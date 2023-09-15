@@ -11,11 +11,11 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 
         @vite('resources/css/app.css')
-
     </head>
-    <body class="bg-gray-500">
-        <div class="text-green-400">
-            adasdfs
+    <body class="bg-green-400 h-full">
+        <div class="grid grid-cols-2 gap-1.5">
+            <button class="btn btn-primary">Teszt</button>
+            <button class="btn btn-accent">Teszt 2</button>
         </div>
     </body>
 </html>

@@ -12,11 +12,9 @@
 
         @vite('resources/css/app.css')
 
-        <!-- Styles -->
-
     </head>
     <body class="bg-gray-500">
-        <div class="text-green-200">
+        <div class="text-green-400">
             adasdfs
         </div>
     </body>

@@ -3,23 +3,22 @@
 namespace App\Livewire;
 
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Cookie;
 use Livewire\Component;
 
 class Languageswitcher extends Component
 {
 
-    public function changeLanguage($language) {
-        App::setLocale($language);
-    }
-
     public function setHungarian()
     {
-        App::setLocale('hun');
+        Cookie::queue('lang', 'hu');
+        $this->js('window.location.reload()');
     }
 
     public function setEnglish()
     {
-        App::setLocale('en');
+        Cookie::queue('lang', 'en');
+        $this->js('window.location.reload()');
     }
 
     public function render()

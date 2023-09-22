@@ -28,17 +28,8 @@ class LadderServiceProvider extends ServiceProvider
      */
     protected function configurePermissions(): void
     {
-        Ladder::role('admin', 'Administrator', [
-            'create',
-            'read',
-            'update',
-            'delete',
-        ])->description('Administrator users can perform any action.');
-
-        Ladder::role('editor', 'Editor', [
-            'read',
-            'create',
-            'update',
-        ])->description('Editor users have the ability to read, create, and update.');
+        Ladder::role('admin', 'Administrator', [])->description('Administrator role');
+        Ladder::role('teacher', 'Teacher', [])->description('Teacher role');
+        Ladder::role('student', 'Student', [])->description('Student role.');
     }
 }

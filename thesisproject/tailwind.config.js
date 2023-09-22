@@ -6,6 +6,9 @@ export default {
       "./resources/**/*.vue",
   ],
   theme: {
+      fontFamily: {
+        'serif': ['Roboto', 'ui-serif', 'sans-serif']
+      },
     extend: {},
   },
   plugins: [require("daisyui")],

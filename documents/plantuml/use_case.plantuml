@@ -1,0 +1,79 @@
+@startuml Use Case
+
+left to right direction
+skinparam Style strictuml
+
+together {
+	actor "Hallgató" as student
+	actor "Tanár" as teacher
+	actor "Adminisztrátor" as admin
+}
+
+package Általános as general {
+		usecase "Bejelentkezés" as login
+		usecase "Regisztráció" as register
+		usecase "Kijelentkezés" as logout
+		usecase "Felhasználó fiók kezelése" as profile
+		usecase "Információk megtekintése" as viewInfos
+}
+
+
+together {
+	package "Hallgatói" as studentSystem {
+		usecase "Órák, kurzusok, tantárgyak megtekintése" as viewClassesStudent
+		usecase "Hiányzások megtekintése" as viewAbsences
+		usecase "Igazolások kezelése" as recordCert
+	}
+
+	package "Tanári" as teacherSystem {
+		usecase "Órák, kurzusok, tantárgyak megtekintése" as viewClassesTeacher
+		usecase "Információk szerkesztése" as editInfos
+		usecase "Hiányzások kezelése" as editAbsence
+		usecase "Igazolások kezelése" as editCerts
+	}	
+
+	package "Adminisztrátori" as adminSystem {
+		usecase "Alkalmazás beállítások kezelése" as changeSettings
+		usecase "Felhasználó kezelés" as userManage
+		usecase "Teljeskörű hozzáférés" as fullAccess
+	}
+}
+
+together {
+	package "Laravel keretrendszer" as laravel {
+		usecase "Kommunikáció az adatbázissal" as dbComm
+		usecase "Authentikáció, authorizáció" as auth
+		usecase "Kérések kiszolgálása" as serveReq
+		usecase "Értesítések küldése" as sendNotif
+	}
+
+	package Adatbázis as database {
+		usecase "Adatok tárolása" as storeData
+	}
+
+	package "Email Queue" as emailQueue {
+		usecase "Elküldendő e-mail sorba rakása" as queueEmail
+		usecase "E-mail küldése" as sendEmail
+	}
+}
+
+student --> general #Green
+teacher --> general #Blue
+admin --> general #Red
+
+student -> studentSystem #Green
+teacher -> teacherSystem #Blue
+admin -> adminSystem #Red
+
+admin -> studentSystem #Red
+admin ->teacherSystem #Red
+
+general -> laravel #Orange
+studentSystem -> laravel #Orange
+teacherSystem -> laravel #Orange
+adminSystem -> laravel #Orange
+
+laravel --> database #Violet
+laravel --> emailQueue #Violet
+
+@enduml

@@ -28,6 +28,7 @@ class LadderServiceProvider extends ServiceProvider
      */
     protected function configurePermissions(): void
     {
+        Ladder::role('superadmin', 'SuperAdmin', [])->description('Super Admin Role');
         Ladder::role('admin', 'Administrator', [])->description('Administrator role');
         Ladder::role('teacher', 'Teacher', [])->description('Teacher role');
         Ladder::role('student', 'Student', [])->description('Student role.');

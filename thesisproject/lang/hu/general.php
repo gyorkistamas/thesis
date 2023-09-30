@@ -1,5 +1,9 @@
 <?php
 
 return [
-  'Attendance' => 'Jelenlét'
+    'Attendance' => 'Jelenlét',
+    'Config' => 'Konfiguráció',
+    'Continue' => 'Folytatás',
+    'Theme' => 'Téma',
+    'Tracker' => 'Jelenlét nyomonkövető'
 ];

@@ -1,4 +1,8 @@
 <?php
  return [
-   'Attendance' => 'Attendance'
+     'Attendance' => 'Attendance',
+     'Config' => 'Configuration',
+     'Continue' => 'Continue',
+     'Theme' => 'Theme',
+     'Tracker' => 'Presence tracker'
  ];

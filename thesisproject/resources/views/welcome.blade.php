@@ -1,8 +1,10 @@
-@extends('layout.layout')
+@extends('layout.default_layout')
+
+@section('title', 'Teszt')
 
 @section('content')
-    <h1>Teszt</h1>
-    <h1>Teszt</h1>
-    <h1>Teszt</h1>
-    <h1>Teszt</h1>
+
+    <div class="prose">
+        <h1>Test</h1>
+    </div>
 @endsection

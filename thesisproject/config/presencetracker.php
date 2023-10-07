@@ -2,5 +2,5 @@
 
 return [
     'sitename' => env('SITENAME', 'Tracker'),
-    'favicon' => '/favicon.ico'
+    'favicon' => '/favicon.ico',
 ];

@@ -2,13 +2,11 @@
 
 namespace App\Livewire;
 
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cookie;
 use Livewire\Component;
 
 class Languageswitcher extends Component
 {
-
     public function setHungarian()
     {
         Cookie::queue('lang', 'hu');

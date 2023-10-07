@@ -13,6 +13,6 @@ class CourseClass extends Model
         'course_code',
         'start_time',
         'end_time',
-        'place_id'
+        'place_id',
     ];
 }

@@ -12,6 +12,6 @@ class JustificationAcceptance extends Model
     protected $fillable = [
         'justification_id',
         'user_id',
-        'status'
+        'status',
     ];
 }

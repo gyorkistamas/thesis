@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('terms', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string("name")->unique();
-            $table->string("description")->nullable();
-            $table->date("start");
-            $table->date("end");
-            $table->boolean("active")->default(false);
+            $table->string('name')->unique();
+            $table->string('description')->nullable();
+            $table->date('start');
+            $table->date('end');
+            $table->boolean('active')->default(false);
         });
     }
 

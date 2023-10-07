@@ -5,5 +5,5 @@ return [
     'Config' => 'Konfiguráció',
     'Continue' => 'Folytatás',
     'Theme' => 'Téma',
-    'Tracker' => 'Jelenlét nyomonkövető'
+    'Tracker' => 'Jelenlét nyomonkövető',
 ];

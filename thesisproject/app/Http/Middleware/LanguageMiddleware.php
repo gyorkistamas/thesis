@@ -5,7 +5,6 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Crypt;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,7 +17,7 @@ class LanguageMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if($request->cookie('lang')) {
+        if ($request->cookie('lang')) {
             App::setLocale(explode('|', Crypt::decrypt($request->cookie('lang'), false))[1]);
         }
 

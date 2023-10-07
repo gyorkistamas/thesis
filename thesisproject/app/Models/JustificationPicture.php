@@ -11,6 +11,6 @@ class JustificationPicture extends Model
 
     protected $fillable = [
         'justification_id',
-        'picture_name'
+        'picture_name',
     ];
 }

@@ -14,6 +14,6 @@ class Course extends Model
         'subject_id',
         'subject_id',
         'term_id',
-        'course_limit'
+        'course_limit',
     ];
 }

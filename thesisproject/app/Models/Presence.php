@@ -13,6 +13,6 @@ class Presence extends Model
         'user_id',
         'course_class_id',
         'presence',
-        'late_minutes'
+        'late_minutes',
     ];
 }

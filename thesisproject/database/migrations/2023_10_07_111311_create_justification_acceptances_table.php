@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('course_teachers', function (Blueprint $table) {
+        Schema::create('justification_acceptances', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('course_id')->constrained();
-            $table->foreignId('user_id')->constrained();
             $table->timestamps();
+            $table->foreignId('justification_id')->constrained();
+            $table->foreignId('user_id')->constrained();
+            $table->enum('status', ['accepted', 'denied', 'na'])->default('na');
         });
     }
 
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('course_teachers');
+        Schema::dropIfExists('justification_acceptances');
     }
 };

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('subject_id');
             $table->foreign('subject_id')->references('id')->on('subjects');
             $table->foreignId('term_id')->constrained();
+            $table->integer('course_limit')->default(20);
             $table->timestamps();
         });
     }

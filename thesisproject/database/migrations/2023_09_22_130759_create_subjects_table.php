@@ -16,8 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->integer('credit');
-            $table->string('manager');
-            $table->foreign('manager')->references('id')->on('users');
+            $table->foreignId('manager')->constrained(table: 'users');
             $table->timestamps();
         });
     }

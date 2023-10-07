@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('course_teachers', function (Blueprint $table) {
+        Schema::create('presences', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('course_id')->constrained();
-            $table->foreignId('user_id')->constrained();
             $table->timestamps();
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('course_class_id')->constrained();
+            $table->enum('presence', ['present', 'missing', 'late', 'not_filled', 'justified'])->default('not_filled');
+            $table->integer('late_minutes')->nullable();
         });
     }
 
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('course_teachers');
+        Schema::dropIfExists('presences');
     }
 };

@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('presences', function (Blueprint $table) {
+        Schema::create('attendances', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('course_class_id')->constrained();
-            $table->enum('presence', ['present', 'missing', 'late', 'not_filled', 'justified'])->default('not_filled');
+            $table->enum('attendance', ['present', 'missing', 'late', 'not_filled', 'justified'])->default('not_filled');
             $table->integer('late_minutes')->nullable();
         });
     }

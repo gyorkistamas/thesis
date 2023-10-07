@@ -77,9 +77,16 @@ class User extends Authenticatable
 
     public function GetClassWithPresence($class_id): BelongsToMany
     {
-        return $this->belongsToMany(CourseClass::class, 'presences')
+        return $this->belongsToMany(CourseClass::class, 'attendances')
             ->as('presence_details')
-            ->withPivot('presence', 'late_minutes')
-            ->wherePivot('course_class', '=', $class_id);
+            ->withPivot('attendance', 'late_minutes')
+            ->wherePivot('course_class_id', '=', $class_id);
+    }
+
+    public function GetClassesWithPresence(): BelongsToMany
+    {
+        return $this->belongsToMany(CourseClass::class, 'attendances')
+            ->as('presence_details')
+            ->withPivot('attendance', 'late_minutes');
     }
 }

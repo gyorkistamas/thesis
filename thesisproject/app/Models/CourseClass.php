@@ -15,4 +15,30 @@ class CourseClass extends Model
         'end_time',
         'place_id',
     ];
+
+    public function Course()
+    {
+        return $this->belongsTo(Course::class);
+    }
+
+    public function Place()
+    {
+        return $this->hasOne(Place::class);
+    }
+
+    public function StudentsWithPresence()
+    {
+        return $this->belongsToMany(User::class, 'presences')
+            ->as('attendance')
+            ->withPivot('attendance', 'late_minutes');
+    }
+
+    public function GetStudent($student_id)
+    {
+        return $this->belongsToMany(User::class, 'presences')
+            ->as('attendance')
+            ->withPivot('attendance', 'late_minutes')
+            ->where('id', '=', $student_id);
+    }
+
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileUpdateController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,4 +18,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/configure', [\App\Http\Controllers\ConfigController::class, 'index'])->name('config');
+/*
+|--------------------------------------------------------------------------
+| Profile update
+|--------------------------------------------------------------------------
+*/
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileUpdateController::class, 'index'])->name('update-profile');
+});

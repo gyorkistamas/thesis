@@ -51,6 +51,10 @@ class User extends Authenticatable
 
     public function get_pic()
     {
+        if ($this->picture) {
+            return $this->picture;
+        }
+
         return 'https://gravatar.com/avatar/'.hash('sha256', Str::lower($this->email)).'?d=identicon';
     }
 

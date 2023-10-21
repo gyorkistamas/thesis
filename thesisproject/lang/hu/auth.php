@@ -26,5 +26,8 @@ return [
     'resetPassword' => 'Jelszó visszaállítás',
     'newPassword' => 'Új jelszó',
     'newPasswordAgain' => 'Új jelszó megint',
-
+    'picChange' => 'A felhasználó képét a Gravatar oldalon tudja megváltoztatni',
+    'currentPassword' => 'Jelenlegi jelszó',
+    'changePassword' => 'Jelszó változtatás',
+    'passwordChanged' => 'Jelszó sikeresen megváltoztatva, kérjük jelentkezzen ki',
 ];

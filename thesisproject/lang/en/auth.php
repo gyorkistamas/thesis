@@ -26,4 +26,8 @@ return [
     'resetPassword' => 'Reset password',
     'newPassword' => 'New password',
     'newPasswordAgain' => 'New password again',
+    'picChange' => 'You can change your avatar on Gravatar',
+    'currentPassword' => 'Current password',
+    'changePassword' => 'Change password',
+    'passwordChanged' => 'Password successfully changed, please log out',
 ];

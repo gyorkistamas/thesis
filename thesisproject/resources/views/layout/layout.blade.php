@@ -20,5 +20,6 @@
     <livewire:themeswitcher></livewire:themeswitcher>
 </footer>
 -->
+<livewire:simple-notification />
 </body>
 </html>

@@ -33,13 +33,8 @@
                                 </div>
                             </label>
                                 <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-                                    <li>
-                                        <a class="justify-between">
-                                            Profile
-                                            <span class="badge">New</span>
-                                        </a>
-                                    </li>
-                                    <li><form method="POST" action="/logout">@csrf<button>Logout</button></form></li>
+                                    <li> <a href="{{route('update-profile')}}">{{__('general.profile')}}</a></li>
+                                    <li><form method="POST" action="/logout">@csrf<button>{{__('general.logout')}}</button></form></li>
                                 </ul>
                         </div>
                     @else

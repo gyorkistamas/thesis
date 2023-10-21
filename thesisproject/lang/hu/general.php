@@ -9,4 +9,5 @@ return [
     'neptunCode' => 'Neptun kód',
     'name' => 'Név',
     'email' => 'Email',
+    'send' => 'Küldés',
 ];

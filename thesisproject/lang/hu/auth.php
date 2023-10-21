@@ -22,5 +22,9 @@ return [
     'rememberMe' => 'Emlékezzen rám',
     'register' => 'Regisztráció',
     'passwordAgain' => 'Jelszó újra',
+    'forgotPassword' => 'Elfelejtett jelszó',
+    'resetPassword' => 'Jelszó visszaállítás',
+    'newPassword' => 'Új jelszó',
+    'newPasswordAgain' => 'Új jelszó megint',
 
 ];

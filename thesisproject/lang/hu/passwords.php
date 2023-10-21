@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'reset' => 'Jelszava vissaz lett állítva.',
+    'reset' => 'Jelszava vissza lett állítva.',
     'sent' => 'E-mailben elküldtük a jelszó visszaállító linket.',
     'throttled' => 'Kérjük várjon mielőtt újra próbálkozik.',
     'token' => 'A jelszó visszaállítási token helytelen.',

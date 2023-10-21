@@ -9,4 +9,5 @@ return [
     'neptunCode' => 'Neptun code',
     'name' => 'Name',
     'email' => 'Email',
+    'send' => 'Send',
 ];

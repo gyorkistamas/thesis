@@ -22,4 +22,8 @@ return [
     'rememberMe' => 'Remember me',
     'register' => 'Register',
     'passwordAgain' => 'Confirm password',
+    'forgotPassword' => 'Forgotten password',
+    'resetPassword' => 'Reset password',
+    'newPassword' => 'New password',
+    'newPasswordAgain' => 'New password again',
 ];

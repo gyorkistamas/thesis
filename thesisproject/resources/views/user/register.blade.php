@@ -23,6 +23,7 @@
 
                 <input type="password" name="password_confirmation" placeholder="{{__('auth.passwordAgain')}}*" class="input input-bordered input-primary mt-3">
                 @error('password_confirmation') <x-error-alert class="p-2 mt-2">{{$message}}</x-error-alert> @enderror
+                <span class="text-warning text-sm mt-1">*: {{__('general.required')}}</span>
 
                 <button class="btn btn-primary mx-auto mt-5">{{__('auth.register')}}</button>
             </div>

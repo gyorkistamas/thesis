@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'sitename' => env('SITENAME', 'Tracker'),
+    'sitename' => env('SITENAME', 'Presence Tracker'),
     'favicon' => '/favicon.ico',
 ];

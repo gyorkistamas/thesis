@@ -10,4 +10,8 @@ return [
     'name' => 'Név',
     'email' => 'Email',
     'send' => 'Küldés',
+    'required' => 'Kötelező',
+    'welcomeTitle' => 'Üdvözöljük az intézmény jelenlét követő oldalán!',
+    'welcomeMessage' => 'Az oldal használatához kérjük jelentkezzen be.',
+    'mainPage' => 'Főoldal',
 ];

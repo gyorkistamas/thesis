@@ -10,7 +10,7 @@
     @vite('resources/css/themeswitcher.css')
 
 </head>
-<body class="font-serif">
+<body class="font-serif h-full min-h-screen">
 
 @yield('content_place')
 

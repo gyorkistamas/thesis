@@ -13,13 +13,14 @@ return [
     |
     */
 
-    'failed' => 'These credentials do not match our records.',
-    'password' => 'The provided password is incorrect.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-    'login' => 'Login',
-    'neptunOrEmail' => 'Neptun code or email',
-    'passwordText' => 'Password',
-    'rememberMe' => 'Remember me',
-    'register' => 'Register',
-    'passwordAgain' => 'Confirm password',
+    'failed' => 'A megadott belépési adatok helytelenek.',
+    'password' => 'A jelszó helytelen.',
+    'throttle' => 'Túl sok belépési kisérlet. Kérjük, próbálja újra :seconds másodperc múlva.',
+    'login' => 'Bejelentkezés',
+    'neptunOrEmail' => 'Neptun kód vagy e-mail cím',
+    'passwordText' => 'Jelszó',
+    'rememberMe' => 'Emlékezzen rám',
+    'register' => 'Regisztráció',
+    'passwordAgain' => 'Jelszó újra',
+
 ];

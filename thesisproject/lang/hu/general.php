@@ -6,4 +6,7 @@ return [
     'Continue' => 'Folytatás',
     'Theme' => 'Téma',
     'Tracker' => 'Jelenlét nyomonkövető',
+    'neptunCode' => 'Neptun kód',
+    'name' => 'Név',
+    'email' => 'Email',
 ];

@@ -50,7 +50,10 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         Fortify::registerView(function () {
-            return view('user.register');
+            if (config('presencetracker.enableRegister')) {
+                return view('user.register');
+            }
+            abort(404);
         });
 
         Fortify::requestPasswordResetLinkView(function () {

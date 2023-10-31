@@ -11,10 +11,8 @@ class Themeswitcher extends Component
     {
         if (Cookie::get('theme') == 'light') {
             Cookie::queue('theme', 'dark');
-            $this->dispatch('themeChange', 'dark');
         } else {
             Cookie::queue('theme', 'light');
-            $this->dispatch('themeChange', 'light');
         }
     }
 

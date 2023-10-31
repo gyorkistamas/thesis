@@ -89,7 +89,7 @@
                         </div>
                     @else
                         <div class="dropdown dropdown-end align-top">
-                            <a tabindex="0" class="btn btn-ghost btn-circle avatar" href="/login">
+                            <a tabindex="0" class="btn btn-ghost btn-circle avatar" href="/login" wire:navigate>
                                 <div class="w-10 rounded-full">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                          stroke-width="1.5" stroke="currentColor" class="stroke-neutral">

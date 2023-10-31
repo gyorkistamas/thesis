@@ -37,8 +37,8 @@
                 <button class="btn btn-primary" type="submit">{{__('auth.login')}}</button>
             </div>
             <div class="flex flex-row justify-between mt-3">
-                <a class="link link-primary" href="/forgot-password">{{__('auth.forgotPassword')}}</a>
-                <a class="link link-primary" href="{{ route('register') }}">{{__('auth.register')}}</a>
+                <a class="link link-primary" href="/forgot-password" wire:navigate>{{__('auth.forgotPassword')}}</a>
+                <a class="link link-primary" href="{{ route('register') }}" wire:navigate>{{__('auth.register')}}</a>
             </div>
         </form>
     </x-rounded-container>

@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 /*
 |--------------------------------------------------------------------------
@@ -25,4 +25,14 @@ Route::get('/', function () {
 */
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileUpdateController::class, 'index'])->name('update-profile');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Website settings
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware(['auth', 'superadmin'])->group(function () {
+    Route::get('/user-settings', [\App\Http\Controllers\Controller::class, 'UserSettings'])->name('user-settings');
 });

@@ -5,10 +5,13 @@ namespace App\Livewire\Settings;
 use App\Models\User;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Usernotnull\Toast\Concerns\WireToast;
 use function Symfony\Component\Translation\t;
 
 class ChangeRolesForUser extends Component
 {
+    use WireToast;
+
     public User $user;
 
     public $superadmin;
@@ -57,6 +60,7 @@ class ChangeRolesForUser extends Component
             $this->user->roles()->updateOrCreate(['role' => 'student']);
         }
 
+        toast()->success(__('general.changeroleSuccess'), __('general.success'))->push();
         $this->dispatch('redrawUserList');
 
     }

@@ -7,9 +7,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
+use Usernotnull\Toast\Concerns\WireToast;
 
 class UpdatePassword extends Component
 {
+    use WireToast;
     public $currentPassword;
 
     #[Rule('required|min:8|max:50')]
@@ -27,15 +29,12 @@ class UpdatePassword extends Component
                 'type' => SimpleNotification::TYPE_ALERT, 'timer' => 5,
             ]);
 
+            toast()->danger(__('general.noPermission'), __('general.error'))->push();
             return;
         }
 
         if (! Hash::check($this->currentPassword, $this->user->password)) {
-            $this->dispatch('sendNotif', [
-                'title' => __('general.error'), 'message' => __('auth.password'),
-                'type' => SimpleNotification::TYPE_ALERT, 'timer' => 5,
-            ]);
-
+            toast()->warning(__('auth.password'), __('general.error'))->push();
             return;
         }
 
@@ -51,10 +50,7 @@ class UpdatePassword extends Component
 
         $this->user->password = Hash::make($this->password);
         $this->user->save();
-        $this->dispatch('sendNotif', [
-            'title' => __('general.success'), 'message' => __('auth.passwordChanged'),
-            'type' => SimpleNotification::TYPE_SUCCESS, 'timer' => 10,
-        ]);
+        toast()->success(__('auth.passwordChanged'), __('general.success'))->push();
     }
 
     public function mount(User $user)

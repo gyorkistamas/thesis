@@ -1,6 +1,6 @@
 <div>
     <div class="prose mb-3 flex flex-row flex-wrap justify-between min-w-full max-w-full md:flex-row">
-        <h1 class="mb-0 mx-auto md:mx-0">{{__('general.userSettings')}}</h1>
+        <h1 class="mb-0 mx-auto md:mx-0 md:ms-1">{{__('general.userSettings')}}</h1>
         <div class="min-w-full max-w-full flex flex-col items-center gap-3 mt-2 md:flex-row md:min-w-fit md:max-w-fit">
             <button class="btn btn-success w-fit">
                 <x-icons.plus_fill_small/>{{__('general.createNewUser')}}</button>

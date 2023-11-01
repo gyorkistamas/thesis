@@ -51,7 +51,6 @@
                 });
             });
             let closeButton = document.getElementById('closeButton');
-            console.log(closeButton)
             closeButton.addEventListener('click', () => {
                 console.log('fire');
             });

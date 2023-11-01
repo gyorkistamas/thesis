@@ -49,4 +49,5 @@ return [
     'importUsers' => 'Felhasználók importálása',
     'changeRoles' => 'Szerepkörök szerkesztése',
     'resetPassword' => 'Jelszó visszaállítása',
+    'changeroleSuccess' => 'Szerepkörök sikeresen megváltoztatva',
 ];

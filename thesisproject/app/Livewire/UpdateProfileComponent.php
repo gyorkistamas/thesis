@@ -7,9 +7,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
+use Usernotnull\Toast\Concerns\WireToast;
 
 class UpdateProfileComponent extends Component
 {
+    use WireToast;
+
     public $id;
 
     #[Rule('string|max:6')]
@@ -45,10 +48,10 @@ class UpdateProfileComponent extends Component
                 'name' => $this->name,
                 'email' => $this->email,
             ])->save();
-            $this->dispatch('sendNotif', ['title' => __('general.success'), 'message' => __('general.updateSuccess'), 'type' => SimpleNotification::TYPE_SUCCESS, 'timer' => 5]);
+            toast()->success(__('general.updateSuccess'), __('general.success'))->push();
             return;
         }
-        $this->dispatch('sendNotif', ['title' => __('general.error'), 'message' => __('general.noPermission'), 'type' => 1]);
+        toast()->danger(__('general.noPermission'), __('general.error'))->push();
     }
 
     public function render(

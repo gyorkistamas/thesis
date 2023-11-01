@@ -49,4 +49,5 @@ return [
     'importUsers' => 'Import users',
     'changeRoles' => 'Change roles',
     'resetPassword' => 'Reset password',
+    'changeroleSuccess' => 'Roles changed successfully',
 ];

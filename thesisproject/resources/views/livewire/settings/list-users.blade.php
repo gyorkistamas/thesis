@@ -100,7 +100,7 @@
                             </div>
                         </td>
                         <th>
-                            <div class="dropdown dropdown-hover dropdown-top dropdown-end">
+                            <div class="dropdown dropdown-hover dropdown-top dropdown-end" wire:loading.class="not-clickable">
                                 <label tabindex="0" class="btn m-1 btn-sm">{{__('general.options')}}</label>
                                 <ul tabindex="0"
                                     class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">

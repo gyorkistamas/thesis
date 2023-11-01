@@ -47,4 +47,6 @@ return [
     'deleteSuccessful' => 'Törlés sikeres',
     'createNewUser' => 'Új felhasználó létrehozása',
     'importUsers' => 'Felhasználók importálása',
+    'changeRoles' => 'Szerepkörök szerkesztése',
+    'resetPassword' => 'Jelszó visszaállítása',
 ];

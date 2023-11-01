@@ -1,5 +1,5 @@
 <div
-    class="alert @switch($type) @case(0) alert-success @break @case(1) alert-error @break @case(2) alert-info @break @endswitch @if(!$isOpen) hidden @endif max-w-sm fixed bottom-5 right-5 p-4">
+    class="alert @switch($type) @case(0) alert-success @break @case(1) alert-error @break @case(2) alert-info @break @endswitch @if(!$isOpen) hidden @endif max-w-sm fixed bottom-5 right-5 p-4 z-[1]" id="alert">
     @switch($type)
         @case (0)
             <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
@@ -36,20 +36,25 @@
         </svg>
     </label>
 
-    <script>
-        let closeButton = document.getElementById('closeButton');
-        document.addEventListener('livewire:initialized', () => {
-            console.log("added")
-           @this.on('startTimer', (event) => {
-               if (!event[0].autoHide)
-                   return;
-                console.log(event)
-                setTimeout(() =>{
-                    if (closeButton.checked) {
-                        closeButton.click();
-                    }
-                }, event[0].timer * 1000);
+    @persist("alertBox")
+        <script data-navigate-once>
+            document.addEventListener('livewire:initialized', () => {
+                let closeButton = document.getElementById('closeButton');
+                @this.on('startTimer', (event) => {
+                    if (!event[0].autoHide)
+                        return;
+                    setTimeout(() => {
+                        if (closeButton.checked) {
+                            closeButton.click();
+                        }
+                    }, event[0].timer * 1000);
+                });
             });
-        });
-    </script>
+            let closeButton = document.getElementById('closeButton');
+            console.log(closeButton)
+            closeButton.addEventListener('click', () => {
+                console.log('fire');
+            });
+        </script>
+    @endpersist
 </div>

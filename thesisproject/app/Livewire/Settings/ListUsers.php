@@ -5,6 +5,7 @@ namespace App\Livewire\Settings;
 use App\Livewire\SimpleNotification;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -14,6 +15,7 @@ class ListUsers extends Component
 
     public $search;
 
+    #[On('redrawUserList')]
     public function redraw()
     {
         $this->resetPage();
@@ -27,6 +29,7 @@ class ListUsers extends Component
                 'message' => __('general.noPermission'),
                 'type' => SimpleNotification::TYPE_ALERT,
             ]);
+
             return;
         }
         $user = User::find($id);

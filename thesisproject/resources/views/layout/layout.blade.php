@@ -8,7 +8,6 @@
     <link rel="icon" type="image/x-icon" href="{{config('presencetracker.favicon')}}">
     @vite('resources/css/app.css')
     @vite('resources/css/themeswitcher.css')
-
 </head>
 <body class="font-serif h-full min-h-screen">
 

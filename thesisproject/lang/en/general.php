@@ -47,4 +47,6 @@ return [
     'deleteSuccessful' => 'Delete successful',
     'createNewUser' => 'Create new user',
     'importUsers' => 'Import users',
+    'changeRoles' => 'Change roles',
+    'resetPassword' => 'Reset password',
 ];

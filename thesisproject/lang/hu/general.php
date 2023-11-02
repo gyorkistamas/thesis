@@ -50,4 +50,10 @@ return [
     'changeRoles' => 'Szerepkörök szerkesztése',
     'resetPassword' => 'Jelszó visszaállítása',
     'changeroleSuccess' => 'Szerepkörök sikeresen megváltoztatva',
+    'Regards' => 'Üdvözlettel',
+    'welcome' => 'Üdv!',
+    'problemClicking' => 'Ha nem tud rákattintani a  ":actionText" gombra, akkor másolja be az alábbi linket a böngészőjébe:',
+    'receiveEmailPasswordReset' => 'Azért kapja ezt az emailt, mert jelszó visszaállítást kértek fiókjára',
+    'resetExpireIn' => 'Ez a link :count perc múlva le fog járni.',
+    'didNotRequest' => 'Ha nem ön kérte ezt a visszállítást, akkor nincs több teendője, ignorálhatja az emailt.',
 ];

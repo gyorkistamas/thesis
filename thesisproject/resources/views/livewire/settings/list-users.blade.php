@@ -2,39 +2,42 @@
     <div class="prose mb-3 flex flex-row flex-wrap justify-between min-w-full max-w-full md:flex-row">
         <h1 class="mb-0 mx-auto md:mx-0 md:ms-1">{{__('general.userSettings')}}</h1>
         <div class="min-w-full max-w-full flex flex-col items-center gap-3 mt-2 md:flex-row md:min-w-fit md:max-w-fit">
-            <button class="btn btn-success w-fit">
+            <button class="btn btn-success w-fit" onclick="newUserModal.showModal()" >
                 <x-icons.plus_fill_small/>{{__('general.createNewUser')}}</button>
             <button class="btn btn-success w-fit">
                 <x-icons.plus_fill_small/>{{__('general.importUsers')}}</button>
         </div>
     </div>
     <div class="flex flex-col flex-wrap gap-2 content-center lg:flex-row mb-5">
-        <input type="text"
-               placeholder="{{__('general.search')}}: {{__('general.neptunCode')}} {{__('general.or')}} {{__('general.name')}}"
-               class="input input-bordered input-accent w-full max-w-xs mx-auto lg:mx-0" wire:model.live="search"/>
+        <form class="w-full max-w-xs mx-auto lg:mx-0 flex flex-row gap-2 min-w-full justify-center md:justify-start" wire:submit="searchUsers">
+            <input type="search"
+                   placeholder="{{__('general.search')}}: {{__('general.neptunCode')}} {{__('general.or')}} {{__('general.name')}}"
+                   class="input input-bordered input-accent w-full max-w-xs lg:mx-0" wire:model="search"/>
+            <button class="btn btn-success" type="submit">{{__('general.search')}}</button>
+        </form>
         <div class="flex flex-col flex-wrap content-center md:flex-row gap-5">
             <div class="form-control">
                 <label class="cursor-pointer label">
                     <span class="label-text me-2">{{__('general.superadmin')}}</span>
-                    <input type="checkbox" class="checkbox checkbox-accent"/>
+                    <input type="checkbox" class="checkbox checkbox-accent" wire:model="superadmin"/>
                 </label>
             </div>
             <div class="form-control">
                 <label class="cursor-pointer label">
                     <span class="label-text me-2">{{__('general.admin')}}</span>
-                    <input type="checkbox" class="checkbox checkbox-accent"/>
+                    <input type="checkbox" class="checkbox checkbox-accent" wire:model="admin"/>
                 </label>
             </div>
             <div class="form-control">
                 <label class="cursor-pointer label">
                     <span class="label-text me-2">{{__('general.teacher')}}</span>
-                    <input type="checkbox" class="checkbox checkbox-accent"/>
+                    <input type="checkbox" class="checkbox checkbox-accent" wire:model="teacher"/>
                 </label>
             </div>
             <div class="form-control">
                 <label class="cursor-pointer label">
                     <span class="label-text me-2">{{__('general.student')}}</span>
-                    <input type="checkbox" class="checkbox checkbox-accent"/>
+                    <input type="checkbox" class="checkbox checkbox-accent" wire:model="student"/>
                 </label>
             </div>
         </div>
@@ -100,63 +103,24 @@
                             </div>
                         </td>
                         <th>
-                            <div class="dropdown dropdown-hover dropdown-top dropdown-end" wire:loading.class="not-clickable">
-                                <label tabindex="0" class="btn m-1 btn-sm">{{__('general.options')}}</label>
+                            <div class="dropdown dropdown-top dropdown-end" wire:loading.class="not-clickable">
+                                <label tabindex="0" class="btn m-1 btn-sm" wire:click="$dispatch('changeSelectedUser', {id: '{{$user->id}}'})">{{__('general.options')}}</label>
                                 <ul tabindex="0"
                                     class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                                     <li>
-                                        <a class="text-warning" onclick="modifyModal{{$user->id}}.showModal()">
+                                        <a class="text-warning" onclick="modifyModal.showModal()" wire:loading.class="not-clickable">
                                             <x-icons.edit_fill_small/>{{__('general.edit')}}</a>
                                     </li>
                                     <li>
-                                        <a class="text-accent" onclick="roleModal{{$user->id}}.showModal()">
+                                        <a class="text-accent" onclick="roleModal.showModal()" wire:loading.class="not-clickable">
                                             <x-icons.tag_fill_small/>{{__('general.changeRoles')}}</a>
                                     </li>
                                     <li>
-                                        <a onclick="deleteModal{{$user->id}}.showModal()" class="text-error">
+                                        <a onclick="deleteModal.showModal()" class="text-error" wire:loading.class="not-clickable">
                                             <x-icons.delete_fill_small/>{{__('general.delete')}}</a>
                                     </li>
                                 </ul>
                             </div>
-                            <dialog id="modifyModal{{$user->id}}" class="modal modal-bottom sm:modal-middle">
-                                <div class="modal-box">
-                                    <h3 class="font-bold text-lg">{{__('general.edit')}}</h3>
-                                    <livewire:update-profile-component :user="$user" wire:key="update{{$user->id}}"/>
-                                    <div class="modal-action">
-                                        <form method="dialog">
-                                            <button class="btn" wire:click="redraw">{{__('general.close')}}</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </dialog>
-                            <dialog id="roleModal{{$user->id}}" class="modal modal-bottom sm:modal-middle">
-                                <div class="modal-box">
-                                    <h3 class="font-bold text-lg">{{__('general.changeRoles')}}</h3>
-                                    <livewire:settings.change-roles-for-user wire:key="role{{$user->id}}"
-                                                                             :user="$user"/>
-                                    <div class="modal-action">
-                                        <form method="dialog">
-                                            <button class="btn btn-accent"
-                                                    wire:click="$dispatch('updateRoles.{{$user->id}}')">{{__('general.save')}}</button>
-                                            <button class="btn">{{__('general.close')}}</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </dialog>
-                            <dialog id="deleteModal{{$user->id}}" class="modal modal-bottom sm:modal-middle">
-                                <div class="modal-box">
-                                    <h3 class="font-bold text-lg">{{__('general.delete')}}</h3>
-                                    <p class="py-4 text-lg">{{$user->neptun}} - {{$user->name}}</p>
-                                    <h2 class="text-error text-xl">{{__('general.confirmDelete')}}</h2>
-                                    <div class="modal-action">
-                                        <form method="dialog">
-                                            <button class="btn btn-error"
-                                                    wire:click="deleteUser({{$user->id}})">{{__('general.delete')}}</button>
-                                            <button class="btn">{{__('general.close')}}</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </dialog>
                         </th>
                     </tr>
                 @endforeach
@@ -183,4 +147,35 @@
     <div class="fixed inset-0 flex items-center justify-center" style="pointer-events: none;">
         <span class="loading loading-dots loading-lg" wire:loading></span>
     </div>
+    <dialog id="newUserModal" class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box">
+            <h3 class="font-bold text-lg">{{__('general.createNewUser')}}</h3>
+            <livewire:settings.create-new-user />
+            <div class="modal-action">
+                <button class="btn btn-success" wire:click="$dispatch('createNewUser')">{{__('general.createNewUser')}}</button>
+                <form method="dialog">
+                    <button class="btn" wire:click="redraw">{{__('general.close')}}</button>
+                </form>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog id="modifyModal" class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box">
+            <h3 class="font-bold text-lg">{{__('general.edit')}}</h3>
+            <livewire:update-profile-component />
+            <div class="modal-action">
+                <form method="dialog">
+                    <button class="btn" wire:click="$refresh">{{__('general.close')}}</button>
+                </form>
+            </div>
+        </div>
+    </dialog>
+    <dialog id="roleModal" class="modal modal-bottom sm:modal-middle">
+        <livewire:settings.change-roles-for-user />
+    </dialog>
+    <dialog id="deleteModal" class="modal modal-bottom sm:modal-middle">
+        <livewire:settings.delete-user />
+    </dialog>
+
 </div>

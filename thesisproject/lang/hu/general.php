@@ -56,4 +56,8 @@ return [
     'receiveEmailPasswordReset' => 'Azért kapja ezt az emailt, mert jelszó visszaállítást kértek fiókjára',
     'resetExpireIn' => 'Ez a link :count perc múlva le fog járni.',
     'didNotRequest' => 'Ha nem ön kérte ezt a visszállítást, akkor nincs több teendője, ignorálhatja az emailt.',
+    'userCreated' => 'Felhasználó létrehozva',
+    'newUserCreated' => 'Fiók létrehozva',
+    'accountCreated' => 'Kedves :name, egy fiókot hoztak önnek létre az alábbi adatokkal:',
+    'toLogin' => 'Az első bejelentkezés előtt kérem változtassa meg jelszavát',
 ];

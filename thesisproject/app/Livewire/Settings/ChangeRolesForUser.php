@@ -6,7 +6,6 @@ use App\Models\User;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Usernotnull\Toast\Concerns\WireToast;
-use function Symfony\Component\Translation\t;
 
 class ChangeRolesForUser extends Component
 {
@@ -22,27 +21,13 @@ class ChangeRolesForUser extends Component
 
     public $student;
 
-    public function mount(User $user)
+    public function mount()
     {
-        $this->user = $user;
-        if ($user->hasRole('superadmin')) {
-            $this->superadmin = true;
-        }
-
-        if ($user->hasRole('admin')) {
-            $this->admin = true;
-        }
-
-        if ($user->hasRole('teacher')) {
-            $this->teacher = true;
-        }
-
-        if ($user->hasRole('student')) {
-            $this->student = true;
-        }
+        $this->user = \Auth::user();
+        $this->updateRoles();
     }
 
-    #[On('updateRoles.{user.id}')]
+    #[On('updateRoles')]
     public function update()
     {
         $this->user->roles()->delete();
@@ -63,6 +48,43 @@ class ChangeRolesForUser extends Component
         toast()->success(__('general.changeroleSuccess'), __('general.success'))->push();
         $this->dispatch('redrawUserList');
 
+    }
+
+    #[On('changeSelectedUser')]
+    public function selectUser($id)
+    {
+        if ($id == $this->user->id) {
+            return;
+        }
+        $this->user = User::find($id);
+        $this->updateRoles();
+    }
+
+    public function updateRoles()
+    {
+        if ($this->user->hasRole('superadmin')) {
+            $this->superadmin = true;
+        } else {
+            $this->superadmin = false;
+        }
+
+        if ($this->user->hasRole('admin')) {
+            $this->admin = true;
+        } else {
+            $this->admin = false;
+        }
+
+        if ($this->user->hasRole('teacher')) {
+            $this->teacher = true;
+        } else {
+            $this->teacher = false;
+        }
+
+        if ($this->user->hasRole('student')) {
+            $this->student = true;
+        } else {
+            $this->student = false;
+        }
     }
 
     public function render()

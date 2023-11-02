@@ -56,4 +56,8 @@ return [
     'receiveEmailPasswordReset' => 'You are receiving this email because we received a password reset request for your account.',
     'resetExpireIn' => 'This password reset link will expire in :count minutes.',
     'didNotRequest' => 'If you did not request a password reset, no further action is required.',
+    'userCreated' => 'User created successfully',
+    'newUserCreated' => 'Account created',
+    'accountCreated' => 'Dear :name, an account has been created for you with the following details:',
+    'toLogin' => 'To login, please change you password below',
 ];

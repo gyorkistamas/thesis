@@ -4,6 +4,6 @@
 
 @section('content')
     <x-rounded-container class="mt-5">
-        <livewire:settings.list-users />
+        <livewire:settings.list-users wire:key="updateUser"/>
     </x-rounded-container>
 @endsection

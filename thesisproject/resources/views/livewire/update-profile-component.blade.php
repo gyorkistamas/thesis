@@ -4,12 +4,15 @@
             <span class="mx-auto">{{__('auth.picChange')}}</span>
             <hr class="my-5"/>
 
-            <input type="text" wire:model.live="neptun" class="input input-bordered input-primary mb-3" placeholder="{{__('general.neptunCode')}}" />
+            <input type="text" wire:model.live="neptun" class="input input-bordered input-primary mb-3" placeholder="{{__('general.neptunCode')}}" wire:loading.attr="disabled"/>
             @error('neptun')<x-error-alert class="mb-2">{{$message}}</x-error-alert> @enderror
-            <input type="text" wire:model.live="name" class="input input-bordered input-primary mb-3" placeholder="{{__('general.name')}}" />
+            <input type="text" wire:model.live="name" class="input input-bordered input-primary mb-3" placeholder="{{__('general.name')}}" wire:loading.attr="disabled" />
             @error('name')<x-error-alert class="mb-2">{{$message}}</x-error-alert>@enderror
-            <input type="email" wire:model.live="email" class="input input-bordered input-primary mb-3" placeholder="{{__('general.email')}}" />
+            <input type="email" wire:model.live="email" class="input input-bordered input-primary mb-3" placeholder="{{__('general.email')}}" wire:loading.attr="disabled"/>
             @error('email')<x-error-alert class="mb-2">{{$message}}</x-error-alert>@enderror
-            <button type="submit" class="btn btn-primary">{{__('general.send')}}</button>
+            <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">{{__('general.send')}}</button>
         </form>
+    <div class="fixed inset-0 flex items-center justify-center" style="pointer-events: none;">
+        <span class="loading loading-dots loading-lg" wire:loading.delay.longest></span>
+    </div>
 </div>

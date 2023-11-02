@@ -2,57 +2,77 @@
 
 namespace App\Livewire\Settings;
 
-use App\Livewire\SimpleNotification;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Usernotnull\Toast\Concerns\WireToast;
 
 class ListUsers extends Component
 {
-    use WithPagination;
+    use WireToast, WithPagination;
 
     public $search;
 
     #[On('redrawUserList')]
     public function redraw()
     {
+        $this->reset();
+    }
+
+    #[On('resetUserList')]
+    public function searchUsers()
+    {
         $this->resetPage();
     }
 
-    public function deleteUser($id)
+    public function updateRoles($id)
     {
-        if (! Auth::user()->hasRole('superadmin')) {
-            $this->dispatch('sendNotif', [
-                'title' => __('general.noPermission'),
-                'message' => __('general.noPermission'),
-                'type' => SimpleNotification::TYPE_ALERT,
-            ]);
-
-            return;
-        }
-        $user = User::find($id);
-        $user->delete();
-        $this->dispatch('sendNotif', [
-            'title' => __('general.success'),
-            'message' => __('general.deleteSuccessful'),
-            'type' => SimpleNotification::TYPE_SUCCESS,
-        ]);
-        $this->redraw();
+        $this->dispatch('updateRoles.'.$id);
+        $this->reset();
     }
 
-    //TODO szűrés csoport alapján
+    public $superadmin = false;
+
+    public $admin = false;
+
+    public $teacher = false;
+
+    public $student = false;
+
     public function render()
     {
-        $users = User::where([
-            ['id', '!=', \Auth::user()->id],
-            ['neptun', 'like', '%'.$this->search.'%'],
-        ])
-            ->orWhere([
-                ['id', '!=', \Auth::user()->id],
-                ['name', 'like', '%'.$this->search.'%'],
-            ])
+        $roles = [];
+
+        if ($this->superadmin) {
+            $roles[] = 'superadmin';
+        }
+        if ($this->admin) {
+            $roles[] = 'admin';
+        }
+        if ($this->teacher) {
+            $roles[] = 'teacher';
+        }
+        if ($this->student) {
+            $roles[] = 'student';
+        }
+
+        // TODO látrehzoni egy default felhasználót fallback-nek
+        $users = User::whereHas('roles', function ($query) use ($roles) {
+            if (count($roles) != 0) {
+                $query->whereIn('role', $roles);
+            }
+        }, '>=', count($roles) > 0 ? 1 : 0)
+            ->where(function ($query) {
+                $query->where([
+                    ['id', '!=', \Auth::user()->id],
+                    ['neptun', 'like', '%'.$this->search.'%'],
+                ])
+                    ->orWhere([
+                        ['id', '!=', \Auth::user()->id],
+                        ['name', 'like', '%'.$this->search.'%'],
+                    ]);
+            })
             ->paginate(10);
 
         return view('livewire.settings.list-users', [

@@ -4,7 +4,7 @@
         <div class="min-w-full max-w-full flex flex-col items-center gap-3 mt-2 md:flex-row md:min-w-fit md:max-w-fit">
             <button class="btn btn-success w-fit" onclick="newUserModal.showModal()" >
                 <x-icons.plus_fill_small/>{{__('general.createNewUser')}}</button>
-            <button class="btn btn-success w-fit">
+            <button class="btn btn-success w-fit" onclick="importModal.showModal()">
                 <x-icons.plus_fill_small/>{{__('general.importUsers')}}</button>
         </div>
     </div>
@@ -176,6 +176,10 @@
     </dialog>
     <dialog id="deleteModal" class="modal modal-bottom sm:modal-middle">
         <livewire:settings.delete-user />
+    </dialog>
+
+    <dialog id="importModal" class="modal modal-bottom sm:modal-middle">
+        <livewire:settings.import-users />
     </dialog>
 
 </div>

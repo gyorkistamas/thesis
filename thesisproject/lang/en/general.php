@@ -60,4 +60,11 @@ return [
     'newUserCreated' => 'Account created',
     'accountCreated' => 'Dear :name, an account has been created for you with the following details:',
     'toLogin' => 'To login, please change you password below',
+    'import' => 'Import',
+    'importUsersNotice' => 'You may import user here. The file must be a .csv file, without headers. It must be divided by a semicolon, and may contain 3 data in this order: neptun, name, email.',
+    'unableToProcess' => 'We could not process the uplaoded file. Please make sure the file is in a correct format',
+    'importedDetails' => ':success number of users imported, :error could not be imported!',
+    'couldNotImportLines' => 'The lines below could not be imported:',
+    'badFormat' => 'Bad format',
+    'alreadExists' => 'Neptun or email already used',
 ];

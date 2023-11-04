@@ -60,4 +60,11 @@ return [
     'newUserCreated' => 'Fiók létrehozva',
     'accountCreated' => 'Kedves :name, egy fiókot hoztak önnek létre az alábbi adatokkal:',
     'toLogin' => 'Az első bejelentkezés előtt kérem változtassa meg jelszavát',
+    'import' => 'Importálás',
+    'importUsersNotice' => 'Itt tud felhasználókat importálni fájlból. A fájlnak .csv fájlnak kell lennie, címek nélkül. Pontosvesszővel kell elválasztani az adatokat. 3 adatnak kell lennie egy sorban, az alábbi sorrendben: neptun kód, név, e-mail cím. Nem szükséges a neptun kódot megadni, viszont ilyenkor üresen kell hagyni',
+    'unableToProcess' => 'A fájl feldolgozása sikertelen volt. Kérjük ellenőrizze, hogy a fájl és a tartalma megfelelő formátumal rendelkezik-e.',
+    'importedDetails' => ':success db felhasználó importálva, :error db-ot nem sikerült!',
+    'couldNotImportLines' => 'Az alábbi sorokat nem sikerült importálni:',
+    'badFormat' => 'Rossz formátum',
+    'alreadExists' => 'Neptun kód vagy e-mail cím már használva van',
 ];

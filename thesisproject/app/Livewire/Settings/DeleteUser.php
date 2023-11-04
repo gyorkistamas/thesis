@@ -17,7 +17,6 @@ class DeleteUser extends Component
     #[On('changeSelectedUser')]
     public function updateUser($id)
     {
-        toast()->success($id)->push();
         if ($this->user && $id == $this->user->id) {
             return;
         }

@@ -40,5 +40,4 @@ class CourseClass extends Model
             ->withPivot('attendance', 'late_minutes')
             ->where('id', '=', $student_id);
     }
-
 }

@@ -60,6 +60,7 @@ class UpdateProfileComponent extends Component
                 'email' => $this->email,
             ])->save();
             toast()->success(__('general.updateSuccess'), __('general.success'))->push();
+
             return;
         }
         toast()->danger(__('general.noPermission'), __('general.error'))->push();

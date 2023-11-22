@@ -12,6 +12,7 @@ use Usernotnull\Toast\Concerns\WireToast;
 class UpdatePassword extends Component
 {
     use WireToast;
+
     public $currentPassword;
 
     #[Rule('required|min:8|max:50')]
@@ -30,11 +31,13 @@ class UpdatePassword extends Component
             ]);
 
             toast()->danger(__('general.noPermission'), __('general.error'))->push();
+
             return;
         }
 
         if (! Hash::check($this->currentPassword, $this->user->password)) {
             toast()->warning(__('auth.password'), __('general.error'))->push();
+
             return;
         }
 

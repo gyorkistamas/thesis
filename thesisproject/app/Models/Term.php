@@ -28,7 +28,7 @@ class Term extends Model
             ->where('subject_id', '=', $subject_id);
     }
 
-    public function Courses() : HasMany
+    public function Courses(): HasMany
     {
         return $this->hasMany(Course::class);
     }

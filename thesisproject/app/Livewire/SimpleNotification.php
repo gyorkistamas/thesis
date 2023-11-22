@@ -14,12 +14,12 @@ class SimpleNotification extends Component
     public int $type = 2;
 
     public bool $isOpen = false;
+
     public const TYPE_SUCCESS = 0;
 
     public const TYPE_ALERT = 1;
 
     public const TYPE_INFO = 2;
-
 
     #[On('sendNotif')]
     public function sendSimpleBrowserNotification($data): void

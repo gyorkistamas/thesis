@@ -12,6 +12,7 @@ class NewUserRegistered extends Notification implements ShouldQueue
     use Queueable;
 
     public $token;
+
     public $user;
 
     /**

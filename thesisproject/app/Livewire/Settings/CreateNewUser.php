@@ -4,6 +4,7 @@ namespace App\Livewire\Settings;
 
 use App\Models\User;
 use App\Notifications\NewUserRegistered;
+use Auth;
 use Illuminate\Auth\Passwords\PasswordBroker;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
@@ -38,6 +39,11 @@ class CreateNewUser extends Component
             'name' => 'required|min:2|max:255',
             'email' => ['required', 'email', Rule::unique(User::class)],
         ]);
+
+        if (Auth::user()->cannot('create', User::class)) {
+            toast()->danger(__('general.noPermission'), __('general.error'))->push();
+            return;
+        }
 
         $user = User::create([
             'neptun' => $this->neptun,

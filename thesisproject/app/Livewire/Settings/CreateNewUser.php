@@ -42,6 +42,7 @@ class CreateNewUser extends Component
 
         if (Auth::user()->cannot('create', User::class)) {
             toast()->danger(__('general.noPermission'), __('general.error'))->push();
+
             return;
         }
 

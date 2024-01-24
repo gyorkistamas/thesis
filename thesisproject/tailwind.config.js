@@ -17,11 +17,11 @@ export default {
         themes: [
             {
                 light: {
-                    ...require("daisyui/src/theming/themes")["[data-theme=light]"],
+                    ...require("daisyui/src/theming/themes")["light"],
                     "primary": "darkgreen",
                 },
                 dark: {
-                    ...require("daisyui/src/theming/themes")["[data-theme=dark]"],
+                    ...require("daisyui/src/theming/themes")["dark"],
                     "primary": "darkgreen",
                 }
             }

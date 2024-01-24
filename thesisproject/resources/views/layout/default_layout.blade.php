@@ -28,7 +28,7 @@
                                         <ul class="p-2">
                                             <li><a href="{{route('user-settings')}}"
                                                    wire:navigate>{{__('general.userSettings')}}</a></li>
-                                            <li><a>{{__('general.administration')}}</a></li>
+                                            <li><a href="{{route('administration')}}" wire:navigate>{{__('general.administration')}}</a></li>
                                         </ul>
                                     </details>
                                 @else

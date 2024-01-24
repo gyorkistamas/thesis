@@ -35,4 +35,14 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'superadmin'])->group(function () {
     Route::get('/user-settings', [\App\Http\Controllers\Controller::class, 'UserSettings'])->name('user-settings');
+    Route::get('/administration', [\App\Http\Controllers\ConfigController::class, 'getCreationSite'])->name('administration');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Administration settings
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/administration', [\App\Http\Controllers\ConfigController::class, 'getCreationSite'])->name('administration');
 });

@@ -22,6 +22,15 @@ class Term extends Model
         'active' => 'bool',
     ];
 
+    public function active(): bool
+    {
+        if (\Date::now() >= $this->start && \Date::now() <= $this->end) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function CoursesBySubjectId($subject_id): HasMany
     {
         return $this->hasMany(Course::class)

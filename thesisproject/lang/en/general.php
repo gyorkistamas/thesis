@@ -74,5 +74,8 @@ return [
     'endDate' => 'End date',
     'overlap' => 'The dates overlap with an existing semester',
     'createTermSuccess' => 'Semester created successfully',
-    'active' => 'Active',
+    'currentSemester' => 'Current semester',
+    'editSemester' => 'Edit semester',
+    'deleteSemester' => 'Delete semester',
+    'confirmSemesterDelete' => 'Are you sure you want to delete this semester? You can only do so if there are nothing referencing it.',
 ];

@@ -74,5 +74,8 @@ return [
     'endDate' => 'Befejezés dátuma',
     'overlap' => 'A megadott dátumok átfedésben vannak egy már létező félévvel',
     'createTermSuccess' => 'Félév sikeresen létrehozva',
-    'active' => 'Aktív',
+    'currentSemester' => 'Aktuális félév',
+    'editSemester' => 'Félév szerkesztése',
+    'deleteSemester' => 'Félév törlése',
+    'confirmSemesterDelete' => 'Biztosan törölni szeretné ezt a félévet? Csak akkor lehet törölni, ha nincs rá hivatkozás.',
 ];

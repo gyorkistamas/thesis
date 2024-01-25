@@ -11,6 +11,6 @@ class ConfigController extends Controller
 
     public function getCreationSite()
     {
-        return view("settings.administration");
+        return view('settings.administration');
     }
 }

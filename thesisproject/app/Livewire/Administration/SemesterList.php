@@ -25,6 +25,7 @@ class SemesterList extends Component
     {
         if (Auth::user()->cannot('create', Term::class)) {
             toast()->danger(__('general.noPermission'), __('general.error'))->push();
+
             return;
         }
 
@@ -37,10 +38,12 @@ class SemesterList extends Component
         foreach (Term::all() as $term) {
             if ($term->start <= $this->newStart && $term->end >= $this->newStart) {
                 toast()->danger(__('general.overlap'), __('general.error'))->push();
+
                 return;
             }
             if ($term->start <= $this->newEnd && $term->end >= $this->newEnd) {
                 toast()->danger(__('general.overlap'), __('general.error'))->push();
+
                 return;
             }
         }

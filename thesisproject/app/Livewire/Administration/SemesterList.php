@@ -19,6 +19,8 @@ class SemesterList extends Component
 
     public $newEnd;
 
+    protected $listeners = ['semesterRefresh' => '$refresh'];
+
     public function newSemester(): void
     {
         if (Auth::user()->cannot('create', Term::class)) {
@@ -49,12 +51,16 @@ class SemesterList extends Component
             'end' => $this->newEnd,
         ]);
 
+        $this->newName = '';
+        $this->newStart = '';
+        $this->newEnd = '';
+
         toast()->success(__('general.createTermSuccess'), __('general.success'))->push();
     }
 
     public function render(
     ): \Illuminate\Contracts\Foundation\Application|Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application {
-        $terms = Term::orderBy('start')->paginate(5);
+        $terms = Term::orderBy('start', 'desc')->paginate(5);
 
         return view('livewire.administration.semester-list')->with(['terms' => $terms]);
     }

@@ -1,4 +1,7 @@
 <div>
+    <div class="fixed inset-0 flex items-center justify-center" style="pointer-events: none;">
+        <span class="loading loading-dots loading-lg" wire:loading></span>
+    </div>
     <div class="prose mb-3 flex flex-row flex-wrap justify-between min-w-full max-w-full md:flex-row">
         <h1 class="mb-0 mx-auto md:mx-0 md:ms-1">{{__('general.semesters')}}</h1>
         <button class="btn btn-success w-fit" onclick="newSemesterModal.showModal()">
@@ -14,13 +17,15 @@
                         <th>{{__('general.name')}}</th>
                         <th>{{__('general.startDate')}}</th>
                         <th>{{__('general.endDate')}}</th>
-                        <th>{{__('general.active')}}</th>
+                        <th>{{__('general.currentSemester')}}</th>
                         <th>{{__('general.actions')}}</th>
                     </tr>
                     </thead>
                     <tbody>
                     <!-- rows -->
-
+                    @foreach($terms as $term)
+                        <livewire:administration.semester-item-list :term="$term" :key="$term->id" @semesterRefresh="$refresh"/>
+                    @endforeach
                     </tbody>
                     <!-- foot -->
                     <tfoot>
@@ -28,7 +33,7 @@
                         <th>{{__('general.name')}}</th>
                         <th>{{__('general.startDate')}}</th>
                         <th>{{__('general.endDate')}}</th>
-                        <th>{{__('general.active')}}</th>
+                        <th>{{__('general.currentSemester')}}</th>
                         <th>{{__('general.actions')}}</th>
                     </tr>
                     </tfoot>
@@ -79,7 +84,7 @@
                 <div class="flex flex-row gap-3 mt-5 justify-end">
                     <button class="btn btn-success" wire:click="newSemester">{{__('general.createNewSemester')}}</button>
                     <form method="dialog">
-                        <button class="btn" wire:click="">{{__('general.close')}}</button>
+                        <button class="btn">{{__('general.close')}}</button>
                     </form>
                 </div>
             </div>

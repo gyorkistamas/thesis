@@ -67,4 +67,12 @@ return [
     'couldNotImportLines' => 'Az alábbi sorokat nem sikerült importálni:',
     'badFormat' => 'Rossz formátum',
     'alreadExists' => 'Neptun kód vagy e-mail cím már használva van',
+    'semesters' => 'Félévek',
+    'subjects' => 'Tárgyak',
+    'createNewSemester' => 'Új félév létrehozása',
+    'startDate' => 'Kezdés dátuma',
+    'endDate' => 'Befejezés dátuma',
+    'overlap' => 'A megadott dátumok átfedésben vannak egy már létező félévvel',
+    'createTermSuccess' => 'Félév sikeresen létrehozva',
+    'active' => 'Aktív',
 ];

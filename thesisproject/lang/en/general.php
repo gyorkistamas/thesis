@@ -67,4 +67,12 @@ return [
     'couldNotImportLines' => 'The lines below could not be imported:',
     'badFormat' => 'Bad format',
     'alreadExists' => 'Neptun or email already used',
+    'semesters' => 'Semesters',
+    'subjects' => 'Subjects',
+    'createNewSemester' => 'Create new semester',
+    'startDate' => 'Start date',
+    'endDate' => 'End date',
+    'overlap' => 'The dates overlap with an existing semester',
+    'createTermSuccess' => 'Semester created successfully',
+    'active' => 'Active',
 ];

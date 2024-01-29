@@ -84,4 +84,5 @@ return [
     'subjectDescription' => 'Subject description',
     'subjectCredit' => 'Subject credit',
     'subjectManager' => 'Subject manager',
+    'noResult' => 'No result',
 ];

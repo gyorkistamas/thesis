@@ -84,4 +84,5 @@ return [
     'subjectDescription' => 'Tárgy leírása',
     'subjectCredit' => 'Tárgy kredit',
     'subjectManager' => 'Tárgy felelős',
+    'noResult' => 'Nincs találat',
 ];

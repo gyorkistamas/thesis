@@ -9,6 +9,7 @@ class SubjectList extends Component
     public function render()
     {
         $this->dispatch('setupSelect2');
+
         return view('livewire.administration.subject-list');
     }
 }

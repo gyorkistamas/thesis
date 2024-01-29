@@ -7,7 +7,6 @@ use Livewire\Component;
 
 class Administration extends Component
 {
-
     #[Url]
     public $selectedTab = 'semesters';
 

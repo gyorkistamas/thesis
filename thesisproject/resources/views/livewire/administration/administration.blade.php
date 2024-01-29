@@ -23,5 +23,5 @@
             <livewire:administration.subject-list/>
         @endif
     </div>
-
+</div>
 </div>

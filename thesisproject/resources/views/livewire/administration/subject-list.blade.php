@@ -6,7 +6,7 @@
         <h1 class="mb-0 mx-auto md:mx-0 md:ms-1">{{__('general.subjects')}}</h1>
         <label for="newSubjectModel" class="btn btn-success w-fit"><x-icons.plus_fill_small/>{{__('general.createSubject')}}</label>
     </div>
-    
+
     <input type="checkbox" id="newSubjectModel" class="modal-toggle" wire:ignore.self/>
     <div class="modal" role="dialog">
         <div class="modal-box">
@@ -47,12 +47,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        $(document).ready(function () {
-            $('#manager').select2({
-                $dropdownParent: $('#ManagerDropdown')
-            });
-        });
-    </script>
 </div>

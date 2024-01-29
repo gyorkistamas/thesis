@@ -63,7 +63,7 @@ class SemesterList extends Component
 
     public function render(
     ): \Illuminate\Contracts\Foundation\Application|Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application {
-        $terms = Term::orderBy('start', 'desc')->paginate(5);
+        $terms = Term::orderBy('start', 'desc')->paginate(5, pageName: 'termsPage');
 
         return view('livewire.administration.semester-list')->with(['terms' => $terms]);
     }

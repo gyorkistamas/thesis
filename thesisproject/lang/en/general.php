@@ -78,4 +78,10 @@ return [
     'editSemester' => 'Edit semester',
     'deleteSemester' => 'Delete semester',
     'confirmSemesterDelete' => 'Are you sure you want to delete this semester? You can only do so if there are nothing referencing it.',
+    'createSubject' => 'Create subject',
+    'subjectCode' => 'Subject code',
+    'subjectName' => 'Subject name',
+    'subjectDescription' => 'Subject description',
+    'subjectCredit' => 'Subject credit',
+    'subjectManager' => 'Subject manager',
 ];

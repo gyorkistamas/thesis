@@ -78,4 +78,10 @@ return [
     'editSemester' => 'Félév szerkesztése',
     'deleteSemester' => 'Félév törlése',
     'confirmSemesterDelete' => 'Biztosan törölni szeretné ezt a félévet? Csak akkor lehet törölni, ha nincs rá hivatkozás.',
+    'createSubject' => 'Tárgy létrehozása',
+    'subjectCode' => 'Tárgy kód',
+    'subjectName' => 'Tárgy neve',
+    'subjectDescription' => 'Tárgy leírása',
+    'subjectCredit' => 'Tárgy kredit',
+    'subjectManager' => 'Tárgy felelős',
 ];

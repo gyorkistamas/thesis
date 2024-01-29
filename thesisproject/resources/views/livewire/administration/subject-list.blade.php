@@ -7,8 +7,10 @@
         <label for="newSubjectModel" class="btn btn-success w-fit"><x-icons.plus_fill_small/>{{__('general.createSubject')}}</label>
     </div>
 
+
+
     <input type="checkbox" id="newSubjectModel" class="modal-toggle" wire:ignore.self/>
-    <div class="modal" role="dialog">
+    <div class="modal modal-bottom sm:modal-middle" role="dialog">
         <div class="modal-box">
             <h3 class="font-bold text-lg">{{__('general.createSubject')}}</h3>
             <div class="modal-action flex flex-col">
@@ -16,28 +18,25 @@
 
                     <div>
                         <label for="id" class="label">{{__('general.subjectCode')}}</label>
-                        <input type="text" name="id" class="input input-bordered input-accent w-full max-w-xs"/>
+                        <input type="text" name="id" class="input input-bordered input-accent w-full"/>
                     </div>
 
                     <div>
                         <label for="name" class="label mt-2">{{__('general.subjectName')}}</label>
-                        <input type="text" name="name" class="input input-bordered input-accent w-full max-w-xs"/>
+                        <input type="text" name="name" class="input input-bordered input-accent w-full"/>
                     </div>
 
                     <div>
                         <label for="description" class="label mt-2">{{__('general.subjectDescription')}}</label>
-                        <input type="text" name="description" class="input input-bordered input-accent w-full max-w-xs"/>
+                        <input type="text" name="description" class="input input-bordered input-accent w-full"/>
                     </div>
                     <div>
                         <label for="credit" class="label mt-2">{{__('general.subjectCredit')}}</label>
-                        <input type="number" name="credit" class="input input-bordered input-accent w-full max-w-xs"/>
+                        <input type="number" name="credit" class="input input-bordered input-accent w-full"/>
                     </div>
                     <div id="ManagerDropdown">
                         <label for="manager" class="label mt-2">{{__('general.subjectManager')}}</label>
-                        <select class="js-example-basic-single" name="manager" id="manager">
-                            <option value="AL">Alabama</option>
-                            <option value="WY">Wyoming</option>
-                        </select>
+                        <livewire:dropdown-select.teacher-single-select />
                     </div>
                 </form>
                 <div class="flex flex-row gap-3 mt-5 justify-end">

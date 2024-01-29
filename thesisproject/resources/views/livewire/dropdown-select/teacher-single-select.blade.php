@@ -2,13 +2,13 @@
 
     <div class="relative">
         <input
-            type="text"
+            type="search"
             class="input input-bordered input-accent w-full"
             placeholder="{{__('general.search')}}..."
             wire:model.live="query"
             wire:ignore
         />
-        <span wire:loading class="flex absolute right-0 loading loading-spinner loading-md mt-3 me-2">
+        <span wire:loading class="flex absolute right-0 loading loading-spinner loading-md mt-3 me-[13px]">
         </span>
 
         @if(!empty($query))

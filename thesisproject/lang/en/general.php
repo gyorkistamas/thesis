@@ -85,4 +85,5 @@ return [
     'subjectCredit' => 'Subject credit',
     'subjectManager' => 'Subject manager',
     'noResult' => 'No result',
+    'subjectCreated' => 'Subject created',
 ];

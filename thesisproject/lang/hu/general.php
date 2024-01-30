@@ -85,4 +85,5 @@ return [
     'subjectCredit' => 'Tárgy kredit',
     'subjectManager' => 'Tárgy felelős',
     'noResult' => 'Nincs találat',
+    'subjectCreated' => 'Tárgy létrehozva',
 ];

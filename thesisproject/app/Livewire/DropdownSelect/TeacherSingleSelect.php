@@ -43,7 +43,7 @@ class TeacherSingleSelect extends Component
             $this->query = '';
         }
 
-        $this->dispatch('single-select-teacher', $this->selected_items);
+        $this->dispatch('single-select-teacher', data: $user->id);
     }
 
     public function removeSelectedItem($id)
@@ -54,7 +54,7 @@ class TeacherSingleSelect extends Component
                 break;
             }
         }
-        $this->dispatch('single-select-teacher', $this->selected_items);
+        $this->dispatch('single-select-teacher', data: '');
     }
 
     public function resetProps()

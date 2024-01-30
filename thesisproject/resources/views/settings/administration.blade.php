@@ -4,6 +4,6 @@
 
 @section('content')
     <x-rounded-container class="mt-5">
-        <livewire:administration.administration />
+        <livewire:administration.administration wire:key="administration"/>
     </x-rounded-container>
 @endsection

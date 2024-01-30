@@ -23,10 +23,11 @@ class SubjectList extends Component
 
     public $subjectManager;
 
-    public $idSearch = '';
+    public $idSearch;
 
-    public $nameSearch = '';
+    public $nameSearch;
 
+    public $created = 1;
 
     public function rules()
     {
@@ -37,6 +38,13 @@ class SubjectList extends Component
             'subjectCredit' => 'required|numeric|between:1,20',
             'subjectManager' => 'required|exists:users,id',
         ];
+    }
+
+    public function resetSearch()
+    {
+        $this->created += 1;
+        $this->idSearch = '';
+        $this->nameSearch = '';
     }
 
     #[On('single-select-teacher')]
@@ -64,12 +72,8 @@ class SubjectList extends Component
         $subject->save();
         //TODO close modal maybe
 
+        $this->created += 1;
         toast()->success(__('general.subjectCreated'), __('general.success'))->push();
-    }
-
-    public function searchSubjects()
-    {
-        $this->reset();
     }
 
     public function render()
@@ -79,7 +83,7 @@ class SubjectList extends Component
                 $query->where('id', 'like', '%'.$this->idSearch.'%');
             }
             if ($this->nameSearch != '') {
-                $query->orWhere('name', 'like', '%'.$this->nameSearch.'%');
+                $query->where('name', 'like', '%'.$this->nameSearch.'%');
             }
         })
             ->paginate(10, pageName: 'subjectsPage');

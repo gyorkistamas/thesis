@@ -11,22 +11,24 @@
     <div class="flex flex-row gap-4">
         <span class="my-auto">{{__('general.search')}}: </span>
         <input type="search" name="code" class="input input-bordered input-accent"
-               placeholder="{{__('general.subjectCode')}}" wire:model="idSearch"/>
+               placeholder="{{__('general.subjectCode')}}" wire:model.live="idSearch"/>
         <input type="search" name="name" class="input input-bordered input-accent"
-               placeholder="{{__('general.subjectName')}}" wire:model="nameSearch"/>
-        <button wire:click="$refresh" class="btn btn-success">{{__('general.search')}}</button>
+               placeholder="{{__('general.subjectName')}}" wire:model.live="nameSearch"/>
+        <button class="btn btn-warning" wire:click="resetSearch">{{__('general.resetSearch')}}</button>
     </div>
 
-    <div class="mt-4" wire:ignore.self>
+    <div class="mt-4">
         @forelse($subjects as $subject)
             <div >
-                @livewire('administration.subject-drop-down', ['subject' => $subject], key($subject->id))
+                <livewire:administration.subject-drop-down :subject="$subject" :key="$subject->id.$idSearch.$nameSearch.$subjectCode.$subjectCredit.$subjectDescription.$subjectName.$subjectManager.$created"/>
             </div>
         @empty
             <div class="prose mx-auto mt-2">
                 <h1>{{__('general.searchNotFound')}}</h1>
             </div>
         @endforelse
+
+        {{$subjects->links()}}
     </div>
 
 
@@ -72,7 +74,7 @@
                     </div>
                     <div>
                         <label for="manager" class="label mt-2">{{__('general.subjectManager')}}</label>
-                        <livewire:dropdown-select.teacher-single-select wire:key="teacherSelection"/>
+                        <livewire:dropdown-select.teacher-single-select :key="'teacherSelection'.$idSearch.$nameSearch"/>
                         @error('subjectManager')
                         <x-error-alert class="mt-2">{{$message}}</x-error-alert>
                         @enderror

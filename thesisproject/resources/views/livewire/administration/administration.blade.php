@@ -7,7 +7,7 @@
             <span class="loading loading-dots loading-lg" wire:loading></span>
         </div>
         @if($selectedTab == 'semesters')
-            <livewire:administration.semester-list/>
+            <livewire:administration.semester-list wire:key="semester"/>
         @endif
     </div>
 
@@ -20,7 +20,7 @@
             </div>
         </div>
         @if($selectedTab == 'subjects')
-            <livewire:administration.subject-list/>
+            <livewire:administration.subject-list wire:key="subject"/>
         @endif
     </div>
 </div>

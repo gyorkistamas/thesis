@@ -12,6 +12,7 @@ class SubjectDropDown extends Component
     {
         $this->subject = $subject;
     }
+
     public function render()
     {
         return view('livewire.administration.subject-drop-down');

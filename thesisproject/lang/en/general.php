@@ -86,4 +86,6 @@ return [
     'subjectManager' => 'Subject manager',
     'noResult' => 'No result',
     'subjectCreated' => 'Subject created',
+    'refresh' => 'Refresh',
+    'resetSearch' => 'Reset search',
 ];

@@ -86,4 +86,6 @@ return [
     'subjectManager' => 'Tárgy felelős',
     'noResult' => 'Nincs találat',
     'subjectCreated' => 'Tárgy létrehozva',
+    'refresh' => 'Frissítés',
+    'resetSearch' => 'Keresés törlése',
 ];

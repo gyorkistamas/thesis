@@ -11,9 +11,10 @@ class Subject extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'id';
+    public $incrementing = false;
 
     protected $fillable = [
+        'id',
         'name',
         'description',
         'credit',
@@ -22,7 +23,7 @@ class Subject extends Model
 
     public function Manager(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'manager', 'id');
     }
 
     public function Courses(): HasMany

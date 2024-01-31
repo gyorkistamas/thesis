@@ -88,4 +88,7 @@ return [
     'subjectCreated' => 'Tárgy létrehozva',
     'refresh' => 'Frissítés',
     'resetSearch' => 'Keresés törlése',
+    'updateSubject' => 'Tárgy frissítése',
+    'deleteSubject' => 'Tárgy törlése',
+    'confirmSubjectDelete' => 'Biztosan törölni szeretné ezt a tárgyat? Csak akkor lehet törölni, ha nincs rá hivatkozás.',
 ];

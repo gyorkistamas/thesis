@@ -88,4 +88,7 @@ return [
     'subjectCreated' => 'Subject created',
     'refresh' => 'Refresh',
     'resetSearch' => 'Reset search',
+    'updateSubject' => 'Update subject',
+    'deletSubject' => 'Delete subject',
+    'confirmSubjectDelete' => 'Are you sure you want to delete this subject? You can only do so if there are nothing referencing it.',
 ];

@@ -34,7 +34,7 @@ class SubjectList extends Component
         return [
             'subjectCode' => 'required|unique:subjects,id',
             'subjectName' => 'required',
-            'subjectDescription' => 'required',
+            'subjectDescription' => 'string|nullable',
             'subjectCredit' => 'required|numeric|between:1,20',
             'subjectManager' => 'required|exists:users,id',
         ];
@@ -47,7 +47,7 @@ class SubjectList extends Component
         $this->nameSearch = '';
     }
 
-    #[On('single-select-teacher')]
+    #[On('single-select-teacher.-1')]
     public function setManager($data)
     {
         $this->subjectManager = $data;

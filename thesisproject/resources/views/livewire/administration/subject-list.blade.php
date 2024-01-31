@@ -1,5 +1,5 @@
 <div>
-    <div class="fixed inset-0 flex items-center justify-center" style="pointer-events: none;">
+    <div class="fixed inset-0 flex items-center justify-center z-[9999]" style="pointer-events: none;">
         <span class="loading loading-dots loading-lg" wire:loading></span>
     </div>
     <div class="prose mb-3 flex flex-row flex-wrap justify-between min-w-full max-w-full md:flex-row">
@@ -74,7 +74,7 @@
                     </div>
                     <div>
                         <label for="manager" class="label mt-2">{{__('general.subjectManager')}}</label>
-                        <livewire:dropdown-select.teacher-single-select :key="'teacherSelection'.$idSearch.$nameSearch"/>
+                        <livewire:dropdown-select.teacher-single-select :key="'teacherSelection'.$idSearch.$nameSearch" :selectedId="null" :subjectId="-1" />
                         @error('subjectManager')
                         <x-error-alert class="mt-2">{{$message}}</x-error-alert>
                         @enderror

@@ -13,6 +13,8 @@ class TeacherSingleSelect extends Component
 
     public $selected_items = [];
 
+    public $subjectId;
+
     public function updatedQuery()
     {
         $this->data = User::whereHas('roles', function ($query) {
@@ -43,7 +45,7 @@ class TeacherSingleSelect extends Component
             $this->query = '';
         }
 
-        $this->dispatch('single-select-teacher', data: $user->id);
+        $this->dispatch('single-select-teacher.'.$this->subjectId, data: $user->id);
     }
 
     public function removeSelectedItem($id)
@@ -54,12 +56,21 @@ class TeacherSingleSelect extends Component
                 break;
             }
         }
-        $this->dispatch('single-select-teacher', data: '');
+        $this->dispatch('single-select-teacher.'.$this->subjectId, data: '');
     }
 
     public function resetProps()
     {
         $this->reset(['query', 'data']);
+    }
+
+    public function mount($selectedId, $subjectId)
+    {
+        $this->subjectId = $subjectId;
+        if ($selectedId != null)
+        {
+            $this->selected_items[] = User::findOrFail($selectedId, ['id', 'name', 'neptun']);
+        }
     }
 
     public function render()

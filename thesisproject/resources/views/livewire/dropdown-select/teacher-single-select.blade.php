@@ -14,7 +14,7 @@
             <div
                 class="absolute z-10 list-group w-full rounded-t-none shadow-lg">
                 <div class="block">
-                    <div class="absolute z-40 left-0 mt-2 w-full">
+                    <div class="absolute z-40 left-0 mt-2 w-full overflow-visible">
                         <div class="py-1 text-sm rounded shadow-lg border input-bordered input-accent bg-base-300">
                             @if(!empty($data))
                                 @foreach($data as $i => $item)

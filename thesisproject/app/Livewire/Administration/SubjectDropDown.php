@@ -25,6 +25,7 @@ class SubjectDropDown extends Component
     public $subjectManager;
 
     public $isOpen = false;
+
     public $deleted = false;
 
     #[On('single-select-teacher.{subject.id}')]
@@ -48,6 +49,7 @@ class SubjectDropDown extends Component
     {
         if (Auth::user()->cannot('update', $this->subject)) {
             toast()->danger(__('general.noPermission', __('general.error')))->push();
+
             return;
         }
 
@@ -68,6 +70,7 @@ class SubjectDropDown extends Component
     {
         if (Auth::user()->cannot('delete', $this->subject)) {
             toast()->danger(__('general.noPermission', __('general.error')))->push();
+
             return;
         }
 

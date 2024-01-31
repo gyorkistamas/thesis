@@ -67,8 +67,7 @@ class TeacherSingleSelect extends Component
     public function mount($selectedId, $subjectId)
     {
         $this->subjectId = $subjectId;
-        if ($selectedId != null)
-        {
+        if ($selectedId != null) {
             $this->selected_items[] = User::findOrFail($selectedId, ['id', 'name', 'neptun']);
         }
     }

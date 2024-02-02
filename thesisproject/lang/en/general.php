@@ -105,4 +105,7 @@ return [
     'semester' => 'Semester',
     'courseCreated' => 'Course created successfully',
     'courses' => 'Courses',
+    'courseDelete' => 'Delete course',
+    'courseDeleteConfirm' => 'Are you sure you want to delete this course? You can only do so if there are nothing referencing it.',
+    'view' => 'View',
 ];

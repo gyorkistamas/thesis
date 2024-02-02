@@ -100,8 +100,12 @@ return [
     'createNewCourse' => 'Új kurzus létrehozása',
     'courseId' => 'Kurzus kód',
     'courseDescription' => 'Kurzus leírása',
+    'courseLimit' => 'Kurzus létszám',
     'teachers' => 'Tanárok',
     'semester' => 'Félév',
     'courseCreated' => 'Kurzus sikeresen létrehozva',
     'courses' => 'Kurzusok',
+    'courseDelete' => 'Kurzus törlése',
+    'courseDeleteConfirm' => 'Biztosan törölni szeretné ezt a kurzust? Csak akkor lehet törölni, ha nincs rá hivatkozás.',
+    'view' => 'Megtekintés',
 ];

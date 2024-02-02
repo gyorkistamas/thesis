@@ -18,7 +18,7 @@ class Course extends Model
         'subject_id',
         'term_id',
         'course_limit',
-        'description'
+        'description',
     ];
 
     public function Teachers(): BelongsToMany

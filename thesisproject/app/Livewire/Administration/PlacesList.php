@@ -38,6 +38,7 @@ class PlacesList extends Component
     public function render()
     {
         $places = Place::paginate(10, pageName: 'placesPage');
+
         return view('livewire.administration.places-list')->with('places', $places);
     }
 }

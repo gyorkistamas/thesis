@@ -5,11 +5,9 @@ namespace App\Policies;
 use App\Models\Course;
 use App\Models\User;
 use Auth;
-use Illuminate\Auth\Access\Response;
 
 class CoursePolicy
 {
-
     public function before()
     {
         if (Auth::user()->hasRole('superadmin') || Auth::user()->hasRole('admin')) {

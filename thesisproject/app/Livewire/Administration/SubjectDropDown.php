@@ -149,8 +149,7 @@ class SubjectDropDown extends Component
             'term_id' => $this->newCourseSemester,
         ]);
 
-        if($this->newCourseTeacher)
-        {
+        if ($this->newCourseTeacher) {
             foreach ($this->newCourseTeacher as $teacher) {
                 $user = User::findOrFail($teacher);
                 $course->Teachers()->attach($user);

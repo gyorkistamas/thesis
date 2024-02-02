@@ -40,6 +40,15 @@ class SubjectDropDown extends Component
 
     public $newCourseSemester;
 
+    public $filterCoursesBySemester;
+
+    #[On('single-select-term.{subject.id}.filter')]
+    public function updatefilterCoursesBySemester($data)
+    {
+        $this->filterCoursesBySemester = $data;
+        $this->dispatch('$refresh');
+    }
+
     #[On('single-select-term.-1')]
     public function updateSemester($data)
     {
@@ -149,6 +158,15 @@ class SubjectDropDown extends Component
         }
 
         toast()->success(__('general.courseCreated'), __('general.success'))->push();
+    }
+
+    public function getCourses()
+    {
+        if ($this->filterCoursesBySemester) {
+            return $this->subject->CoursesbySemester($this->filterCoursesBySemester)->paginate(10, pageName: 'courses'.$this->subject->id);
+        }
+
+        return $this->subject->Courses()->paginate(10, pageName: 'courses'.$this->subject->id);
     }
 
     public function render()

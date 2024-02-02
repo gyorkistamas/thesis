@@ -63,8 +63,29 @@
                         <x-icons.edit_fill_small/>{{__('general.updateSubject')}}</button>
                     <button class="btn btn-error" onclick="subjectDelete{{$subject->id}}.showModal()">
                         <x-icons.delete_fill_small/>{{__('general.deleteSubject')}}</button>
-                    <button class="btn btn-success" onclick="createCourse{{$subject->id}}.showModal()">
-                        <x-icons.plus_fill_small/>{{__('general.createNewCourse')}}</button>
+
+                </div>
+
+                <div class="mt-5">
+                    <div class="prose mb-3 flex flex-row flex-wrap justify-between min-w-full max-w-full md:flex-row">
+                        <h1 class="mb-0 mx-auto md:mx-0 md:ms-1">{{__('general.courses')}}</h1>
+                        <div class="flex flex-row gap-3">
+                            <livewire:dropdown-select.select-single-semester :selectedId="null" :courseId="$subject->id.'.filter'"
+                                                                             :autoSelect="true"/>
+                            <button class="btn btn-success" onclick="createCourse{{$subject->id}}.showModal()">
+                                <x-icons.plus_fill_small/>{{__('general.createNewCourse')}}</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        @forelse($filterCoursesBySemester == '' ? $subject->Courses()->get() : $subject->CoursesInTerm($filterCoursesBySemester)->get() as $course)
+                            <div>{{$course->course_id}}</div>
+                        @empty
+                            <div class="prose mx-auto mt-2">
+                                <h1>{{__('general.searchNotFound')}}</h1>
+                            </div>
+                        @endforelse
+                    </div>
                 </div>
             @endif
 
@@ -125,7 +146,8 @@
 
                     </div>
                     <div class="modal-action">
-                        <button class="btn btn-success" wire:click="createCourse">{{__('general.createNewCourse')}}</button>
+                        <button class="btn btn-success"
+                                wire:click="createCourse">{{__('general.createNewCourse')}}</button>
                         <form method="dialog">
                             <button class="btn">{{__('general.close')}}</button>
                         </form>

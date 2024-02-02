@@ -7,7 +7,7 @@
         </div>
         <div class="collapse-content overflow-visible">
             <hr class="mb-3 mx-6"/>
-            <div class="fixed inset-0 flex items-center justify-center" style="pointer-events: none;">
+            <div class="fixed inset-0 flex items-center justify-center z-[99]" style="pointer-events: none;">
                 <span class="loading loading-dots loading-lg" wire:loading></span>
             </div>
             @if($isOpen)
@@ -73,7 +73,8 @@
                     <div class="prose mb-3 flex flex-row flex-wrap justify-between min-w-full max-w-full md:flex-row">
                         <h1 class="mb-0 mx-auto md:mx-0 md:ms-1">{{__('general.courses')}}</h1>
                         <div class="flex flex-row gap-3">
-                            <livewire:dropdown-select.select-single-semester :selectedId="null" :courseId="$subject->id.'.filter'"
+                            <livewire:dropdown-select.select-single-semester :selectedId="null"
+                                                                             :courseId="$subject->id.'.filter'"
                                                                              :autoSelect="true"/>
                             <button class="btn btn-success" onclick="createCourse{{$subject->id}}.showModal()">
                                 <x-icons.plus_fill_small/>{{__('general.createNewCourse')}}</button>
@@ -81,13 +82,34 @@
                     </div>
 
                     <div>
-                        @forelse($filterCoursesBySemester == '' ? $subject->Courses()->get() : $subject->CoursesInTerm($filterCoursesBySemester)->get() as $course)
-                            <div>{{$course->course_id}}</div>
-                        @empty
-                            <div class="prose mx-auto mt-2">
-                                <h1>{{__('general.searchNotFound')}}</h1>
-                            </div>
-                        @endforelse
+                        <table class="table">
+                            <!-- head -->
+                            <thead>
+                            <tr>
+                                <th>{{__('general.courseId')}}</th>
+                                <th>{{__('general.courseDescription')}}</th>
+                                <th>{{__('general.semester')}}</th>
+                                <th>{{__('general.actions')}}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @forelse($filterCoursesBySemester == '' ? $subject->Courses()->get() : $subject->CoursesInTerm($filterCoursesBySemester)->get() as $course)
+                                <livewire:administration.course-list-item :course="$course" :key="$course->id.'courseItemList'"/>
+                            @empty
+                                <div class="prose mx-auto mt-2">
+                                    <h1>{{__('general.searchNotFound')}}</h1>
+                                </div>
+                            @endforelse
+                            <tfoot>
+                            <tr>
+                                <th>{{__('general.courseId')}}</th>
+                                <th>{{__('general.courseDescription')}}</th>
+                                <th>{{__('general.semester')}}</th>
+                                <th>{{__('general.actions')}}</th>
+                            </tr>
+                            </tfoot>
+
+                        </table>
                     </div>
                 </div>
             @endif

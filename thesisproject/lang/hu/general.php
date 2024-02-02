@@ -103,4 +103,5 @@ return [
     'teachers' => 'Tanárok',
     'semester' => 'Félév',
     'courseCreated' => 'Kurzus sikeresen létrehozva',
+    'courses' => 'Kurzusok',
 ];

@@ -6,6 +6,7 @@
             {{$subject->id}} - {{$subject->name}}
         </div>
         <div class="collapse-content overflow-visible">
+            <hr class="mb-3 mx-6"/>
             <div class="fixed inset-0 flex items-center justify-center" style="pointer-events: none;">
                 <span class="loading loading-dots loading-lg" wire:loading></span>
             </div>
@@ -65,6 +66,8 @@
                         <x-icons.delete_fill_small/>{{__('general.deleteSubject')}}</button>
 
                 </div>
+
+                <hr class="my-5 mx-6"/>
 
                 <div class="mt-5">
                     <div class="prose mb-3 flex flex-row flex-wrap justify-between min-w-full max-w-full md:flex-row">

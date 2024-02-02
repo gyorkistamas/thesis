@@ -104,4 +104,5 @@ return [
     'teachers' => 'Teachers',
     'semester' => 'Semester',
     'courseCreated' => 'Course created successfully',
+    'courses' => 'Courses',
 ];

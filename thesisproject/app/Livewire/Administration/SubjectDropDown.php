@@ -134,7 +134,7 @@ class SubjectDropDown extends Component
         }
 
         $this->validate([
-            'newCourseID' => 'required|string|max:255',
+            'newCourseID' => ['required', 'string', 'max:255', Rule::unique('courses', 'course_id')->where('term_id', $this->newCourseSemester)],
             'newCourseDescription' => 'nullable|string|max:255',
             'newCourseLimit' => 'required|numeric|between:0,500',
             'newCourseSemester' => 'required|exists:terms,id',

@@ -67,6 +67,7 @@ class SelectSingleSemester extends Component
             foreach (Term::all() as $term) {
                 if ($term->active()) {
                     $selectedId = $term->id;
+                    $this->dispatch('single-select-term.'.$this->courseId, data: $term->id);
                     break;
                 }
             }

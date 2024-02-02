@@ -91,4 +91,10 @@ return [
     'updateSubject' => 'Update subject',
     'deletSubject' => 'Delete subject',
     'confirmSubjectDelete' => 'Are you sure you want to delete this subject? You can only do so if there are nothing referencing it.',
+    'places' => 'Places',
+    'createNewPlace' => 'Create new place',
+    'createNewPlaceSuccess' => 'Place created successfully',
+    'editPlace' => 'Edit place',
+    'deletePlace' => 'Delete place',
+    'deletePlaceConfirm' => 'Are you sure you want to delete this place? You can only do so if there are nothing referencing it.',
 ];

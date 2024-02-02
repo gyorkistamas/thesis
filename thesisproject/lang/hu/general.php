@@ -91,4 +91,10 @@ return [
     'updateSubject' => 'Tárgy frissítése',
     'deleteSubject' => 'Tárgy törlése',
     'confirmSubjectDelete' => 'Biztosan törölni szeretné ezt a tárgyat? Csak akkor lehet törölni, ha nincs rá hivatkozás.',
+    'places' => 'Helyek',
+    'createNewPlace' => 'Új hely létrehozása',
+    'createNewPlaceSuccess' => 'Hely sikeresen létrehozva',
+    'editPlace' => 'Hely szerkesztése',
+    'deletePlace' => 'Hely törlése',
+    'deletePlaceConfirm' => 'Biztosan törölni szeretné ezt a helyet? Csak akkor lehet törölni, ha nincs rá hivatkozás.',
 ];

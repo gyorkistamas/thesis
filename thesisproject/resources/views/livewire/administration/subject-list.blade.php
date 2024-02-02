@@ -14,7 +14,7 @@
                placeholder="{{__('general.subjectCode')}}" wire:model.live="idSearch"/>
         <input type="search" name="name" class="input input-bordered input-accent"
                placeholder="{{__('general.subjectName')}}" wire:model.live="nameSearch"/>
-        <button class="btn btn-warning" wire:click="resetSearch">{{__('general.resetSearch')}}</button>
+        <button class="btn btn-warning" wire:click="resetSearch"><x-icons.delete_fill_small />{{__('general.resetSearch')}}</button>
     </div>
 
     <div class="mt-4">

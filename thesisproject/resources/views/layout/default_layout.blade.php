@@ -103,10 +103,11 @@
                 </div>
             </div>
         </div>
-        <div class="drawer-side">
+        <div class="drawer-side z-[9999]">
             <label for="my-drawer-3" aria-label="close sidebar" class="drawer-overlay"></label>
             <ul class="menu p-4 w-80 min-h-full bg-base-200">
                 <!-- Sidebar content here -->
+                <!--TODO Add sidebar items here -->
                 <li><a>Sidebar Item 1</a></li>
                 <li><a>Sidebar Item 2</a></li>
             </ul>

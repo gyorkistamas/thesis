@@ -97,4 +97,11 @@ return [
     'editPlace' => 'Edit place',
     'deletePlace' => 'Delete place',
     'deletePlaceConfirm' => 'Are you sure you want to delete this place? You can only do so if there are nothing referencing it.',
+    'createNewCourse' => 'Create new course',
+    'courseId' => 'Course code',
+    'courseDescription' => 'Course description',
+    'courseLimit' => 'Course limit',
+    'teachers' => 'Teachers',
+    'semester' => 'Semester',
+    'courseCreated' => 'Course created successfully',
 ];

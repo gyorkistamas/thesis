@@ -97,4 +97,10 @@ return [
     'editPlace' => 'Hely szerkesztése',
     'deletePlace' => 'Hely törlése',
     'deletePlaceConfirm' => 'Biztosan törölni szeretné ezt a helyet? Csak akkor lehet törölni, ha nincs rá hivatkozás.',
+    'createNewCourse' => 'Új kurzus létrehozása',
+    'courseId' => 'Kurzus kód',
+    'courseDescription' => 'Kurzus leírása',
+    'teachers' => 'Tanárok',
+    'semester' => 'Félév',
+    'courseCreated' => 'Kurzus sikeresen létrehozva',
 ];

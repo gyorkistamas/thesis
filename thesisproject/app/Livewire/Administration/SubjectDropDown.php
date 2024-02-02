@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Administration;
 
+use App\Models\Course;
+use App\Models\User;
 use Auth;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\On;
@@ -27,6 +29,28 @@ class SubjectDropDown extends Component
     public $isOpen = false;
 
     public $deleted = false;
+
+    public $newCourseID;
+
+    public $newCourseDescription;
+
+    public $newCourseLimit;
+
+    public $newCourseTeacher;
+
+    public $newCourseSemester;
+
+    #[On('single-select-term.-1')]
+    public function updateSemester($data)
+    {
+        $this->newCourseSemester = $data;
+    }
+
+    #[On('multiple-select-teacher.-1')]
+    public function updateTeacher($data)
+    {
+        $this->newCourseTeacher = $data;
+    }
 
     #[On('single-select-teacher.{subject.id}')]
     public function updateManager($data)
@@ -90,6 +114,41 @@ class SubjectDropDown extends Component
         $this->subjectDescription = $subject->description;
         $this->subjectCredit = $subject->credit;
         $this->subjectManager = $subject->Manager->id;
+    }
+
+    public function createCourse()
+    {
+        if (Auth::user()->cannot('create', Course::class)) {
+            toast()->danger(__('general.noPermission', __('general.error')))->push();
+
+            return;
+        }
+
+        $this->validate([
+            'newCourseID' => 'required|string|max:255',
+            'newCourseDescription' => 'nullable|string|max:255',
+            'newCourseLimit' => 'required|numeric|between:0,500',
+            'newCourseSemester' => 'required|exists:terms,id',
+        ]);
+        // TODO validate teachers
+
+        $course = Course::create([
+            'course_id' => $this->newCourseID,
+            'description' => $this->newCourseDescription,
+            'course_limit' => $this->newCourseLimit,
+            'subject_id' => $this->subject->id,
+            'term_id' => $this->newCourseSemester,
+        ]);
+
+        if($this->newCourseTeacher)
+        {
+            foreach ($this->newCourseTeacher as $teacher) {
+                $user = User::findOrFail($teacher);
+                $course->Teachers()->attach($user);
+            }
+        }
+
+        toast()->success(__('general.courseCreated'), __('general.success'))->push();
     }
 
     public function render()

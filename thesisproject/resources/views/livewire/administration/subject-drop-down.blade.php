@@ -1,4 +1,5 @@
-<div class="collapse collapse-arrow border border-base-300 bg-base-200 mt-2 @if($isOpen) collapse-open @else collapse-close @endif @if($deleted) hidden @endif">
+<div
+    class="collapse collapse-arrow border border-base-300 bg-base-200 mt-2 @if($isOpen) collapse-open @else collapse-close @endif @if($deleted) hidden @endif">
     @if(!$deleted)
         <input type="checkbox" wire:model.live="isOpen"/>
         <div class="collapse-title text-xl font-medium">
@@ -50,14 +51,20 @@
                     </div>
                     <div>
                         <label for="manager" class="label">{{__('general.subjectManager')}}</label>
-                        <livewire:dropdown-select.teacher-single-select :key="'teacherSelection'.$subject->id.$subjectManager" :selectedId="$subjectManager ?? null" :subjectId="$subject->id"/>
+                        <livewire:dropdown-select.teacher-single-select
+                            :key="'teacherSelection'.$subject->id.$subjectManager" :selectedId="$subjectManager ?? null"
+                            :subjectId="$subject->id"/>
                         @error('subjectManager')
                         <x-error-alert class="mt-2">{{$message}}</x-error-alert>
                         @enderror
                     </div>
 
-                    <button class="btn btn-success" wire:click="updateSubject"><x-icons.edit_fill_small />{{__('general.updateSubject')}}</button>
-                    <button class="btn btn-error" onclick="subjectDelete{{$subject->id}}.showModal()"><x-icons.delete_fill_small />{{__('general.deleteSubject')}}</button>
+                    <button class="btn btn-success" wire:click="updateSubject">
+                        <x-icons.edit_fill_small/>{{__('general.updateSubject')}}</button>
+                    <button class="btn btn-error" onclick="subjectDelete{{$subject->id}}.showModal()">
+                        <x-icons.delete_fill_small/>{{__('general.deleteSubject')}}</button>
+                    <button class="btn btn-success" onclick="createCourse{{$subject->id}}.showModal()">
+                        <x-icons.plus_fill_small/>{{__('general.createNewCourse')}}</button>
                 </div>
             @endif
 
@@ -67,7 +74,59 @@
                     <h3 class="font bold text-error">{{__('general.confirmSubjectDelete')}}</h3>
                     <div class="modal-action">
                         <form method="dialog">
-                            <button class="btn btn-error" wire:click="deleteSubject">{{__('general.deleteSubject')}}</button>
+                            <button class="btn btn-error"
+                                    wire:click="deleteSubject">{{__('general.deleteSubject')}}</button>
+                            <button class="btn">{{__('general.close')}}</button>
+                        </form>
+                    </div>
+                </div>
+            </dialog>
+
+            <dialog id="createCourse{{$subject->id}}" class="modal modal-bottom sm:modal-middle" wire:ignore.self>
+                <div class="modal-box">
+                    <h3 class="font-bold text-lg">{{__('general.createNewCourse')}}</h3>
+                    <div class="">
+                        <label for="courseCode" class="label mt-2">{{__('general.courseId')}}</label>
+                        <input type="text" name="courseCode" class="input input-bordered input-accent w-full"
+                               wire:model="newCourseID"/>
+                        @error('newCourseID')
+                        <x-error-alert class="mt-2">{{$message}}</x-error-alert>
+                        @enderror
+
+                        <label for="courseDescription" class="label mt-2">{{__('general.courseDescription')}}</label>
+                        <input type="text" name="courseDescription" class="input input-bordered input-accent w-full"
+                               wire:model="newCourseDescription"/>
+                        @error('newCourseDescription')
+                        <x-error-alert class="mt-2">{{$message}}</x-error-alert>
+                        @enderror
+
+                        <label for="courseLimit" class="label mt-2">{{__('general.courseLimit')}}</label>
+                        <input type="text" name="courseLimit" class="input input-bordered input-accent w-full"
+                               wire:model="newCourseLimit"/>
+                        @error('newCourseLimit')
+                        <x-error-alert class="mt-2">{{$message}}</x-error-alert>
+                        @enderror
+
+                        <label for="teachers" class="label mt-2">{{__('general.teachers')}}</label>
+                        <livewire:dropdown-select.teacher-multi-select :key="'teacherSelection'.$subject->id"
+                                                                       :selectedIds="null" :courseId="-1"/>
+                        @error('newCourseTeacher')
+                        <x-error-alert class="mt-2">{{$message}}</x-error-alert>
+                        @enderror
+
+                        <label for="semester" class="label mt-2">{{__('general.semester')}}</label>
+                        <livewire:dropdown-select.select-single-semester :key="'semesterSelection'.$subject->id"
+                                                                         :selectedId="null" :courseId="-1"
+                                                                         :autoSelect="true"/>
+                        @error('newCourseSemester')
+                        <x-error-alert class="mt-2">{{$message}}</x-error-alert>
+                        @enderror
+
+
+                    </div>
+                    <div class="modal-action">
+                        <button class="btn btn-success" wire:click="createCourse">{{__('general.createNewCourse')}}</button>
+                        <form method="dialog">
                             <button class="btn">{{__('general.close')}}</button>
                         </form>
                     </div>

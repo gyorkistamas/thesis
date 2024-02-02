@@ -58,7 +58,7 @@
                             </div>
                         </form>
                         <div class="flex flex-row gap-3 mt-5 justify-end">
-                            <button class="btn btn-success" wire:click="edit" wire:confirm="Do you?">{{__('general.editSemester')}}</button>
+                            <button class="btn btn-success" wire:click="edit">{{__('general.editSemester')}}</button>
                             <form method="dialog">
                                 <button class="btn">{{__('general.close')}}</button>
                             </form>

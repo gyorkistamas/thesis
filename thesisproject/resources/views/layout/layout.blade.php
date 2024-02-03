@@ -11,7 +11,7 @@
     @vite('resources/js/app.js')
 </head>
 <body class="font-serif h-full min-h-screen" dir="ltr">
-<livewire:toasts />
+<livewire:toasts class="z-[900]"/>
 @yield('content_place')
 
 <!--

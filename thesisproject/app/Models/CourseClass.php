@@ -23,7 +23,7 @@ class CourseClass extends Model
 
     public function Place()
     {
-        return $this->hasOne(Place::class);
+        return $this->hasOne(Place::class, 'id', 'place_id');
     }
 
     public function StudentsWithPresence()

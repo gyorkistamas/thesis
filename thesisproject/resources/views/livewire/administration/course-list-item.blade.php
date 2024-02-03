@@ -95,8 +95,63 @@
                                    wire:model.live="currentTab"/>
                             <div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6">
                                 @if($currentTab == 'classes')
+                                    <table class="table">
+                                        <!-- head -->
+                                        <thead>
+                                        <tr>
+                                            <th>{{__('general.startTime')}}</th>
+                                            <th>{{__('general.endTime')}}</th>
+                                            <th>{{__('general.place')}}</th>
+                                            <th>{{__('general.options')}}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <!-- rows -->
+                                        @foreach($course->Classes as $class)
+                                            <livewire:administration.class-table-item :key="'classItem'.$course->id.$class->id" :class="$class"/>
+                                        @endforeach
+                                        <tr>
+                                            <td>
+                                                <input type="datetime-local" name="startTimeNew" class="input input-bordered input-accent w-full max-w-2xl"
+                                                       wire:model="newClassStart"/>
+                                                @error('newClassStart')
+                                                <x-error-alert class="mt-2">{{$message}}</x-error-alert>
+                                                @enderror
+                                            </td>
+                                            <td>
+                                                <input type="datetime-local" name="endTimeNew" class="input input-bordered input-accent w-full max-w-2xl"
+                                                       wire:model="newClassEnd"/>
+                                                @error('newClassEnd')
+                                                <x-error-alert class="mt-2">{{$message}}</x-error-alert>
+                                                @enderror
+                                            </td>
+                                            <td>
+                                                <livewire:dropdown-select.single-place-select :key="'newPlaceSelection'.$course->id"
+                                                                                              :selectedId="null" :classId="-1" class="w-full max-w-2xl"/>
+                                                @error('newClassPlace')
+                                                <x-error-alert class="mt-2">{{$message}}</x-error-alert>
+                                                @enderror
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-success btn-md" wire:click="newClass"><x-icons.plus_fill_small />{{__('general.add')}}</button>
+                                                <label class="cursor-pointer label">
+                                                    <span class="label-text">{{__('general.repeatUntilEndOfTermEveryWeek')}}</span>
+                                                    <input type="checkbox" class="checkbox checkbox-accent" wire:model="repeatUntilEndOfTerm"/>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                        <!-- foot -->
+                                        <tfoot>
+                                        <tr>
+                                            <th>{{__('general.startTime')}}</th>
+                                            <th>{{__('general.endTime')}}</th>
+                                            <th>{{__('general.place')}}</th>
+                                            <th>{{__('general.options')}}</th>
+                                        </tr>
+                                        </tfoot>
 
-
+                                    </table>
                                 @endif
                             </div>
 
@@ -105,7 +160,6 @@
                                    wire:model.live="currentTab"/>
                             <div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6">
                                 @if($currentTab == 'students')
-
 
                                 @endif
                             </div>

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Administration;
 
+use App\Models\CourseClass;
 use Auth;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\On;
@@ -28,6 +29,20 @@ class CourseListItem extends Component
     public $currentTab = 'edit';
 
     public $deleted = false;
+
+    public $newClassStart;
+
+    public $newClassEnd;
+
+    public $newClassPlace;
+
+    public $repeatUntilEndOfTerm = false;
+
+    #[On('single-select-place.-1')]
+    public function updateNewClassPlace($data)
+    {
+        $this->newClassPlace = $data;
+    }
 
     #[On('single-select-term.{course.id}')]
     public function updateSemester($data)
@@ -60,8 +75,9 @@ class CourseListItem extends Component
         }
 
         $this->validate([
-            'newCourseCode' => ['required', 'string', 'max:255', Rule::unique('courses', 'course_id')->where('term_id',
-                $this->course->term_id)->ignore($this->course->id),
+            'newCourseCode' => [
+                'required', 'string', 'max:255', Rule::unique('courses', 'course_id')->where('term_id',
+                    $this->course->term_id)->ignore($this->course->id),
             ],
             'newCourseDescription' => 'nullable|string|max:255',
             'newCourseLimit' => 'required|integer|between:0,200',
@@ -79,6 +95,32 @@ class CourseListItem extends Component
 
         toast()->success(__('general.courseUpdated'), __('general.success'))->push();
     }
+
+    public function newClass()
+    {
+        if (Auth::user()->cannot('create', CourseClass::class)) {
+            toast()->danger(__('general.noPermission'), __('general.error'))->push();
+
+            return;
+        }
+
+        $this->validate([
+            'newClassStart' => 'required|date',
+            'newClassEnd' => 'required|date|after:newClassStart',
+            'newClassPlace' => 'required|exists:places,id',
+        ]);
+
+        $this->course->Classes()->create([
+            'start_time' => $this->newClassStart,
+            'end_time' => $this->newClassEnd,
+            'place_id' => $this->newClassPlace,
+        ]);
+        // TODO check for students class status and update it
+        // TODO implement repeat until end of term
+        toast()->success(__('general.classCreated'), __('general.success'))->push();
+    }
+
+    //TODO implement delete
 
     public function render()
     {

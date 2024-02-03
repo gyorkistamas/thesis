@@ -112,4 +112,12 @@ return [
     'classTimes' => 'Órák',
     'students' => 'Hallgatók',
     'courseUpdated' => 'Kurzus frissítve',
+    'startTime' => 'Kezdés ideje',
+    'endTime' => 'Befejezés ideje',
+    'place' => 'Hely',
+    'add' => 'Hozzáadás',
+    'repeatUntilEndOfTermEveryWeek' => 'Ismétlés a félév végéig minden héten',
+    'deleteClass' => 'Óra törlése',
+    'deleteClassConfirm' => 'Biztosan törölni szeretné ezt az órát?',
+    'classCreated' => 'Óra létrehozva',
 ];

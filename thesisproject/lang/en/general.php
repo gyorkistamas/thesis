@@ -112,4 +112,12 @@ return [
     'classTimes' => 'Class times',
     'students' => 'Students',
     'courseUpdated' => 'Course updated',
+    'startTime' => 'Start time',
+    'endTime' => 'End time',
+    'place' => 'Place',
+    'add' => 'Add',
+    'repeatUntilEndOfTermEveryWeek' => 'Repeat until the end of the term every week',
+    'deleteClass' => 'Delete class',
+    'deleteClassConfirm' => 'Are you sure you want to delete this class?',
+    'classCreated' => 'Class created',
 ];

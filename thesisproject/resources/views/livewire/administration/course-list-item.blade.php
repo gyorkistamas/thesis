@@ -49,21 +49,21 @@
                                 @if($currentTab == 'edit')
                                     <div class="">
                                         <label for="courseCode" class="label mt-2">{{__('general.courseId')}}</label>
-                                        <input type="text" name="courseCode" class="input input-bordered input-accent w-full"
+                                        <input type="text" name="courseCode" class="input input-bordered input-accent w-full max-w-2xl"
                                                wire:model="newCourseCode"/>
                                         @error('newCourseCode')
                                         <x-error-alert class="mt-2">{{$message}}</x-error-alert>
                                         @enderror
 
                                         <label for="courseDescription" class="label mt-2">{{__('general.courseDescription')}}</label>
-                                        <input type="text" name="courseDescription" class="input input-bordered input-accent w-full"
+                                        <input type="text" name="courseDescription" class="input input-bordered input-accent w-full max-w-2xl"
                                                wire:model="newCourseDescription"/>
                                         @error('newCourseDescription')
                                         <x-error-alert class="mt-2">{{$message}}</x-error-alert>
                                         @enderror
 
                                         <label for="courseLimit" class="label mt-2">{{__('general.courseLimit')}}</label>
-                                        <input type="text" name="courseLimit" class="input input-bordered input-accent w-full"
+                                        <input type="number" name="courseLimit" class="input input-bordered input-accent w-full max-w-2xl"
                                                wire:model="newCourseLimit"/>
                                         @error('newCourseLimit')
                                         <x-error-alert class="mt-2">{{$message}}</x-error-alert>
@@ -71,7 +71,7 @@
 
                                         <label for="teachers" class="label mt-2">{{__('general.teachers')}}</label>
                                         <livewire:dropdown-select.teacher-multi-select :key="'editTeacherSelection'.$course->id"
-                                                                                       :selectedIds="$newCourseTeachers" :courseId="$course->id"/>
+                                                                                       :selectedIds="$newCourseTeachers" :courseId="$course->id" class="w-full max-w-2xl"/>
                                         @error('newCourseTeachers')
                                         <x-error-alert class="mt-2">{{$message}}</x-error-alert>
                                         @enderror
@@ -79,7 +79,7 @@
                                         <label for="semester" class="label mt-2">{{__('general.semester')}}</label>
                                         <livewire:dropdown-select.select-single-semester :key="'editSemesterSelection'.$course->id"
                                                                                          :selectedId="$newCourseSemester" :courseId="$course->id"
-                                                                                         :autoSelect="false"/>
+                                                                                         :autoSelect="false" class="w-full max-w-2xl"/>
                                         @error('newCourseSemester')
                                         <x-error-alert class="mt-2">{{$message}}</x-error-alert>
                                         @enderror

@@ -11,9 +11,9 @@
     <div class="flex flex-row gap-4">
         <span class="my-auto">{{__('general.search')}}: </span>
         <input type="search" name="code" class="input input-bordered input-accent"
-               placeholder="{{__('general.subjectCode')}}" wire:model.live="idSearch"/>
+               placeholder="{{__('general.subjectCode')}}" wire:model.live.debounce.250ms="idSearch"/>
         <input type="search" name="name" class="input input-bordered input-accent"
-               placeholder="{{__('general.subjectName')}}" wire:model.live="nameSearch"/>
+               placeholder="{{__('general.subjectName')}}" wire:model.live.debounce.250ms="nameSearch"/>
         <button class="btn btn-warning" wire:click="resetSearch"><x-icons.delete_fill_small />{{__('general.resetSearch')}}</button>
     </div>
 

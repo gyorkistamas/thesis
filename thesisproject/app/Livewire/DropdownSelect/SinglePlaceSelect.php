@@ -3,7 +3,6 @@
 namespace App\Livewire\DropdownSelect;
 
 use App\Models\Place;
-use App\Models\Term;
 use Livewire\Component;
 
 class SinglePlaceSelect extends Component
@@ -67,7 +66,6 @@ class SinglePlaceSelect extends Component
             $this->selected_items[] = Place::findOrFail($selectedId, ['id', 'name']);
         }
     }
-
 
     public function render()
     {

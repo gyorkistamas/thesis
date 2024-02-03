@@ -108,4 +108,8 @@ return [
     'courseDelete' => 'Kurzus törlése',
     'courseDeleteConfirm' => 'Biztosan törölni szeretné ezt a kurzust? Csak akkor lehet törölni, ha nincs rá hivatkozás.',
     'view' => 'Megtekintés',
+    'courseEdit' => 'Kurzus szerkesztése',
+    'classTimes' => 'Órák',
+    'students' => 'Hallgatók',
+    'courseUpdated' => 'Kurzus frissítve',
 ];

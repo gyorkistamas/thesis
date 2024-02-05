@@ -29,7 +29,7 @@ class ClassTableItem extends Component
 
     public function editClass()
     {
-        if (Auth::user()->cannot('edit', $this->class)) {
+        if (Auth::user()->cannot('update', $this->class)) {
             toast()->danger(__('general.noPermission'), __('general.error'))->push();
             return;
         }

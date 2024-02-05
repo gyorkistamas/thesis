@@ -28,7 +28,8 @@ class CourseClass extends Model
 
     public function StudentsWithPresence()
     {
-        return $this->belongsToMany(User::class, 'presences')
+        return $this->belongsToMany(User::class, 'attendances')
+            ->using(Attendance::class)
             ->as('attendance')
             ->withPivot('attendance', 'late_minutes');
     }

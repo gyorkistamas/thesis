@@ -120,7 +120,21 @@ class CourseListItem extends Component
         toast()->success(__('general.classCreated'), __('general.success'))->push();
     }
 
-    //TODO implement delete
+    public function deleteCourse()
+    {
+        if (Auth::user()->cannot('delete', $this->course)) {
+            toast()->danger(__('general.noPermission'), __('general.error'))->push();
+
+            return;
+        }
+
+        $temp = $this->course;
+        $this->course = null;
+        $temp->delete();
+        $this->deleted = true;
+
+        toast()->success(__('general.courseDelete'), __('general.success'))->push();
+    }
 
     public function render()
     {

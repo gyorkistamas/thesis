@@ -19,7 +19,7 @@
                     <h3 class="font bold text-error">{{__('general.courseDeleteConfirm')}}</h3>
                     <div class="modal-action">
                         <form method="dialog">
-                            <button class="btn btn-error" wire:click="">{{__('general.courseDelete')}}</button>
+                            <button class="btn btn-error" wire:click="deleteCourse">{{__('general.courseDelete')}}</button>
                             <button class="btn">{{__('general.close')}}</button>
                         </form>
                     </div>
@@ -133,7 +133,7 @@
                                                 @enderror
                                             </td>
                                             <td>
-                                                <button class="btn btn-success btn-md" wire:click="newClass"><x-icons.plus_fill_small />{{__('general.add')}}</button>
+                                                <button class="btn btn-success btn-sm" wire:click="newClass"><x-icons.plus_fill_small />{{__('general.add')}}</button>
                                                 <label class="cursor-pointer label">
                                                     <span class="label-text">{{__('general.repeatUntilEndOfTermEveryWeek')}}</span>
                                                     <input type="checkbox" class="checkbox checkbox-accent" wire:model="repeatUntilEndOfTerm"/>

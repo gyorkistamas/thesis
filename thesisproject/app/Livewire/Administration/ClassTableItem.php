@@ -31,13 +31,13 @@ class ClassTableItem extends Component
     {
         if (Auth::user()->cannot('update', $this->class)) {
             toast()->danger(__('general.noPermission'), __('general.error'))->push();
+
             return;
         }
 
-        // TODO check in semester
         $this->validate([
-            'editStart' => 'required|date',
-            'editEnd' => 'required|date|after:editStart',
+            'editStart' => 'required|date|after:'.$this->class->Course->Term->start.'|before:'.$this->class->Course->Term->end,
+            'editEnd' => 'required|date|after:editStart|before:'.$this->class->Course->Term->end,
             'editPlace' => 'required|exists:places,id',
         ]);
 
@@ -54,6 +54,7 @@ class ClassTableItem extends Component
     {
         if (Auth::user()->cannot('delete', $this->class)) {
             toast()->danger(__('general.noPermission'), __('general.error'))->push();
+
             return;
         }
 

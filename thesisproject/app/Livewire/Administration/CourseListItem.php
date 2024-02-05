@@ -114,15 +114,28 @@ class CourseListItem extends Component
 
         $this->validate([
             'newClassStart' => 'required|date|after:'.$this->course->Term->start.'|before:'.$this->course->Term->end,
-            'newClassEnd' => 'required|date|after:newClassStart|before:'.$this->course->Term->end_date,
+            'newClassEnd' => 'required|date|after:newClassStart|before:'.$this->course->Term->end,
             'newClassPlace' => 'required|exists:places,id',
         ]);
 
-        $this->course->Classes()->create([
-            'start_time' => $this->newClassStart,
-            'end_time' => $this->newClassEnd,
-            'place_id' => $this->newClassPlace,
-        ]);
+        if ($this->repeatUntilEndOfTerm) {
+            while ($this->newClassEnd < $this->course->Term->end) {
+                $this->course->Classes()->create([
+                    'start_time' => $this->newClassStart,
+                    'end_time' => $this->newClassEnd,
+                    'place_id' => $this->newClassPlace,
+                ]);
+                $this->newClassStart = date('Y-m-d H:i:s', strtotime($this->newClassStart.' +1 week'));
+                $this->newClassEnd = date('Y-m-d H:i:s', strtotime($this->newClassEnd.' +1 week'));
+            }
+        } else {
+            $this->course->Classes()->create([
+                'start_time' => $this->newClassStart,
+                'end_time' => $this->newClassEnd,
+                'place_id' => $this->newClassPlace,
+            ]);
+
+        }
 
         foreach ($this->course->Classes as $class) {
             $class->StudentsWithPresence()->sync($this->course->Students->pluck('id')->toArray());

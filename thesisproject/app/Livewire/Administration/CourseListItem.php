@@ -113,8 +113,8 @@ class CourseListItem extends Component
         }
 
         $this->validate([
-            'newClassStart' => 'required|date',
-            'newClassEnd' => 'required|date|after:newClassStart',
+            'newClassStart' => 'required|date|after:'.$this->course->Term->start.'|before:'.$this->course->Term->end,
+            'newClassEnd' => 'required|date|after:newClassStart|before:'.$this->course->Term->end_date,
             'newClassPlace' => 'required|exists:places,id',
         ]);
 
@@ -123,8 +123,11 @@ class CourseListItem extends Component
             'end_time' => $this->newClassEnd,
             'place_id' => $this->newClassPlace,
         ]);
-        // TODO check for students class status and update it
-        // TODO implement repeat until end of term
+
+        foreach ($this->course->Classes as $class) {
+            $class->StudentsWithPresence()->sync($this->course->Students->pluck('id')->toArray());
+        }
+
         toast()->success(__('general.classCreated'), __('general.success'))->push();
     }
 
@@ -154,9 +157,12 @@ class CourseListItem extends Component
 
         $this->course->Students()->syncWithoutDetaching($this->newStudents);
 
-        // TODO add student status to each class
+        foreach ($this->course->Classes as $class) {
+            $class->StudentsWithPresence()->sync($this->course->Students->pluck('id')->toArray());
+        }
 
-        $this->dispatch('multiple-select-students-update.'.$this->course->id, ['alreadySelected' => $this->course->Students->pluck('id')->toArray()]);
+        $this->dispatch('multiple-select-students-update.'.$this->course->id,
+            ['alreadySelected' => $this->course->Students->pluck('id')->toArray()]);
         toast()->success(__('general.studentsAdded'), __('general.success'))->push();
     }
 
@@ -170,9 +176,12 @@ class CourseListItem extends Component
 
         $this->course->Students()->detach($id);
 
-        // TODO remove student status from each class
+        foreach ($this->course->Classes as $class) {
+            $class->StudentsWithPresence()->sync($this->course->Students->pluck('id')->toArray());
+        }
 
-        $this->dispatch('multiple-select-students-update.'.$this->course->id, ['alreadySelected' => $this->course->Students->pluck('id')->toArray()]);
+        $this->dispatch('multiple-select-students-update.'.$this->course->id,
+            ['alreadySelected' => $this->course->Students->pluck('id')->toArray()]);
         toast()->success(__('general.studentRemoved'), __('general.success'))->push();
     }
 

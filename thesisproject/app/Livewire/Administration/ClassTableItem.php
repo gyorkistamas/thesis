@@ -59,9 +59,11 @@ class ClassTableItem extends Component
 
         // TODO delete student records for this class
 
+        $this->class->StudentsWithPresence()->detach();
+
         $temp = $this->class;
-        $this->class = null;
         $temp->delete();
+        $this->class = null;
         $this->deleted = true;
 
         toast()->success(__('general.classDeleted'), __('general.success'))->push();

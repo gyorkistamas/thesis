@@ -38,6 +38,14 @@ class CourseListItem extends Component
 
     public $repeatUntilEndOfTerm = false;
 
+    public $newStudents;
+
+    #[On('multiple-select-students.{course.id}')]
+    public function studentsToAdd($data)
+    {
+        $this->newStudents = $data;
+    }
+
     #[On('single-select-place.-1')]
     public function updateNewClassPlace($data)
     {
@@ -134,6 +142,38 @@ class CourseListItem extends Component
         $this->deleted = true;
 
         toast()->success(__('general.courseDelete'), __('general.success'))->push();
+    }
+
+    public function addStudents()
+    {
+        if (Auth::user()->cannot('update', $this->course)) {
+            toast()->danger(__('general.noPermission'), __('general.error'))->push();
+
+            return;
+        }
+
+        $this->course->Students()->syncWithoutDetaching($this->newStudents);
+
+        // TODO add student status to each class
+
+        $this->dispatch('multiple-select-students-update.'.$this->course->id, ['alreadySelected' => $this->course->Students->pluck('id')->toArray()]);
+        toast()->success(__('general.studentsAdded'), __('general.success'))->push();
+    }
+
+    public function removeStudent($id)
+    {
+        if (Auth::user()->cannot('update', $this->course)) {
+            toast()->danger(__('general.noPermission'), __('general.error'))->push();
+
+            return;
+        }
+
+        $this->course->Students()->detach($id);
+
+        // TODO remove student status from each class
+
+        $this->dispatch('multiple-select-students-update.'.$this->course->id, ['alreadySelected' => $this->course->Students->pluck('id')->toArray()]);
+        toast()->success(__('general.studentRemoved'), __('general.success'))->push();
     }
 
     public function render()

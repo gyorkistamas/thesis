@@ -120,4 +120,9 @@ return [
     'deleteClass' => 'Óra törlése',
     'deleteClassConfirm' => 'Biztosan törölni szeretné ezt az órát?',
     'classCreated' => 'Óra létrehozva',
+    'classDeleted' => 'Óra törölve',
+    'classEdited' => 'Óra szerkesztve',
+    'remove' => 'Eltávolítás',
+    'studentsAdded' => 'Hallgatók hozzáadva',
+    'studentRemoved' => 'Hallgató eltávolítva',
 ];

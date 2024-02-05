@@ -120,4 +120,9 @@ return [
     'deleteClass' => 'Delete class',
     'deleteClassConfirm' => 'Are you sure you want to delete this class?',
     'classCreated' => 'Class created',
+    'classDeleted' => 'Class deleted',
+    'classEdited' => 'Class edited',
+    'remove' => 'Remove',
+    'studentsAdded' => 'Students added',
+    'studentRemoved' => 'Student removed',
 ];

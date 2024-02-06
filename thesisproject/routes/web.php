@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\ConfigController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\ProfileUpdateController;
+use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,8 +37,8 @@ Route::middleware('auth')->group(function () {
 */
 
 Route::middleware(['auth', 'superadmin'])->group(function () {
-    Route::get('/user-settings', [\App\Http\Controllers\Controller::class, 'UserSettings'])->name('user-settings');
-    Route::get('/administration', [\App\Http\Controllers\ConfigController::class, 'getCreationSite'])->name('administration');
+    Route::get('/user-settings', [Controller::class, 'UserSettings'])->name('user-settings');
+    Route::get('/administration', [ConfigController::class, 'getCreationSite'])->name('administration'); // TODO REMOVE
 });
 
 /*
@@ -44,5 +47,23 @@ Route::middleware(['auth', 'superadmin'])->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/administration', [\App\Http\Controllers\ConfigController::class, 'getCreationSite'])->name('administration');
+    Route::get('/administration', [ConfigController::class, 'getCreationSite'])->name('administration');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Teacher routes
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'teacher'])->group(function () {
+    Route::get('teacher-subjects', [TeacherController::class, 'teacherSubjects'])->name('teacher-subjects');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Student routes
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'student'])->group(function () {
+
 });

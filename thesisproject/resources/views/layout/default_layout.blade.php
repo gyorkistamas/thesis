@@ -20,6 +20,9 @@
                 <div class="flex-none hidden lg:block">
                     <ul class="menu menu-horizontal">
                         <li><a href="{{route('home')}}" wire:navigate>{{__('general.homePage')}}</a></li>
+                        @if(Auth::user() && Auth::user()->hasRole('teacher'))
+                            <li><a href="{{route('teacher-subjects')}}" wire:navigate>{{__('teacher.mySubjectSlashCourses')}}</a></li>
+                        @endif
                         @if(Auth::user() && Auth::user()->hasRole(['admin', 'superadmin']))
                             <li tabindex="0">
                                 @if(Auth::user()->hasRole('superadmin'))
@@ -32,7 +35,7 @@
                                         </ul>
                                     </details>
                                 @else
-                                    <a>{{__('general.administration')}}</a>
+                                    <a href="{{route('administration')}}" wire:navigate>{{__('general.administration')}}</a>
                                 @endif
                             </li>
                         @endif

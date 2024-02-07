@@ -1,36 +1,38 @@
 <div>
-    <div class="relative">
-        <input
-            type="search"
-            class="input input-bordered input-accent w-full"
-            placeholder="{{__('general.search')}}..."
-            wire:model.live="query"
-            wire:ignore
-        />
-        <span wire:loading class="flex absolute right-0 loading loading-spinner loading-md mt-3 me-[13px]">
+    @if(! $selected_items)
+        <div class="relative">
+            <input
+                type="search"
+                class="input input-bordered input-accent w-full"
+                placeholder="{{__('general.search')}}..."
+                wire:model.live="query"
+                wire:ignore
+            />
+            <span wire:loading class="flex absolute right-0 loading loading-spinner loading-md mt-3 me-[13px]">
         </span>
 
-        @if(!empty($query))
-            <div
-                class="absolute z-10 list-group w-full rounded-t-none shadow-lg">
-                <div class="block">
-                    <div class="absolute z-40 left-0 mt-2 w-full overflow-visible">
-                        <div class="py-1 text-sm rounded shadow-lg border input-bordered input-accent bg-base-300">
-                            @if(!empty($data))
-                                @foreach($data as $i => $item)
-                                    <a wire:click="addSelectedItem({{$item['id']}})"
-                                       class="block py-1 px-5 cursor-pointer hover:bg-accent hover:text-black font-semibold">{{$item['name']}}</a>
-                                @endforeach
-                            @else
-                                <span
-                                    class="block py-1 px-5 hover:bg-accent hover:text-black font-semibold">{{__('general.noResult')}}</span>
-                            @endif
+            @if(!empty($query))
+                <div
+                    class="absolute z-10 list-group w-full rounded-t-none shadow-lg">
+                    <div class="block">
+                        <div class="absolute z-40 left-0 mt-2 w-full overflow-visible">
+                            <div class="py-1 text-sm rounded shadow-lg border input-bordered input-accent bg-base-300">
+                                @if(!empty($data))
+                                    @foreach($data as $i => $item)
+                                        <a wire:click="addSelectedItem({{$item['id']}})"
+                                           class="block py-1 px-5 cursor-pointer hover:bg-accent hover:text-black font-semibold">{{$item['name']}}</a>
+                                    @endforeach
+                                @else
+                                    <span
+                                        class="block py-1 px-5 hover:bg-accent hover:text-black font-semibold">{{__('general.noResult')}}</span>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        @endif
-    </div>
+            @endif
+        </div>
+    @endif
 
     <!-- selections -->
     @if(!empty($selected_items))

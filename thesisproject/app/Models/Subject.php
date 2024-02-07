@@ -40,7 +40,7 @@ class Subject extends Model
 
     public function CoursesInTermAndTeacher($term_id, $teacher_id): HasMany
     {
-        if ($teacher_id == Auth::user()->id) {
+        if ($teacher_id == $this->Manager->id) {
             return $this->hasMany(Course::class)
                 ->where('term_id', '=', $term_id);
         }
@@ -48,7 +48,7 @@ class Subject extends Model
         return $this->hasMany(Course::class)
             ->where('term_id', '=', $term_id)
             ->whereHas('Teachers', function ($query) use ($teacher_id) {
-                return $query->where('id', '=', $teacher_id);
+                return $query->where('users.id', '=', $teacher_id);
             });
     }
 

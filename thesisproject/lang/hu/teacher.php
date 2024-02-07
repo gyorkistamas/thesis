@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'mySubjectSlashCourses' => 'Tárgyaim/Kurzusaim',
+    'mySubjectSlashCourses' => 'Oktatott tárgyaim/kurzusaim',
 ];

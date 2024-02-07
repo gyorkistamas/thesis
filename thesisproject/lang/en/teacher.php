@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'mySubjectSlashCourses' => 'My Subjects/Courses',
+    'mySubjectSlashCourses' => 'My taught subjects/courses',
 ];

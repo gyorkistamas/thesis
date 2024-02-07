@@ -57,6 +57,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 */
 Route::middleware(['auth', 'teacher'])->group(function () {
     Route::get('teacher-subjects', [TeacherController::class, 'teacherSubjects'])->name('teacher-subjects');
+    Route::get('teacher-class/{courseClass}', [TeacherController::class, 'teacherClass'])->name('teacher-view-class');
 });
 
 /*

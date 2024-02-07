@@ -7,7 +7,7 @@
     <div class="fixed inset-0 flex items-center justify-center z-[9999]" wire:loading>
     </div>
 
-    <div class="flex flex-row gap-4 mb-3 ms-2">
+    <div class="flex flex-col md:flex-row gap-4 mb-4 md:mb-3 ms-2">
         <span class="my-auto">{{__('general.search')}}: </span>
         <input type="search" name="code" class="input input-bordered input-accent"
                placeholder="{{__('general.subjectCode')}}" wire:model.live.debounce.250ms="codeSearch"/>

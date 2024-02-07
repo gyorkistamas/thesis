@@ -54,7 +54,7 @@
                     <div>
                         <label for="manager" class="label">{{__('general.subjectManager')}}</label>
                         <livewire:dropdown-select.teacher-single-select
-                            :key="'teacherSelection'.$subject->id.$subjectManager" :selectedId="$subjectManager ?? null"
+                            :key="'teacherSelection'.$subject->id.$subject->Manager->id" :selectedId="$subjectManager ?? null"
                             :subjectId="$subject->id"/>
                         @error('subjectManager')
                         <x-error-alert class="mt-2">{{$message}}</x-error-alert>

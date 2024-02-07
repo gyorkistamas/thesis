@@ -4,6 +4,6 @@
 
 @section('content')
     <x-rounded-container class="mt-5">
-
+        <livewire:teacher.subject-course-view />
     </x-rounded-container>
 @endsection

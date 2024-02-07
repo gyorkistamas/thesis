@@ -7,6 +7,7 @@ use Livewire\Component;
 class SubjectDropdown extends Component
 {
     public $subject;
+
     public $semesterSearch;
 
     public function mount($subject, $semesterSearch)

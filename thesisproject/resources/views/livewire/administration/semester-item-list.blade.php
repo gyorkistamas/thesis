@@ -5,7 +5,7 @@
         <td>{{$term->end}}</td>
         <td>
             @if($term->active())
-                <x-icons.check_circle_fill_small />
+                <x-icons.check_circle_fill_small/>
             @endif
         </td>
         <td>
@@ -14,16 +14,19 @@
                 <ul tabindex="0"
                     class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                     <li>
-                        <a class="text-warning" onclick="semesterModify{{$term->id}}.showModal()" wire:loading.class="not-clickable">
+                        <a class="text-warning" onclick="semesterModify{{$term->id}}.showModal()"
+                           wire:loading.class="not-clickable">
                             <x-icons.edit_fill_small/>{{__('general.edit')}}</a>
                     </li>
                     <li>
-                        <a onclick="semesterDelete{{$term->id}}.showModal()" class="text-error" wire:loading.class="not-clickable">
+                        <a onclick="semesterDelete{{$term->id}}.showModal()" class="text-error"
+                           wire:loading.class="not-clickable">
                             <x-icons.delete_fill_small/>{{__('general.delete')}}</a>
                     </li>
                 </ul>
             </div>
 
+            @teleport('body')
             <dialog id="semesterModify{{$term->id}}" class="modal modal-bottom sm:modal-middle" wire:ignore.self>
                 <div class="modal-box">
                     <h3 class="font-bold text-lg">{{__('general.edit')}}: {{$term->name}}</h3>
@@ -32,7 +35,9 @@
                             <div class="flex flex-col items-center">
                                 <div>
                                     <label for="name" class="label w-min">{{__('general.name')}}: </label>
-                                    <input type="text" name="name{{$term->id}}" class="input input-bordered input-accent w-full max-w-xs" wire:model="editName"/>
+                                    <input type="text" name="name{{$term->id}}"
+                                           class="input input-bordered input-accent w-full max-w-xs"
+                                           wire:model="editName"/>
                                 </div>
                                 @error('editName')
                                 <x-error-alert class="mt-3 mx-5">{{$message}}</x-error-alert>
@@ -42,7 +47,9 @@
                             <div class="flex flex-row justify-between">
                                 <div class="w-max">
                                     <label for="start" class="label mt-3">{{__('general.startDate')}}: </label>
-                                    <input type="date" name="start" class="input input-bordered input-accent w-full max-w-xs" wire:model="editStart"/>
+                                    <input type="date" name="start"
+                                           class="input input-bordered input-accent w-full max-w-xs"
+                                           wire:model="editStart"/>
                                     @error('editStart')
                                     <x-error-alert class="mt-3">{{$message}}</x-error-alert>
                                     @enderror
@@ -50,7 +57,9 @@
 
                                 <div class="w-max">
                                     <label for="end" class="label mt-3">{{__('general.endDate')}}: </label>
-                                    <input type="date" name="end" class="input input-bordered input-accent w-full max-w-xs" wire:model="editEnd"/>
+                                    <input type="date" name="end"
+                                           class="input input-bordered input-accent w-full max-w-xs"
+                                           wire:model="editEnd"/>
                                     @error('editEnd')
                                     <x-error-alert class="mt-3">{{$message}}</x-error-alert>
                                     @enderror
@@ -66,6 +75,9 @@
                     </div>
                 </div>
             </dialog>
+            @endteleport
+
+            @teleport('body')
             <dialog id="semesterDelete{{$term->id}}" class="modal modal-bottom sm:modal-middle" wire:ignore.self>
                 <div class="modal-box">
                     <h3 class="font-bold text-lg">{{__('general.deleteSemester')}}</h3>
@@ -78,6 +90,7 @@
                     </div>
                 </div>
             </dialog>
+            @endteleport
         </td>
     @endif
 </tr>

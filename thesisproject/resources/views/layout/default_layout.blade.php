@@ -26,7 +26,7 @@
                         @if(Auth::user() && Auth::user()->hasRole(['admin', 'superadmin']))
                             <li tabindex="0">
                                 @if(Auth::user()->hasRole('superadmin'))
-                                    <details>
+                                    <details class="z-[200]">
                                         <summary>{{__('general.siteAdministration')}}</summary>
                                         <ul class="p-2">
                                             <li><a href="{{route('user-settings')}}"

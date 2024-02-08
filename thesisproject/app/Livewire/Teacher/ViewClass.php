@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Teacher;
 
-use Asantibanez\LivewireCharts\Models\PieChartModel;
 use Livewire\Attributes\On;
 use Livewire\Component;
 

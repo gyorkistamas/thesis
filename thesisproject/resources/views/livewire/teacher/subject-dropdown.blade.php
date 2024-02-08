@@ -62,6 +62,13 @@
             </tfoot>
         </table>
 
+        @if(($semesterSearch != '' && $subject->CoursesInTermAndTeacher($semesterSearch, Auth::user()->id)->count() == 0) || ($semesterSearch == '' && $subject->CoursesTaughtByTeacher(Auth::user()->id)->count() == 0))
+            <div class="prose">
+                <h1>{{__('general.noResult')}}</h1>
+            </div>
+        @endif
+
+
         @foreach($semesterSearch != '' ? $subject->CoursesInTermAndTeacher($semesterSearch, Auth::user()->id)->get() : $subject->CoursesTaughtByTeacher(Auth::user()->id)->get() as $course)
             <div class="drawer z-[200]" wire:ignore.self>
                 <input id="courseDrawer{{$course->id}}" type="checkbox" class="drawer-toggle"/>
@@ -86,56 +93,70 @@
                                    aria-label="{{__('general.classTimes')}}" checked/>
                             <div role="tabpanel"
                                  class="tab-content bg-base-100 border-base-300 rounded-box p-6">
-                                <div class="md:hidden">
-                                    @foreach($course->Classes as $class)
-                                        <div class="card card-compact bg-base-200 shadow-md mb-4">
-                                            <div class="card-body">
-                                                <div class="flex flex-col gap-2 text-lg">
-                                                    <span><span class="font-bold">{{__('general.startTime')}}:</span> {{$class->start_time}}</span>
-                                                    <span><span class="font-bold">{{__('general.endTime')}}:</span> {{$class->end_time}}</span>
-                                                    <span><span class="font-bold">{{__('general.place')}}:</span> {{$class->Place->name}}</span>
+
+                                @if($course->Classes->count() == 0)
+                                    <div class="prose">
+                                        <h1>{{__('general.noResult')}}</h1>
+                                    </div>
+                                @else
+                                    <div class="md:hidden">
+                                        @foreach($course->Classes as $class)
+                                            <div class="card card-compact bg-base-200 shadow-md mb-4">
+                                                <div class="card-body">
+                                                    <div class="flex flex-col gap-2 text-lg">
+                                                        <span><span class="font-bold">{{__('general.startTime')}}:</span> {{$class->start_time}}</span>
+                                                        <span><span class="font-bold">{{__('general.endTime')}}:</span> {{$class->end_time}}</span>
+                                                        <span><span class="font-bold">{{__('general.place')}}:</span> {{$class->Place->name}}</span>
+                                                    </div>
+                                                    <div class="card-actions justify-end">
+                                                        <a class="btn btn-success btn-sm" href="{{route('teacher-view-class', ['courseClass' => $class->id])}}" wire:navigate for="courseDrawer{{$course->id}}">
+                                                            <x-icons.view_fill_small/>{{__('general.view')}}
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    @endforeach
-                                </div>
+                                        @endforeach
+                                    </div>
 
-                                <table class="table hidden md:table">
-                                    <!-- head -->
-                                    <thead>
-                                    <tr>
-                                        <th>{{__('general.startTime')}}</th>
-                                        <th>{{__('general.endTime')}}</th>
-                                        <th>{{__('general.place')}}</th>
-                                        <th>{{__('general.options')}}</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <!-- rows -->
-                                    @foreach($course->Classes as $class)
+                                    <table class="table hidden md:table">
+                                        <!-- head -->
+                                        <thead>
                                         <tr>
-                                            <td>{{$class->start_time}}</td>
-                                            <td>{{$class->end_time}}</td>
-                                            <td>{{$class->Place->name}}</td>
-                                            <td>
-                                                <a class="btn btn-success btn-sm" href="{{route('teacher-view-class', ['courseClass' => $class->id])}}" wire:navigate for="courseDrawer{{$course->id}}">
-                                                    <x-icons.view_fill_small/>{{__('general.view')}}
-                                                </a>
-                                            </td>
+                                            <th>{{__('general.startTime')}}</th>
+                                            <th>{{__('general.endTime')}}</th>
+                                            <th>{{__('general.place')}}</th>
+                                            <th>{{__('general.options')}}</th>
                                         </tr>
-                                    @endforeach
-                                    </tbody>
-                                    <!-- foot -->
-                                    <tfoot>
-                                    <tr>
-                                        <th>{{__('general.startTime')}}</th>
-                                        <th>{{__('general.endTime')}}</th>
-                                        <th>{{__('general.place')}}</th>
-                                        <th>{{__('general.options')}}</th>
-                                    </tr>
-                                    </tfoot>
+                                        </thead>
+                                        <tbody>
+                                        <!-- rows -->
+                                        @foreach($course->Classes as $class)
+                                            <tr>
+                                                <td>{{$class->start_time}}</td>
+                                                <td>{{$class->end_time}}</td>
+                                                <td>{{$class->Place->name}}</td>
+                                                <td>
+                                                    <a class="btn btn-success btn-sm" href="{{route('teacher-view-class', ['courseClass' => $class->id])}}" wire:navigate for="courseDrawer{{$course->id}}">
+                                                        <x-icons.view_fill_small/>{{__('general.view')}}
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                        <!-- foot -->
+                                        <tfoot>
+                                        <tr>
+                                            <th>{{__('general.startTime')}}</th>
+                                            <th>{{__('general.endTime')}}</th>
+                                            <th>{{__('general.place')}}</th>
+                                            <th>{{__('general.options')}}</th>
+                                        </tr>
+                                        </tfoot>
 
-                                </table>
+                                    </table>
+                                @endif
+
+
                             </div>
 
                             <input type="radio" name="drawertab{{$course->id}}" role="tab"

@@ -13,6 +13,6 @@ class TeacherController extends Controller
 
     public function teacherClass(CourseClass $courseClass)
     {
-        return view('layout.default_layout');
+        return view('teacher.view-course')->with('courseClass', $courseClass);
     }
 }

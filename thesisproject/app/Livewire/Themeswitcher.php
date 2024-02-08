@@ -14,6 +14,8 @@ class Themeswitcher extends Component
         } else {
             Cookie::queue('theme', 'light');
         }
+
+        $this->dispatch('themeChanged', data: Cookie::get('theme'));
     }
 
     public function render()

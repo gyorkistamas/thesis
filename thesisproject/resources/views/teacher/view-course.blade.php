@@ -7,3 +7,5 @@
         <livewire:teacher.view-class :class="$courseClass"/>
     </x-rounded-container>
 @endsection
+
+

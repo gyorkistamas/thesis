@@ -42,8 +42,88 @@
 
         </div>
 
-        <div>
-            {{QrCode::size(250)->generate('https://www.youtube.com/watch?v=dQw4w9WgXcQ')}}
+        <div class="flex flex-col justify-center">
+            <div class="mb-3">
+                <div class="card w-96 bg-base-100 shadow-xl">
+                    <div class="card-body p-3 flex flex-row justify-center">
+                        {{QrCode::size(250)->generate('https://www.youtube.com/watch?v=dQw4w9WgXcQ')}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="">
+                <div class="card w-96 bg-base-100 shadow-xl">
+                    <div class="card-body p-3 h-96" wire:ignore>
+                        <canvas id="presenceChart"></canvas>
+                        @script
+                            <script>
+                                Chart.defaults.font.family = 'Roboto';
+                                let ctx = document.getElementById('presenceChart').getContext('2d');
+                                let chart = new Chart(ctx, {
+                                    type: 'pie',
+                                    data: {
+                                        labels: [
+                                            '{{__('teacher.present')}}',
+                                            '{{__('teacher.absent')}}',
+                                            '{{__('teacher.late')}}',
+                                            '{{__('teacher.notFilled')}}'
+                                        ],
+                                        datasets: [{
+                                            label: '{{__('general.students')}}',
+                                            data: [
+                                                {{$class->StudentsWithPresence()->wherePivot('attendance', 'present')->count()}},
+                                                {{$class->StudentsWithPresence()->wherePivot('attendance', 'absent')->count()}},
+                                                {{$class->StudentsWithPresence()->wherePivot('attendance', 'late')->count()}},
+                                                {{$class->StudentsWithPresence()->wherePivot('attendance', 'not_filled')->count()}}
+                                            ],
+                                            backgroundColor: [
+                                                'rgba(75, 192, 192, 0.2)',
+                                                'rgba(255, 99, 132, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                            ],
+                                            borderColor: [
+                                                'rgba(75, 192, 192, 1)',
+                                                'rgba(255, 99, 132, 1)',
+                                                'rgba(255, 206, 86, 1)',
+                                                'rgba(54, 162, 235, 1)',
+                                            ],
+                                            borderWidth: 1
+                                        }]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        locale: '{{App::currentLocale()}}',
+                                        plugins: {
+                                            legend: {
+                                                position: 'bottom',
+                                            },
+                                            title: {
+                                                display: true,
+                                                text: '{{__('teacher.presence')}}'
+                                            }
+                                        }
+                                    }
+                                });
+
+                                setInterval(() => {
+                                    $wire.dispatch('refreshChart');
+                                }, 5000);
+
+                                $wire.on('updateChart', (data) => {
+                                    chart.data.datasets[0].data[0] = data.data[0];
+                                    chart.data.datasets[0].data[1] = data.data[1];
+                                    chart.data.datasets[0].data[2] = data.data[2];
+                                    chart.data.datasets[0].data[3] = data.data[3];
+                                    chart.update();
+                                    console.log('update')
+                                });
+
+                            </script>
+                        @endscript
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -9,17 +9,13 @@
     @vite('resources/css/app.css')
     @vite('resources/css/themeswitcher.css')
     @vite('resources/js/app.js')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    @yield('styles')
 </head>
 <body class="font-serif h-full min-h-screen" dir="ltr">
 <livewire:toasts class="z-[900]"/>
 @yield('content_place')
 
-<!--
-<footer class="p-2 bg-base-300 sticky top-[100vh] flex flex-row justify-center sm:justify-end items-center gap-1.5">
-    <livewire:languageswitcher></livewire:languageswitcher>
-    <livewire:themeswitcher></livewire:themeswitcher>
-</footer>
--->
-<livewire:simple-notification class="z-[900]"/>
+@yield('scripts')
 </body>
 </html>

@@ -29,18 +29,6 @@ class ViewClass extends Component
 
     public function render()
     {
-        $piechart = (new PieChartModel())
-            ->setTitle(__('teacher.presence'))
-            ->addSlice(__('teacher.present'),
-                $this->class->StudentsWithPresence()->wherePivot('attendance', 'present')->count(), '#4CAF50')
-            ->addSlice(__('teacher.absent'),
-                $this->class->StudentsWithPresence()->wherePivot('attendance', 'present')->count(), '#F44336')
-            ->addSlice(__('teacher.late'),
-                $this->class->StudentsWithPresence()->wherePivot('attendance', 'late')->count(), '#FFC107')
-            ->addSlice(__('teacher.notFilled'),
-                $this->class->StudentsWithPresence()->wherePivot('attendance', 'not_filled')->count(), '#9E9E9E')
-            ->setThemePalette('palette3');
-
-        return view('livewire.teacher.view-class')->with('piechart', $piechart);
+        return view('livewire.teacher.view-class');
     }
 }

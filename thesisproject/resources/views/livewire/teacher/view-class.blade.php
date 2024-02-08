@@ -58,6 +58,12 @@
                         @script
                             <script>
                                 Chart.defaults.font.family = 'Roboto';
+                                if (document.documentElement.getAttribute('data-theme') === 'light') {
+                                    Chart.defaults.color = '#202938';
+                                }
+                                else {
+                                    Chart.defaults.color = '#a7adbc';
+                                }
                                 let ctx = document.getElementById('presenceChart').getContext('2d');
                                 let chart = new Chart(ctx, {
                                     type: 'pie',
@@ -100,7 +106,10 @@
                                             },
                                             title: {
                                                 display: true,
-                                                text: '{{__('teacher.presence')}}'
+                                                text: '{{__('teacher.presence')}}',
+                                                font: {
+                                                    size: 25
+                                                }
                                             }
                                         }
                                     }
@@ -117,6 +126,17 @@
                                     chart.data.datasets[0].data[3] = data.data[3];
                                     chart.update();
                                     console.log('update')
+                                });
+
+                                $wire.on('themeChanged', (data) => {
+                                    console.log(data);
+                                    if (data.color === 'light') {
+                                        Chart.defaults.color = '#202938';
+                                    }
+                                    else {
+                                        Chart.defaults.color = '#a7adbc';
+                                    }
+                                    chart.update();
                                 });
 
                             </script>

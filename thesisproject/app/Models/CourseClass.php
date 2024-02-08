@@ -16,6 +16,11 @@ class CourseClass extends Model
         'place_id',
     ];
 
+    protected $casts = [
+        'start_time' => 'datetime',
+        'end_time' => 'datetime',
+    ];
+
     public function Course()
     {
         return $this->belongsTo(Course::class);

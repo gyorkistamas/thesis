@@ -10,5 +10,9 @@ return [
     'late' => 'Late',
     'notFilled' => 'Not filled',
     'justified' => 'Justified absence',
-    'minutes' => 'minutes'
+    'minutes' => 'minutes',
+    'absenceRecorded' => 'Absence recorded',
+    'absenceRecordedLine' => 'Dear :name, an absence has been recorded as follows:',
+    'subject' => 'Subject',
+    'recordedBy' => 'Recorded by: :name',
 ];

@@ -10,5 +10,9 @@ return [
     'late' => 'Késés',
     'notFilled' => 'Nincs kitöltve',
     'justified' => 'Igazolt hiányzás',
-    'minutes' => 'perc'
+    'minutes' => 'perc',
+    'absenceRecorded' => 'Hiányzás rögzítve',
+    'absenceRecordedLine' => 'Kedves :name, a következő hiányzás került rögzítésre:',
+    'subject' => 'Tárgy',
+    'recordedBy' => 'Rögzítette: :name',
 ];

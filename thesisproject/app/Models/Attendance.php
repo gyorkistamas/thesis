@@ -19,4 +19,9 @@ class Attendance extends Pivot
     public $incrementing = true;
 
     public $table = 'attendances';
+
+    public function Class()
+    {
+        return $this->belongsTo(CourseClass::class, 'course_class_id');
+    }
 }

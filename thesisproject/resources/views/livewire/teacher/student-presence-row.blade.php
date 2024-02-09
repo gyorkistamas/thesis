@@ -1,4 +1,4 @@
-<div class="card bg-base-100 shadow-xl mb-3 w-fit relative">
+<div class="card bg-base-100 shadow-xl mb-4 w-full md:w-fit relative">
     <div class="inset-0 flex items-center justify-center z-[9999] absolute" style="pointer-events: none;" >
         <span class="loading loading-dots loading-lg" wire:loading></span>
     </div>
@@ -6,22 +6,24 @@
     <div class="absolute inset-0 flex items-center justify-center z-[9999]" wire:loading>
     </div>
 
-    <div class="card-body flex flex-row p-2 px-3 align-middle" wire:loading.class="blur-sm">
-        <div class="avatar">
-            <div class="w-8 rounded">
-                <img src="{{ $student->get_pic() }}" alt="{{ $student->name }}">
+    <div class="card-body flex flex-col p-2 px-3 md:flex-row md:w-fit md:max-w-fit" wire:loading.class="blur-sm">
+        <div class="flex flex-col items-center mb-2 md:flex-row md:gap-2">
+            <div class="avatar">
+                <div class="w-8 rounded">
+                    <img src="{{ $student->get_pic() }}" alt="{{ $student->name }}">
+                </div>
+            </div>
+            <div>
+                {{$student->neptun}} - {{$student->name}}
             </div>
         </div>
-        <div>
-            {{$student->neptun}} - {{$student->name}}
-        </div>
 
-        <div class="join">
+        <div class="join join-vertical md:join-horizontal">
             <!-- TODO igazolt óra ellenőrzése és hiányzások száma -->
             <button class="btn btn-sm join-item btn-info @if($pivot->attendance != 'not_filled') btn-outline @endif" wire:click="setAttendance('not_filled')">{{__('teacher.notFilled')}}</button>
             <button class="btn btn-sm join-item btn-success @if($pivot->attendance != 'present') btn-outline @endif" wire:click="setAttendance('present')">{{__('teacher.present')}}</button>
             <details class="dropdown join-item dropdown-top dropdown-end" id="lateDropdown{{$student->id}}">
-                <summary tabindex="0" class="btn join-item btn-sm btn-warning @if($pivot->attendance != 'late') btn-outline @endif">{{__('teacher.late')}} @if($pivot->late_minutes != 0) ({{$pivot->late_minutes}} {{__('teacher.minutes')}}) @endif</summary>
+                <summary tabindex="0" class="btn join-item btn-sm btn-warning  w-full @if($pivot->attendance != 'late') btn-outline @endif">{{__('teacher.late')}} @if($pivot->late_minutes != 0) ({{$pivot->late_minutes}} {{__('teacher.minutes')}}) @endif</summary>
                 <div tabindex="0" class="dropdown-content z-[1] card card-compact w-64 p-2 shadow bg-base-100">
                     <div class="card-body">
                         <input type="number" class="input input-bordered w-full" wire:model="lateMinutes" min="1" max="500">

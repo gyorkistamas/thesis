@@ -4,7 +4,7 @@
     </div>
     <div class="divider"></div>
 
-    <div class="flex flex-row justify-between me-20">
+    <div class="flex flex-col justify-between lg:flex-row">
 
         <div class="flex flex-col gap-2 grow">
             <div class="flex flex-row justify-start items-center gap-2 text-lg">
@@ -31,7 +31,7 @@
             </div>
 
 
-            <div class="mt-6 ms-3">
+            <div class="mt-6 flex flex-col items-center lg:items-start">
                 <div class="prose min-w-full mb-3">
                     <h2>{{__('general.students')}}:</h2>
                 </div>
@@ -42,9 +42,9 @@
 
         </div>
 
-        <div class="flex flex-col justify-center">
+        <div class="flex flex-col w-full min-w-full lg:w-fit lg:min-w-fit lg:me-10">
             <div class="mb-3">
-                <div class="card w-96 bg-base-100 shadow-xl">
+                <div class="card bg-base-100 shadow-xl">
                     <div class="card-body p-3 flex flex-row justify-center">
                         {{QrCode::size(250)->generate('https://www.youtube.com/watch?v=dQw4w9WgXcQ')}}
                     </div>
@@ -52,7 +52,7 @@
             </div>
 
             <div class="">
-                <div class="card w-96 bg-base-100 shadow-xl">
+                <div class="card bg-base-100 shadow-xl">
                     <div class="card-body p-3 h-96" wire:ignore>
                         <canvas id="presenceChart"></canvas>
                         @script

@@ -70,6 +70,7 @@
                                     data: {
                                         labels: [
                                             '{{__('teacher.present')}}',
+                                            '{{__('teacher.justified')}}',
                                             '{{__('teacher.absent')}}',
                                             '{{__('teacher.late')}}',
                                             '{{__('teacher.notFilled')}}'
@@ -78,21 +79,24 @@
                                             label: '{{__('general.students')}}',
                                             data: [
                                                 {{$class->StudentsWithPresence()->wherePivot('attendance', 'present')->count()}},
-                                                {{$class->StudentsWithPresence()->wherePivot('attendance', 'absent')->count()}},
+                                                {{$class->StudentsWithPresence()->wherePivot('attendance', 'justified')->count()}},
+                                                {{$class->StudentsWithPresence()->wherePivot('attendance', 'missing')->count()}},
                                                 {{$class->StudentsWithPresence()->wherePivot('attendance', 'late')->count()}},
                                                 {{$class->StudentsWithPresence()->wherePivot('attendance', 'not_filled')->count()}}
                                             ],
                                             backgroundColor: [
-                                                'rgba(75, 192, 192, 0.2)',
+                                                'rgba(48, 146, 92, 0.2)',
+                                                'rgba(255, 217, 0, 0.2)',
                                                 'rgba(255, 99, 132, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(255, 162, 0, 0.2)',
+                                                'rgba(0, 160, 230, 0.2)',
                                             ],
                                             borderColor: [
-                                                'rgba(75, 192, 192, 1)',
+                                                'rgba(48, 146, 92, 1)',
+                                                'rgba(255, 215, 0, 1)',
                                                 'rgba(255, 99, 132, 1)',
-                                                'rgba(255, 206, 86, 1)',
-                                                'rgba(54, 162, 235, 1)',
+                                                'rgba(255, 162, 0, 1)',
+                                                'rgba(0, 160, 230, 1)',
                                             ],
                                             borderWidth: 1
                                         }]
@@ -124,6 +128,7 @@
                                     chart.data.datasets[0].data[1] = data.data[1];
                                     chart.data.datasets[0].data[2] = data.data[2];
                                     chart.data.datasets[0].data[3] = data.data[3];
+                                    chart.data.datasets[0].data[4] = data.data[4];
                                     chart.update();
                                     console.log('update')
                                 });
@@ -137,6 +142,13 @@
                                         Chart.defaults.color = '#a7adbc';
                                     }
                                     chart.update();
+                                });
+
+
+                                $wire.on('closeLateDropdown', (data) => {
+                                    console.log(data);
+                                    let dropdown = document.getElementById('lateDropdown'+data);
+                                    dropdown.removeAttribute('open');
                                 });
 
                             </script>

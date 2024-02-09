@@ -19,9 +19,10 @@ class ViewClass extends Component
     {
         $data = [
             0 => $this->class->StudentsWithPresence()->wherePivot('attendance', 'present')->count(),
-            1 => $this->class->StudentsWithPresence()->wherePivot('attendance', 'absent')->count(),
-            2 => $this->class->StudentsWithPresence()->wherePivot('attendance', 'late')->count(),
-            3 => $this->class->StudentsWithPresence()->wherePivot('attendance', 'not_filled')->count(),
+            1 => $this->class->StudentsWithPresence()->wherePivot('attendance', 'justified')->count(),
+            2 => $this->class->StudentsWithPresence()->wherePivot('attendance', 'missing')->count(),
+            3 => $this->class->StudentsWithPresence()->wherePivot('attendance', 'late')->count(),
+            4 => $this->class->StudentsWithPresence()->wherePivot('attendance', 'not_filled')->count(),
         ];
         $this->dispatch('updateChart', data: $data);
     }

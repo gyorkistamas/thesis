@@ -12,6 +12,7 @@ class AbsenceNotification extends Notification implements ShouldQueue
     use Queueable;
 
     private $user;
+
     private $class;
 
     private $recordingUser;

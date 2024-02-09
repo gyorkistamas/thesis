@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Teacher;
 
+use App\Notifications\AbsenceNotification;
+use Auth;
 use Livewire\Component;
 
 class StudentPresenceRow extends Component
@@ -33,6 +35,10 @@ class StudentPresenceRow extends Component
         $this->pivot->attendance = $status;
         $this->pivot->late_minutes = 0;
         $this->pivot->save();
+
+        if ($status === 'missing') {
+            $this->student->notify(new AbsenceNotification($this->student, $this->pivot->Class, Auth::user()));
+        }
     }
 
     public function render()

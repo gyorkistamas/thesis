@@ -1,3 +1,50 @@
-<div>
-    {{$student->name}} - {{$student->attendance->attendance}}
+<div class="card bg-base-100 shadow-xl mb-3 w-fit relative">
+    <div class="inset-0 flex items-center justify-center z-[9999] absolute" style="pointer-events: none;" >
+        <span class="loading loading-dots loading-lg" wire:loading></span>
+    </div>
+
+    <div class="absolute inset-0 flex items-center justify-center z-[9999]" wire:loading>
+    </div>
+
+    <div class="card-body flex flex-row p-2 px-3 align-middle" wire:loading.class="blur-sm">
+        <div class="avatar">
+            <div class="w-8 rounded">
+                <img src="{{ $student->get_pic() }}" alt="{{ $student->name }}">
+            </div>
+        </div>
+        <div>
+            {{$student->neptun}} - {{$student->name}}
+        </div>
+
+        <div class="join">
+            <!-- TODO igazolt óra ellenőrzése és hiányzások száma -->
+            <button class="btn btn-sm join-item btn-info @if($pivot->attendance != 'not_filled') btn-outline @endif" wire:click="setAttendance('not_filled')">{{__('teacher.notFilled')}}</button>
+            <button class="btn btn-sm join-item btn-success @if($pivot->attendance != 'present') btn-outline @endif" wire:click="setAttendance('present')">{{__('teacher.present')}}</button>
+            <details class="dropdown join-item dropdown-top dropdown-end" id="lateDropdown{{$student->id}}">
+                <summary tabindex="0" class="btn join-item btn-sm btn-warning @if($pivot->attendance != 'late') btn-outline @endif">{{__('teacher.late')}} @if($pivot->late_minutes != 0) ({{$pivot->late_minutes}} {{__('teacher.minutes')}}) @endif</summary>
+                <div tabindex="0" class="dropdown-content z-[1] card card-compact w-64 p-2 shadow bg-base-100">
+                    <div class="card-body">
+                        <input type="number" class="input input-bordered w-full" wire:model="lateMinutes" min="1" max="500">
+                        <button class="btn btn-sm btn-success" wire:click="setLateMinutes">{{__('general.save')}}</button>
+                    </div>
+                </div>
+            </details>
+            <button class="btn btn-sm join-item btn-warning @if($pivot->attendance != 'justified') btn-outline @endif" wire:click="setAttendance('justified')">{{__('teacher.justified')}}</button>
+            <button class="btn btn-sm join-item btn-error @if($pivot->attendance != 'missing') btn-outline @endif" wire:click="setAttendance('missing')">{{__('teacher.absent')}}</button>
+
+        </div>
+    </div>
+
+    <dialog id="lateModal{{$student->id}}" class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box">
+            <h3 class="font-bold text-lg">Hello!</h3>
+            <p class="py-4">Press ESC key or click the button below to close</p>
+            <div class="modal-action">
+                <form method="dialog">
+                    <!-- if there is a button in form, it will close the modal -->
+                    <button class="btn">Close</button>
+                </form>
+            </div>
+        </div>
+    </dialog>
 </div>

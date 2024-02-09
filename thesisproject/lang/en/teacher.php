@@ -9,4 +9,6 @@ return [
     'absent' => 'Absent',
     'late' => 'Late',
     'notFilled' => 'Not filled',
+    'justified' => 'Justified absence',
+    'minutes' => 'minutes'
 ];

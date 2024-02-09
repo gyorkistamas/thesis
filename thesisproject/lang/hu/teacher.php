@@ -9,4 +9,6 @@ return [
     'absent' => 'Hiányzás',
     'late' => 'Késés',
     'notFilled' => 'Nincs kitöltve',
+    'justified' => 'Igazolt hiányzás',
+    'minutes' => 'perc'
 ];

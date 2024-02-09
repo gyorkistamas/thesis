@@ -12,9 +12,11 @@ class Attendance extends Pivot
     protected $fillable = [
         'user_id',
         'course_class_id',
-        'presence',
+        'attendance',
         'late_minutes',
     ];
 
     public $incrementing = true;
+
+    public $table = 'attendances';
 }

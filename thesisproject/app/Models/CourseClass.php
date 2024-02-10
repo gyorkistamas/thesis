@@ -26,6 +26,11 @@ class CourseClass extends Model
         return $this->belongsTo(Course::class);
     }
 
+    public function Loginlinks()
+    {
+        return $this->hasMany(ClassLoginLink::class);
+    }
+
     public function Place()
     {
         return $this->hasOne(Place::class, 'id', 'place_id');

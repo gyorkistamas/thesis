@@ -66,5 +66,5 @@ Route::middleware(['auth', 'teacher'])->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'student'])->group(function () {
-
+    Route::get('student-class-login/{uuid}')->name('student-class-login');
 });

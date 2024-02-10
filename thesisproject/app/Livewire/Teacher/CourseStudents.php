@@ -31,6 +31,10 @@ class CourseStudents extends Component
 
         $this->course->Students()->attach($this->studentsToAdd);
 
+        foreach ($this->course->Classes as $class) {
+            $class->StudentsWithPresence()->sync($this->course->Students->pluck('id')->toArray());
+        }
+
         $this->dispatch('multiple-select-students-update.'.$this->course->id,
             alreadySelected: ['alreadySelected' => $this->course->students->pluck('id')->toArray()]);
 
@@ -46,6 +50,10 @@ class CourseStudents extends Component
         }
 
         $this->course->Students()->detach($student_id);
+
+        foreach ($this->course->Classes as $class) {
+            $class->StudentsWithPresence()->sync($this->course->Students->pluck('id')->toArray());
+        }
 
         $this->dispatch('multiple-select-students-update.'.$this->course->id,
             alreadySelected: ['alreadySelected' => $this->course->students->pluck('id')->toArray()]);

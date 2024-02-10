@@ -4,14 +4,57 @@ namespace App\Livewire\Teacher;
 
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Str;
+use Usernotnull\Toast\Concerns\WireToast;
 
 class ViewClass extends Component
 {
+    use WireToast;
+
     public $class;
+
+    public $isQrCodeVisible = false;
+
+    public $loginLink;
+
+    public $loginCode;
+
+    // TODO listen for logins
 
     public function mount($class)
     {
         $this->class = $class;
+    }
+
+    public function disableQrCode()
+    {
+        if (! $this->isQrCodeVisible) {
+            toast()->danger(__('teacher.noQrCodeGenerated'), __('general.error'))->push();
+
+            return;
+        }
+
+        $this->isQrCodeVisible = false;
+        $this->loginCode->invalidated = true;
+        $this->loginCode->save();
+
+        toast()->success(__('teacher.qrCodeDisabled'), __('general.success'))->push();
+    }
+
+    public function generateQrCode()
+    {
+        if ($this->isQrCodeVisible) {
+            toast()->danger(__('teacher.qrCodeAlreadyGenerated'), __('general.error'))->push();
+
+            return;
+        }
+
+        $this->loginCode = $this->class->Loginlinks()->create([
+            'key' => Str::uuid()->toString(),
+        ]);
+
+        $this->isQrCodeVisible = true;
+        $this->loginLink = route('student-class-login', ['uuid' => $this->loginCode->key]);
     }
 
     #[On('refreshChart')]

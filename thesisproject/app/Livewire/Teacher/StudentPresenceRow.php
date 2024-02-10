@@ -27,6 +27,7 @@ class StudentPresenceRow extends Component
         $this->pivot->late_minutes = $this->lateMinutes;
         $this->pivot->save();
         $this->dispatch('closeLateDropdown', data: $this->student->id);
+        $this->dispatch('refreshChart');
     }
 
     public function setAttendance($status)
@@ -39,6 +40,8 @@ class StudentPresenceRow extends Component
         if ($status === 'missing') {
             $this->student->notify(new AbsenceNotification($this->student, $this->pivot->Class, Auth::user()));
         }
+
+        $this->dispatch('refreshChart');
     }
 
     public function render()

@@ -15,4 +15,10 @@ return [
     'absenceRecordedLine' => 'Kedves :name, a következő hiányzás került rögzítésre:',
     'subject' => 'Tárgy',
     'recordedBy' => 'Rögzítette: :name',
+    'showQrCodeForPresence' => 'Jelenlét QR kód megjelenítése',
+    'enlargeQrCode' => 'QR kód nagyítása',
+    'qrCodeAlreadyGenerated' => 'A QR kód már generálva lett',
+    'noQrCodeGenerated' => 'Nincs QR kód generálva',
+    'qrCodeDisabled' => 'QR kód letiltva',
+    'disableQrCode' => 'QR kód letiltása',
 ];

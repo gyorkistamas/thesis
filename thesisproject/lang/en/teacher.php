@@ -15,4 +15,10 @@ return [
     'absenceRecordedLine' => 'Dear :name, an absence has been recorded as follows:',
     'subject' => 'Subject',
     'recordedBy' => 'Recorded by: :name',
+    'showQrCodeForPresence' => 'Show QR code for presence',
+    'enlargeQrCode' => 'Enlarge QR code',
+    'qrCodeAlreadyGenerated' => 'The QR code has already been generated',
+    'noQrCodeGenerated' => 'No QR code generated',
+    'qrCodeDisabled' => 'QR code disabled',
+    'disableQrCode' => 'Disable QR code',
 ];

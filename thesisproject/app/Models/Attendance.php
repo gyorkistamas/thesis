@@ -10,6 +10,7 @@ class Attendance extends Pivot
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'user_id',
         'course_class_id',
         'attendance',

@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use Illuminate\Broadcasting\Broadcasters\PusherBroadcaster;
+use Illuminate\Broadcasting\BroadcastManager;
 use Illuminate\Support\ServiceProvider;
+use Pusher\Pusher;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +22,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+
     }
 }

@@ -40,14 +40,14 @@ class CourseClass extends Model
     {
         return $this->belongsToMany(User::class, 'attendances')
             ->using(Attendance::class)
-            ->withPivot('attendance', 'late_minutes');
+            ->withPivot('attendance', 'late_minutes', 'id');
     }
 
     public function GetStudent($student_id)
     {
         return $this->belongsToMany(User::class, 'attendances')
             ->using(Attendance::class)
-            ->withPivot('attendance', 'late_minutes')
+            ->withPivot('attendance', 'late_minutes', 'id')
             ->where('users.id', '=', $student_id);
     }
 }

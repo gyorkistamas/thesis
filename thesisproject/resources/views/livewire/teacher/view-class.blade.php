@@ -66,7 +66,9 @@
                             @if($isQrCodeVisible)
                                 <button class="btn btn-success join-item" onclick="classQrCodeModal.showModal();">
                                     <x-icons.view_fill_small/>{{__('teacher.enlargeQrCode')}}</button>
-                                <button class="btn btn-error join-item" wire:click="disableQrCode"><x-icons.delete_fill_small />{{__('teacher.disableQrCode')}}</button>
+                                <div class="tooltip join-item" data-tip="{{__('teacher.qrCodeAutomaticallyDisablesAfterClass')}}">
+                                    <button class="btn btn-error join-item" wire:click="disableQrCode"><x-icons.delete_fill_small />{{__('teacher.disableQrCode')}}</button>
+                                </div>
                             @else
                                 <button class="btn btn-success join-item" wire:click="generateQrCode">
                                     <x-icons.view_fill_small/>{{__('teacher.showQrCodeForPresence')}}</button>

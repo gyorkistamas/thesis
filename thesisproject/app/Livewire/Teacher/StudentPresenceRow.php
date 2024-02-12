@@ -4,6 +4,7 @@ namespace App\Livewire\Teacher;
 
 use App\Notifications\AbsenceNotification;
 use Auth;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class StudentPresenceRow extends Component
@@ -18,6 +19,12 @@ class StudentPresenceRow extends Component
     {
         $this->student = $student;
         $this->pivot = $student->pivot;
+    }
+
+    #[On('echo:presenceUpdated.{pivot.id},.Illuminate\Notifications\Events\ClassPresenceChanged')]
+    public function presenceUpdated($event)
+    {
+        dd($event);
     }
 
     public function setLateMinutes()

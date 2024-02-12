@@ -6,9 +6,12 @@ use App\Notifications\AbsenceNotification;
 use Auth;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Usernotnull\Toast\Concerns\WireToast;
 
 class StudentPresenceRow extends Component
 {
+    use WireToast;
+
     public $student;
 
     public $pivot;
@@ -21,10 +24,11 @@ class StudentPresenceRow extends Component
         $this->pivot = $student->pivot;
     }
 
-    #[On('echo:presenceUpdated.{pivot.id},.Illuminate\Notifications\Events\ClassPresenceChanged')]
+    #[On('echo:updatePresence.{pivot.id},.App\Events\ClassPresenceChanged')]
     public function presenceUpdated($event)
     {
-        dd($event);
+        $this->pivot->refresh();
+        $this->dispatch('refreshChart');
     }
 
     public function setLateMinutes()

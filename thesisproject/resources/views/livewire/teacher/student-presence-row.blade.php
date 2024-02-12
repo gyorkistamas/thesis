@@ -1,4 +1,4 @@
-<div class="card bg-base-100 shadow-xl mb-4 w-full md:w-fit relative">
+<div class="card bg-base-100 shadow-xl mb-4 w-full md:w-full relative">
     <div class="inset-0 flex items-center justify-center z-[9999] absolute" style="pointer-events: none;" >
         <span class="loading loading-dots loading-lg" wire:loading></span>
     </div>
@@ -6,7 +6,7 @@
     <div class="absolute inset-0 flex items-center justify-center z-[9999]" wire:loading>
     </div>
 
-    <div class="card-body flex flex-col p-2 px-3 md:flex-row md:w-fit md:max-w-fit" wire:loading.class="blur-sm">
+    <div class="card-body flex flex-col p-2 px-3 md:flex-row md:w-full md:max-w-full md:justify-between" wire:loading.class="blur-sm">
         <div class="flex flex-col items-center mb-2 md:flex-row md:gap-2">
             <div class="avatar">
                 <div class="w-8 rounded">

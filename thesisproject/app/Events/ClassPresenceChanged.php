@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Attendance;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -12,12 +13,14 @@ class ClassPresenceChanged implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+
+    public $attendance;
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct(Attendance $attendance)
     {
-        //
+        $this->attendance = $attendance;
     }
 
     /**
@@ -28,7 +31,7 @@ class ClassPresenceChanged implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('channel-name'),
+            new PrivateChannel('presenceUpdated.'.$this->attendance->id),
         ];
     }
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ProfileUpdateController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
 
@@ -66,5 +67,6 @@ Route::middleware(['auth', 'teacher'])->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'student'])->group(function () {
-    Route::get('student-class-login/{uuid}')->name('student-class-login');
+    Route::get('student-class-login/{uuid}', [StudentController::class, 'loginToClass'])->name('student-class-login');
+    Route::get('student-class-login-link', [StudentController::class, 'getLoginLink'])->name('student-class-login-link');
 });

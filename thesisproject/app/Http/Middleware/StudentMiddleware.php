@@ -15,7 +15,7 @@ class StudentMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (\Auth::user()->hasRole('superadmin') || \Auth::user()->hasRole('admin') || \Auth::user()->hasRole('student')){
+        if (\Auth::user()->hasRole('superadmin') || \Auth::user()->hasRole('admin') || \Auth::user()->hasRole('student')) {
             return $next($request);
         }
 

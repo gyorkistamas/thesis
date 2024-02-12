@@ -45,9 +45,9 @@ class CourseClass extends Model
 
     public function GetStudent($student_id)
     {
-        return $this->belongsToMany(User::class, 'presences')
+        return $this->belongsToMany(User::class, 'attendances')
             ->using(Attendance::class)
             ->withPivot('attendance', 'late_minutes')
-            ->where('id', '=', $student_id);
+            ->where('users.id', '=', $student_id);
     }
 }

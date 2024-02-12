@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ClassLoginLink;
+use Date;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -13,7 +14,7 @@ class StudentController extends Controller
             ->where('invalidated', false)
             ->first();
 
-        if ($loginuuid == null) {
+        if ($loginuuid == null || $loginuuid->Class->end_time > Date::now()) {
             return abort(404);
         }
 

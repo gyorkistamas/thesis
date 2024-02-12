@@ -17,6 +17,6 @@ class ClassLoginLink extends Model
 
     public function Class()
     {
-        return $this->belongsTo(CourseClass::class);
+        return $this->belongsTo(CourseClass::class, 'course_class_id');
     }
 }

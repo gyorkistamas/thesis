@@ -21,4 +21,5 @@ return [
     'noQrCodeGenerated' => 'No QR code generated',
     'qrCodeDisabled' => 'QR code disabled',
     'disableQrCode' => 'Disable QR code',
+    'qrCodeAutomaticallyDisablesAfterClass' => 'The QR code is automatically disabled after class.',
 ];

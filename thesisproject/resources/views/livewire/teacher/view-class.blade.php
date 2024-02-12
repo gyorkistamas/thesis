@@ -37,7 +37,7 @@
             </div>
 
 
-            <div class="mt-6 flex flex-col items-center lg:items-start">
+            <div class="mt-6 flex flex-col items-center lg:items-start lg:w-fit">
                 <div class="prose min-w-full mb-3">
                     <h2>{{__('general.students')}}:</h2>
                 </div>

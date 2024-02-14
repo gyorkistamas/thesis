@@ -16,4 +16,5 @@ return [
     'comment' => 'Megjegyzés',
     'uploadPictures' => 'Képek feltöltése',
     'upload' => 'Feltöltés',
+    'affectedClassesAndTeachers' => 'Érintett órák és tanárok',
 ];

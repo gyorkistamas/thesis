@@ -16,4 +16,5 @@ return [
     'comment' => 'Comment',
     'uploadPictures' => 'Upload pictures',
     'upload' => 'Upload',
+    'affectedClassesAndTeachers' => 'Affected classes and teachers',
 ];

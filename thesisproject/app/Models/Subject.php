@@ -51,6 +51,15 @@ class Subject extends Model
             });
     }
 
+    public function CoursesInTermAndStudent($term_id, $student_id): HasMany
+    {
+        return $this->hasMany(Course::class)
+            ->where('term_id', '=', $term_id)
+            ->whereHas('Students', function ($query) use ($student_id) {
+                return $query->where('users.id', '=', $student_id);
+            });
+    }
+
     public function CoursesTaughtByTeacher($teacher_id): HasMany
     {
         if ($teacher_id == $this->Manager->id) {
@@ -60,6 +69,14 @@ class Subject extends Model
         return $this->hasMany(Course::class)
             ->whereHas('Teachers', function ($query) use ($teacher_id) {
                 return $query->where('users.id', '=', $teacher_id);
+            });
+    }
+
+    public function CoursesHasStudent($student_id): HasMany
+    {
+        return $this->hasMany(Course::class)
+            ->whereHas('Students', function ($query) use ($student_id) {
+                return $query->where('users.id', '=', $student_id);
             });
     }
 }

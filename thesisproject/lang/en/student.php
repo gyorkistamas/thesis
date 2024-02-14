@@ -7,4 +7,13 @@ return [
     'presenceAlreadySetCannotModifyHere' => 'Presence already set, cannot modify here',
     'mySubjectsSlashCourses' => 'My subjects/courses',
     'numberOfClasses' => 'Number of classes',
+    'myJustifications' => 'My justifications',
+    'newJustification' => 'New justification',
+    'doctorJustification' => 'Doctor justification',
+    'otherJustification' => 'Other justification',
+    'justificationType' => 'Justification type',
+    'chooseOne' => 'Choose one',
+    'comment' => 'Comment',
+    'uploadPictures' => 'Upload pictures',
+    'upload' => 'Upload',
 ];

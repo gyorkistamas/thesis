@@ -20,6 +20,9 @@
                 <div class="flex-none hidden lg:block">
                     <ul class="menu menu-horizontal">
                         <li><a href="{{route('home')}}" wire:navigate>{{__('general.homePage')}}</a></li>
+                        @if(Auth::user() && Auth::user()->hasRole('student'))
+                            <li><a href="{{route('student-subjects')}}" wire:navigate>{{__('student.mySubjectsSlashCourses')}}</a></li>
+                        @endif
                         @if(Auth::user() && Auth::user()->hasRole('teacher'))
                             <li><a href="{{route('teacher-subjects')}}" wire:navigate>{{__('teacher.mySubjectSlashCourses')}}</a></li>
                         @endif

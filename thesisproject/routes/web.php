@@ -69,4 +69,5 @@ Route::middleware(['auth', 'teacher'])->group(function () {
 Route::middleware(['auth', 'student'])->group(function () {
     Route::get('student-class-login/{uuid}', [StudentController::class, 'loginToClass'])->name('student-class-login');
     Route::get('student-class-login-link', [StudentController::class, 'getLoginLink'])->name('student-class-login-link');
+    Route::get('student-subjects', [StudentController::class, 'studentSubjects'])->name('student-subjects');
 });

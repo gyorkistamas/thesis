@@ -30,9 +30,7 @@
                 <x-icons.person_fill_small/>
                 <span
                     class="font-bold">{{__('general.teachers')}}:</span> @foreach($class->Course->Teachers as $teacher)
-                    {{$teacher->name}}@if(!$loop->last)
-                        ,
-                    @endif
+                    {{$teacher->name}}@if(!$loop->last), @endif
                 @endforeach
             </div>
 

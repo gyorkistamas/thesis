@@ -5,4 +5,6 @@ return [
     'status' => 'Státusz',
     'iAmPresent' => 'Jelen vagyok',
     'presenceAlreadySetCannotModifyHere' => 'Jelenlét már beállítva, itt nem módosítható.',
+    'mySubjectsSlashCourses' => 'Tantárgyaim/kurzusaim',
+    'numberOfClasses' => 'Órák száma',
 ];

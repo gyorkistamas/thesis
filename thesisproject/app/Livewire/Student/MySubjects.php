@@ -21,7 +21,6 @@ class MySubjects extends Component
         $this->semesterSearch = $data;
     }
 
-
     public function render()
     {
         $subjects = Subject::whereHas('Courses', function ($query) {
@@ -41,7 +40,6 @@ class MySubjects extends Component
                 }
             })
             ->paginate(10, pageName: 'subjectPage');
-
 
         return view('livewire.student.my-subjects')->with('subjects', $subjects);
     }

@@ -53,6 +53,7 @@ class StudentJustificationPage extends Component
     {
         if (Auth::user()->cannot('create', Justification::class)) {
             toast()->danger(__('general.noPermission'), __('general.error'))->push();
+
             return;
         }
         // TODO show actual error messages

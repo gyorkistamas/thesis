@@ -22,6 +22,7 @@
                         <li><a href="{{route('home')}}" wire:navigate>{{__('general.homePage')}}</a></li>
                         @if(Auth::user() && Auth::user()->hasRole('student'))
                             <li><a href="{{route('student-subjects')}}" wire:navigate>{{__('student.mySubjectsSlashCourses')}}</a></li>
+                            <li><a href="{{route('student-justifications')}}" wire:navigate>{{__('student.myJustifications')}}</a></li>
                         @endif
                         @if(Auth::user() && Auth::user()->hasRole('teacher'))
                             <li><a href="{{route('teacher-subjects')}}" wire:navigate>{{__('teacher.mySubjectSlashCourses')}}</a></li>

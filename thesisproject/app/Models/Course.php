@@ -45,4 +45,11 @@ class Course extends Model
     {
         return $this->belongsTo(Term::class);
     }
+
+    public function NumberOfStatusForStudent($student_id, $status)
+    {
+        return $this->Classes()->whereHas('StudentsWithPresence', function ($query) use ($student_id, $status) {
+            $query->where('users.id', $student_id)->where('attendance', $status);
+        })->count();
+    }
 }

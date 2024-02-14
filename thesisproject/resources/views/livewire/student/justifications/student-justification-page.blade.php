@@ -97,7 +97,7 @@
                                         </div>
                                         <input type="file" accept="image/*" multiple class="file-input file-input-bordered file-input-accent w-full max-w-xs" wire:model.live="images" id="fileUpload"/>
                                     </label>
-                                    <button class="btn btn-success btn-sm" wire:click="uploadPics"><x-icons.plus_fill_small />{{__('student.upload')}}</button>
+                                    <button class="btn btn-success btn-sm" wire:loading.attr="disabled" wire:loading.class="disabled" wire:click="uploadPics"><x-icons.plus_fill_small />{{__('student.upload')}}</button>
 
                                     @script
                                     <script>
@@ -145,8 +145,14 @@
 
                     </div>
 
-                    <div class="col-span-1">
-                        dolgok
+                    <div class="col-span-1 flex flex-col">
+                        <div class="prose">
+                            <h3>{{__('student.affectedClassesAndTeachers')}}:</h3>
+                        </div>
+
+                        <div>
+                            todo
+                        </div>
                     </div>
                 </div>
 

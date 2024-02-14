@@ -34,4 +34,9 @@ class StudentController extends Controller
     {
         return view('student.subjects');
     }
+
+    public function getJustifications()
+    {
+        return view('student.justifications');
+    }
 }

@@ -18,9 +18,11 @@
             <label for="newJustification" aria-label="close sidebar"
                    class="drawer-overlay"></label>
             <div class="p-4 w-full min-h-full bg-base-200 text-base-content">
-                <div class="fixed inset-0 flex items-center justify-center"
-                     style="pointer-events: none;">
+                <div class="inset-0 flex items-center justify-center z-[9999] absolute" style="pointer-events: none;" >
                     <span class="loading loading-dots loading-lg" wire:loading></span>
+                </div>
+
+                <div class="absolute inset-0 flex items-center justify-center z-[9999]" wire:loading>
                 </div>
                 <div
                     class="prose mb-3 flex flex-row flex-wrap justify-between min-w-full max-w-full md:flex-row">
@@ -29,8 +31,123 @@
                 <label for="newJustification"
                        class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">X</label>
 
-                <div>
+                <div class="grid grid-cols-1 xl:grid-cols-2 gap-5 xl:gap-12">
+                    <div class="flex flex-col gap-5 col-span-1">
+                        <div class="flex flex-col items-center gap-3 md:flex-row md:justify-start md:gap-10 md:items-start">
+                            <div class="w-fit">
+                                <label class="form-control w-full max-w-xs">
+                                    <div class="label">
+                                        <span class="label-text">{{__('student.justificationType')}}: </span>
+                                    </div>
+                                    <select class="select select-bordered select-accent" wire:model="type">
+                                        <option value="doctor" selected>{{__('student.doctorJustification')}}</option>
+                                        <option value="other">{{__('student.otherJustification')}}</option>
+                                    </select>
+                                </label>
+                                @error('type')
+                                <x-error-alert class="mt-2">{{$message}}</x-error-alert>
+                                @enderror
+                            </div>
 
+                            <div class="w-fit">
+                                <label class="form-control w-full max-w-xs">
+                                    <div class="label">
+                                        <span class="label-text">{{__('general.startTime')}}: </span>
+                                    </div>
+                                    <input type="datetime-local" class="input input-bordered input-accent w-full max-w-xs" wire:model.live="start"/>
+                                </label>
+                                @error('start')
+                                <x-error-alert class="mt-2">{{$message}}</x-error-alert>
+                                @enderror
+                            </div>
+
+                            <div class="w-fit">
+                                <label class="form-control w-full max-w-xs">
+                                    <div class="label">
+                                        <span class="label-text">{{__('general.endTime')}}: </span>
+                                    </div>
+                                    <input type="datetime-local" placeholder="Type here" class="input input-bordered input-accent w-full max-w-xs" wire:model.live="end"/>
+                                </label>
+                                @error('end')
+                                <x-error-alert class="mt-2">{{$message}}</x-error-alert>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div>
+                            <div>
+                                <label class="form-control">
+                                    <div class="label">
+                                        <span class="label-text">{{__('student.comment')}}: </span>
+                                    </div>
+                                    <textarea class="textarea textarea-bordered textarea-accent h-24" wire:model="comment"></textarea>
+                                </label>
+                                @error('comment')
+                                <x-error-alert class="mt-2">{{$message}}</x-error-alert>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex flex-col">
+                                <div class="flex md:flex-row gap-2 md:items-end  flex-col justify-center md:justify-start">
+                                    <label class="form-control w-full max-w-xs">
+                                        <div class="label">
+                                            <span class="label-text">{{__('student.uploadPictures')}}</span>
+                                        </div>
+                                        <input type="file" accept="image/*" multiple class="file-input file-input-bordered file-input-accent w-full max-w-xs" wire:model.live="images" id="fileUpload"/>
+                                    </label>
+                                    <button class="btn btn-success btn-sm" wire:click="uploadPics"><x-icons.plus_fill_small />{{__('student.upload')}}</button>
+
+                                    @script
+                                    <script>
+                                        $wire.on('clearFileUpload', () => {
+                                            document.getElementById('fileUpload').value = null;
+                                        });
+                                    </script>
+                                    @endscript
+
+                                </div>
+                                <div>
+                                    @error('images.*')
+                                    <x-error-alert class="mt-2">{{$message}}</x-error-alert>
+                                    @enderror
+                                    @error('uploadedPics.*')
+                                    <x-error-alert class="mt-2">{{$message}}</x-error-alert>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col mt-5 gap-3">
+                                @if($uploadedPics)
+                                    @foreach($uploadedPics as $image)
+                                        <div class="flex flex-row gap-2 justify-start items-center">
+                                            <div class="avatar">
+                                                <div class="w-12 rounded">
+                                                    <img src="{{ $image->temporaryUrl() }}" alt="image" />
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <span>{{$image->getClientOriginalName()}}</span>
+                                            </div>
+                                            <div>
+                                                <button class="btn btn-error btn-sm" wire:click="removeImage({{ $loop->index }})"><x-icons.delete_fill_small /></button>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="flex flex-row justify-center md:justify-end">
+                            <button class="btn btn-success" wire:click="createJustification"><x-icons.plus_fill_small />{{__('general.save')}}</button>
+                        </div>
+
+                    </div>
+
+                    <div class="col-span-1">
+                        dolgok
+                    </div>
                 </div>
 
             </div>

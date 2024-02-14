@@ -29,4 +29,9 @@ class StudentController extends Controller
 
         return view('student.login-to-class')->with(['classId' => $request->session()->get('classid')]);
     }
+
+    public function studentSubjects()
+    {
+        return view('student.subjects');
+    }
 }

@@ -73,9 +73,10 @@ class ClassTableItem extends Component
     public function mount($class)
     {
         $this->class = $class;
-        $this->editStart = $class->start_time;
-        $this->editEnd = $class->end_time;
+        $this->editStart = $class->start_time->isoFormat('YYYY-MM-DD HH:mm:ss');
+        $this->editEnd = $class->end_time->isoFormat('YYYY-MM-DD HH:mm:ss');
         $this->editPlace = $class->Place->id;
+        //dd($this);
     }
 
     public function render()

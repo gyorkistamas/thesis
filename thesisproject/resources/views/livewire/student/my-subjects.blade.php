@@ -28,4 +28,6 @@
         </div>
     @endif
 
+    {{$subjects->links()}}
+
 </div>

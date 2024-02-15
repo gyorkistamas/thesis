@@ -4,6 +4,7 @@ namespace App\Livewire\Student\Justifications;
 
 use App\Models\Justification;
 use App\Models\Subject;
+use App\Models\User;
 use Auth;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -52,21 +53,53 @@ class StudentJustificationPage extends Component
 
     public function createJustification()
     {
-        dd($this->getAffectedClasses());
-
         if (Auth::user()->cannot('create', Justification::class)) {
             toast()->danger(__('general.noPermission'), __('general.error'))->push();
 
             return;
         }
-
         $this->validate();
+
+        $justification = Auth::user()->Justifications()->create([
+            'type' => $this->type,
+            'start_date' => $this->start,
+            'end_time' => $this->end,
+            'description' => $this->comment,
+        ]);
+
+        $justification->Pictures()->createMany(array_map(function ($image) {
+            return ['picture_name' => $image->store('justification_pictures', 'public')];
+        }, $this->uploadedPics));
+
+        // assign teachers
+        $teachers = User::whereHas('TaughtCourses', function ($query) {
+            $query->whereHas('Classes', function ($query) {
+                $query->where('start_time', '>=', $this->start);
+                $query->where('end_time', '<=', $this->end);
+
+            });
+            $query->whereHas('Students', function ($query) {
+                $query->where('users.id', Auth::id());
+            });
+        })
+            ->distinct()
+            ->get();
+
+        $justification->GetTeachers()->attach($teachers->pluck('id')->toArray());
+
+        $this->type = 'doctor';
+        $this->start = null;
+        $this->end = null;
+        $this->comment = null;
+        $this->uploadedPics = [];
+
+        toast()->success(__('student.justificationCreatedTeachersNotified'), __('general.success'))->push();
     }
 
     public function getAffectedClasses()
     {
         // TODO class creation not show date in subjects
-        $subjects = Subject::whereHas('Courses', function ($query) {
+        return Subject::whereHas('Courses', function ($query) {
             $query->whereHas('Students', function ($query) {
                 $query->where('users.id', Auth::id());
             });
@@ -75,7 +108,6 @@ class StudentJustificationPage extends Component
                 $query->where('end_time', '<=', $this->end);
             });
         })->get();
-        return $subjects;
     }
 
     public function render()

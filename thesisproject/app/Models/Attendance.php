@@ -15,6 +15,13 @@ class Attendance extends Pivot
         'course_class_id',
         'attendance',
         'late_minutes',
+        'created_at',
+        'updated_at',
+    ];
+
+    public $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     public $incrementing = true;

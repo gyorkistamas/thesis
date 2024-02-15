@@ -17,4 +17,10 @@ return [
     'uploadPictures' => 'Upload pictures',
     'upload' => 'Upload',
     'affectedClassesAndTeachers' => 'Affected classes and teachers',
+    'justificationCreatedTeachersNotified' => 'Justification created, teachers notified',
+    'uploadedPictures' => 'Uploaded pictures',
+    'teacherResponses' => 'Teacher responses',
+    'accepted' => 'Accepted',
+    'rejected' => 'Rejected',
+    'noResponse' => 'No response',
 ];

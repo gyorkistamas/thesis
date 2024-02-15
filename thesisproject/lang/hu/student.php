@@ -17,4 +17,10 @@ return [
     'uploadPictures' => 'Képek feltöltése',
     'upload' => 'Feltöltés',
     'affectedClassesAndTeachers' => 'Érintett órák és tanárok',
+    'justificationCreatedTeachersNotified' => 'Igazolás létrehozva, tanárok értesítve',
+    'uploadedPictures' => 'Feltöltött képek',
+    'teacherResponses' => 'Tanári visszajelzések',
+    'accepted' => 'Elfogadva',
+    'rejected' => 'Elutasítva',
+    'noResponse' => 'Nincs válasz',
 ];

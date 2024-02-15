@@ -151,7 +151,70 @@
                         </div>
 
                         <div>
-                            todo
+                            @if($start && $end)
+                                <ul class="menu bg-base-200 w-full rounded-box">
+                                    @foreach($this->getAffectedClasses() as $subject)
+                                        <li>
+                                            <details open>
+                                                <summary class="font-bold text-xl text-success">{{$subject->id}} - {{$subject->name}}</summary>
+                                                <ul>
+                                                    @foreach($subject->CoursesWithClassesBetweenDatesAndStudents(Auth::user()->id, $start, $end)->get() as $course)
+                                                        <li>
+                                                            <details open>
+                                                                <summary class="text-lg text-info">{{$course->course_id}} ( {{__('general.teachers')}}: @foreach($course->Teachers as $teacher){{$teacher->name}}@if(! $loop->last), @endif @endforeach )</summary>
+                                                                <ul>
+                                                                    @foreach($course->ClassesBetweenTimes($start, $end)->get() as $class)
+                                                                        <li>
+                                                                            <a disabled>
+                                                                                {{\Carbon\Carbon::parse($class->start_time)->isoFormat('YYYY.MM.DD, dddd, HH:mm')}} - {{\Carbon\Carbon::parse($class->end_time)->isoFormat('YYYY.MM.DD, dddd, HH:mm')}}
+                                                                                @switch($class->GetStudent(Auth::user()->id)->first()->pivot->attendance)
+                                                                                    @case('not_filled')
+                                                                                        <div class="badge badge-info gap-2">
+                                                                                            {{__('teacher.notFilled')}}
+                                                                                        </div>
+                                                                                        @break
+
+                                                                                    @case('present')
+                                                                                        <div class="badge badge-success gap-2">
+                                                                                            {{__('teacher.present')}}
+                                                                                        </div>
+                                                                                        @break
+
+                                                                                    @case('late')
+                                                                                        <div class="badge badge-warning gap-2">
+                                                                                            {{__('teacher.late')}} ({{$attendance->late_minutes}} {{__('teacher.minutes')}})
+                                                                                        </div>
+                                                                                        @break
+
+                                                                                    @case('justified')
+                                                                                        <div class="badge badge-warning gap-2">
+                                                                                            {{__('teacher.justified')}}
+                                                                                        </div>
+                                                                                        @break
+
+                                                                                    @case('missing')
+                                                                                        <div class="badge badge-error gap-2">
+                                                                                            {{__('teacher.absent')}}
+                                                                                        </div>
+                                                                                        @break
+                                                                                @endswitch
+                                                                            </a>
+                                                                        </li>
+                                                                    @endforeach
+                                                                </ul>
+                                                            </details>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </details>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @else
+                                <div class="prose">
+                                    <h4>{{__('general.searchNotFound')}}</h4>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

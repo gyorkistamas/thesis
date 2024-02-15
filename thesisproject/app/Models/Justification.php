@@ -15,19 +15,29 @@ class Justification extends Model
     protected $fillable = [
         'user_id',
         'start_date',
-        'end_date',
+        'end_time',
         'description',
+        'type',
+        'created_at',
+        'updated_at',
     ];
 
-    public function GetPictures(): HasMany
+    public $casts = [
+        'start_date' => 'datetime',
+        'end_time' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
+    public function Pictures(): HasMany
     {
         return $this->hasMany(JustificationPicture::class);
     }
 
     public function GetTeachers(): BelongsToMany
     {
-        return $this->belongsToMany(User::class)
-            ->as('acceptance')
+        return $this->belongsToMany(User::class, 'justification_acceptances')
+            ->using(JustificationAcceptance::class)
             ->withPivot('status');
     }
 

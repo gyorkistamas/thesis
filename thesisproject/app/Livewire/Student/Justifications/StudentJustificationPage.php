@@ -3,6 +3,7 @@
 namespace App\Livewire\Student\Justifications;
 
 use App\Models\Justification;
+use App\Models\Subject;
 use Auth;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -51,13 +52,30 @@ class StudentJustificationPage extends Component
 
     public function createJustification()
     {
+        dd($this->getAffectedClasses());
+
         if (Auth::user()->cannot('create', Justification::class)) {
             toast()->danger(__('general.noPermission'), __('general.error'))->push();
 
             return;
         }
-        // TODO show actual error messages
+
         $this->validate();
+    }
+
+    public function getAffectedClasses()
+    {
+        // TODO class creation not show date in subjects
+        $subjects = Subject::whereHas('Courses', function ($query) {
+            $query->whereHas('Students', function ($query) {
+                $query->where('users.id', Auth::id());
+            });
+            $query->whereHas('Classes', function ($query) {
+                $query->where('start_time', '>=', $this->start);
+                $query->where('end_time', '<=', $this->end);
+            });
+        })->get();
+        return $subjects;
     }
 
     public function render()

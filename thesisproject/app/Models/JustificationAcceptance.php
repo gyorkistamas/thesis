@@ -13,6 +13,7 @@ class JustificationAcceptance extends Pivot
         'justification_id',
         'user_id',
         'status',
+        'comment',
     ];
 
     public $table = 'justification_acceptances';

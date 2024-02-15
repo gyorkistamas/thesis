@@ -67,11 +67,11 @@ class StudentJustificationPage extends Component
             'description' => $this->comment,
         ]);
 
+        //TODO fix or limit the length of comment
         $justification->Pictures()->createMany(array_map(function ($image) {
             return ['picture_name' => $image->store('justification_pictures', 'public')];
         }, $this->uploadedPics));
 
-        // assign teachers
         $teachers = User::whereHas('TaughtCourses', function ($query) {
             $query->whereHas('Classes', function ($query) {
                 $query->where('start_time', '>=', $this->start);
@@ -98,7 +98,6 @@ class StudentJustificationPage extends Component
 
     public function getAffectedClasses()
     {
-        // TODO class creation not show date in subjects
         return Subject::whereHas('Courses', function ($query) {
             $query->whereHas('Students', function ($query) {
                 $query->where('users.id', Auth::id());
@@ -112,6 +111,12 @@ class StudentJustificationPage extends Component
 
     public function render()
     {
-        return view('livewire.student.justifications.student-justification-page');
+        $justifications = Auth::user()->Justifications()
+            ->with('Pictures')
+            ->orderBy('created_at')
+            ->paginate(10);
+
+        return view('livewire.student.justifications.student-justification-page')->with('justifications',
+            $justifications);
     }
 }

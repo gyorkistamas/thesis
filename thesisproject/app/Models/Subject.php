@@ -76,7 +76,19 @@ class Subject extends Model
     {
         return $this->hasMany(Course::class)
             ->whereHas('Students', function ($query) use ($student_id) {
-                return $query->where('users.id', '=', $student_id);
+                $query->where('users.id', '=', $student_id);
+            });
+    }
+
+    public function CoursesWithClassesBetweenDatesAndStudents($student_id, $start, $end): HasMany
+    {
+        return $this->hasMany(Course::class)
+            ->whereHas('Students', function ($query) use ($student_id) {
+                $query->where('users.id', '=', $student_id);
+            })
+            ->whereHas('Classes', function ($query) use ($start, $end) {
+                $query->where('start_time', '>=', $start);
+                $query->where('end_time', '<=', $end);
             });
     }
 }

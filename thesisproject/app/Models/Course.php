@@ -33,7 +33,7 @@ class Course extends Model
 
     public function Classes(): HasMany
     {
-        return $this->hasMany(CourseClass::class);
+        return $this->hasMany(CourseClass::class, 'course_id');
     }
 
     public function Subject(): BelongsTo
@@ -51,5 +51,10 @@ class Course extends Model
         return $this->Classes()->whereHas('StudentsWithPresence', function ($query) use ($student_id, $status) {
             $query->where('users.id', $student_id)->where('attendance', $status);
         })->count();
+    }
+
+    public function ClassesBetweenTimes($start, $end)
+    {
+        return $this->Classes()->where('start_time', '>=', $start)->where('end_time', '<=', $end);
     }
 }

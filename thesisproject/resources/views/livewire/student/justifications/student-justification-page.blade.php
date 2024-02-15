@@ -9,7 +9,17 @@
     </div>
 
     <div>
-        <!-- List of justifications. -->
+        <!-- Filter. -->
+    </div>
+
+    <div>
+        @forelse($justifications as $justification)
+            <livewire:student.justifications.justification-item :justification="$justification" :key="'justification-dropdown'.$justification->id"/>
+        @empty
+            <div class="prose mt-4">
+                <h2>{{__('general.noResult')}}</h2>
+            </div>
+        @endforelse
     </div>
 
     <div class="drawer z-[200]" wire:ignore.self>
@@ -179,9 +189,7 @@
                                                                         class="text-lg text-info">{{$course->course_id}}
                                                                     ( {{__('general.teachers')}}
                                                                     : @foreach($course->Teachers as $teacher)
-                                                                        {{$teacher->name}}@if(! $loop->last)
-                                                                            ,
-                                                                        @endif
+                                                                        {{$teacher->name}}@if(! $loop->last), @endif
                                                                     @endforeach )</summary>
                                                                 <ul>
                                                                     @foreach($course->ClassesBetweenTimes($start, $end)->get() as $class)
@@ -246,4 +254,5 @@
             </div>
         </div>
     </div>
+    {{ $justifications->links()}}
 </div>

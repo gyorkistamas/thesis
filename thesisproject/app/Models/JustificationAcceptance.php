@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class JustificationAcceptance extends Model
+class JustificationAcceptance extends Pivot
 {
     use HasFactory;
 
@@ -14,4 +14,18 @@ class JustificationAcceptance extends Model
         'user_id',
         'status',
     ];
+
+    public $table = 'justification_acceptances';
+
+    public $incrementing = true;
+
+    public function Justification()
+    {
+        return $this->belongsTo(Justification::class, 'justification_id');
+    }
+
+    public function Teacher()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

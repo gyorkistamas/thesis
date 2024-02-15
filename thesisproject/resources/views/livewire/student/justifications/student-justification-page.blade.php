@@ -5,7 +5,7 @@
         </div>
 
         <label for="newJustification" class="btn btn-success">
-            <x-icons.plus_fill_small />{{__('student.newJustification')}}</label>
+            <x-icons.plus_fill_small/>{{__('student.newJustification')}}</label>
     </div>
 
     <div>
@@ -18,14 +18,14 @@
             <label for="newJustification" aria-label="close sidebar"
                    class="drawer-overlay"></label>
             <div class="p-4 w-full min-h-full bg-base-200 text-base-content">
-                <div class="inset-0 flex items-center justify-center z-[9999] absolute" style="pointer-events: none;" >
+                <div class="inset-0 flex items-center justify-center z-[9999] absolute" style="pointer-events: none;">
                     <span class="loading loading-dots loading-lg" wire:loading></span>
                 </div>
 
                 <div class="absolute inset-0 flex items-center justify-center z-[9999]" wire:loading>
                 </div>
                 <div
-                    class="prose mb-3 flex flex-row flex-wrap justify-between min-w-full max-w-full md:flex-row">
+                        class="prose mb-3 flex flex-row flex-wrap justify-between min-w-full max-w-full md:flex-row">
                     <h1 class="mb-0 mx-auto md:mx-0 md:ms-1">{{__('student.newJustification')}}</h1>
                 </div>
                 <label for="newJustification"
@@ -54,7 +54,9 @@
                                     <div class="label">
                                         <span class="label-text">{{__('general.startTime')}}: </span>
                                     </div>
-                                    <input type="datetime-local" class="input input-bordered input-accent w-full max-w-xs" wire:model.live="start"/>
+                                    <input type="datetime-local"
+                                           class="input input-bordered input-accent w-full max-w-xs"
+                                           wire:model.live="start"/>
                                 </label>
                                 @error('start')
                                 <x-error-alert class="mt-2">{{$message}}</x-error-alert>
@@ -66,7 +68,9 @@
                                     <div class="label">
                                         <span class="label-text">{{__('general.endTime')}}: </span>
                                     </div>
-                                    <input type="datetime-local" placeholder="Type here" class="input input-bordered input-accent w-full max-w-xs" wire:model.live="end"/>
+                                    <input type="datetime-local" placeholder="Type here"
+                                           class="input input-bordered input-accent w-full max-w-xs"
+                                           wire:model.live="end"/>
                                 </label>
                                 @error('end')
                                 <x-error-alert class="mt-2">{{$message}}</x-error-alert>
@@ -80,7 +84,8 @@
                                     <div class="label">
                                         <span class="label-text">{{__('student.comment')}}: </span>
                                     </div>
-                                    <textarea class="textarea textarea-bordered textarea-accent h-24" wire:model="comment"></textarea>
+                                    <textarea class="textarea textarea-bordered textarea-accent h-24"
+                                              wire:model="comment"></textarea>
                                 </label>
                                 @error('comment')
                                 <x-error-alert class="mt-2">{{$message}}</x-error-alert>
@@ -95,9 +100,13 @@
                                         <div class="label">
                                             <span class="label-text">{{__('student.uploadPictures')}}</span>
                                         </div>
-                                        <input type="file" accept="image/*" multiple class="file-input file-input-bordered file-input-accent w-full max-w-xs" wire:model.live="images" id="fileUpload"/>
+                                        <input type="file" accept="image/*" multiple
+                                               class="file-input file-input-bordered file-input-accent w-full max-w-xs"
+                                               wire:model.live="images" id="fileUpload"/>
                                     </label>
-                                    <button class="btn btn-success btn-sm" wire:loading.attr="disabled" wire:loading.class="disabled" wire:click="uploadPics"><x-icons.plus_fill_small />{{__('student.upload')}}</button>
+                                    <button class="btn btn-success btn-sm" wire:loading.attr="disabled"
+                                            wire:loading.class="disabled" wire:click="uploadPics">
+                                        <x-icons.plus_fill_small/>{{__('student.upload')}}</button>
 
                                     @script
                                     <script>
@@ -124,14 +133,17 @@
                                         <div class="flex flex-row gap-2 justify-start items-center">
                                             <div class="avatar">
                                                 <div class="w-12 rounded">
-                                                    <img src="{{ $image->temporaryUrl() }}" alt="image" />
+                                                    <img src="{{ $image->temporaryUrl() }}" alt="image"/>
                                                 </div>
                                             </div>
                                             <div>
                                                 <span>{{$image->getClientOriginalName()}}</span>
                                             </div>
                                             <div>
-                                                <button class="btn btn-error btn-sm" wire:click="removeImage({{ $loop->index }})"><x-icons.delete_fill_small /></button>
+                                                <button class="btn btn-error btn-sm"
+                                                        wire:click="removeImage({{ $loop->index }})">
+                                                    <x-icons.delete_fill_small/>
+                                                </button>
                                             </div>
                                         </div>
                                     @endforeach
@@ -140,7 +152,8 @@
                         </div>
 
                         <div class="flex flex-row justify-center md:justify-end">
-                            <button class="btn btn-success" wire:click="createJustification"><x-icons.plus_fill_small />{{__('general.save')}}</button>
+                            <button class="btn btn-success" wire:click="createJustification">
+                                <x-icons.plus_fill_small/>{{__('general.save')}}</button>
                         </div>
 
                     </div>
@@ -156,17 +169,26 @@
                                     @foreach($this->getAffectedClasses() as $subject)
                                         <li>
                                             <details open>
-                                                <summary class="font-bold text-xl text-success">{{$subject->id}} - {{$subject->name}}</summary>
+                                                <summary class="font-bold text-xl text-success">{{$subject->id}}
+                                                    - {{$subject->name}}</summary>
                                                 <ul>
                                                     @foreach($subject->CoursesWithClassesBetweenDatesAndStudents(Auth::user()->id, $start, $end)->get() as $course)
                                                         <li>
                                                             <details open>
-                                                                <summary class="text-lg text-info">{{$course->course_id}} ( {{__('general.teachers')}}: @foreach($course->Teachers as $teacher){{$teacher->name}}@if(! $loop->last), @endif @endforeach )</summary>
+                                                                <summary
+                                                                        class="text-lg text-info">{{$course->course_id}}
+                                                                    ( {{__('general.teachers')}}
+                                                                    : @foreach($course->Teachers as $teacher)
+                                                                        {{$teacher->name}}@if(! $loop->last)
+                                                                            ,
+                                                                        @endif
+                                                                    @endforeach )</summary>
                                                                 <ul>
                                                                     @foreach($course->ClassesBetweenTimes($start, $end)->get() as $class)
                                                                         <li>
                                                                             <a disabled>
-                                                                                {{\Carbon\Carbon::parse($class->start_time)->isoFormat('YYYY.MM.DD, dddd, HH:mm')}} - {{\Carbon\Carbon::parse($class->end_time)->isoFormat('YYYY.MM.DD, dddd, HH:mm')}}
+                                                                                {{\Carbon\Carbon::parse($class->start_time)->isoFormat('YYYY.MM.DD, dddd, HH:mm')}}
+                                                                                - {{\Carbon\Carbon::parse($class->end_time)->isoFormat('YYYY.MM.DD, dddd, HH:mm')}}
                                                                                 @switch($class->GetStudent(Auth::user()->id)->first()->pivot->attendance)
                                                                                     @case('not_filled')
                                                                                         <div class="badge badge-info gap-2">
@@ -182,7 +204,9 @@
 
                                                                                     @case('late')
                                                                                         <div class="badge badge-warning gap-2">
-                                                                                            {{__('teacher.late')}} ({{$attendance->late_minutes}} {{__('teacher.minutes')}})
+                                                                                            {{__('teacher.late')}}
+                                                                                            ({{$attendance->late_minutes}} {{__('teacher.minutes')}}
+                                                                                            )
                                                                                         </div>
                                                                                         @break
 

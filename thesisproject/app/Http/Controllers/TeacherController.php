@@ -15,4 +15,9 @@ class TeacherController extends Controller
     {
         return view('teacher.view-course')->with('courseClass', $courseClass);
     }
+
+    public function getJustifications()
+    {
+        return view('teacher.justifications');
+    }
 }

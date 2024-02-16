@@ -153,8 +153,6 @@
                 </div>
             @endif
         </div>
-
-
         @teleport('body')
         <dialog id="justificationDeleteModal{{$justification->id}}" class="modal modal-bottom sm:modal-middle">
             <div class="modal-box">
@@ -163,7 +161,6 @@
                 <div class="modal-action">
                     <button class="btn btn-error" wire:click="deleteJustification"><x-icons.delete_fill_small />{{__('general.delete')}}</button>
                     <form method="dialog">
-                        <!-- if there is a button in form, it will close the modal -->
                         <button class="btn">{{__('general.close')}}</button>
                     </form>
                 </div>

@@ -255,4 +255,13 @@
         </div>
     </div>
     {{ $justifications->links()}}
+
+    @script
+    <script>
+        $wire.on('closeDeleteModal', (event) => {
+            console.log(event);
+            document.getElementById('justificationDeleteModal'+event[0].id).close();
+        });
+    </script>
+    @endscript
 </div>

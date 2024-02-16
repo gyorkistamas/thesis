@@ -38,7 +38,18 @@ class Justification extends Model
     {
         return $this->belongsToMany(User::class, 'justification_acceptances')
             ->using(JustificationAcceptance::class)
-            ->withPivot('status');
+            ->withPivot('status', 'comment');
+    }
+
+    public function GetTeacherResponse($user_id)
+    {
+        return $this->hasOne(JustificationAcceptance::class, 'justification_id', 'id')
+            ->where('user_id', $user_id);
+    }
+
+    public function Acceptances()
+    {
+        return $this->hasMany(JustificationAcceptance::class, 'justification_id', 'id');
     }
 
     public function GetAffectedClasses(): BelongsToMany|_IH_CourseClass_QB

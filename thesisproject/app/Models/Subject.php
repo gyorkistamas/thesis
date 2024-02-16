@@ -91,4 +91,19 @@ class Subject extends Model
                 $query->where('end_time', '<=', $end);
             });
     }
+
+    public function CoursesWithClassesBetweenDatesAndStudentsAndTeachers($student_id, $start, $end, $teacher_id): HasMany
+    {
+        return $this->hasMany(Course::class)
+            ->whereHas('Students', function ($query) use ($student_id) {
+                $query->where('users.id', '=', $student_id);
+            })
+            ->whereHas('Teachers', function ($query) use ($teacher_id) {
+                $query->where('users.id', '=', $teacher_id);
+            })
+            ->whereHas('Classes', function ($query) use ($start, $end) {
+                $query->where('start_time', '>=', $start);
+                $query->where('end_time', '<=', $end);
+            });
+    }
 }

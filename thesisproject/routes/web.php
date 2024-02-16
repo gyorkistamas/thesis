@@ -59,6 +59,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 Route::middleware(['auth', 'teacher'])->group(function () {
     Route::get('teacher-subjects', [TeacherController::class, 'teacherSubjects'])->name('teacher-subjects');
     Route::get('teacher-class/{courseClass}', [TeacherController::class, 'teacherClass'])->name('teacher-view-class');
+    Route::get('teacher-justifications', [TeacherController::class, 'getJustifications'])->name('teacher-justifications');
 });
 
 /*
@@ -70,6 +71,5 @@ Route::middleware(['auth', 'student'])->group(function () {
     Route::get('student-class-login/{uuid}', [StudentController::class, 'loginToClass'])->name('student-class-login');
     Route::get('student-class-login-link', [StudentController::class, 'getLoginLink'])->name('student-class-login-link');
     Route::get('student-subjects', [StudentController::class, 'studentSubjects'])->name('student-subjects');
-
     Route::get('/student-justifications', [StudentController::class, 'getJustifications'])->name('student-justifications');
 });

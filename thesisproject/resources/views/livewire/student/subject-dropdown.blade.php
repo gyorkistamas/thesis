@@ -232,8 +232,9 @@
                                             } else {
                                                 Chart.defaults.color = '#a7adbc';
                                             }
-                                            let ctx = document.getElementById('courseDiagram{{$course->id}}').getContext('2d');
-                                            let chart = new Chart(ctx, {
+                                            console.log('{{$course->id}}');
+                                            let ctx{{$course->id}} = document.getElementById('courseDiagram{{$course->id}}').getContext('2d');
+                                            let chart{{$course->id}} = new Chart(ctx{{$course->id}}, {
                                                 type: 'pie',
                                                 data: {
                                                     labels: [
@@ -289,7 +290,7 @@
                                         </script>
                                         @endscript
                                     </div>
-
+                                    <!-- TODO fix chart not showing up
                                 @endif
                             </div>
 

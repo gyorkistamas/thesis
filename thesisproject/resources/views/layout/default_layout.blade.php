@@ -26,6 +26,7 @@
                         @endif
                         @if(Auth::user() && Auth::user()->hasRole('teacher'))
                             <li><a href="{{route('teacher-subjects')}}" wire:navigate>{{__('teacher.mySubjectSlashCourses')}}</a></li>
+                            <li><a href="{{route('teacher-justifications')}}" wire:navigate>{{__('teacher.justifications')}}</a></li>
                         @endif
                         @if(Auth::user() && Auth::user()->hasRole(['admin', 'superadmin']))
                             <li tabindex="0">

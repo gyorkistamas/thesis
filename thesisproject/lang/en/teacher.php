@@ -22,4 +22,11 @@ return [
     'qrCodeDisabled' => 'QR code disabled',
     'disableQrCode' => 'Disable QR code',
     'qrCodeAutomaticallyDisablesAfterClass' => 'The QR code is automatically disabled after class.',
+    'justifications' => 'Justifications',
+    'response' => 'Response',
+    'accept' => 'Accept',
+    'deny' => 'Deny',
+    'reason' => 'Reason',
+    'youNeedToChooseOne' => 'You need to choose one',
+    'responseSaved' => 'Response saved',
 ];

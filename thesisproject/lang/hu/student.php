@@ -23,4 +23,6 @@ return [
     'accepted' => 'Elfogadva',
     'rejected' => 'Elutasítva',
     'noResponse' => 'Nincs válasz',
+    'confirmDeleteJustification' => 'Biztosan törölni szeretné ezt az igazolást?',
+    'justificationDeleted' => 'Igazolás törölve',
 ];

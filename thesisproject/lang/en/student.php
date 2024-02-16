@@ -23,4 +23,6 @@ return [
     'accepted' => 'Accepted',
     'rejected' => 'Rejected',
     'noResponse' => 'No response',
+    'confirmDeleteJustification' => 'Are you sure you want to delete this justification?',
+    'justificationDeleted' => 'Justification deleted',
 ];

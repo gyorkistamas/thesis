@@ -22,4 +22,11 @@ return [
     'qrCodeDisabled' => 'QR kód letiltva',
     'disableQrCode' => 'QR kód letiltása',
     'qrCodeAutomaticallyDisablesAfterClass' => 'A QR kód automatikusan letiltódik az óra után.',
+    'justifications' => 'Igazolások',
+    'response' => 'Válasz',
+    'accept' => 'Elfogad',
+    'deny' => 'Elutasít',
+    'reason' => 'Indoklás',
+    'youNeedToChooseOne' => 'Ki kell választania egyet',
+    'responseSaved' => 'Válasz elmentve',
 ];

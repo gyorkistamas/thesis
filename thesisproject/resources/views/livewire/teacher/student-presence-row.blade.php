@@ -13,28 +13,57 @@
                     <img src="{{ $student->get_pic() }}" alt="{{ $student->name }}">
                 </div>
             </div>
-            <div>
-                {{$student->neptun}} - {{$student->name}}
+            <div class="flex flex-col items-center md:items-start">
+                <span>{{$student->neptun}}</span>
+                <span>{{$student->name}}</span>
             </div>
         </div>
 
-        <div class="join join-vertical md:join-horizontal">
-            <!-- TODO igazolt óra ellenőrzése és hiányzások száma -->
-            <button class="btn btn-sm join-item btn-info @if($pivot->attendance != 'not_filled') btn-outline @endif" wire:click="setAttendance('not_filled')">{{__('teacher.notFilled')}}</button>
-            <button class="btn btn-sm join-item btn-success @if($pivot->attendance != 'present') btn-outline @endif" wire:click="setAttendance('present')">{{__('teacher.present')}}</button>
-            <details class="dropdown join-item dropdown-top dropdown-end" id="lateDropdown{{$student->id}}">
-                <summary tabindex="0" class="btn join-item btn-sm btn-warning  w-full @if($pivot->attendance != 'late') btn-outline @endif">{{__('teacher.late')}} @if($pivot->late_minutes != 0) ({{$pivot->late_minutes}} {{__('teacher.minutes')}}) @endif</summary>
-                <div tabindex="0" class="dropdown-content z-[1] card card-compact w-64 p-2 shadow bg-base-100">
-                    <div class="card-body">
-                        <input type="number" class="input input-bordered w-full" wire:model="lateMinutes" min="1" max="500">
-                        <button class="btn btn-sm btn-success" wire:click="setLateMinutes">{{__('general.save')}}</button>
+        <div class="flex flex-col">
+            @if($isJustified)
+                <div class="tooltip" data-tip="{{__('teacher.studentHasAcceptedJustification')}}">
+                    <div class="join join-vertical md:join-horizontal">
+                        <!-- TODO igazolt óra ellenőrzése és hiányzások száma -->
+                        <button class="btn btn-sm join-item btn-info @if($pivot->attendance != 'not_filled') btn-outline @endif" disabled>{{__('teacher.notFilled')}}</button>
+                        <button class="btn btn-sm join-item btn-success @if($pivot->attendance != 'present') btn-outline @endif" wire:click="setAttendance('present')">{{__('teacher.present')}}</button>
+                        <details class="dropdown join-item dropdown-top dropdown-end" id="lateDropdown{{$student->id}}">
+                            <summary tabindex="0" class="btn join-item btn-sm btn-warning  w-full @if($pivot->attendance != 'late') btn-outline @endif" disabled>{{__('teacher.late')}} @if($pivot->late_minutes != 0) ({{$pivot->late_minutes}} {{__('teacher.minutes')}}) @endif</summary>
+                            <div tabindex="0" class="dropdown-content z-[1] card card-compact w-64 p-2 shadow bg-base-100">
+                                <div class="card-body">
+                                    <input type="number" class="input input-bordered w-full" wire:model="lateMinutes" min="1" max="500">
+                                    <button class="btn btn-sm btn-success" wire:click="setLateMinutes">{{__('general.save')}}</button>
+                                </div>
+                            </div>
+                        </details>
+                        <button class="btn btn-sm join-item btn-warning @if($pivot->attendance != 'justified') btn-outline @endif @if($pivot->attendance == 'justified') pointer-events-none @endif" wire:click="setAttendance('justified')">{{__('teacher.justified')}}</button>
+                        <button class="btn btn-sm join-item btn-error @if($pivot->attendance != 'missing') btn-outline @endif" wire:click="setAttendance('missing')" disabled>{{__('teacher.absent')}}</button>
                     </div>
                 </div>
-            </details>
-            <button class="btn btn-sm join-item btn-warning @if($pivot->attendance != 'justified') btn-outline @endif" wire:click="setAttendance('justified')">{{__('teacher.justified')}}</button>
-            <button class="btn btn-sm join-item btn-error @if($pivot->attendance != 'missing') btn-outline @endif" wire:click="setAttendance('missing')">{{__('teacher.absent')}}</button>
+            @else
+                <div class="join join-vertical md:join-horizontal">
+                    <!-- TODO igazolt óra ellenőrzése és hiányzások száma -->
+                    <button class="btn btn-sm join-item btn-info @if($pivot->attendance != 'not_filled') btn-outline @endif pointer-events-none">{{__('teacher.notFilled')}}</button>
+                    <button class="btn btn-sm join-item btn-success @if($pivot->attendance != 'present') btn-outline @endif" wire:click="setAttendance('present')">{{__('teacher.present')}}</button>
+                    <details class="dropdown join-item dropdown-top dropdown-end" id="lateDropdown{{$student->id}}">
+                        <summary tabindex="0" class="btn join-item btn-sm btn-warning  w-full @if($pivot->attendance != 'late') btn-outline @endif">{{__('teacher.late')}} @if($pivot->late_minutes != 0) ({{$pivot->late_minutes}} {{__('teacher.minutes')}}) @endif</summary>
+                        <div tabindex="0" class="dropdown-content z-[1] card card-compact w-64 p-2 shadow bg-base-100">
+                            <div class="card-body">
+                                <input type="number" class="input input-bordered w-full" wire:model="lateMinutes" min="1" max="500">
+                                <button class="btn btn-sm btn-success" wire:click="setLateMinutes">{{__('general.save')}}</button>
+                            </div>
+                        </div>
+                    </details>
+                    <button class="btn btn-sm join-item btn-warning @if($pivot->attendance != 'justified') btn-outline @endif" wire:click="setAttendance('justified')">{{__('teacher.justified')}}</button>
+                    <button class="btn btn-sm join-item btn-error @if($pivot->attendance != 'missing') btn-outline @endif" wire:click="setAttendance('missing')">{{__('teacher.absent')}}</button>
+                </div>
+            @endif
 
+            <div class="mt-2 @if($notJustifiedAbsents >= config('presencetracker.maxNotJustifiedAbsences')) text-error @endif">
+                {{__('teacher.numberOfAbsences', ['number' =>  $allAbsents, 'notjustified' => $notJustifiedAbsents])}}
+            </div>
         </div>
+
+
     </div>
 
     <dialog id="lateModal{{$student->id}}" class="modal modal-bottom sm:modal-middle">

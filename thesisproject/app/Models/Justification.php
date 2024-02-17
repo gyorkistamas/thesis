@@ -29,6 +29,11 @@ class Justification extends Model
         'updated_at' => 'datetime',
     ];
 
+    public function User(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function Pictures(): HasMany
     {
         return $this->hasMany(JustificationPicture::class);
@@ -38,7 +43,7 @@ class Justification extends Model
     {
         return $this->belongsToMany(User::class, 'justification_acceptances')
             ->using(JustificationAcceptance::class)
-            ->withPivot('status', 'comment');
+            ->withPivot('status', 'comment', 'user_id', 'justification_id');
     }
 
     public function GetTeacherResponse($user_id)

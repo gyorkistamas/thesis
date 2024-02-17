@@ -3,6 +3,7 @@
 namespace App\Livewire\Teacher\Justifications;
 
 use App\Models\Subject;
+use App\Notifications\JustificationResponse;
 use Auth;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -74,9 +75,31 @@ class JustificationListItem extends Component
 
         // TODO handle classes if accepted
         // TODO send message to student
-        // TODO display comment on student page
+        if ($this->justificationResponse->status == 'accepted') {
+            $this->setClassStatuses();
+        }
+
+        $this->justification->User->notify(new JustificationResponse($this->justification->User, $this->justification, $this->justificationResponse));
 
         toast()->success(__('teacher.responseSaved'), __('general.success'))->push();
+    }
+
+    private function setClassStatuses()
+    {
+        foreach ($this->getAffectedClasses() as $subject) {
+            foreach ($subject->CoursesWithClassesBetweenDatesAndStudentsAndTeachers($this->justification->user_id,
+                $this->justification->start_date, $this->justification->end_time, Auth::user()->id)->get() as $course) {
+                foreach ($course->ClassesBetweenTimes($this->justification->start_date,
+                    $this->justification->end_time)->get() as $class) {
+                    $student = $class->getStudent($this->justification->user_id)->first();
+                    if ($student->pivot->attendance == 'not_filled' || $student->pivot->attendance == 'missing' || $student->pivot->attendance == 'late') {
+                        $student->pivot->attendance = 'justified';
+                        $student->pivot->late_minutes = null;
+                        $student->pivot->save();
+                    }
+                }
+            }
+        }
     }
 
     public function render()

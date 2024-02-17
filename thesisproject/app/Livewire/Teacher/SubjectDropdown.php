@@ -10,6 +10,8 @@ class SubjectDropdown extends Component
 
     public $semesterSearch;
 
+    public $isOpen = false;
+
     public function mount($subject, $semesterSearch)
     {
         $this->subject = $subject;

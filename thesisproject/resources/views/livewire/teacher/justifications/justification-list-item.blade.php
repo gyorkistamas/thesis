@@ -103,7 +103,7 @@
                                                     <ul>
                                                         @foreach($course->ClassesBetweenTimes($justification->start_date, $justification->end_time)->get() as $class)
                                                             <li>
-                                                                <a disabled>
+                                                                <a href="{{route('teacher-view-class', ['courseClass' => $class->id])}}" wire:navigate>
                                                                     {{\Carbon\Carbon::parse($class->start_time)->isoFormat('YYYY.MM.DD, dddd, HH:mm')}}
                                                                     - {{\Carbon\Carbon::parse($class->end_time)->isoFormat('YYYY.MM.DD, dddd, HH:mm')}}
                                                                     @switch($class->GetStudent(Auth::user()->id)->first()->pivot->attendance)

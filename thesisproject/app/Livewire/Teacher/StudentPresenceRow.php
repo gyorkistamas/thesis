@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Teacher;
 
+use App\Models\Attendance;
 use App\Notifications\AbsenceNotification;
 use Auth;
 use Livewire\Attributes\On;
@@ -18,10 +19,53 @@ class StudentPresenceRow extends Component
 
     public $lateMinutes;
 
+    public $isJustified = false;
+
+    public $allAbsents;
+
+    public $notJustifiedAbsents;
+
+    public function ActiveAcceptedJustification()
+    {
+        $temp = $this->student->Justifications()->whereHas('Acceptances', function ($q) {
+            $q->where('user_id', Auth::user()->id);
+            $q->where('status', 'accepted');
+        })
+            ->where('start_date', '<=', $this->pivot->Class->start_time)
+            ->where('end_time', '>=', $this->pivot->Class->end_time)
+            ->count();
+
+        return $temp > 0;
+    }
+
+    public function getNumbersForAbsents()
+    {
+        $course = $this->pivot->Class->Course;
+
+        $allAbsents = Attendance::whereHas('Class', function ($query) use ($course) {
+            $query->where('course_id', $course->id);
+        })
+            ->where('user_id', $this->student->id)
+            ->whereIn('attendance', ['missing', 'justified'])
+            ->count();
+
+        $notJustified = Attendance::whereHas('Class', function ($query) use ($course) {
+            $query->where('course_id', $course->id);
+        })
+            ->where('user_id', $this->student->id)
+            ->where('attendance', 'missing')
+            ->count();
+
+        $this->allAbsents = $allAbsents;
+        $this->notJustifiedAbsents = $notJustified;
+    }
+
     public function mount($student)
     {
         $this->student = $student;
         $this->pivot = $student->pivot;
+        $this->isJustified = $this->ActiveAcceptedJustification();
+        $this->getNumbersForAbsents();
     }
 
     #[On('echo:updatePresence.{pivot.id},.App\Events\ClassPresenceChanged')]
@@ -52,6 +96,7 @@ class StudentPresenceRow extends Component
             $this->student->notify(new AbsenceNotification($this->student, $this->pivot->Class, Auth::user()));
         }
 
+        $this->getNumbersForAbsents();
         $this->dispatch('refreshChart');
     }
 

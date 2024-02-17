@@ -29,4 +29,8 @@ return [
     'reason' => 'Indoklás',
     'youNeedToChooseOne' => 'Ki kell választania egyet',
     'responseSaved' => 'Válasz elmentve',
+    'justification' => 'Igazolás',
+    'dearJustificationStatus' => 'Kedves :name, az igazolása :status állapotba lett helyezve',
+    'justificationDetails' => 'Igazolás részletei',
+    'modifier' => 'Módosító',
 ];

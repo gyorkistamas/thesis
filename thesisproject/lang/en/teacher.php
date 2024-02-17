@@ -29,4 +29,8 @@ return [
     'reason' => 'Reason',
     'youNeedToChooseOne' => 'You need to choose one',
     'responseSaved' => 'Response saved',
+    'justification' => 'Justification',
+    'dearJustificationStatus' => 'Dear :name, your justification has been :status.',
+    'justificationDetails' => 'Justification details',
+    'modifier' => 'Modifier',
 ];

@@ -5,4 +5,5 @@ return [
     'favicon' => '/favicon.ico',
     'logo' => env('LOGO', '/def_logo.png'),
     'enableRegister' => env('ALLOWREGISTER', true),
+    'maxNotJustifiedAbsences' => env('MAX_NOT_JUSTIFIED_ABSENCES', 3),
 ];

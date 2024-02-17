@@ -1,7 +1,12 @@
 <div class="collapse collapse-arrow bg-base-200 mt-3">
     @if(! $deleted)
+        <div class="inset-0 flex items-center justify-center z-[9999] absolute" style="pointer-events: none;">
+            <span class="loading loading-dots loading-lg" wire:loading></span>
+        </div>
+        <div class="absolute inset-0 flex items-center justify-center z-[9999]" wire:loading>
+        </div>
         <input type="checkbox" wire:model.live="isOpened"/>
-        <div class="collapse-title text-xl font-medium">
+        <div class="collapse-title text-xl font-medium" wire:loading.class="blur-md">
             @if($justification->type == 'other')
                 {{__('student.otherJustification')}}
             @else

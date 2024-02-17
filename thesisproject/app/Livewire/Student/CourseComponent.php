@@ -13,7 +13,6 @@ class CourseComponent extends Component
         $this->course = $course;
     }
 
-
     public function render()
     {
         return view('livewire.student.course-component');

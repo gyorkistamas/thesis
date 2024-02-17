@@ -33,4 +33,6 @@ return [
     'dearJustificationStatus' => 'Dear :name, your justification has been :status.',
     'justificationDetails' => 'Justification details',
     'modifier' => 'Modifier',
+    'studentHasAcceptedJustification' => 'The student has an accepted justification for the class.',
+    'numberOfAbsences' => 'Number of absences: :number, :notjustified of them are not justified.',
 ];

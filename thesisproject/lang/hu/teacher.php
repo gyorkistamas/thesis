@@ -33,4 +33,6 @@ return [
     'dearJustificationStatus' => 'Kedves :name, az igazolása :status állapotba lett helyezve',
     'justificationDetails' => 'Igazolás részletei',
     'modifier' => 'Módosító',
+    'studentHasAcceptedJustification' => 'A diák elfogadott igazolással rendelkezik az órára.',
+    'numberOfAbsences' => 'Hiányzások száma: :number, ebből :notjustified nincs igazolva.',
 ];

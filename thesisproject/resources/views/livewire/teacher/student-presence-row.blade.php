@@ -24,7 +24,7 @@
                 <div class="tooltip" data-tip="{{__('teacher.studentHasAcceptedJustification')}}">
                     <div class="join join-vertical md:join-horizontal">
                         <!-- TODO igazolt óra ellenőrzése és hiányzások száma -->
-                        <button class="btn btn-sm join-item btn-info @if($pivot->attendance != 'not_filled') btn-outline @endif" disabled>{{__('teacher.notFilled')}}</button>
+                        <button class="btn btn-sm join-item btn-info @if($pivot->attendance != 'not_filled') btn-outline @endif pointer-events-none">{{__('teacher.notFilled')}}</button>
                         <button class="btn btn-sm join-item btn-success @if($pivot->attendance != 'present') btn-outline @endif" wire:click="setAttendance('present')">{{__('teacher.present')}}</button>
                         <details class="dropdown join-item dropdown-top dropdown-end" id="lateDropdown{{$student->id}}">
                             <summary tabindex="0" class="btn join-item btn-sm btn-warning  w-full @if($pivot->attendance != 'late') btn-outline @endif" disabled>{{__('teacher.late')}} @if($pivot->late_minutes != 0) ({{$pivot->late_minutes}} {{__('teacher.minutes')}}) @endif</summary>

@@ -13,7 +13,6 @@ class TeacherJustifications extends Component
         $this->user = $user;
     }
 
-
     public function render()
     {
         $justification = $this->user->AssignedJustifications()

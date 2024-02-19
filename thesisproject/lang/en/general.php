@@ -125,4 +125,10 @@ return [
     'remove' => 'Remove',
     'studentsAdded' => 'Students added',
     'studentRemoved' => 'Student removed',
+    'ClassesToday' => 'Classes today',
+    'myPendingJustifications' => 'My pending justifications',
+    'taughtClassesToday' => 'Taught classes today',
+    'justificationToRespondTo' => 'Justification to respond to',
+    'onGoing' => 'On going',
+    'noClassesToday' => 'You don\'t have classes today',
 ];

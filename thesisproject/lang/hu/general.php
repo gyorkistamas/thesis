@@ -125,4 +125,10 @@ return [
     'remove' => 'Eltávolítás',
     'studentsAdded' => 'Hallgatók hozzáadva',
     'studentRemoved' => 'Hallgató eltávolítva',
+    'ClassesToday' => 'Mai órák',
+    'myPendingJustifications' => 'Függőben lévő igazolásaim',
+    'taughtClassesToday' => 'Mai oktatott óráim',
+    'justificationToRespondTo' => 'Várakozó igazolások',
+    'onGoing' => 'Folyamatban',
+    'noClassesToday' => 'Nincsen ma órája',
 ];

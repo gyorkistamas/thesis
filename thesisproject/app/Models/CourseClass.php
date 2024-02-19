@@ -21,6 +21,11 @@ class CourseClass extends Model
         'end_time' => 'datetime',
     ];
 
+    public function isOnGoing()
+    {
+        return $this->start_time < now() && $this->end_time > now();
+    }
+
     public function Course()
     {
         return $this->belongsTo(Course::class);

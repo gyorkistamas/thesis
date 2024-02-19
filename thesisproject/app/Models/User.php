@@ -86,7 +86,7 @@ class User extends Authenticatable
 
     public function AssignedJustifications(): BelongsToMany
     {
-        return $this->belongsToMany(Justification::class, 'justification_acceptance')
+        return $this->belongsToMany(Justification::class, 'justification_acceptances')
             ->as('acceptance')
             ->withPivot('status');
     }

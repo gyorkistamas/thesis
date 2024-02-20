@@ -4,7 +4,7 @@
             <h2>{{__('general.justificationToRespondTo')}}</h2>
         </div>
         <div class="divider mt-1"></div>
-        <div class="md:max-h-72 overflow-y-auto pr-2">
+        <div class="md:max-h-96 overflow-y-auto pr-2">
             @forelse($justifications as $justification)
                 <div class="card bg-base-100 mb-2 p-0">
                     <div class="card-body p-1 ps-3 gap-1 ">

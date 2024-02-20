@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Auth;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +16,8 @@ class TeacherMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (\Auth::user()->hasRole(['admin, superadmin', 'teacher'])) {
+        $user = Auth::user();
+        if ($user->hasRole('admin') || $user->hasRole('teacher') || $user->hasRole('superadmin')) {
             return $next($request);
         }
         abort(403);

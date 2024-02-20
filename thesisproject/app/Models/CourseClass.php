@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,7 +24,7 @@ class CourseClass extends Model
 
     public function isOnGoing()
     {
-        return $this->start_time < now() && $this->end_time > now();
+        return Carbon::now()->between($this->start_time, $this->end_time);
     }
 
     public function Course()

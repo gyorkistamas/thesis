@@ -73,3 +73,12 @@ Route::middleware(['auth', 'student'])->group(function () {
     Route::get('student-subjects', [StudentController::class, 'studentSubjects'])->name('student-subjects');
     Route::get('/student-justifications', [StudentController::class, 'getJustifications'])->name('student-justifications');
 });
+
+/*
+|--------------------------------------------------------------------------
+| Timetable
+|--------------------------------------------------------------------------
+*/
+Route::get('timetable', [Controller::class, 'getTimetable'])
+    ->middleware(['auth', 'studentorteacher'])
+    ->name('timetable');

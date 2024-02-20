@@ -30,7 +30,13 @@ class CourseClassPolicy
      */
     public function view(User $user, CourseClass $courseClass): bool
     {
-        return true;
+        $course = $courseClass->Course;
+
+        if ($course->Teachers->contains($user)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

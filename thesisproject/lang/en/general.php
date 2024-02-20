@@ -131,4 +131,5 @@ return [
     'justificationToRespondTo' => 'Justification to respond to',
     'onGoing' => 'On going',
     'noClassesToday' => 'You don\'t have classes today',
+    'timetable' => 'Timetable',
 ];

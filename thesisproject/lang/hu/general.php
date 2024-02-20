@@ -131,4 +131,5 @@ return [
     'justificationToRespondTo' => 'Várakozó igazolások',
     'onGoing' => 'Folyamatban',
     'noClassesToday' => 'Nincsen ma órája',
+    'timetable' => 'Órarend',
 ];

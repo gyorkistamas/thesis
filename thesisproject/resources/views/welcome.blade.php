@@ -35,15 +35,10 @@
                     <livewire:landing.teacher-justifications :user="Auth::user()" />
                 @endif
             </div>
-
-            <x-rounded-container class="my-3">
-                ÓRAREND
-            </x-rounded-container>
-
         @endif
 
         @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('superadmin'))
-            <x-rounded-container>
+            <x-rounded-container class="mt-3">
                 STATISZTIKA
             </x-rounded-container>
         @endif

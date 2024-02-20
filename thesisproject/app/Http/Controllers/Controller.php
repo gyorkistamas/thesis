@@ -14,4 +14,9 @@ class Controller extends BaseController
     {
         return view('settings.user_settings');
     }
+
+    public function getTimetable()
+    {
+        return view('timetable');
+    }
 }

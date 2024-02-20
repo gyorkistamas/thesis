@@ -61,6 +61,7 @@ class Timetable extends Component
             });
 
         $classes = $studentClasses->merge($teacherClasses);
+
         return json_encode($classes);
     }
 

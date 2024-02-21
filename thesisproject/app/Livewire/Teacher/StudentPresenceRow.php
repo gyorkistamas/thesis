@@ -93,7 +93,7 @@ class StudentPresenceRow extends Component
         $this->pivot->save();
 
         if ($status === 'missing') {
-            $this->student->notify(new AbsenceNotification($this->student, $this->pivot->Class, Auth::user()));
+            $this->student->notify((new AbsenceNotification($this->student, $this->pivot->Class, Auth::user()))->locale($this->student->lang));
         }
 
         $this->getNumbersForAbsents();

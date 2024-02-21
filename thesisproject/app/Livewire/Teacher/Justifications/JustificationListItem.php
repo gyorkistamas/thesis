@@ -79,7 +79,7 @@ class JustificationListItem extends Component
             $this->setClassStatuses();
         }
 
-        $this->justification->User->notify(new JustificationResponse($this->justification->User, $this->justification, $this->justificationResponse));
+        $this->justification->User->notify((new JustificationResponse($this->justification->User, $this->justification, $this->justificationResponse))->locale($this->justification->User->lang));
 
         toast()->success(__('teacher.responseSaved'), __('general.success'))->push();
     }

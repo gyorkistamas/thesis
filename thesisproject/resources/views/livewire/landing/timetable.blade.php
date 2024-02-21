@@ -1,7 +1,8 @@
 <x-rounded-container>
 
-    <div class="prose">
+    <div class="prose flex flex-col md:flex-row md:justify-between w-full min-w-full">
         <h1>{{__('general.timetable')}}</h1>
+        <button class="btn btn-success" onclick="exportModal.showModal()">{{__('general.exportTimeTable')}}</button>
     </div>
 
     <div class="mt-5" wire:ignore>
@@ -13,18 +14,60 @@
         <div id="timetable" class="">
         </div>
     </div>
+
+    <dialog id="exportModal" class="modal" wire:ignore.self>
+        <div class="modal-box">
+            <h3 class="font-bold text-lg">{{__('general.exportTimeTable')}}</h3>
+            @if($user->calendarUUID)
+                <div class="flex flex-col">
+                    <span class="text-md">{{__('general.giveThisURLInYourCalenderApp')}}:</span>
+                    <span class="text-success text-lg">{{route('export-timetable', ['uuid' => $user->calendarUUID])}}</span>
+                </div>
+            @else
+                <span>{{__('general.clickButtonToGenerateExport')}}</span>
+            @endif
+            <div class="modal-action">
+                @if($user->calendarUUID)
+                    <button class="btn btn-error" wire:click="deleteExportUUID">{{__('general.disableExport')}}</button>
+                @else
+                    <button class="btn btn-success" wire:click="generateExportUUID">{{__('general.exportTimeTable')}}</button>
+                @endif
+                <form method="dialog">
+                    <button class="btn">{{__('general.close')}}</button>
+                </form>
+            </div>
+        </div>
+    </dialog>
     @script
-    <script>
+    <script data-navigate-once>
         let loading = document.getElementById('loadingIndicator');
         let calendarEl = document.getElementById('timetable');
-        console.log('{{App::currentLocale()}}');
         let calendar = new FullCalendar.Calendar(calendarEl, {
             locale: '{{App::currentLocale()}}',
-            initialView: 'timeGridWeek',
+            initialView: getInitialView(),
             slotMinTime: '8:00:00',
             nowIndicator: true,
             expandRows: true,
             eventMaxStack: 1,
+            views: {
+                timeGridDay: {
+                    type: 'timeGrid',
+                    duration: {days: 1},
+                },
+                timeGridTwoDay: {
+                    type: 'timeGrid',
+                    duration: {days: 2},
+                },
+                timeGridWeek: {
+                    type: 'timeGrid',
+                    duration: {weeks: 1},
+                },
+            },
+            eventClick: function (info) {
+                if(info.event.extendedProps.allowClick) {
+                    Livewire.navigate('/teacher-class/' + info.event.id);
+                }
+            },
             loading: function (isLoading) {
                 if (isLoading) {
                     loading.style.display = 'flex';
@@ -53,9 +96,29 @@
                         failureCallback(err);
                     });
             },
+            windowResize: function (view) {
+                let width = window.innerWidth;
+                if(width < 640) {
+                    calendar.changeView('timeGridDay');
+                } else if(width < 1024) {
+                    calendar.changeView('timeGridTwoDay');
+                } else {
+                    calendar.changeView('timeGridWeek');
+                }
+            }
         });
-
         calendar.render();
+
+        function getInitialView() {
+            let width = window.innerWidth;
+            if(width < 640) {
+                return 'timeGridDay';
+            } else if(width < 1024) {
+                return 'timeGridTwoDay';
+            } else {
+                return 'timeGridWeek';
+            }
+        }
     </script>
     @endscript
 </x-rounded-container>

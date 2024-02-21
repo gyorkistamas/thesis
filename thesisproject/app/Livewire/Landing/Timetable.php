@@ -5,6 +5,7 @@ namespace App\Livewire\Landing;
 use App\Models\CourseClass;
 use Carbon\Carbon;
 use Livewire\Component;
+use Str;
 use Usernotnull\Toast\Concerns\WireToast;
 
 class Timetable extends Component
@@ -12,6 +13,18 @@ class Timetable extends Component
     use WireToast;
 
     public $user;
+
+    public function generateExportUUID()
+    {
+        $this->user->calendarUUID = Str::uuid()->toString();
+        $this->user->save();
+    }
+
+    public function deleteExportUUID()
+    {
+        $this->user->calendarUUID = null;
+        $this->user->save();
+    }
 
     public function mount($user)
     {
@@ -37,10 +50,13 @@ class Timetable extends Component
             ->get()
             ->map(function ($class) {
                 return [
-                    'title' => $class->Course->Subject->name.' - '.$class->Course->course_id,
+                    'id' => $class->id,
+                    'title' => $class->Course->Subject->name.' - '.$class->Course->course_id.' ('.$class->Place->name.')',
                     'start' => $class->start_time->toISOString(),
                     'end' => $class->end_time->toISOString(),
                     'color' => $this->getColor($class),
+                    'allowClick' => false,
+                    'className' => 'break-all',
                 ];
             });
 
@@ -53,10 +69,13 @@ class Timetable extends Component
             ->get()
             ->map(function ($class) {
                 return [
-                    'title' => $class->Course->Subject->name.' - '.$class->Course->course_id,
+                    'id' => $class->id,
+                    'title' => $class->Course->Subject->name.' - '.$class->Course->course_id.' ('.$class->Place->name.')',
                     'start' => $class->start_time->toISOString(),
                     'end' => $class->end_time->toISOString(),
                     'color' => 'orange',
+                    'allowClick' => true,
+                    'className' => 'break-all',
                 ];
             });
 

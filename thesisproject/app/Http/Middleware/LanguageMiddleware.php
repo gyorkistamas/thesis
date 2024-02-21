@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Auth;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -17,8 +18,12 @@ class LanguageMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->cookie('lang')) {
-            App::setLocale(explode('|', Crypt::decrypt($request->cookie('lang'), false))[1]);
+        if (Auth::user()) {
+            App::setLocale(Auth::user()->lang);
+        } else {
+            if ($request->cookie('lang')) {
+                App::setLocale(explode('|', Crypt::decrypt($request->cookie('lang'), false))[1]);
+            }
         }
 
         return $next($request);

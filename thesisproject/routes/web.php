@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'superadmin'])->group(function () {
     Route::get('/user-settings', [Controller::class, 'UserSettings'])->name('user-settings');
-    Route::get('/administration', [ConfigController::class, 'getCreationSite'])->name('administration'); // TODO REMOVE
+    Route::get('/administration', [ConfigController::class, 'getCreationSite'])->name('administration');
 });
 
 /*
@@ -76,9 +76,16 @@ Route::middleware(['auth', 'student'])->group(function () {
 
 /*
 |--------------------------------------------------------------------------
-| Timetable
+| Routes for both student and teacher
 |--------------------------------------------------------------------------
 */
-Route::get('timetable', [Controller::class, 'getTimetable'])
-    ->middleware(['auth', 'studentorteacher'])
-    ->name('timetable');
+Route::middleware(['auth', 'studentorteacher'])->group(function () {
+    Route::get('timetable', [Controller::class, 'getTimetable'])->name('timetable');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Timetable export
+|--------------------------------------------------------------------------
+*/
+Route::get('export-timetable/{uuid}', [Controller::class, 'exportTimetable'])->name('export-timetable');

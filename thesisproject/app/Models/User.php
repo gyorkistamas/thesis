@@ -28,6 +28,7 @@ class User extends Authenticatable
         'password',
         'neptun',
         'picture',
+        'calendarUUID',
     ];
 
     /**
@@ -52,7 +53,7 @@ class User extends Authenticatable
 
     public function sendPasswordResetNotification($token)
     {
-        $this->notify(new PasswordResetEmail($token));
+        $this->notify((new PasswordResetEmail($token))->locale($this->lang));
     }
 
     public function get_pic()

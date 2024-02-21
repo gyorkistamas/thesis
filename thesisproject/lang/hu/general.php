@@ -132,4 +132,8 @@ return [
     'onGoing' => 'Folyamatban',
     'noClassesToday' => 'Nincsen ma órája',
     'timetable' => 'Órarend',
+    'exportTimeTable' => 'Órarend exportálása',
+    'clickButtonToGenerateExport' => 'Kattintson az alábbi gombra az exportáláshoz',
+    'disableExport' => 'Exportálás kikapcsolása',
+    'giveThisURLInYourCalenderApp' => 'Adja meg ezt az URL-t a naptár alkalmazásában, a naptár automatikusan frissülni fog',
 ];

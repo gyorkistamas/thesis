@@ -132,4 +132,8 @@ return [
     'onGoing' => 'On going',
     'noClassesToday' => 'You don\'t have classes today',
     'timetable' => 'Timetable',
+    'exportTimeTable' => 'Export timetable',
+    'clickButtonToGenerateExport' => 'Click the button below to generate the export',
+    'disableExport' => 'Disable export',
+    'giveThisURLInYourCalenderApp' => 'Give this URL to your calendar app, the calendar will automatically update',
 ];

@@ -23,7 +23,7 @@ class MySubjects extends Component
 
     public function render()
     {
-        $subjects = Subject::whereHas('Courses', function ($query) {
+        $subjects = Subject::withWhereHas('Courses', function ($query) {
             if ($this->semesterSearch != -1) {
                 $query->where('term_id', $this->semesterSearch);
             }

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Student;
 
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class CourseComponent extends Component

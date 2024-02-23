@@ -141,7 +141,7 @@
 
                         </table>
 
-                        <div class="flex flex-row justify-center h-[20rem] md:h-[25rem] lg:h-[30rem]">
+                        <div class="flex flex-row justify-center h-[20rem] md:h-[25rem] lg:h-[30rem]" wire:ignore>
                             <canvas id="courseDiagram{{$course->id}}"></canvas>
 
                             @script

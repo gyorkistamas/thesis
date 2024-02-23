@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Teacher;
 
-use App\Events\ClassPresenceChanged;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Str;
@@ -13,6 +12,7 @@ class ViewClass extends Component
     use WireToast;
 
     public $class;
+
     public $course;
 
     public $isQrCodeVisible = false;

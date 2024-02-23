@@ -2,15 +2,15 @@
     <div class="fixed inset-0 flex items-center justify-center" style="pointer-events: none;">
         <span class="loading loading-dots loading-lg" wire:loading></span>
     </div>
-    <div class="prose mb-3 flex flex-row flex-wrap justify-between min-w-full max-w-full md:flex-row">
+    <div class="prose mb-3 flex flex-col flex-wrap min-w-full max-w-full md:flex-row justify-center md:justify-between">
         <h1 class="mb-0 mx-auto md:mx-0 md:ms-1">{{__('general.semesters')}}</h1>
-        <button class="btn btn-success w-fit" onclick="newSemesterModal.showModal()">
+        <button class="btn btn-success w-fit mt-2 md:mt-0 mx-auto md:mx-0" onclick="newSemesterModal.showModal()">
             <x-icons.plus_fill_small/>{{__('general.createNewSemester')}}</button>
     </div>
     <div>
         @if($terms->count() != 0)
             <div>
-                <table class="table">
+                <table class="hidden md:table">
                     <!-- head -->
                     <thead>
                     <tr>
@@ -39,6 +39,8 @@
                     </tfoot>
 
                 </table>
+
+                <div id="semesterCards" class="md:hidden"></div>
             </div>
             {{$terms->links()}}
         @else

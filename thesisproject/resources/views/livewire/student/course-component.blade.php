@@ -70,11 +70,6 @@
                                                 @endswitch
                                                         </span>
                                         </div>
-                                        <div class="card-actions justify-end">
-                                            <a class="btn btn-success btn-sm" href="{{route('teacher-view-class', ['courseClass' => $class->id])}}" wire:navigate for="courseDrawer{{$course->id}}">
-                                                <x-icons.view_fill_small/>{{__('general.view')}}
-                                            </a>
-                                        </div>
                                     </div>
                                 </div>
                             @endforeach

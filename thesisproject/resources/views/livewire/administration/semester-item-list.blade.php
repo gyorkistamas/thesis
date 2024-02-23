@@ -25,21 +25,6 @@
                     </li>
                 </ul>
             </div>
-
-            @teleport('#semesterCards')
-                <div class="card bg-base-200 mb-3">
-                    <div class="card-body">
-                        <h2 class="card-title">{{$term->name}}</h2>
-                        <p>{{$term->start}} - {{$term->end}}</p>
-                        @if($term->active())<p class="text-success">{{__('general.currentSemester')}}@endif</p>
-                        <div class="card-actions">
-                            <button class="btn btn-sm btn-warning" onclick="semesterModify{{$term->id}}.showModal()">{{__('general.edit')}}</button>
-                            <button class="btn btn-sm btn-error" onclick="semesterDelete{{$term->id}}.showModal()">{{__('general.delete')}}</button>
-                        </div>
-                    </div>
-                </div>
-            @endteleport
-
             @teleport('body')
             <dialog id="semesterModify{{$term->id}}" class="modal modal-bottom sm:modal-middle" wire:ignore.self>
                 <div class="modal-box">
@@ -107,4 +92,19 @@
             @endteleport
         </td>
     @endif
+        @teleport('#semesterCards')
+        <div class="card bg-base-200 mb-3 @if($deleted) hidden @endif">
+            <div class="card-body">
+                @if(! $deleted)
+                    <h2 class="card-title">{{$term->name}}</h2>
+                    <p>{{$term->start}} - {{$term->end}}</p>
+                    @if($term->active())<p class="text-success">{{__('general.currentSemester')}}@endif</p>
+                    <div class="card-actions">
+                        <button class="btn btn-sm btn-warning" onclick="semesterModify{{$term->id}}.showModal()">{{__('general.edit')}}</button>
+                        <button class="btn btn-sm btn-error" onclick="semesterDelete{{$term->id}}.showModal()">{{__('general.delete')}}</button>
+                    </div>
+                    @endif
+            </div>
+        </div>
+        @endteleport
 </tr>

@@ -17,6 +17,8 @@ class StudentPresenceRow extends Component
 
     public $pivot;
 
+    public $class;
+
     public $lateMinutes;
 
     public $isJustified = false;
@@ -27,30 +29,28 @@ class StudentPresenceRow extends Component
 
     public function ActiveAcceptedJustification()
     {
-        $temp = $this->student->Justifications()->whereHas('Acceptances', function ($q) {
-            $q->where('user_id', Auth::user()->id);
-            $q->where('status', 'accepted');
-        })
-            ->where('start_date', '<=', $this->pivot->Class->start_time)
-            ->where('end_time', '>=', $this->pivot->Class->end_time)
-            ->count();
+        $temp = $this->student->Justifications
+            ->where('start_date', '<=', $this->class->start_time)
+            ->where('end_time', '>=', $this->class->end_time)
+            ->filter(function ($justification) {
+                return $justification->Acceptances->where('status', 'accepted')
+                    ->where('user_id', Auth::user()->id)->count() > 0;
+            });
 
-        return $temp > 0;
+        return $temp->count() > 0;
     }
 
     public function getNumbersForAbsents()
     {
-        $course = $this->pivot->Class->Course;
-
-        $allAbsents = Attendance::whereHas('Class', function ($query) use ($course) {
-            $query->where('course_id', $course->id);
+        $allAbsents = Attendance::withWhereHas('Class', function ($query) {
+            $query->where('course_id', $this->class->course->id);
         })
             ->where('user_id', $this->student->id)
             ->whereIn('attendance', ['missing', 'justified'])
             ->count();
 
-        $notJustified = Attendance::whereHas('Class', function ($query) use ($course) {
-            $query->where('course_id', $course->id);
+        $notJustified = Attendance::withWhereHas('Class', function ($query) {
+            $query->where('course_id', $this->class->course->id);
         })
             ->where('user_id', $this->student->id)
             ->where('attendance', 'missing')
@@ -60,10 +60,11 @@ class StudentPresenceRow extends Component
         $this->notJustifiedAbsents = $notJustified;
     }
 
-    public function mount($student)
+    public function mount($student, $cclass)
     {
-        $this->student = $student;
         $this->pivot = $student->pivot;
+        $this->student = $student;
+        $this->class = $cclass;
         $this->isJustified = $this->ActiveAcceptedJustification();
         $this->getNumbersForAbsents();
     }
@@ -93,7 +94,8 @@ class StudentPresenceRow extends Component
         $this->pivot->save();
 
         if ($status === 'missing') {
-            $this->student->notify((new AbsenceNotification($this->student, $this->pivot->Class, Auth::user()))->locale($this->student->lang));
+            $this->student->notify((new AbsenceNotification($this->student, $this->pivot->Class,
+                Auth::user()))->locale($this->student->lang));
         }
 
         $this->getNumbersForAbsents();

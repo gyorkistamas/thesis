@@ -40,7 +40,7 @@
                     <h2>{{__('general.students')}}:</h2>
                 </div>
                 @foreach($class->StudentsWithPresence as $student)
-                    <livewire:teacher.student-presence-row :student="$student" :key="'presence'.$student->id"/>
+                    <livewire:teacher.student-presence-row :student="$student" :cclass="$class" :key="'presence'.$student->id"/>
                 @endforeach
             </div>
 
@@ -102,11 +102,11 @@
                                     datasets: [{
                                         label: '{{__('general.students')}}',
                                         data: [
-                                            {{$class->StudentsWithPresence()->wherePivot('attendance', 'present')->count()}},
-                                            {{$class->StudentsWithPresence()->wherePivot('attendance', 'justified')->count()}},
-                                            {{$class->StudentsWithPresence()->wherePivot('attendance', 'missing')->count()}},
-                                            {{$class->StudentsWithPresence()->wherePivot('attendance', 'late')->count()}},
-                                            {{$class->StudentsWithPresence()->wherePivot('attendance', 'not_filled')->count()}}
+                                            {{$class->StudentsWithPresence->filter(function($student) {return $student->pivot->attendance == 'present';})->count()}},
+                                            {{$class->StudentsWithPresence->filter(function($student) {return $student->pivot->attendance == 'justified';})->count()}},
+                                            {{$class->StudentsWithPresence->filter(function($student) {return $student->pivot->attendance == 'missing';})->count()}},
+                                            {{$class->StudentsWithPresence->filter(function($student) {return $student->pivot->attendance == 'late';})->count()}},
+                                            {{$class->StudentsWithPresence->filter(function($student) {return $student->pivot->attendance == 'not_filled';})->count()}}
                                         ],
                                         backgroundColor: [
                                             'rgba(48, 146, 92, 0.2)',

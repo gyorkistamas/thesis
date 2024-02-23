@@ -57,8 +57,8 @@ class ListUsers extends Component
             $roles[] = 'student';
         }
 
-        // TODO látrehzoni egy default felhasználót fallback-nek
-        $users = User::whereHas('roles', function ($query) use ($roles) {
+        // TODO create fallback user
+        $users = User::with('roles')->whereHas('roles', function ($query) use ($roles) {
             if (count($roles) != 0) {
                 $query->whereIn('role', $roles);
             }

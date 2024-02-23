@@ -32,7 +32,7 @@
     <div class="modal-action">
         <form method="dialog">
             <button class="btn btn-accent"
-                    wire:click="$dispatch('updateRoles')" wire:loading.attr="disabled">{{__('general.save')}}</button>
+                    wire:click="update" wire:loading.attr="disabled">{{__('general.save')}}</button>
             <button class="btn">{{__('general.close')}}</button>
         </form>
     </div>

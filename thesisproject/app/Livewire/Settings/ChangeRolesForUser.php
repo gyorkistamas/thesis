@@ -3,7 +3,6 @@
 namespace App\Livewire\Settings;
 
 use App\Models\User;
-use Livewire\Attributes\On;
 use Livewire\Component;
 use Usernotnull\Toast\Concerns\WireToast;
 
@@ -21,13 +20,12 @@ class ChangeRolesForUser extends Component
 
     public $student;
 
-    public function mount()
+    public function mount($user)
     {
-        $this->user = \Auth::user();
+        $this->user = $user;
         $this->updateRoles();
     }
 
-    #[On('updateRoles')]
     public function update()
     {
         $this->user->roles()->delete();
@@ -44,20 +42,8 @@ class ChangeRolesForUser extends Component
         if ($this->student) {
             $this->user->roles()->updateOrCreate(['role' => 'student']);
         }
-
+        $this->dispatch('updateUser.'.$this->user->id);
         toast()->success(__('general.changeroleSuccess'), __('general.success'))->push();
-        $this->dispatch('redrawUserList');
-
-    }
-
-    #[On('changeSelectedUser')]
-    public function selectUser($id)
-    {
-        if ($id == $this->user->id) {
-            return;
-        }
-        $this->user = User::find($id);
-        $this->updateRoles();
     }
 
     public function updateRoles()

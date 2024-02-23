@@ -5,7 +5,6 @@ namespace App\Livewire;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use Livewire\Attributes\On;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 use Usernotnull\Toast\Concerns\WireToast;
@@ -27,19 +26,13 @@ class UpdateProfileComponent extends Component
 
     public User $user;
 
-    public function mount(): void
+    public function mount($user): void
     {
-        $this->user = Auth::user();
-        $this->fill($this->user->only(['neptun', 'name', 'email']));
-    }
-
-    #[On('changeSelectedUser')]
-    public function updateSelectedUser($id)
-    {
-        if ($id == $this->user->id) {
-            return;
+        if ($user) {
+            $this->user = $user;
+        } else {
+            $this->user = Auth::user();
         }
-        $this->user = User::find($id);
         $this->fill($this->user->only(['neptun', 'name', 'email']));
     }
 

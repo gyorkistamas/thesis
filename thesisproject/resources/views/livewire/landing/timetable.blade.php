@@ -45,7 +45,7 @@
         let calendar = new FullCalendar.Calendar(calendarEl, {
             locale: '{{App::currentLocale()}}',
             initialView: getInitialView(),
-            slotMinTime: '8:00:00',
+            slotMinTime: '7:00:00',
             nowIndicator: true,
             expandRows: true,
             eventMaxStack: 1,

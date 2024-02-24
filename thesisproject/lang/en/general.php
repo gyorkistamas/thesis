@@ -136,4 +136,6 @@ return [
     'clickButtonToGenerateExport' => 'Click the button below to generate the export',
     'disableExport' => 'Disable export',
     'giveThisURLInYourCalenderApp' => 'Give this URL to your calendar app, the calendar will automatically update',
+    '404NotFound' => '404 Not Found',
+    'pageNotFound' => 'The page you are looking for is not found',
 ];

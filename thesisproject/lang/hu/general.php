@@ -136,4 +136,6 @@ return [
     'clickButtonToGenerateExport' => 'Kattintson az alábbi gombra az exportáláshoz',
     'disableExport' => 'Exportálás kikapcsolása',
     'giveThisURLInYourCalenderApp' => 'Adja meg ezt az URL-t a naptár alkalmazásában, a naptár automatikusan frissülni fog',
+    '404NotFound' => '404 Nem található',
+    'pageNotFound' => 'Az oldal nem található',
 ];

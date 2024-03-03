@@ -1,5 +1,5 @@
 const preLoad = function () {
-    return caches.open("offline").then(function (cache) {
+    return caches.open("offlinev2").then(function (cache) {
         // caching index and important routes
         return cache.addAll(filesToCache);
     });
@@ -10,7 +10,6 @@ self.addEventListener("install", function (event) {
 });
 
 const filesToCache = [
-    '/',
     '/offline.html'
 ];
 
@@ -27,15 +26,19 @@ const checkResponse = function (request) {
 };
 
 const addToCache = function (request) {
-    return caches.open("offline").then(function (cache) {
+    return caches.open("offlinev2").then(function (cache) {
         return fetch(request).then(function (response) {
-            return cache.put(request, response);
+            if(request.url.match("^(http|https)://")) {
+                return cache.put(request, response);
+            } else {
+                return;
+            }
         });
     });
 };
 
 const returnFromCache = function (request) {
-    return caches.open("offline").then(function (cache) {
+    return caches.open("offlinev2").then(function (cache) {
         return cache.match(request).then(function (matching) {
             if (!matching || matching.status === 404) {
                 return cache.match("offline.html");

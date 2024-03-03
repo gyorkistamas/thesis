@@ -37,6 +37,7 @@
                                     <details class="z-[200]">
                                         <summary>{{__('general.siteAdministration')}}</summary>
                                         <ul class="p-2">
+                                            <li><a href="{{route('config')}}" wire:navigate>{{__('config.siteConfig')}}</a></li>
                                             <li><a href="{{route('user-settings')}}"
                                                    wire:navigate>{{__('general.userSettings')}}</a></li>
                                             <li><a href="{{route('administration')}}" wire:navigate>{{__('general.administration')}}</a></li>
@@ -140,6 +141,7 @@
                                 <details class="z-[200]">
                                     <summary>{{__('general.siteAdministration')}}</summary>
                                     <ul class="p-2">
+                                        <li><a href="{{route('config')}}" wire:navigate>{{__('config.siteConfig')}}</a></li>
                                         <li><a href="{{route('user-settings')}}"
                                                wire:navigate>{{__('general.userSettings')}}</a></li>
                                         <li><a href="{{route('administration')}}" wire:navigate>{{__('general.administration')}}</a></li>

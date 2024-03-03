@@ -8,7 +8,7 @@
     <link rel="icon" type="image/x-icon" href="{{config('presencetracker.favicon')}}">
     <meta name="theme-color" content="#6777ef"/>
     <link rel="apple-touch-icon" href="{{ asset('logo.PNG') }}">
-    <link rel="manifest" href="{{ asset('/manifest.json') }}">
+    <link rel="manifest" href="{{route('manifest')}}">
     @vite('resources/css/app.css')
     @vite('resources/css/themeswitcher.css')
     @vite('resources/js/app.js')

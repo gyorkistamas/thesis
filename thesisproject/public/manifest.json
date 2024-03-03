@@ -1,5 +1,5 @@
 {
-    "name": "Presence tracker",
+    "name": "Jelenlét követő",
     "short_name": "Jelenlét",
     "start_url": "/",
     "background_color": "#1e232a",
@@ -8,7 +8,7 @@
     "theme_color": "#407a5d",
     "icons": [
         {
-            "src": "def_logo.PNG",
+            "src": "/rsz_def_logo.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "any maskable"

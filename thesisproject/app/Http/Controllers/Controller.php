@@ -94,4 +94,28 @@ class Controller extends BaseController
 
         return $content;
     }
+
+    public function manifest()
+    {
+        $manifest = [
+            'name' => config('app.name'),
+            'short_name' => config('app.name'),
+            'start_url' => '/',
+            'display' => 'fullscreen',
+            'background_color' => '#1e232a',
+            'theme_color' => '#407a5d',
+            'icons' => [
+                [
+                    'src' => '/rsz_def_logo.png',
+                    'sizes' => '512x512',
+                    'type' => 'image/png',
+                    'purpose' => 'any maskable',
+                ],
+            ],
+        ];
+
+        return response()->streamDownload(function () use ($manifest) {
+            echo json_encode($manifest, JSON_UNESCAPED_SLASHES);
+        }, 'manifest.json');
+    }
 }

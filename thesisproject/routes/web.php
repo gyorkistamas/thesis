@@ -22,6 +22,8 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+Route::get('/manifest', [Controller::class, 'manifest'])->name('manifest');
+
 /*
 |--------------------------------------------------------------------------
 | Profile update

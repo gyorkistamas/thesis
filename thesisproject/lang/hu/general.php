@@ -138,4 +138,7 @@ return [
     'giveThisURLInYourCalenderApp' => 'Adja meg ezt az URL-t a naptár alkalmazásában, a naptár automatikusan frissülni fog',
     '404NotFound' => '404 Nem található',
     'pageNotFound' => 'Az oldal nem található',
+    'pictureSaved' => 'Kép mentve.',
+    'pictureNotSaved' => 'Kép nincs mentve.',
+    'noPicture' => 'Nincs kép beállítva.',
 ];

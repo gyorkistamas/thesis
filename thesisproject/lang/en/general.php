@@ -138,4 +138,7 @@ return [
     'giveThisURLInYourCalenderApp' => 'Give this URL to your calendar app, the calendar will automatically update',
     '404NotFound' => '404 Not Found',
     'pageNotFound' => 'The page you are looking for is not found',
+    'pictureSaved' => 'Picture saved.',
+    'pictureNotSaved' => 'Picture not saved.',
+    'noPicture' => 'No picture set.',
 ];

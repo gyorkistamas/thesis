@@ -141,4 +141,5 @@ return [
     'pictureSaved' => 'Picture saved.',
     'pictureNotSaved' => 'Picture not saved.',
     'noPicture' => 'No picture set.',
+    'currentlyOffline' => 'Currently offline, please check your internet connection!',
 ];

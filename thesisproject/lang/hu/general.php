@@ -141,4 +141,5 @@ return [
     'pictureSaved' => 'Kép mentve.',
     'pictureNotSaved' => 'Kép nincs mentve.',
     'noPicture' => 'Nincs kép beállítva.',
+    'currentlyOffline' => 'Jelenleg nem elérhető az alkalmazás, kérem ellenőrizze internetkapcsolatát, vagy próbálja meg később.',
 ];

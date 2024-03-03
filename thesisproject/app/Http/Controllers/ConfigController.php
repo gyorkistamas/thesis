@@ -8,4 +8,9 @@ class ConfigController extends Controller
     {
         return view('settings.administration');
     }
+
+    public function getConfig()
+    {
+        return view('settings.config');
+    }
 }

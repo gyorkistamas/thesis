@@ -22,7 +22,7 @@
 @yield('content_place')
 
 @yield('scripts')
-<script src="{{ asset('/sw.js') }}"></script>
+<script src="{{ asset('/sw.js') }}" data-navigate-once></script>
 <script data-navigate-once>
     if ("serviceWorker" in navigator) {
         // Register a service worker hosted at the root of the

@@ -48,7 +48,8 @@
                             </li>
                         @endif
                     </ul>
-
+                </div>
+                <div>
                     <div class="dropdown dropdown-end">
                         <label tabindex="0" class="btn">
                             <svg class="h-5 w-5 fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
@@ -119,8 +120,39 @@
             <ul class="menu p-4 w-80 min-h-full bg-base-200">
                 <!-- Sidebar content here -->
                 <!--TODO Add sidebar items here -->
-                <li><a>Sidebar Item 1</a></li>
-                <li><a>Sidebar Item 2</a></li>
+                <li><a href="{{route('home')}}" wire:navigate>{{__('general.homePage')}}</a></li>
+                @auth()
+                    <li><a href="{{route('timetable')}}" wire:navigate>{{__('general.timetable')}}</a></li>
+
+                    @if(Auth::user()->hasRole('student'))
+                        <li><a href="{{route('student-subjects')}}" wire:navigate>{{__('student.mySubjectsSlashCourses')}}</a></li>
+                        <li><a href="{{route('student-justifications')}}" wire:navigate>{{__('student.myJustifications')}}</a></li>
+                    @endif
+
+                    @if(Auth::user()->hasRole('teacher'))
+                        <li><a href="{{route('teacher-subjects')}}" wire:navigate>{{__('teacher.mySubjectSlashCourses')}}</a></li>
+                        <li><a href="{{route('teacher-justifications')}}" wire:navigate>{{__('teacher.justifications')}}</a></li>
+                    @endif
+
+                    @if(Auth::user() && (Auth::user()->hasRole('admin') || Auth::user()->hasRole('superadmin')))
+                        <li tabindex="0">
+                            @if(Auth::user()->hasRole('superadmin'))
+                                <details class="z-[200]">
+                                    <summary>{{__('general.siteAdministration')}}</summary>
+                                    <ul class="p-2">
+                                        <li><a href="{{route('user-settings')}}"
+                                               wire:navigate>{{__('general.userSettings')}}</a></li>
+                                        <li><a href="{{route('administration')}}" wire:navigate>{{__('general.administration')}}</a></li>
+                                    </ul>
+                                </details>
+                            @else
+                                <a href="{{route('administration')}}" wire:navigate>{{__('general.administration')}}</a>
+                            @endif
+                        </li>
+                    @endif
+
+
+                @endauth
             </ul>
         </div>
     </div>

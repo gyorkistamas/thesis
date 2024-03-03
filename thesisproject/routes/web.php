@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'superadmin'])->group(function () {
     Route::get('/user-settings', [Controller::class, 'UserSettings'])->name('user-settings');
     Route::get('/administration', [ConfigController::class, 'getCreationSite'])->name('administration');
+    Route::get('/config', [ConfigController::class, 'getConfig'])->name('config');
 });
 
 /*

@@ -122,7 +122,9 @@ class SubjectDropDown extends Component
         $this->subjectName = $subject->name;
         $this->subjectDescription = $subject->description;
         $this->subjectCredit = $subject->credit;
-        $this->subjectManager = $subject->Manager->id;
+        if($subject->Manager) {
+            $this->subjectManager = $subject->Manager->id;
+        }
     }
 
     public function createCourse()

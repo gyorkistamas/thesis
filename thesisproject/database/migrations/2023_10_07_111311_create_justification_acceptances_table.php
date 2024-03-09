@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('justification_acceptances', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('justification_id')->constrained();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('justification_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->enum('status', ['accepted', 'denied', 'na'])->default('na');
         });
     }

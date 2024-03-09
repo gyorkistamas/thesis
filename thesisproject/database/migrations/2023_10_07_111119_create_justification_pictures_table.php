@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('justification_pictures', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('justification_id')->constrained();
+            $table->foreignId('justification_id')->constrained()->cascadeOnDelete();
             $table->string('picture_name');
         });
     }

@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('course_classes', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('course_id')->constrained();
+            $table->foreignId('course_id')->constrained()->cascadeOnDelete();
             $table->timestamp('start_time');
             $table->timestamp('end_time');
-            $table->foreignId('place_id')->constrained();
+            $table->foreignId('place_id')->nullable()->constrained()->nullOnDelete();
         });
     }
 

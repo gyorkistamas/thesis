@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->integer('credit');
-            $table->foreignId('manager')->constrained(table: 'users');
+            $table->foreignId('manager')->nullable()->constrained(table: 'users')->nullOnDelete();
             $table->timestamps();
         });
     }

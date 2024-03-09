@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->date('start');
             $table->date('end');
-            $table->boolean('active')->default(false);
+            //$table->boolean('active')->default(false);
         });
     }
 

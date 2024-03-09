@@ -1,0 +1,425 @@
+{
+  "cypress.factory": {
+    "name": "cypress.factory",
+    "domain": null,
+    "action": "Laracasts\\Cypress\\Controllers\\CypressController@factory",
+    "uri": "__cypress__/factory",
+    "method": [
+      "POST"
+    ]
+  },
+  "cypress.login": {
+    "name": "cypress.login",
+    "domain": null,
+    "action": "Laracasts\\Cypress\\Controllers\\CypressController@login",
+    "uri": "__cypress__/login",
+    "method": [
+      "POST"
+    ]
+  },
+  "cypress.logout": {
+    "name": "cypress.logout",
+    "domain": null,
+    "action": "Laracasts\\Cypress\\Controllers\\CypressController@logout",
+    "uri": "__cypress__/logout",
+    "method": [
+      "POST"
+    ]
+  },
+  "cypress.artisan": {
+    "name": "cypress.artisan",
+    "domain": null,
+    "action": "Laracasts\\Cypress\\Controllers\\CypressController@artisan",
+    "uri": "__cypress__/artisan",
+    "method": [
+      "POST"
+    ]
+  },
+  "cypress.run-php": {
+    "name": "cypress.run-php",
+    "domain": null,
+    "action": "Laracasts\\Cypress\\Controllers\\CypressController@runPhp",
+    "uri": "__cypress__/run-php",
+    "method": [
+      "POST"
+    ]
+  },
+  "cypress.csrf-token": {
+    "name": "cypress.csrf-token",
+    "domain": null,
+    "action": "Laracasts\\Cypress\\Controllers\\CypressController@csrfToken",
+    "uri": "__cypress__/csrf_token",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "cypress.routes": {
+    "name": "cypress.routes",
+    "domain": null,
+    "action": "Laracasts\\Cypress\\Controllers\\CypressController@routes",
+    "uri": "__cypress__/routes",
+    "method": [
+      "POST"
+    ]
+  },
+  "cypress.current-user": {
+    "name": "cypress.current-user",
+    "domain": null,
+    "action": "Laracasts\\Cypress\\Controllers\\CypressController@currentUser",
+    "uri": "__cypress__/current-user",
+    "method": [
+      "POST"
+    ]
+  },
+  "login": {
+    "name": "login",
+    "domain": null,
+    "action": "Laravel\\Fortify\\Http\\Controllers\\AuthenticatedSessionController@create",
+    "uri": "login",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "": {
+    "name": null,
+    "domain": null,
+    "action": "Closure",
+    "uri": "api/user",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "logout": {
+    "name": "logout",
+    "domain": null,
+    "action": "Laravel\\Fortify\\Http\\Controllers\\AuthenticatedSessionController@destroy",
+    "uri": "logout",
+    "method": [
+      "POST"
+    ]
+  },
+  "password.request": {
+    "name": "password.request",
+    "domain": null,
+    "action": "Laravel\\Fortify\\Http\\Controllers\\PasswordResetLinkController@create",
+    "uri": "forgot-password",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "password.reset": {
+    "name": "password.reset",
+    "domain": null,
+    "action": "Laravel\\Fortify\\Http\\Controllers\\NewPasswordController@create",
+    "uri": "reset-password/{token}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "password.email": {
+    "name": "password.email",
+    "domain": null,
+    "action": "Laravel\\Fortify\\Http\\Controllers\\PasswordResetLinkController@store",
+    "uri": "forgot-password",
+    "method": [
+      "POST"
+    ]
+  },
+  "password.update": {
+    "name": "password.update",
+    "domain": null,
+    "action": "Laravel\\Fortify\\Http\\Controllers\\NewPasswordController@store",
+    "uri": "reset-password",
+    "method": [
+      "POST"
+    ]
+  },
+  "register": {
+    "name": "register",
+    "domain": null,
+    "action": "Laravel\\Fortify\\Http\\Controllers\\RegisteredUserController@create",
+    "uri": "register",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "user-profile-information.update": {
+    "name": "user-profile-information.update",
+    "domain": null,
+    "action": "Laravel\\Fortify\\Http\\Controllers\\ProfileInformationController@update",
+    "uri": "user/profile-information",
+    "method": [
+      "PUT"
+    ]
+  },
+  "user-password.update": {
+    "name": "user-password.update",
+    "domain": null,
+    "action": "Laravel\\Fortify\\Http\\Controllers\\PasswordController@update",
+    "uri": "user/password",
+    "method": [
+      "PUT"
+    ]
+  },
+  "password.confirmation": {
+    "name": "password.confirmation",
+    "domain": null,
+    "action": "Laravel\\Fortify\\Http\\Controllers\\ConfirmedPasswordStatusController@show",
+    "uri": "user/confirmed-password-status",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "password.confirm": {
+    "name": "password.confirm",
+    "domain": null,
+    "action": "Laravel\\Fortify\\Http\\Controllers\\ConfirmablePasswordController@store",
+    "uri": "user/confirm-password",
+    "method": [
+      "POST"
+    ]
+  },
+  "sanctum.csrf-cookie": {
+    "name": "sanctum.csrf-cookie",
+    "domain": null,
+    "action": "Laravel\\Sanctum\\Http\\Controllers\\CsrfCookieController@show",
+    "uri": "sanctum/csrf-cookie",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "livewire.update": {
+    "name": "livewire.update",
+    "domain": null,
+    "action": "Livewire\\Mechanisms\\HandleRequests\\HandleRequests@handleUpdate",
+    "uri": "livewire/update",
+    "method": [
+      "POST"
+    ]
+  },
+  "livewire.upload-file": {
+    "name": "livewire.upload-file",
+    "domain": null,
+    "action": "Livewire\\Features\\SupportFileUploads\\FileUploadController@handle",
+    "uri": "livewire/upload-file",
+    "method": [
+      "POST"
+    ]
+  },
+  "livewire.preview-file": {
+    "name": "livewire.preview-file",
+    "domain": null,
+    "action": "Livewire\\Features\\SupportFileUploads\\FilePreviewController@handle",
+    "uri": "livewire/preview-file/{filename}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "laravelpwa.manifest": {
+    "name": "laravelpwa.manifest",
+    "domain": null,
+    "action": "LaravelPWA\\Http\\Controllers\\LaravelPWAController@manifestJson",
+    "uri": "manifest.json",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "laravelpwa.": {
+    "name": "laravelpwa.",
+    "domain": null,
+    "action": "LaravelPWA\\Http\\Controllers\\LaravelPWAController@offline",
+    "uri": "offline",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "ignition.healthCheck": {
+    "name": "ignition.healthCheck",
+    "domain": null,
+    "action": "Spatie\\LaravelIgnition\\Http\\Controllers\\HealthCheckController",
+    "uri": "_ignition/health-check",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "ignition.executeSolution": {
+    "name": "ignition.executeSolution",
+    "domain": null,
+    "action": "Spatie\\LaravelIgnition\\Http\\Controllers\\ExecuteSolutionController",
+    "uri": "_ignition/execute-solution",
+    "method": [
+      "POST"
+    ]
+  },
+  "ignition.updateConfig": {
+    "name": "ignition.updateConfig",
+    "domain": null,
+    "action": "Spatie\\LaravelIgnition\\Http\\Controllers\\UpdateConfigController",
+    "uri": "_ignition/update-config",
+    "method": [
+      "POST"
+    ]
+  },
+  "home": {
+    "name": "home",
+    "domain": null,
+    "action": "Closure",
+    "uri": "/",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "manifest": {
+    "name": "manifest",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\Controller@manifest",
+    "uri": "manifest",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "update-profile": {
+    "name": "update-profile",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\ProfileUpdateController@index",
+    "uri": "profile",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "user-settings": {
+    "name": "user-settings",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\Controller@UserSettings",
+    "uri": "user-settings",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "administration": {
+    "name": "administration",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\ConfigController@getCreationSite",
+    "uri": "administration",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "config": {
+    "name": "config",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\ConfigController@getConfig",
+    "uri": "config",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "teacher-subjects": {
+    "name": "teacher-subjects",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\TeacherController@teacherSubjects",
+    "uri": "teacher-subjects",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "teacher-view-class": {
+    "name": "teacher-view-class",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\TeacherController@teacherClass",
+    "uri": "teacher-class/{courseClass}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "teacher-justifications": {
+    "name": "teacher-justifications",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\TeacherController@getJustifications",
+    "uri": "teacher-justifications",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "student-class-login": {
+    "name": "student-class-login",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\StudentController@loginToClass",
+    "uri": "student-class-login/{uuid}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "student-class-login-link": {
+    "name": "student-class-login-link",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\StudentController@getLoginLink",
+    "uri": "student-class-login-link",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "student-subjects": {
+    "name": "student-subjects",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\StudentController@studentSubjects",
+    "uri": "student-subjects",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "student-justifications": {
+    "name": "student-justifications",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\StudentController@getJustifications",
+    "uri": "student-justifications",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "timetable": {
+    "name": "timetable",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\Controller@getTimetable",
+    "uri": "timetable",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  },
+  "export-timetable": {
+    "name": "export-timetable",
+    "domain": null,
+    "action": "App\\Http\\Controllers\\Controller@exportTimetable",
+    "uri": "export-timetable/{uuid}",
+    "method": [
+      "GET",
+      "HEAD"
+    ]
+  }
+}

@@ -140,6 +140,6 @@ return [
     'pageNotFound' => 'Az oldal nem található',
     'pictureSaved' => 'Kép mentve.',
     'pictureNotSaved' => 'Kép nincs mentve.',
-    'noPicture' => 'Nincs kép beállítva.',
+    'noPicture' => 'Nincs kép beállítva. Ha mégis lát képet, akkor azt a Gravatar.com oldalon tudja megváltoztatni.',
     'currentlyOffline' => 'Jelenleg nem elérhető az alkalmazás, kérem ellenőrizze internetkapcsolatát, vagy próbálja meg később.',
 ];

@@ -140,6 +140,6 @@ return [
     'pageNotFound' => 'The page you are looking for is not found',
     'pictureSaved' => 'Picture saved.',
     'pictureNotSaved' => 'Picture not saved.',
-    'noPicture' => 'No picture set.',
+    'noPicture' => 'No picture set. If you do see a picture, then you need to change it on Gravatar.com',
     'currentlyOffline' => 'Currently offline, please check your internet connection!',
 ];

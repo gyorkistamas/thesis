@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Artisan;
-
 class ConfigController extends Controller
 {
     public function getCreationSite()

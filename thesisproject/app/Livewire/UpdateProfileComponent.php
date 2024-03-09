@@ -96,6 +96,7 @@ class UpdateProfileComponent extends Component
 
         if (! config('presencetracker.allowChangeNeptunCode') && $this->neptun != $this->user->neptun) {
             toast()->danger(__('general.noPermission'), __('general.error'))->push();
+
             return;
         }
 

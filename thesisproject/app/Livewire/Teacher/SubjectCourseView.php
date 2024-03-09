@@ -28,7 +28,7 @@ class SubjectCourseView extends Component
     public function render()
     {
         $subjects = Subject::whereHas('Courses', function ($query) {
-            if ($this->semesterSearch != -1) {
+            if ($this->semesterSearch != '') {
                 $query->where('term_id', $this->semesterSearch);
             }
             $query->whereHas('Teachers', function ($query) {

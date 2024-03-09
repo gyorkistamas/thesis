@@ -23,7 +23,7 @@
         <hr class="my-5"/>
 
         <input type="text" wire:model.live="neptun" class="input input-bordered input-primary mb-3"
-               placeholder="{{__('general.neptunCode')}}"/>
+               placeholder="{{__('general.neptunCode')}}" @if(!config('presencetracker.allowChangeNeptunCode') && ! Auth::user()->hasRole('superadmin')) disabled @endif/>
         @error('neptun')
         <x-error-alert class="mb-2">{{$message}}</x-error-alert> @enderror
         <input type="text" wire:model.live="name" class="input input-bordered input-primary mb-3"

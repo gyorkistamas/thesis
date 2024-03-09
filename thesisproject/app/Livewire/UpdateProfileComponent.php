@@ -94,6 +94,11 @@ class UpdateProfileComponent extends Component
             return;
         }
 
+        if (! config('presencetracker.allowChangeNeptunCode') && $this->neptun != $this->user->neptun) {
+            toast()->danger(__('general.noPermission'), __('general.error'))->push();
+            return;
+        }
+
         $this->validate([
             'neptun' => [
                 'string', 'max:6', \Illuminate\Validation\Rule::unique('users')->ignore($this->user->id),

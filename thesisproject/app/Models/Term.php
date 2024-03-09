@@ -15,7 +15,6 @@ class Term extends Model
         'description',
         'start',
         'end',
-        'active',
     ];
 
     protected $casts = [

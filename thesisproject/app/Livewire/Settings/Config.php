@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Settings;
 
+use Artisan;
 use Auth;
 use Brotzka\DotenvEditor\DotenvEditor;
 use Livewire\Component;
@@ -24,11 +25,11 @@ class Config extends Component
 
     public function mount()
     {
-        $this->siteName = env('SITENAME');
-        $this->allowRegister = env('ALLOWREGISTER');
-        $this->logo = env('LOGO');
-        $this->allowChange = env('ALLOW_CHANGE_NEPTUN_CODE');
-        $this->requireNeptun = env('REQUIRE_NEPTUN_CODE');
+        $this->siteName = config('presencetracker.sitename');
+        $this->allowRegister = config('presencetracker.enableRegister');
+        $this->logo = config('presencetracker.logo');
+        $this->allowChange = config('presencetracker.allowChangeNeptunCode');
+        $this->requireNeptun = config('presencetracker.requireNeptunCode');
     }
 
     public function save()
@@ -50,7 +51,7 @@ class Config extends Component
         $editor = new DotenvEditor();
 
         toast()->success(__('config.changesSavedReload'), __('general.success'))->push();
-        if ($this->logo != $editor->getValue('LOGO')) {
+        if ($this->logo != config('presencetracker.logo')) {
             $this->logo = $this->logo->store('logos', 'public');
             $this->logo = 'storage/'.str_replace('public/', '', $this->logo);
 
@@ -69,7 +70,7 @@ class Config extends Component
                 'REQUIRE_NEPTUN_CODE' => $this->requireNeptun ? 'true' : 'false',
             ]);
         }
-
+        Artisan::call('config:cache');
     }
 
     public function render()

@@ -205,11 +205,19 @@ class CourseListItem extends Component
             return;
         }
 
+        if ($this->course->course_limit < $this->course->Students->count() + count($this->newStudents)) {
+            toast()->danger(__('general.courseLimitExceeded'), __('general.error'))->push();
+
+            return;
+        }
+
         $this->course->Students()->syncWithoutDetaching($this->newStudents);
 
         foreach ($this->course->Classes as $class) {
             $class->StudentsWithPresence()->sync($this->course->Students->pluck('id')->toArray());
         }
+
+        $this->course->refresh();
 
         $this->dispatch('multiple-select-students-update.'.$this->course->id,
             ['alreadySelected' => $this->course->Students->pluck('id')->toArray()]);

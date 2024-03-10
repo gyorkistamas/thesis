@@ -58,8 +58,6 @@ class ClassTableItem extends Component
             return;
         }
 
-        // TODO delete student records for this class
-
         $this->class->StudentsWithPresence()->detach();
 
         $temp = $this->class;

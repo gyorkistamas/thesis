@@ -117,7 +117,7 @@
                                         </thead>
                                         <tbody>
                                         <!-- rows -->
-                                        @foreach($course->Classes as $class)
+                                        @foreach($course->Classes()->orderBy('start_time')->get() as $class)
                                             <livewire:administration.class-table-item
                                                 :key="'classItem'.$course->id.$class->id" :class="$class"/>
                                         @endforeach

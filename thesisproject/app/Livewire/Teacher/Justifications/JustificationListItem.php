@@ -73,8 +73,6 @@ class JustificationListItem extends Component
 
         $this->justificationResponse->save();
 
-        // TODO handle classes if accepted
-        // TODO send message to student
         if ($this->justificationResponse->status == 'accepted') {
             $this->setClassStatuses();
         }

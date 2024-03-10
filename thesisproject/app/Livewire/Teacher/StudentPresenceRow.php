@@ -78,7 +78,12 @@ class StudentPresenceRow extends Component
 
     public function setLateMinutes()
     {
-        // TODO igazolt óra ellenőrzése és email küldés
+        if ($this->isJustified) {
+            toast()->warning(__('teacher.studentHasAcceptedJustification'), __('general.warning'))->push();
+
+            return;
+        }
+
         $this->pivot->attendance = 'late';
         $this->pivot->late_minutes = $this->lateMinutes;
         $this->pivot->save();
@@ -88,7 +93,12 @@ class StudentPresenceRow extends Component
 
     public function setAttendance($status)
     {
-        // TODO igazolt óra ellenőrzése és email küldés
+        if ($status == 'missing' && $this->isJustified) {
+            toast()->warning(__('teacher.studentHasAcceptedJustification'), __('general.warning'))->push();
+
+            return;
+        }
+
         $this->pivot->attendance = $status;
         $this->pivot->late_minutes = 0;
         $this->pivot->save();

@@ -57,7 +57,6 @@ class ListUsers extends Component
             $roles[] = 'student';
         }
 
-        // TODO create fallback user
         $users = User::with('roles')->whereHas('roles', function ($query) use ($roles) {
             if (count($roles) != 0) {
                 $query->whereIn('role', $roles);

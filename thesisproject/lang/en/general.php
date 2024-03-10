@@ -145,4 +145,5 @@ return [
     'classOverlap' => 'The class overlaps with an existing class.',
     'courseLimitExceeded' => 'The course limit would be exceeded by adding these students.',
     'notATeacher' => ':name is not a teacher, cannot be added!',
+    'warning' => 'Warning',
 ];

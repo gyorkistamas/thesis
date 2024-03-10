@@ -25,6 +25,7 @@ class StudentJustificationPage extends Component
     #[Validate('required|date|after:start')]
     public $end;
 
+    #[Validate('nullable|string')]
     public $comment;
 
     #[Validate(['images.*' => 'image|max:1024'])]
@@ -67,7 +68,6 @@ class StudentJustificationPage extends Component
             'description' => $this->comment,
         ]);
 
-        //TODO fix or limit the length of comment
         $justification->Pictures()->createMany(array_map(function ($image) {
             return ['picture_name' => $image->store('justification_pictures', 'public')];
         }, $this->uploadedPics));

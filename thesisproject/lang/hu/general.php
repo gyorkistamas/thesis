@@ -142,4 +142,5 @@ return [
     'pictureNotSaved' => 'Kép nincs mentve.',
     'noPicture' => 'Nincs kép beállítva. Ha mégis lát képet, akkor azt a Gravatar.com oldalon tudja megváltoztatni.',
     'currentlyOffline' => 'Jelenleg nem elérhető az alkalmazás, kérem ellenőrizze internetkapcsolatát, vagy próbálja meg később.',
+    'classOverlap' => 'Az óra átfedésben van egy már létező órával!',
 ];

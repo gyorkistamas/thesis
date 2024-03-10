@@ -142,4 +142,5 @@ return [
     'pictureNotSaved' => 'Picture not saved.',
     'noPicture' => 'No picture set. If you do see a picture, then you need to change it on Gravatar.com',
     'currentlyOffline' => 'Currently offline, please check your internet connection!',
+    'classOverlap' => 'The class overlaps with an existing class.',
 ];

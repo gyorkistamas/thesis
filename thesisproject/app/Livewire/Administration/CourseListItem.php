@@ -120,15 +120,26 @@ class CourseListItem extends Component
 
         if ($this->repeatUntilEndOfTerm) {
             while ($this->newClassEnd < $this->course->Term->end) {
+
+                if ($this->OverlapsClass()) {
+                    toast()->danger(__('general.classOverlap'), __('general.error'))->push();
+                    $this->NextClass();
+                    break;
+                }
+
                 $this->course->Classes()->create([
                     'start_time' => $this->newClassStart,
                     'end_time' => $this->newClassEnd,
                     'place_id' => $this->newClassPlace,
                 ]);
-                $this->newClassStart = date('Y-m-d H:i:s', strtotime($this->newClassStart.' +1 week'));
-                $this->newClassEnd = date('Y-m-d H:i:s', strtotime($this->newClassEnd.' +1 week'));
+                $this->NextClass();
             }
         } else {
+            if ($this->OverlapsClass()) {
+                toast()->danger(__('general.classOverlap'), __('general.error'))->push();
+
+                return;
+            }
             $this->course->Classes()->create([
                 'start_time' => $this->newClassStart,
                 'end_time' => $this->newClassEnd,
@@ -142,6 +153,32 @@ class CourseListItem extends Component
         }
 
         toast()->success(__('general.classCreated'), __('general.success'))->push();
+    }
+
+    private function OverlapsClass()
+    {
+        $overlaps = $this->course->Classes()
+            ->where(function ($query) {
+                $query->where('start_time', '<=', $this->newClassStart)
+                    ->where('end_time', '>=', $this->newClassStart);
+            })
+            ->orWhere(function ($query) {
+                $query->where('end_time', '>=', $this->newClassStart)
+                    ->where('end_time', '<=', $this->newClassEnd);
+            })
+            ->orWhere(function ($query) {
+                $query->where('start_time', '>=', $this->newClassStart)
+                    ->where('start_time', '<=', $this->newClassEnd);
+            })
+            ->count();
+
+        return $overlaps > 0;
+    }
+
+    public function NextClass()
+    {
+        $this->newClassStart = date('Y-m-d H:i:s', strtotime($this->newClassStart.' +1 week'));
+        $this->newClassEnd = date('Y-m-d H:i:s', strtotime($this->newClassEnd.' +1 week'));
     }
 
     public function deleteCourse()

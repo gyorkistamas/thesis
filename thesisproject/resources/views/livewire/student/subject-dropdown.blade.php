@@ -27,8 +27,8 @@
                                 <span><span class="font-bold">{{__('general.semester')}}:</span> {{$course->Term->name}}</span>
                                 <span><span class="font-bold">{{__('general.teachers')}}:</span> @foreach($course->Teachers as $teacher){{$teacher->name}}@if(!$loop->last), @endif @endforeach</span>
                             </div>
-                            <div class="card-actions justify-end">
-                                <label for="courseDrawer{{$course->id}}" class="btn btn-success m-1 btn-sm">
+                            <div class="card-actions justify-end" x-data="{clickedCard{{$course->id}}: false}">
+                                <label for="courseDrawer{{$course->id}}" class="btn btn-success m-1 btn-sm" @click="if(!clickedCard{{$course->id}}) {$dispatch('loadCourse.{{$course->id}}'); clickedCard{{$course->id}} = true;}">
                                     <x-icons.view_fill_small/>{{__('general.view')}}</label>
                             </div>
                         </div>
@@ -54,8 +54,8 @@
                         <td>{{ $course->description }}</td>
                         <td>{{ $course->Term->name }}</td>
                         <td>@foreach($course->Teachers as $teacher){{$teacher->name}}@if(! $loop->last), @endif @endforeach</td>
-                        <td>
-                            <label for="courseDrawer{{$course->id}}" class="btn btn-success m-1 btn-sm">
+                        <td x-data="{clicked{{$course->id}}: false}">
+                            <label for="courseDrawer{{$course->id}}" class="btn btn-success m-1 btn-sm" @click="if(!clicked{{$course->id}}) {$dispatch('loadCourse.{{$course->id}}'); clicked{{$course->id}} = true;}">
                                 <x-icons.view_fill_small/>{{__('general.view')}}</label>
                         </td>
                     </tr>

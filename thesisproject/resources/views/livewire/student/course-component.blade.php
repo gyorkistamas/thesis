@@ -4,10 +4,11 @@
         <label for="courseDrawer{{$course->id}}" aria-label="close sidebar"
                class="drawer-overlay"></label>
         <div class="p-4  w-full md:w-11/12 min-h-full bg-base-200 text-base-content">
-            <div class="fixed inset-0 flex items-center justify-center"
+            <div class="fixed inset-0 flex items-center justify-center h-screen z-[9999]"
                  style="pointer-events: none;">
-                <span class="loading loading-dots loading-lg" wire:loading></span>
+                <span class="loading loading-dots loading-lg z-[9999]" wire:loading></span>
             </div>
+            <div class="absolute inset-0 flex items-center justify-center blur-md z-[999]" wire:loading></div>
             <div
                 class="prose mb-3 flex flex-row flex-wrap justify-between min-w-full max-w-full md:flex-row">
                 <h1 class="mb-0 mx-auto md:mx-0 md:ms-1">{{$course->course_id}}</h1>
@@ -20,126 +21,128 @@
                        class="tab"
                        aria-label="{{__('general.classTimes')}}" checked/>
                 <div role="tabpanel"
-                     class="tab-content bg-base-100 border-base-300 rounded-box p-6">
+                     class="tab-content bg-base-100 border-base-300 rounded-box p-6" wire:loading.class="blur-md">
 
                     @if($course->Classes->count() == 0)
                         <div class="prose">
                             <h1>{{__('general.noResult')}}</h1>
                         </div>
                     @else
-                        <div class="md:hidden">
-                            @foreach($course->Classes as $class)
-                                <div class="card card-compact bg-base-200 shadow-md mb-4">
-                                    <div class="card-body">
-                                        <div class="flex flex-col gap-2 text-lg">
-                                            <span><span class="font-bold">{{__('general.startTime')}}:</span> {{$class->start_time}}</span>
-                                            <span><span class="font-bold">{{__('general.endTime')}}:</span> {{$class->end_time}}</span>
-                                            <span><span class="font-bold">{{__('general.place')}}:</span> {{$class->Place()->exists() ? $class->Place->name : '-' }}</span>
-                                            <span>
+                        @if($loaded)
+                            <div class="md:hidden">
+                                @foreach($course->Classes as $class)
+                                    <div class="card card-compact bg-base-200 shadow-md mb-4">
+                                        <div class="card-body">
+                                            <div class="flex flex-col gap-2 text-lg">
+                                                <span><span class="font-bold">{{__('general.startTime')}}:</span> {{$class->start_time}}</span>
+                                                <span><span class="font-bold">{{__('general.endTime')}}:</span> {{$class->end_time}}</span>
+                                                <span><span class="font-bold">{{__('general.place')}}:</span> {{$class->Place()->exists() ? $class->Place->name : '-' }}</span>
+                                                <span>
                                                             <span class="font-bold">{{__('student.status')}}: </span>
                                                             @switch($class->GetStudent(Auth::user()->id)->first()->pivot->attendance)
-                                                    @case('not_filled')
-                                                        <div class="badge badge-info gap-2">
+                                                        @case('not_filled')
+                                                            <div class="badge badge-info gap-2">
                                                                 {{__('teacher.notFilled')}}
                                                             </div>
-                                                        @break
+                                                            @break
 
-                                                    @case('present')
-                                                        <div class="badge badge-success gap-2">
+                                                        @case('present')
+                                                            <div class="badge badge-success gap-2">
                                                                 {{__('teacher.present')}}
                                                             </div>
-                                                        @break
+                                                            @break
 
-                                                    @case('late')
-                                                        <div class="badge badge-warning gap-2">
+                                                        @case('late')
+                                                            <div class="badge badge-warning gap-2">
                                                                 {{__('teacher.late')}} ({{$attendance->late_minutes}} {{__('teacher.minutes')}})
                                                             </div>
-                                                        @break
+                                                            @break
 
-                                                    @case('justified')
-                                                        <div class="badge badge-warning gap-2">
+                                                        @case('justified')
+                                                            <div class="badge badge-warning gap-2">
                                                                 {{__('teacher.justified')}}
                                                             </div>
-                                                        @break
+                                                            @break
 
-                                                    @case('missing')
-                                                        <div class="badge badge-error gap-2">
+                                                        @case('missing')
+                                                            <div class="badge badge-error gap-2">
                                                                 {{__('teacher.absent')}}
                                                             </div>
-                                                        @break
-                                                @endswitch
+                                                            @break
+                                                    @endswitch
                                                         </span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
-                        </div>
+                                @endforeach
+                            </div>
 
-                        <table class="table hidden md:table">
-                            <!-- head -->
-                            <thead>
-                            <tr>
-                                <th>{{__('general.startTime')}}</th>
-                                <th>{{__('general.endTime')}}</th>
-                                <th>{{__('general.place')}}</th>
-                                <th>{{__('student.status')}}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <!-- rows -->
-                            @foreach($course->Classes as $class)
+                            <table class="table hidden md:table">
+                                <!-- head -->
+                                <thead>
                                 <tr>
-                                    <td>{{$class->start_time}}</td>
-                                    <td>{{$class->end_time}}</td>
-                                    <td>{{$class->Place()->exists() ? $class->Place->name : '-' }}</td>
-
-                                    <td>
-                                        @switch($class->GetStudent(Auth::user()->id)->first()->pivot->attendance)
-                                            @case('not_filled')
-                                                <div class="badge badge-info gap-2">
-                                                    {{__('teacher.notFilled')}}
-                                                </div>
-                                                @break
-
-                                            @case('present')
-                                                <div class="badge badge-success gap-2">
-                                                    {{__('teacher.present')}}
-                                                </div>
-                                                @break
-
-                                            @case('late')
-                                                <div class="badge badge-warning gap-2">
-                                                    {{__('teacher.late')}} ({{$attendance->late_minutes}} {{__('teacher.minutes')}})
-                                                </div>
-                                                @break
-
-                                            @case('justified')
-                                                <div class="badge badge-warning gap-2">
-                                                    {{__('teacher.justified')}}
-                                                </div>
-                                                @break
-
-                                            @case('missing')
-                                                <div class="badge badge-error gap-2">
-                                                    {{__('teacher.absent')}}
-                                                </div>
-                                                @break
-                                        @endswitch
-                                    </td>
+                                    <th>{{__('general.startTime')}}</th>
+                                    <th>{{__('general.endTime')}}</th>
+                                    <th>{{__('general.place')}}</th>
+                                    <th>{{__('student.status')}}</th>
                                 </tr>
-                            @endforeach
-                            </tbody>
-                            <!-- foot -->
-                            <tfoot>
-                            <tr>
-                                <th>{{__('general.startTime')}}</th>
-                                <th>{{__('general.endTime')}}</th>
-                                <th>{{__('general.place')}}</th>
-                                <th>{{__('student.status')}}</th>
-                            </tr>
-                            </tfoot>
+                                </thead>
+                                <tbody>
+                                <!-- rows -->
+                                @foreach($course->Classes as $class)
+                                    <tr>
+                                        <td>{{$class->start_time}}</td>
+                                        <td>{{$class->end_time}}</td>
+                                        <td>{{$class->Place()->exists() ? $class->Place->name : '-' }}</td>
 
-                        </table>
+                                        <td>
+                                            @switch($class->GetStudent(Auth::user()->id)->first()->pivot->attendance)
+                                                @case('not_filled')
+                                                    <div class="badge badge-info gap-2">
+                                                        {{__('teacher.notFilled')}}
+                                                    </div>
+                                                    @break
+
+                                                @case('present')
+                                                    <div class="badge badge-success gap-2">
+                                                        {{__('teacher.present')}}
+                                                    </div>
+                                                    @break
+
+                                                @case('late')
+                                                    <div class="badge badge-warning gap-2">
+                                                        {{__('teacher.late')}} ({{$attendance->late_minutes}} {{__('teacher.minutes')}})
+                                                    </div>
+                                                    @break
+
+                                                @case('justified')
+                                                    <div class="badge badge-warning gap-2">
+                                                        {{__('teacher.justified')}}
+                                                    </div>
+                                                    @break
+
+                                                @case('missing')
+                                                    <div class="badge badge-error gap-2">
+                                                        {{__('teacher.absent')}}
+                                                    </div>
+                                                    @break
+                                            @endswitch
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                                <!-- foot -->
+                                <tfoot>
+                                <tr>
+                                    <th>{{__('general.startTime')}}</th>
+                                    <th>{{__('general.endTime')}}</th>
+                                    <th>{{__('general.place')}}</th>
+                                    <th>{{__('student.status')}}</th>
+                                </tr>
+                                </tfoot>
+
+                            </table>
+                        @endif
 
                         <div class="flex flex-row justify-center h-[20rem] md:h-[25rem] lg:h-[30rem]" wire:ignore>
                             <canvas id="courseDiagram{{$course->id}}"></canvas>
@@ -218,7 +221,7 @@
                        aria-label="{{__('general.students')}}" value="students"
                 />
                 <div role="tabpanel"
-                     class="tab-content bg-base-100 border-base-300 rounded-box p-6">
+                     class="tab-content bg-base-100 border-base-300 rounded-box p-6" wire:loading.class="blur-md">
 
                     <div class="md:hidden">
                         @foreach($course->Students as $student)

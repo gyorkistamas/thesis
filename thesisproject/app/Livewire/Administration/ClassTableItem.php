@@ -73,7 +73,12 @@ class ClassTableItem extends Component
         $this->class = $class;
         $this->editStart = $class->start_time->isoFormat('YYYY-MM-DD HH:mm:ss');
         $this->editEnd = $class->end_time->isoFormat('YYYY-MM-DD HH:mm:ss');
-        $this->editPlace = $class->Place->id;
+        if ($class->Place()->exists()) {
+            $this->editPlace = $class->Place->id;
+        } else {
+            $this->editPlace = null;
+        }
+
         //dd($this);
     }
 

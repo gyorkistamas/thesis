@@ -51,7 +51,7 @@ class Timetable extends Component
             ->map(function ($class) {
                 return [
                     'id' => $class->id,
-                    'title' => $class->Course->Subject->name.' - '.$class->Course->course_id.' ('.$class->Place->name.')',
+                    'title' => $class->Course->Subject->name.' - '.$class->Course->course_id.' ('.($class->Place != null ? $class->Place->name : '-').')',
                     'start' => $class->start_time->toISOString(),
                     'end' => $class->end_time->toISOString(),
                     'color' => $this->getColor($class),
@@ -70,7 +70,7 @@ class Timetable extends Component
             ->map(function ($class) {
                 return [
                     'id' => $class->id,
-                    'title' => $class->Course->Subject->name.' - '.$class->Course->course_id.' ('.$class->Place->name.')',
+                    'title' => $class->Course->Subject->name.' - '.$class->Course->course_id.' ('.($class->Place != null ? $class->Place->name : '-').')',
                     'start' => $class->start_time->toISOString(),
                     'end' => $class->end_time->toISOString(),
                     'color' => 'orange',

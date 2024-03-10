@@ -23,7 +23,7 @@
             <div class="flex flex-row justify-start items-center gap-2 text-lg">
                 <x-icons.map_fill_small class="inline"/>
                 <span class="font-bold">{{__('general.place')}}: </span>
-                {{$class->Place->name}}
+                {{$class->Place()->exists() ? $class->Place->name : '-' }}
             </div>
 
             <div class="flex flex-row justify-start items-center gap-2 text-lg">

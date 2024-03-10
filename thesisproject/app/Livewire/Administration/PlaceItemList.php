@@ -40,7 +40,6 @@ class PlaceItemList extends Component
 
     public function delete()
     {
-        //TODO check if place is in use
         if (Auth::user()->cannot('delete', $this->place)) {
             toast()->danger(__('general.noPermission'), __('general.error'))->push();
 

@@ -61,7 +61,6 @@ class SemesterItemList extends Component
 
     public function delete()
     {
-        //TODO check if semester is in use
         if (Auth::user()->cannot('delete', $this->term)) {
             toast()->danger(__('general.noPermission'), __('general.error'))->push();
 

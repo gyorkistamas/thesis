@@ -34,7 +34,7 @@
                                         <div class="flex flex-col gap-2 text-lg">
                                             <span><span class="font-bold">{{__('general.startTime')}}:</span> {{$class->start_time}}</span>
                                             <span><span class="font-bold">{{__('general.endTime')}}:</span> {{$class->end_time}}</span>
-                                            <span><span class="font-bold">{{__('general.place')}}:</span> {{$class->Place->name}}</span>
+                                            <span><span class="font-bold">{{__('general.place')}}:</span> {{$class->Place()->exists() ? $class->Place->name : '-' }}</span>
                                             <span>
                                                             <span class="font-bold">{{__('student.status')}}: </span>
                                                             @switch($class->GetStudent(Auth::user()->id)->first()->pivot->attendance)
@@ -91,7 +91,7 @@
                                 <tr>
                                     <td>{{$class->start_time}}</td>
                                     <td>{{$class->end_time}}</td>
-                                    <td>{{$class->Place->name}}</td>
+                                    <td>{{$class->Place()->exists() ? $class->Place->name : '-' }}</td>
 
                                     <td>
                                         @switch($class->GetStudent(Auth::user()->id)->first()->pivot->attendance)

@@ -36,7 +36,7 @@ class SubjectList extends Component
             'subjectName' => 'required',
             'subjectDescription' => 'string|nullable',
             'subjectCredit' => 'required|numeric|between:1,20',
-            'subjectManager' => 'required|exists:users,id',
+            'subjectManager' => 'nullable|exists:users,id',
         ];
     }
 
@@ -68,9 +68,12 @@ class SubjectList extends Component
         $subject->name = $this->subjectName;
         $subject->description = $this->subjectDescription;
         $subject->credit = $this->subjectCredit;
-        $subject->manager = $this->subjectManager;
+        if ($this->subjectManager != null && $this->subjectManager != '' && $this->subjectManager != -1) {
+            $subject->manager = $this->subjectManager;
+        }
         $subject->save();
-        //TODO close modal maybe
+
+        $this->dispatch('closeSubjectCreateModal');
 
         $this->created += 1;
         toast()->success(__('general.subjectCreated'), __('general.success'))->push();

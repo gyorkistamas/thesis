@@ -4,8 +4,8 @@
     </div>
     <div class="prose mb-3 flex flex-row flex-wrap justify-between min-w-full max-w-full md:flex-row">
         <h1 class="mb-0 mx-auto md:mx-0 md:ms-1">{{__('general.subjects')}}</h1>
-        <label for="newSubjectModel" class="btn btn-success w-fit">
-            <x-icons.plus_fill_small/>{{__('general.createSubject')}}</label>
+        <button class="btn btn-success w-fit" onclick="subjectCreateModal.showModal();">
+            <x-icons.plus_fill_small/>{{__('general.createSubject')}}</button>
     </div>
 
     <div class="flex flex-row gap-4">
@@ -14,13 +14,15 @@
                placeholder="{{__('general.subjectCode')}}" wire:model.live.debounce.250ms="idSearch"/>
         <input type="search" name="name" class="input input-bordered input-accent"
                placeholder="{{__('general.subjectName')}}" wire:model.live.debounce.250ms="nameSearch"/>
-        <button class="btn btn-warning" wire:click="resetSearch"><x-icons.delete_fill_small />{{__('general.resetSearch')}}</button>
+        <button class="btn btn-warning" wire:click="resetSearch">
+            <x-icons.delete_fill_small/>{{__('general.resetSearch')}}</button>
     </div>
 
     <div class="mt-4">
         @forelse($subjects as $subject)
-            <div >
-                <livewire:administration.subject-drop-down :subject="$subject" :key="$subject->id.$idSearch.$nameSearch.$subjectCode.$subjectCredit.$subjectDescription.$subjectName.$subjectManager.$created"/>
+            <div>
+                <livewire:administration.subject-drop-down :subject="$subject"
+                                                           :key="$subject->id.$idSearch.$nameSearch.$subjectCode.$subjectCredit.$subjectDescription.$subjectName.$subjectManager.$created"/>
             </div>
         @empty
             <div class="prose mx-auto mt-2">
@@ -32,8 +34,7 @@
     </div>
 
 
-    <input type="checkbox" id="newSubjectModel" class="modal-toggle" wire:ignore.self/>
-    <div class="modal modal-bottom sm:modal-middle" role="dialog">
+    <dialog class="modal modal-bottom sm:modal-middle" id="subjectCreateModal" wire:ignore.self>
         <div class="modal-box">
             <h3 class="font-bold text-lg">{{__('general.createSubject')}}</h3>
             <div class="modal-action flex flex-col">
@@ -74,17 +75,28 @@
                     </div>
                     <div>
                         <label for="manager" class="label mt-2">{{__('general.subjectManager')}}</label>
-                        <livewire:dropdown-select.teacher-single-select :key="'teacherSelection'.$idSearch.$nameSearch" :selectedId="null" :subjectId="-1" />
+                        <livewire:dropdown-select.teacher-single-select :key="'teacherSelection'.$idSearch.$nameSearch"
+                                                                        :selectedId="null" :subjectId="-1"/>
                         @error('subjectManager')
                         <x-error-alert class="mt-2">{{$message}}</x-error-alert>
                         @enderror
                     </div>
                 </div>
                 <div class="flex flex-row gap-3 mt-5 justify-end">
-                    <button class="btn btn-success" wire:click="createSubject">{{__('general.createSubject')}}</button>
-                    <label class="btn" for="newSubjectModel">{{__('general.close')}}</label>
+                    <a class="btn btn-success" wire:click="createSubject">{{__('general.createSubject')}}</a>
+                    <form method="dialog">
+                        <button class="btn">{{__('general.close')}}</button>
+                    </form>
                 </div>
             </div>
         </div>
-    </div>
+    </dialog>
+
+    @script
+    <script>
+        Livewire.on('closeSubjectCreateModal', () => {
+            subjectCreateModal.close();
+        })
+    </script>
+    @endscript
 </div>

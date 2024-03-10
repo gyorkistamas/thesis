@@ -62,9 +62,7 @@ return [
      * Writes the N+1 queries into the Laravel.log file
      * \BeyondCode\QueryDetector\Outputs\Log::class
      */
-    // TODO remove querydetector
     'output' => [
         \BeyondCode\QueryDetector\Outputs\Log::class,
-        \BeyondCode\QueryDetector\Outputs\Console::class,
     ],
 ];

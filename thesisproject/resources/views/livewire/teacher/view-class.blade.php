@@ -52,7 +52,6 @@
                     <div class="card-body p-3 flex flex-col justify-center items-center">
 
                         @if($isQrCodeVisible)
-                            <!-- TODO actual QR code here -->
                             {{QrCode::size(250)->generate($loginLink)}}
                         @else
                             <div class="blur-md">
@@ -184,7 +183,6 @@
             <h3 class="font-bold text-lg">QR code</h3>
             <div class="flex flex-row justify-center">
                 @if($isQrCodeVisible)
-                    <!-- TODO actual QR code here -->
                     {{QrCode::size(600)->generate($loginLink)}}
                 @else
                     <div class="blur-md">

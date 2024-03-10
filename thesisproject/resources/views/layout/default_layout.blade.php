@@ -119,8 +119,6 @@
         <div class="drawer-side z-[9999]">
             <label for="my-drawer-3" aria-label="close sidebar" class="drawer-overlay"></label>
             <ul class="menu p-4 w-80 min-h-full bg-base-200">
-                <!-- Sidebar content here -->
-                <!--TODO Add sidebar items here -->
                 <li><a href="{{route('home')}}" wire:navigate>{{__('general.homePage')}}</a></li>
                 @auth()
                     <li><a href="{{route('timetable')}}" wire:navigate>{{__('general.timetable')}}</a></li>

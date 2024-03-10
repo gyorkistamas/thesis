@@ -10,7 +10,6 @@ use App\Models\Place;
 use App\Models\Subject;
 use App\Models\Term;
 use App\Models\User;
-use DB;
 use Livewire\Component;
 
 class Statistics extends Component
@@ -36,6 +35,7 @@ class Statistics extends Component
                 $superadmins++;
             }
         }
+
         return [
             $teachers,
             $students,

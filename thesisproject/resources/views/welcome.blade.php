@@ -39,7 +39,13 @@
 
         @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('superadmin'))
             <x-rounded-container class="mt-3">
-                STATISZTIKA
+                <div class="prose">
+                    <h2>{{__('general.statistics')}}</h2>
+                </div>
+
+                <div class="divider mt-1"></div>
+
+                <livewire:landing.statistics />
             </x-rounded-container>
         @endif
     @endauth

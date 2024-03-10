@@ -146,4 +146,11 @@ return [
     'courseLimitExceeded' => 'The course limit would be exceeded by adding these students.',
     'notATeacher' => ':name is not a teacher, cannot be added!',
     'warning' => 'Warning',
+    'statistics' => 'Statistics',
+    'admins' => 'Admins',
+    'superAdmins' => 'Superadmins',
+    'userCount' => 'User count',
+    'class' => 'Class',
+    'countData' => 'Count data',
+    'count' => 'Count',
 ];

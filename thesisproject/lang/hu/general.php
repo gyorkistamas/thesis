@@ -146,4 +146,11 @@ return [
     'courseLimitExceeded' => 'A kurzus létszámát meghaladná a hallgatók hozzáadása!',
     'notATeacher' => ':name nem tanár, nem lehet hozzáadni!',
     'warning' => 'Figyelmeztetés',
+    'statistics' => 'Statisztika',
+    'admins' => 'Adminisztrátorok',
+    'superAdmins' => 'Szuperadminisztrátorok',
+    'userCount' => 'Felhasználók száma',
+    'class' => 'Óra',
+    'countData' => 'Számadatok',
+    'count' => 'Darabszám',
 ];

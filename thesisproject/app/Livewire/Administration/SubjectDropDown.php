@@ -141,7 +141,6 @@ class SubjectDropDown extends Component
             'newCourseLimit' => 'required|numeric|between:0,500',
             'newCourseSemester' => 'required|exists:terms,id',
         ]);
-        // TODO validate teachers
 
         $course = Course::create([
             'course_id' => $this->newCourseID,
@@ -154,7 +153,11 @@ class SubjectDropDown extends Component
         if ($this->newCourseTeacher) {
             foreach ($this->newCourseTeacher as $teacher) {
                 $user = User::findOrFail($teacher);
-                $course->Teachers()->attach($user);
+                if ($user->hasRole('teacher')) {
+                    $course->Teachers()->attach($user->id);
+                } else {
+                    toast()->danger(__('general.notATeacher', ['name' => $user->name]), __('general.error'))->push();
+                }
             }
         }
 

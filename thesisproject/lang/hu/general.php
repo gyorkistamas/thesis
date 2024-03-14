@@ -153,4 +153,5 @@ return [
     'class' => 'Óra',
     'countData' => 'Számadatok',
     'count' => 'Darabszám',
+    'viewPicture' => 'Kép megtekintése',
 ];

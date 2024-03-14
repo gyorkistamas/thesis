@@ -153,4 +153,5 @@ return [
     'class' => 'Class',
     'countData' => 'Count data',
     'count' => 'Count',
+    'viewPicture' => 'View picture',
 ];

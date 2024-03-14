@@ -7,6 +7,7 @@
         </div>
         <input type="checkbox" wire:model.live="isOpened"/>
         <div class="collapse-title text-xl font-medium" wire:loading.class="blur-md">
+
             @if($justification->type == 'other')
                 {{__('student.otherJustification')}}
             @else
@@ -44,16 +45,27 @@
                                 <span class="flex flex-row items-center gap-1"><x-icons.photo_fill_small />{{__('student.uploadedPictures')}}:</span>
                                 <div class="flex flex-row flex-wrap gap-2">
                                     @foreach($justification->Pictures as $picture)
-                                        <img src="{{asset('storage/'.$picture->picture_name)}}" alt="Justification picture" class="w-1/6" style="max-width: 200px; max-height: 200px; object-fit: cover; object-position: center;">
+                                        <img src="{{asset('storage/'.$picture->picture_name)}}" alt="Justification picture" class="w-1/6 cursor-pointer" style="max-width: 200px; max-height: 200px; object-fit: cover; object-position: center;" onclick="pictureModal{{$picture->id}}.showModal();">
+                                        @teleport('body')
+                                        <dialog id="pictureModal{{$picture->id}}" class="modal">
+                                            <div class="modal-box w-11/12 max-w-5xl">
+                                                <form method="dialog">
+                                                    <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                                </form>
+                                                <h3 class="font-bold text-lg">{{__('general.viewPicture')}}</h3>
+                                                <img src="{{asset('storage/'.$picture->picture_name)}}" alt="Justification picture" class="rounded">
+                                            </div>
+                                        </dialog>
+                                        @endteleport
                                     @endforeach
                                 </div>
                             </div>
                         </div>
 
-                        <div class="flex flex-col gap-2">
+                        <div class="inline-flex flex-col gap-2 items-stretch">
                             <span class="flex flex-row items-center gap-1"><x-icons.person_fill_small />{{__('student.teacherResponses')}}:</span>
                             @foreach($justification->GetTeachers()->get() as $teacher)
-                                <div class="badge flex flex-row flex-wrap gap-2">
+                                <div class="badge flex flex-row flex-wrap justify-between w-[100%] gap-2">
                                     <span>{{$teacher->name}}</span>
                                     @switch($teacher->pivot->status)
                                         @case('accepted')
@@ -102,7 +114,7 @@
                                                         <ul>
                                                             @foreach($course->ClassesBetweenTimes($justification->start_date, $justification->end_time)->get() as $class)
                                                                 <li>
-                                                                    <a disabled>
+                                                                    <a disabled class="flex flex-col md:flex-row items-start">
                                                                         {{\Carbon\Carbon::parse($class->start_time)->isoFormat('YYYY.MM.DD, dddd, HH:mm')}}
                                                                         - {{\Carbon\Carbon::parse($class->end_time)->isoFormat('YYYY.MM.DD, dddd, HH:mm')}}
                                                                         @switch($class->GetStudent(Auth::user()->id)->first()->pivot->attendance)
@@ -127,7 +139,7 @@
                                                                                 @break
 
                                                                             @case('justified')
-                                                                                <div class="badge badge-warning gap-2">
+                                                                                <div class="badge badge-warning gap-2 h-fit">
                                                                                     {{__('teacher.justified')}}
                                                                                 </div>
                                                                                 @break

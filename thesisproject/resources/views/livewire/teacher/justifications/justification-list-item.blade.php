@@ -6,6 +6,7 @@
     </div>
     <input type="checkbox" wire:model.live="isOpened"/>
     <div class="collapse-title text-xl font-medium" wire:loading.class="blur-md">
+        {{$justification->User->name}} -
         @if($justification->type == 'other')
             {{__('student.otherJustification')}}
         @else
@@ -45,8 +46,19 @@
                             <div class="flex flex-row flex-wrap gap-2">
                                 @foreach($justification->Pictures as $picture)
                                     <img src="{{asset('storage/'.$picture->picture_name)}}" alt="Justification picture"
-                                         class="w-1/6"
-                                         style="max-width: 200px; max-height: 200px; object-fit: cover; object-position: center;">
+                                         class="w-1/6 cursor-pointer"
+                                         style="max-width: 200px; max-height: 200px; object-fit: cover; object-position: center;" onclick="pictureModal{{$picture->id}}.showModal();">
+                                    @teleport('body')
+                                    <dialog id="pictureModal{{$picture->id}}" class="modal">
+                                        <div class="modal-box w-11/12 max-w-5xl">
+                                            <form method="dialog">
+                                                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                            </form>
+                                            <h3 class="font-bold text-lg">{{__('general.viewPicture')}}</h3>
+                                            <img src="{{asset('storage/'.$picture->picture_name)}}" alt="Justification picture" class="rounded">
+                                        </div>
+                                    </dialog>
+                                    @endteleport
                                 @endforeach
                             </div>
                         </div>

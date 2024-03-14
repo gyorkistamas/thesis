@@ -20,7 +20,10 @@
 </head>
 <body class="font-serif h-full min-h-screen" dir="ltr">
 <livewire:toasts class="z-[900]"/>
-@yield('content_place')
+
+<div class="backdrop-blur-[1.5px] min-h-screen">
+    @yield('content_place')
+</div>
 
 @yield('scripts')
 </body>

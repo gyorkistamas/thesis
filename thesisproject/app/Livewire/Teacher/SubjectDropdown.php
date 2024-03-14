@@ -24,7 +24,7 @@ class SubjectDropdown extends Component
     #[On('courseOpened')]
     public function setLoadedCourse($courseId)
     {
-        if(! in_array($courseId, $this->loadedCourse)){
+        if (! in_array($courseId, $this->loadedCourse)) {
             $this->loadedCourse[] = $courseId;
         }
     }

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Teacher;
 
+use App\Models\Attendance;
 use Auth;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -59,6 +60,36 @@ class CourseStudents extends Component
             alreadySelected: ['alreadySelected' => $this->course->students->pluck('id')->toArray()]);
 
         toast()->success(__('general.studentRemoved'), __('general.success'))->push();
+    }
+
+    public function getMissingCount($student)
+    {
+        return Attendance::withWhereHas('Class', function ($query) {
+            $query->where('course_id', $this->course->id);
+        })
+            ->where('user_id', $student->id)
+            ->whereIn('attendance', ['missing', 'justified'])
+            ->count();
+    }
+
+    public function getNotJustified($student)
+    {
+        return Attendance::withWhereHas('Class', function ($query) {
+            $query->where('course_id', $this->course->id);
+        })
+            ->where('user_id', $student->id)
+            ->where('attendance', 'missing')
+            ->count();
+    }
+
+    public function getLateMinutes($student)
+    {
+        return Attendance::withWhereHas('Class', function ($query) {
+            $query->where('course_id', $this->course->id);
+        })
+            ->where('user_id', $student->id)
+            ->where('attendance', 'late')
+            ->sum('late_minutes');
     }
 
     public function mount($course)

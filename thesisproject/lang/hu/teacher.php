@@ -35,4 +35,7 @@ return [
     'modifier' => 'Módosító',
     'studentHasAcceptedJustification' => 'A diák elfogadott igazolással rendelkezik az órára.',
     'numberOfAbsences' => 'Hiányzások száma: :number, ebből :notjustified nincs igazolva.',
+    'allMissedClassesNumber' => 'Összes hiányzások',
+    'unJustifiedAbsences' => 'Igazolatlan hiányzások',
+    'cumulatedLateMinutes' => 'Összes késés',
 ];

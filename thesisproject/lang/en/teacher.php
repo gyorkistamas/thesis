@@ -35,4 +35,7 @@ return [
     'modifier' => 'Modifier',
     'studentHasAcceptedJustification' => 'The student has an accepted justification for the class.',
     'numberOfAbsences' => 'Number of absences: :number, :notjustified of them are not justified.',
+    'allMissedClassesNumber' => 'Number of all missed classes',
+    'unJustifiedAbsences' => 'Unjustified absences',
+    'cumulatedLateMinutes' => 'Cumulated late minutes',
 ];

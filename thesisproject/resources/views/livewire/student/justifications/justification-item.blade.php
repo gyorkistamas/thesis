@@ -65,7 +65,7 @@
                         <div class="inline-flex flex-col gap-2 items-stretch">
                             <span class="flex flex-row items-center gap-1"><x-icons.person_fill_small />{{__('student.teacherResponses')}}:</span>
                             @foreach($justification->GetTeachers()->get() as $teacher)
-                                <div class="badge flex flex-row flex-wrap justify-between w-[100%] gap-2">
+                                <div class="flex flex-row flex-wrap justify-between gap-2 bg-base-300 py-2 px-3 rounded-badge">
                                     <span>{{$teacher->name}}</span>
                                     @switch($teacher->pivot->status)
                                         @case('accepted')

@@ -12,8 +12,7 @@
     @vite('resources/css/themeswitcher.css')
     @vite('resources/js/app.js')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/locales/hu.js"></script>
+    @yield('calendar-scripts')
     @yield('styles')
 
     @laravelPWA

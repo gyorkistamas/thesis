@@ -154,4 +154,5 @@ return [
     'countData' => 'Számadatok',
     'count' => 'Darabszám',
     'viewPicture' => 'Kép megtekintése',
+    'showOnlyNotRespondedJustifications' => 'Csak a válaszolatlan igazolások megjelenítése',
 ];

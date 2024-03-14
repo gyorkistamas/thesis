@@ -154,4 +154,5 @@ return [
     'countData' => 'Count data',
     'count' => 'Count',
     'viewPicture' => 'View picture',
+    'showOnlyNotRespondedJustifications' => 'Show only not responded justifications',
 ];

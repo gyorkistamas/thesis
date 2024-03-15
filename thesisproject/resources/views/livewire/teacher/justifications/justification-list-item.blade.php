@@ -123,7 +123,7 @@
                                                                 <a href="{{route('teacher-view-class', ['courseClass' => $class->id])}}" wire:navigate>
                                                                     {{\Carbon\Carbon::parse($class->start_time)->isoFormat('YYYY.MM.DD, dddd, HH:mm')}}
                                                                     - {{\Carbon\Carbon::parse($class->end_time)->isoFormat('YYYY.MM.DD, dddd, HH:mm')}}
-                                                                    @switch($class->GetStudent(Auth::user()->id)->first()->pivot->attendance)
+                                                                    @switch($class->GetStudent($justification->User->id)->first()->pivot->attendance)
                                                                         @case('not_filled')
                                                                             <div class="badge badge-info gap-2">
                                                                                 {{__('teacher.notFilled')}}
@@ -139,7 +139,7 @@
                                                                         @case('late')
                                                                             <div class="badge badge-warning gap-2">
                                                                                 {{__('teacher.late')}}
-                                                                                ({{$class->GetStudent(Auth::user()->id)->first()->pivot->late_minutes}} {{__('teacher.minutes')}}
+                                                                                ({{$class->GetStudent($justification->User->id)->first()->pivot->late_minutes}} {{__('teacher.minutes')}}
                                                                                 )
                                                                             </div>
                                                                             @break

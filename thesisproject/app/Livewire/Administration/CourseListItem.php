@@ -211,7 +211,7 @@ class CourseListItem extends Component
             return;
         }
 
-        $this->course->Students()->syncWithoutDetaching($this->newStudents);
+        $this->course->Students()->attach($this->newStudents);
 
         foreach ($this->course->Classes as $class) {
             $class->StudentsWithPresence()->sync($this->course->Students->pluck('id')->toArray());

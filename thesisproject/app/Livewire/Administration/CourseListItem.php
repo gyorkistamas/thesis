@@ -215,8 +215,6 @@ class CourseListItem extends Component
 
         $this->course->load('Students');
 
-        //dd($this->course->Students);
-
         foreach ($this->course->Classes as $class) {
             $class->StudentsWithPresence()->sync($this->course->Students->pluck('id')->toArray());
         }

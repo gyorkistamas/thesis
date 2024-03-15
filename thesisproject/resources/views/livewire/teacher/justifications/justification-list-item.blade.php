@@ -139,7 +139,7 @@
                                                                         @case('late')
                                                                             <div class="badge badge-warning gap-2">
                                                                                 {{__('teacher.late')}}
-                                                                                ({{$attendance->late_minutes}} {{__('teacher.minutes')}}
+                                                                                ({{$class->GetStudent(Auth::user()->id)->first()->pivot->late_minutes}} {{__('teacher.minutes')}}
                                                                                 )
                                                                             </div>
                                                                             @break

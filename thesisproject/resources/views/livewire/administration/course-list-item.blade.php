@@ -28,7 +28,7 @@
             </dialog>
 
             @teleport('body')
-            <div class="drawer z-[9999]" wire:ignore.self>
+            <div class="drawer z-[222]" wire:ignore.self>
                 <input id="courseDrawer{{$course->id}}" type="checkbox" class="drawer-toggle"/>
                 <div class="drawer-side">
                     <label for="courseDrawer{{$course->id}}" aria-label="close sidebar" class="drawer-overlay"></label>

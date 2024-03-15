@@ -38,6 +38,7 @@ class Timetable extends Component
 
     public function getEvents($from, $to)
     {
+        // TODO fix merging error
         $fromDate = Carbon::parse($from);
         $toDate = Carbon::parse($to);
 
@@ -79,7 +80,7 @@ class Timetable extends Component
                 ];
             });
 
-        $classes = $studentClasses->merge($teacherClasses);
+        $classes = $studentClasses->push($teacherClasses);
 
         return json_encode($classes);
     }

@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = User::create([
+        $user = User::firstOrCreate([
             'name' => 'SuperAdmin',
             'email' => 'superadmin@presencetracker.com',
             'password' => bcrypt('superadmin'),
@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
 
         $user->roles()->updateOrCreate(['role' => 'superadmin']);
 
-        $user = User::create([
+        $user = User::firstOrCreate([
             'name' => 'Admin',
             'email' => 'admin@presencetracker.com',
             'password' => bcrypt('admin'),
@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
         ]);
         $user->roles()->updateOrCreate(['role' => 'admin']);
 
-        $user = User::create([
+        $user = User::firstOrCreate([
             'name' => 'Teacher',
             'email' => 'teacher@presencetracker.com',
             'password' => bcrypt('teacher'),
@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
         ]);
         $user->roles()->updateOrCreate(['role' => 'teacher']);
 
-        $user = User::create([
+        $user = User::firstOrCreate([
             'name' => 'Student',
             'email' => 'student@presencetracker.com',
             'password' => bcrypt('student'),

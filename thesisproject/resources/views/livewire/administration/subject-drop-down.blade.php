@@ -3,7 +3,7 @@
     @if(!$deleted)
         <input type="checkbox" wire:model.live="isOpen"/>
         <div class="collapse-title text-xl font-medium flex flex-row justify-between">
-            {{$subject->id}} - {{$subject->name}}
+            <span wire:loading.class="blur-md">{{$subject->id}} - {{$subject->name}}</span>
             @if(!$isOpen) <span class="loading loading-dots loading-md" wire:loading></span> @endif
         </div>
         <div class="collapse-content overflow-visible">

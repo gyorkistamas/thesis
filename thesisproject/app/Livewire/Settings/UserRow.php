@@ -28,7 +28,6 @@ class UserRow extends Component
 
     public function deleteUser()
     {
-        //TODO deletion of user if constraint
         if (! Auth::user()->hasRole('superadmin')) {
             toast()->danger(__('general.noPermission'), __('general.noPermission'))->push();
 
@@ -36,7 +35,14 @@ class UserRow extends Component
         }
         $temp = $this->user;
         $this->user = null;
-        $temp->delete();
+        try {
+            $temp->delete();
+        } catch (\Exception $e) {
+            $this->user = $temp;
+            toast()->danger(__('general.deleteFailed'), __('general.error'))->push();
+
+            return;
+        }
         $this->deleted = true;
         toast()->success(__('general.deleteSuccessful'), __('general.success'))->push();
     }

@@ -155,4 +155,5 @@ return [
     'count' => 'Count',
     'viewPicture' => 'View picture',
     'showOnlyNotRespondedJustifications' => 'Show only not responded justifications',
+    'userInUseCannotDelete' => 'User in use, cannot delete!',
 ];

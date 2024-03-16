@@ -14,7 +14,7 @@ class StudentController extends Controller
             ->where('invalidated', false)
             ->first();
 
-        if ($loginuuid == null || $loginuuid->Class->end_time > Date::now()) {
+        if ($loginuuid == null || $loginuuid->Class->end_time < Date::now()) {
             return abort(404);
         }
 

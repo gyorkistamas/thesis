@@ -40,7 +40,6 @@ class LoginToClass extends Component
         $this->attendance->attendance = 'present';
         $this->attendance->save();
         $event = ClassPresenceChanged::dispatch($this->attendance);
-        dd($event);
     }
 
     public function render()

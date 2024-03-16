@@ -21,7 +21,7 @@
                                 {{$class->start_time->isoFormat('HH:mm')}} - {{$class->end_time->isoFormat('HH:mm')}},
                             </span>
                             <x-icons.map_fill_small />
-                            <span>{{$class->Place->name}}</span>
+                            <span>{{$class->Place ? $class->Place->name : '-'}}</span>
                         </span>
                     </div>
                 </div>

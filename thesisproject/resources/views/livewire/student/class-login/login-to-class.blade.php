@@ -11,7 +11,7 @@
     <div class="w-fit min-w-fit text-lg font-bold">
         <h1>{{$attendance->Class->Course->Subject->name}}
             - {{$attendance->Class->Course->course_id}} {{__('teacher.course')}}
-            ({{$attendance->Class->Course->Term->name}})</h1>
+            ({{$attendance->Class->Course->Term ? $attendance->Class->Course->Term->name : '-'}})</h1>
     </div>
 
     <div class="divider"></div>
@@ -30,7 +30,7 @@
     <div class="flex flex-row justify-start items-center gap-2 text-lg">
         <x-icons.map_fill_small class="inline"/>
         <span class="font-bold">{{__('general.place')}}: </span>
-        {{$attendance->Class->Place->name}}
+        {{$attendance->Class->Place ? $attendance->Class->Place->name : '-'}}
     </div>
 
     <div class="flex flex-row justify-start items-center gap-2 text-lg">

@@ -80,7 +80,7 @@ class Timetable extends Component
                 ];
             });
 
-        $classes = $studentClasses->push($teacherClasses);
+        $classes = array_merge($studentClasses->toArray(), $teacherClasses->toArray());
 
         return json_encode($classes);
     }

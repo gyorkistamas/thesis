@@ -5,13 +5,27 @@
         <button class="btn btn-success" onclick="exportModal.showModal()">{{__('general.exportTimeTable')}}</button>
     </div>
 
-    <div class="mt-5 h-screen" wire:ignore>
+    <div class="mt-5" wire:ignore>
 
         <div class="inset-0 flex items-center justify-center z-[9999] absolute" style="pointer-events: none;" id="loadingIndicator">
             <span class="loading loading-dots loading-lg"></span>
         </div>
 
-        <div id="timetable" class="">
+        <div class="h-screen">
+            <div id="timetable" class="">
+            </div>
+        </div>
+
+        <div class="mt-2 flex flex-row gap-3 flex-wrap items-center">
+            <div class="prose">
+                <h2>{{__('general.colorMeanings')}}:</h2>
+            </div>
+
+            <div class="badge badge-info gap-2">{{__('teacher.notFilled')}}</div>
+            <div class="badge badge-success gap-2">{{__('teacher.present')}} {{__('general.or')}} {{__('teacher.justified')}}</div>
+            <div class="badge badge-warning gap-2">{{__('teacher.late')}}</div>
+            <div class="badge badge-error gap-2">{{__('teacher.absent')}}</div>
+            <div class="badge badge-accent gap-2">{{__('general.taughtByYou')}}</div>
         </div>
     </div>
 

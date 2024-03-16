@@ -156,4 +156,6 @@ return [
     'viewPicture' => 'View picture',
     'showOnlyNotRespondedJustifications' => 'Show only not responded justifications',
     'userInUseCannotDelete' => 'User in use, cannot delete!',
+    'colorMeanings' => 'Color meanings',
+    'taughtByYou' => 'Taught by you',
 ];

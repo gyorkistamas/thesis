@@ -156,4 +156,6 @@ return [
     'viewPicture' => 'Kép megtekintése',
     'showOnlyNotRespondedJustifications' => 'Csak a válaszolatlan igazolások megjelenítése',
     'userInUseCannotDelete' => 'A felhasználó használatban van, nem lehet törölni!',
+    'colorMeanings' => 'Színek jelentése',
+    'taughtByYou' => 'Oktatott',
 ];

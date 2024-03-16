@@ -74,7 +74,7 @@ class Timetable extends Component
                     'title' => $class->Course->Subject->name.' - '.$class->Course->course_id.' ('.($class->Place != null ? $class->Place->name : '-').')',
                     'start' => $class->start_time->toISOString(),
                     'end' => $class->end_time->toISOString(),
-                    'color' => 'orange',
+                    'color' => 'teal',
                     'allowClick' => true,
                     'className' => 'break-all',
                 ];
@@ -89,6 +89,7 @@ class Timetable extends Component
     {
         switch ($class->GetStudent($this->user->id)->first()->pivot->attendance) {
             case 'present':
+            case 'justified':
                 return 'green';
             case 'late':
                 return 'orange';

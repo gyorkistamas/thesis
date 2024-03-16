@@ -45,7 +45,8 @@
         let calendar = new FullCalendar.Calendar(calendarEl, {
             locale: '{{App::currentLocale()}}',
             initialView: getInitialView(),
-            slotMinTime: '7:00:00',
+            slotMinTime: '8:00:00',
+            slotMaxTime: '19:00:00',
             nowIndicator: true,
             expandRows: true,
             eventMaxStack: 1,
@@ -83,11 +84,9 @@
                 tooltip.classList.add('tooltip');
                 tooltip.classList.add('z-[9999]');
                 let content = info.el.children[0].children[0];
-                tooltip.setAttribute('data-tip', content.children[1].children[0].innerHTML);
-                content.children[1].children[0].classList.add('break-all');
-                info.el.children[0].removeChild(content);
-                tooltip.appendChild(content);
-                info.el.children[0].appendChild(tooltip);
+                content.classList.add('tooltip');
+
+                content.setAttribute('data-tip', content.children[1].children[0].innerHTML);
             },
             events: function (info, successCallback, failureCallback) {
                 $wire.getEvents(info.startStr, info.endStr).then(value => {

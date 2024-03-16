@@ -213,4 +213,6 @@ body {
     }
 }
 
-
+.fc-event-title-container {
+    overflow: hidden;
+}

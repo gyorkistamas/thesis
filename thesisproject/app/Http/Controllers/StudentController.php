@@ -14,6 +14,8 @@ class StudentController extends Controller
             ->where('invalidated', false)
             ->first();
 
+        dd($loginuuid);
+
         if ($loginuuid == null || $loginuuid->Class->end_time > Date::now()) {
             return abort(404);
         }
@@ -24,6 +26,7 @@ class StudentController extends Controller
     public function getLoginLink(Request $request)
     {
         if ($request->session()->get('classid') == null) {
+            dd($request->session()->get('classid'));
             return abort(404);
         }
 

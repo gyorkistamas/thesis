@@ -5,7 +5,7 @@
         <button class="btn btn-success" onclick="exportModal.showModal()">{{__('general.exportTimeTable')}}</button>
     </div>
 
-    <div class="mt-5" wire:ignore>
+    <div class="mt-5 h-screen" wire:ignore>
 
         <div class="inset-0 flex items-center justify-center z-[9999] absolute" style="pointer-events: none;" id="loadingIndicator">
             <span class="loading loading-dots loading-lg"></span>
@@ -49,6 +49,7 @@
             nowIndicator: true,
             expandRows: true,
             eventMaxStack: 1,
+            height: '100%',
             views: {
                 timeGridDay: {
                     type: 'timeGrid',

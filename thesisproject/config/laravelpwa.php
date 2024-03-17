@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'name' => env('SITENAME', 'Presence Tracker'),
+    'name' => config('presencetracker.sitename', 'Presence Tracker'),
     'manifest' => [
-        'name' => env('SITENAME', 'Presence Tracker'),
+        'name' => config('presencetracker.sitename', 'Presence Tracker'),
         'short_name' => 'Presence Tracker',
         'start_url' => '/',
         'background_color' => '#1e232a',

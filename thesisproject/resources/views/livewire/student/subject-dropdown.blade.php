@@ -25,10 +25,15 @@
                             <div class="flex flex-col gap-2 text-lg">
                                 <span><span class="font-bold">{{__('general.courseDescription')}}:</span> {{$course->description}}</span>
                                 <span><span class="font-bold">{{__('general.semester')}}:</span> {{$course->Term->name}}</span>
-                                <span><span class="font-bold">{{__('general.teachers')}}:</span> @foreach($course->Teachers as $teacher){{$teacher->name}}@if(!$loop->last), @endif @endforeach</span>
+                                <span><span class="font-bold">{{__('general.teachers')}}:</span> @foreach($course->Teachers as $teacher)
+                                        {{$teacher->name}}@if(!$loop->last)
+                                            ,
+                                        @endif
+                                    @endforeach</span>
                             </div>
                             <div class="card-actions justify-end" x-data="{clickedCard{{$course->id}}: false}">
-                                <label for="courseDrawer{{$course->id}}" class="btn btn-success m-1 btn-sm" @click="if(!clickedCard{{$course->id}}) {$dispatch('loadCourse.{{$course->id}}'); clickedCard{{$course->id}} = true;}">
+                                <label for="courseDrawer{{$course->id}}" class="btn btn-success m-1 btn-sm"
+                                       @click="if(!clickedCard{{$course->id}}) {$dispatch('loadCourse.{{$course->id}}'); clickedCard{{$course->id}} = true;}">
                                     <x-icons.view_fill_small/>{{__('general.view')}}</label>
                             </div>
                         </div>
@@ -53,9 +58,14 @@
                         <td>{{ $course->course_id }}</td>
                         <td>{{ $course->description }}</td>
                         <td>{{ $course->Term->name }}</td>
-                        <td>@foreach($course->Teachers as $teacher){{$teacher->name}}@if(! $loop->last), @endif @endforeach</td>
+                        <td>@foreach($course->Teachers as $teacher)
+                                {{$teacher->name}}@if(! $loop->last)
+                                    ,
+                                @endif
+                            @endforeach</td>
                         <td x-data="{clicked{{$course->id}}: false}">
-                            <label for="courseDrawer{{$course->id}}" class="btn btn-success m-1 btn-sm" @click="if(!clicked{{$course->id}}) {$dispatch('loadCourse.{{$course->id}}'); clicked{{$course->id}} = true;}">
+                            <label for="courseDrawer{{$course->id}}" class="btn btn-success m-1 btn-sm"
+                                   @click="if(!clicked{{$course->id}}) {$dispatch('loadCourse.{{$course->id}}'); clicked{{$course->id}} = true;}">
                                 <x-icons.view_fill_small/>{{__('general.view')}}</label>
                         </td>
                     </tr>
@@ -79,7 +89,9 @@
 
 
             @foreach($semesterSearch != '' ? $subject->CoursesInTermAndStudent($semesterSearch, Auth::user()->id)->get() : $subject->CoursesHasStudent(Auth::user()->id)->get() as $course)
+                @teleport('body')
                 <livewire:student.course-component :course="$course" :key="$course->id"/>
+                @endteleport
             @endforeach
         @endif
 

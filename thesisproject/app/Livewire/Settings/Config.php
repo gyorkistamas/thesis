@@ -71,6 +71,7 @@ class Config extends Component
             ]);
         }
         Artisan::call('config:cache');
+        Artisan::call('queue:restart');
     }
 
     public function render()

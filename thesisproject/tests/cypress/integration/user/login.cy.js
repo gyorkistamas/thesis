@@ -1,5 +1,10 @@
 describe('Logging in with users', () => {
 
+    before(() => {
+        cy.refreshDatabase();
+        cy.seed();
+    });
+
     it('Logs in with super admin', () => {
         cy.visit('/')
         cy.get('.align-top > .btn').click()

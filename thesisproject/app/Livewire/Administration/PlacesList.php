@@ -23,7 +23,7 @@ class PlacesList extends Component
         }
 
         $this->validate([
-            'newName' => 'required|string|max:255',
+            'newName' => ['required', 'string', 'max:255', 'unique:places,name'],
         ]);
 
         Place::create([

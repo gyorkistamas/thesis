@@ -38,12 +38,7 @@ class SemesterItemList extends Component
         }
 
         foreach (Term::all() as $term) {
-            if ($term->start <= $this->editStart && $term->end >= $this->editStart && $term->id != $this->term->id) {
-                toast()->danger(__('general.overlap'), __('general.error'))->push();
-
-                return;
-            }
-            if ($term->start <= $this->editEnd && $term->end >= $this->editEnd && $term->id != $this->term->id) {
+            if ($this->editEnd >= $term->start && $term->end >= $this->editStart) {
                 toast()->danger(__('general.overlap'), __('general.error'))->push();
 
                 return;

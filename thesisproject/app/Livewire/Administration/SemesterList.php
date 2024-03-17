@@ -36,12 +36,7 @@ class SemesterList extends Component
         ]);
 
         foreach (Term::all() as $term) {
-            if ($term->start <= $this->newStart && $term->end >= $this->newStart) {
-                toast()->danger(__('general.overlap'), __('general.error'))->push();
-
-                return;
-            }
-            if ($term->start <= $this->newEnd && $term->end >= $this->newEnd) {
+            if ($this->newEnd >= $term->start && $term->end >= $this->newStart) {
                 toast()->danger(__('general.overlap'), __('general.error'))->push();
 
                 return;

@@ -56,7 +56,7 @@ class Config extends Component
             $this->logo = 'storage/'.str_replace('public/', '', $this->logo);
 
             $editor->changeEnv([
-                'SITENAME' => '"'.$this->siteName.'"',
+                'APP_NAME' => '"'.$this->siteName.'"',
                 'ALLOWREGISTER' => $this->allowRegister ? 'true' : 'false',
                 'LOGO' => '"'.$this->logo.'"',
                 'ALLOW_CHANGE_NEPTUN_CODE' => $this->allowChange ? 'true' : 'false',
@@ -64,7 +64,7 @@ class Config extends Component
             ]);
         } else {
             $editor->changeEnv([
-                'SITENAME' => '"'.$this->siteName.'"',
+                'APP_NAME' => '"'.$this->siteName.'"',
                 'ALLOWREGISTER' => $this->allowRegister ? 'true' : 'false',
                 'ALLOW_CHANGE_NEPTUN_CODE' => $this->allowChange ? 'true' : 'false',
                 'REQUIRE_NEPTUN_CODE' => $this->requireNeptun ? 'true' : 'false',

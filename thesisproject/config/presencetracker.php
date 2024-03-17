@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'sitename' => env('SITENAME', 'Presence Tracker'),
+    'sitename' => env('APP_NAME', 'Presence Tracker'),
     'favicon' => '/favicon.ico',
     'logo' => env('LOGO', 'def_logo.png'),
     'enableRegister' => env('ALLOWREGISTER', true),

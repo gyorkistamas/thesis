@@ -22,7 +22,7 @@ class LanguageMiddleware
             App::setLocale(Auth::user()->lang);
         } else {
             if ($request->cookie('lang')) {
-                App::setLocale(explode('|', Crypt::decrypt($request->cookie('lang'), false))[1]);
+                App::setLocale($request->cookie('lang'));
             }
         }
 

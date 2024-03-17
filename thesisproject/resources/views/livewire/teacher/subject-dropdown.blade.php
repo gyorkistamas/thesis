@@ -76,6 +76,7 @@
 
 
             @foreach($semesterSearch != '' ? $subject->CoursesInTermAndTeacher($semesterSearch, Auth::user()->id)->get() : $subject->CoursesTaughtByTeacher(Auth::user()->id)->get() as $course)
+                @teleport('body')
                 <div class="drawer z-[200]" wire:ignore.self>
                     <input id="courseDrawer{{$course->id}}" type="checkbox" class="drawer-toggle"/>
                     <div class="drawer-side">
@@ -180,6 +181,7 @@
                         </div>
                     </div>
                 </div>
+                @endteleport
             @endforeach
        @endif
 

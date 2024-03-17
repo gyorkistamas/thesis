@@ -21,7 +21,7 @@ class CreateNewUser implements CreatesNewUsers
     public function create(array $input): User
     {
         Validator::make($input, [
-            'neptun' => ['max:6'],
+            'neptun' => config('presencetracker.requireNeptunCode') ? ['required', 'max:6', 'min:6', 'string'] : ['max:6', 'min:6', 'string'],
             'name' => ['required', 'string', 'max:255'],
             'email' => [
                 'required',

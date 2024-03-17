@@ -9,7 +9,7 @@
         <form method="POST" action="{{ route('register') }}">
             @csrf
             <div class="flex flex-col justify-center">
-                <input type="text" name="neptun" placeholder="{{__('general.neptunCode')}}" class="input input-bordered input-primary" value="{{old('neptun')}}">
+                <input type="text" name="neptun" placeholder="{{__('general.neptunCode')}}@if(config('presencetracker.requireNeptunCode'))* @endif" class="input input-bordered input-primary" value="{{old('neptun')}}">
                 @error('neptun') <x-error-alert class="p-2 mt-2">{{$message}}</x-error-alert> @enderror
 
                 <input type="text" name="name" placeholder="{{__('general.name')}}*" class="input input-bordered input-primary mt-3" value="{{old('name')}}">

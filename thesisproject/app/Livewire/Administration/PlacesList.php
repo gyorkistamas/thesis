@@ -31,6 +31,7 @@ class PlacesList extends Component
         ]);
 
         $this->newName = '';
+        $this->dispatch('closeNewPlaceModal');
         toast()->success(__('general.createNewPlace'), __('general.success'))->push();
 
     }

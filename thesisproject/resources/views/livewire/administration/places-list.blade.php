@@ -67,4 +67,13 @@
             </div>
         </div>
     </dialog>
+
+
+    @script
+    <script>
+        $wire.on('closeNewPlaceModal', () => {
+            newPlaceModal.close();
+        });
+    </script>
+    @endscript
 </div>

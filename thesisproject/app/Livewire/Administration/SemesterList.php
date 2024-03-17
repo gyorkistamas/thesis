@@ -53,6 +53,7 @@ class SemesterList extends Component
         $this->newStart = '';
         $this->newEnd = '';
 
+        $this->dispatch('closeNewTermModal');
         toast()->success(__('general.createTermSuccess'), __('general.success'))->push();
     }
 

@@ -92,4 +92,12 @@
             </div>
         </div>
     </dialog>
+
+    @script
+    <script>
+        $wire.on('closeNewTermModal', () => {
+            newSemesterModal.close();
+        });
+    </script>
+    @endscript
 </div>

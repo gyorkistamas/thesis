@@ -182,5 +182,13 @@
             </dialog>
         </div>
 
+        @script
+        <script>
+            $wire.on('closeCourseCreateModal{{$subject->id}}', () => {
+                createCourse{{$subject->id}}.close();
+            })
+        </script>
+        @endscript
+
     @endif
 </div>

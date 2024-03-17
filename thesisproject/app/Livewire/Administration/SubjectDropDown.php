@@ -160,7 +160,7 @@ class SubjectDropDown extends Component
                 }
             }
         }
-
+        $this->dispatch('closeCourseCreateModal'.$this->subject->id);
         toast()->success(__('general.courseCreated'), __('general.success'))->push();
     }
 

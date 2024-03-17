@@ -38,7 +38,7 @@
             </div>
             <div class="flex flex-row justify-between mt-3">
                 <a class="link link-primary" href="/forgot-password" wire:navigate>{{__('auth.forgotPassword')}}</a>
-                <a class="link link-primary" href="{{ route('register') }}" wire:navigate>{{__('auth.register')}}</a>
+                @if(config('presencetracker.enableRegister'))<a class="link link-primary" href="{{ route('register') }}" wire:navigate>{{__('auth.register')}}</a> @endif
             </div>
         </form>
     </x-rounded-container>

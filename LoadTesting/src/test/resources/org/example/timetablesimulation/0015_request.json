@@ -1,0 +1,19 @@
+{
+  "_token": "#{livewirecsrf}",
+  "components": [
+    {
+      "snapshot": "{\"data\":{\"user\":[null,{\"class\":\"App\\\\Models\\\\User\",\"key\":3,\"s\":\"mdl\"}]},\"memo\":{\"id\":\"PyyPHmD3cXNgud0DML4j\",\"name\":\"landing.timetable\",\"path\":\"timetable\",\"method\":\"GET\",\"children\":[],\"scripts\":[\"4181131285-0\"],\"assets\":[],\"errors\":[],\"locale\":\"hu\"},\"checksum\":\"3e9c8b51c1e30fc21b166a922ba03ef282f2fc2957fde9259c81146d0a5b3229\"}",
+      "updates": {},
+      "calls": [
+        {
+          "path": "",
+          "method": "getEvents",
+          "params": [
+            "2024-03-18T00:00:00+01:00",
+            "2024-03-25T00:00:00+01:00"
+          ]
+        }
+      ]
+    }
+  ]
+}

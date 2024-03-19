@@ -13,7 +13,7 @@
               wire:submit="searchUsers">
             <input type="search"
                    placeholder="{{__('general.search')}}: {{__('general.neptunCode')}} {{__('general.or')}} {{__('general.name')}}"
-                   class="input input-bordered input-accent w-full max-w-xs lg:mx-0" wire:model.live.debounce.500ms="search"/>
+                   class="input input-bordered input-accent w-full max-w-xs lg:mx-0" wire:model.live.debounce.500ms="search" @keyup="$dispatch('resetUserList')"/>
         </form>
         <div class="flex flex-col flex-wrap content-center md:flex-row gap-5">
             <div class="form-control">
@@ -25,19 +25,19 @@
             <div class="form-control">
                 <label class="cursor-pointer label">
                     <span class="label-text me-2">{{__('general.admin')}}</span>
-                    <input type="checkbox" class="checkbox checkbox-accent" wire:model.live="admin"/>
+                    <input type="checkbox" class="checkbox checkbox-accent" wire:model.live="admin" @click="$dispatch('resetUserList')"/>
                 </label>
             </div>
             <div class="form-control">
                 <label class="cursor-pointer label">
                     <span class="label-text me-2">{{__('general.teacher')}}</span>
-                    <input type="checkbox" class="checkbox checkbox-accent" wire:model.live="teacher"/>
+                    <input type="checkbox" class="checkbox checkbox-accent" wire:model.live="teacher" @click="$dispatch('resetUserList')"/>
                 </label>
             </div>
             <div class="form-control">
                 <label class="cursor-pointer label">
                     <span class="label-text me-2">{{__('general.student')}}</span>
-                    <input type="checkbox" class="checkbox checkbox-accent" wire:model.live="student"/>
+                    <input type="checkbox" class="checkbox checkbox-accent" wire:model.live="student" @click="$dispatch('resetUserList')"/>
                 </label>
             </div>
         </div>

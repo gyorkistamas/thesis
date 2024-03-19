@@ -19,7 +19,7 @@
             <div class="form-control">
                 <label class="cursor-pointer label">
                     <span class="label-text me-2">{{__('general.superadmin')}}</span>
-                    <input type="checkbox" class="checkbox checkbox-accent" wire:model.live="superadmin"/>
+                    <input type="checkbox" class="checkbox checkbox-accent" wire:model.live="superadmin" @click="$dispatch('resetUserList')"/>
                 </label>
             </div>
             <div class="form-control">

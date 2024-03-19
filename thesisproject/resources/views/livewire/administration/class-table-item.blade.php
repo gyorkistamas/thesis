@@ -26,6 +26,7 @@
                 <button class="btn btn-warning btn-sm"  wire:loading.class="not-clickable" wire:click="editClass"><x-icons.edit_fill_small/>{{__('general.edit')}}</button>
                 <a onclick="classDelete{{$class->id}}.showModal()" class="btn btn-error btn-sm" wire:loading.class="not-clickable">
                     <x-icons.delete_fill_small/>{{__('general.delete')}}</a>
+                <a class="btn btn-success btn-sm" href="{{route('teacher-view-class', ['courseClass' => $class->id])}}" wire:navigate><x-icons.view_fill_small />{{__('general.view')}}</a>
             </div>
             <dialog id="classDelete{{$class->id}}" class="modal modal-bottom sm:modal-middle" wire:ignore.self>
                 <div class="modal-box">

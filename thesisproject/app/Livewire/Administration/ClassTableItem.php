@@ -41,6 +41,14 @@ class ClassTableItem extends Component
             'editPlace' => 'required|exists:places,id',
         ]);
 
+        foreach ($this->class->Course->Classes as $class) {
+            if ($class->id != $this->class->id && $this->editEnd >= $class->start_time && $class->end_time >= $this->editStart) {
+                toast()->danger(__('general.overlap'), __('general.error'))->push();
+
+                return;
+            }
+        }
+
         $this->class->update([
             'start_time' => $this->editStart,
             'end_time' => $this->editEnd,

@@ -159,16 +159,8 @@ class CourseListItem extends Component
     {
         $overlaps = $this->course->Classes()
             ->where(function ($query) {
-                $query->where('start_time', '<=', $this->newClassStart)
+                $query->where('start_time', '<=', $this->newClassEnd)
                     ->where('end_time', '>=', $this->newClassStart);
-            })
-            ->orWhere(function ($query) {
-                $query->where('end_time', '>=', $this->newClassStart)
-                    ->where('end_time', '<=', $this->newClassEnd);
-            })
-            ->orWhere(function ($query) {
-                $query->where('start_time', '>=', $this->newClassStart)
-                    ->where('start_time', '<=', $this->newClassEnd);
             })
             ->count();
 

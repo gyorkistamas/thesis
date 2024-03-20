@@ -35,7 +35,57 @@ A megvalósításhoz a Laravel keretrendszert használtam, mely egy PHP alapú, 
 
 \chapter{Alkalmazás bemutatása}
 \section{Adatbázis}
+
+\Aref{database} ábrán látható az alkalmazás által használt adatbázis, egyed-kapcsolat diagrammal ábrázolva, melyről szeretnék néhány szót ejteni.
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=15cm]{../pictures/db.png}
+	\caption{Az alkalmazás által használt adatbázis.}
+	\label{database}
+\end{figure}
+
+\begin{itemize}
+	\item \emph{users}: ez a tábla tárolja a felhasználók adatait. Minden felhasználóról tárolunk egy azonosítót, egy Neptun kódot, nevet, email címet, egy titkosított jelszót, egy profilképet, a felhasználó által használt nyelvet, illetve egy UUID-t, azaz egy egyedi azonosítót, amit az órarend exportálásához lehet használni, erről később. Az azonosító oszlopra azért van szükség, mivel az alkalmazás fel van készítve arra, hogy Neptun kód nélkül rendelkező felhasználókat is tudjon kezelni.
+	\item \emph{terms, places}: a félévek és termek (helyek) tárolására szolgáló táblák.
+	\item \emph{subjects, courses, course\_classe, class\_login\_links}: ezen táblák tárolják a tantárgyakat (amik többek között rendelkeznek egy azonosítóval, névvel, leírással, kreditértékkel, és egy tantárgyfelelőssel), a tantárgyakhoz tartozó kurzusokat (amihez tárolok egy azonosítót, ami minden esetben egyedi, egy kurzus azonosítót, ami minden félév és tantárgy esetében kell egyedinek lennie, tartozik hozzá egy félév, illetve egy létszám limit), illetve kurzusokhoz pedig órák (amiknek van egy kezdete, vége, illetve egy terem, ahol tartják). Az utolsó tábla pedig az órákhoz tartozó bejelentkező linkeket tartalmazza, ennek jelentőségéről kicsit később.
+	\item  \emph{attendances}: itt tárolom az egyes kurzusok résztvevőinek az órai jelenléteit, melyek lehetnek: nincs kitöltve, jelen, késés (mely esetben percben lehet tárolni a mértékét), hiányzás, igazolt hiányzás.
+	\item \emph{justification, justification\_acceptances, justification\_pictures}: ezek a táblák tárolják az igazolásokat, az igazoláshoz tartozó feltöltött képeket, illetve az igazolásban érintett tanárok válaszát, hogy elfogadják-e ó, vagy sem.
+	\item Az egyéb, nem említett táblák inkább kapcsolótábla funkciót töltenek be, vagy a keretrendszernek vannak rá szükségei. Például a \emph{jobs} tábla a háttérben végrehajtandó feladatokat (job) tartalmazza.
+\end{itemize}
+
+Itt érdemes még megemlíteni, hogy a fejlesztés során a MySQL nevezetű, relációs adatbázist használtam, viszont a Laravel keretrendszerből adódóan sok más típusú adatbázis szoftverrel használható az alkalmazás, mivel a táblák felépítése a keretrendszerben van elkészítve.
+
 \section{Általános funkciók, információk}
+
+Az alkalmazás elérhető a \url{https://szakdolgozat.ddns.net} címen, ahol ki lehet próbálni az alkalmazást. Pár alapértelmezett felhasználó elérhető:
+\begin{itemize}
+	\item Szuper adminisztrátor:
+	\begin{itemize}
+		\item Felhasználónév: \emph{SADMIN}
+		\item Jelszó: \emph{superadmin}
+	\end{itemize}
+	\item Adminisztrátor:
+	\begin{itemize}
+		\item Felhasználónév: \emph{ADMIN0}
+		\item Jelszó: \emph{admin}
+	\end{itemize}
+	\item Tanár:
+	\begin{itemize}
+		\item Felhasználónév: \emph{TEACHE}
+		\item Jelszó: \emph{teacher}
+	\end{itemize}
+	\item Hallgató:
+	\begin{itemize}
+		\item Felhasználónév: \emph{STUDEN}
+		\item Jelszó: \emph{student}
+	\end{itemize}
+\end{itemize}
+
+\subsection{Felhasználók}
+
+
+
 \section{Adminisztrátori nézet, funkciók}
 \section{Tanári nézet, funkciók}
 \section{Hallgatói nézet, funkciók}

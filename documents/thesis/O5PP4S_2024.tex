@@ -133,6 +133,36 @@ A kurzusokhoz órák hozhatóak létre, amik a féléven belül lehetnek. Minden
 
 
 \section{Tanári nézet, funkciók}
+
+\subsection{Oktatott tárgyak}
+
+A tanárok megtekinthetik az általuk oktatott -- vagy tantárgyfelelősként hozzáadott -- tárgyakat, és az azokhoz kapcsolódó adatokat. Igény szerint szűrhetnek kód, név, vagy félévre is. Minden kurzus esetén megtekinthetik az alap adatokat, a kurzushoz tartozó órákat, hallgatókat. Itt van lehetősége a tanárnak hozzáadni hallgatókat a kurzushoz, illetve egy listában megtekinteni diákokra lebontva, hogy mennyit hiányoztak, mennyit késtek, ebből mennyi az igazolatlan.
+
+A kurzus órái listában érhetik el az egyes órákat, ahol adminisztrálhatják a jelenlétet. Egy órát megnyitva láthatják az ahhoz kapcsolódó adatok, illetve bal oldalon egy listát a kurzus tanulóiról, ahol beállíthatják a hallgató státuszát. Amennyiben az adott hallgató a tanár által elfogadott igazolással rendelkezik, akkor ebben az esetben csak ,,jelen'' státusz -- ha esetleg mégis megjelent az órán --, vagy pedig ,,igazol hiányzás'' státusz állítható be, illetve egy figyelmeztető üzenet is megjelenik. Ezek mellett megjelenik az adott kurzuson való összes hiányzás és igazol hiányzások száma is.
+
+A jobb oldalt kettő doboz foglal helyet. Az első egy Qr\footnote{A Qr kód egy információt tartalmazó kép,  amit kamerával lehet leolvasni.\cite{QR}} kódot tartalmaz. Ennek segítségével, ha az oktató látható teszi, a diákok a kódot a telefonjukon beolvasva, majd bejelentkezve is ,,beírhatják magukat'' az órára, ezzel felgyorsítva a folyamatot, és a tanárnak sem kell végig mennie a listán. A kód csak az óra végéig működik, illetve ha az oktató úgy sejti, hogy a hallgatók visszaélnek ezzel, akkor hamarabb is letilthatja, illetve generálhat egy másikat. Amikor a hallgató íj módon bejelentkezik az órára, a tanári felületen automatikusan frissítésre kerül a státusz. A hallgató csak abban az esetben tudja ezt a funkciót használni, hogy ha fel van iratkozva a kurzusra, és még nem állították be az adott órára a státuszát, ezzel elkerülve, hogy magától átírja esetleges hiányzását, késését. Hiányzás rögzítése esetén email üzenet formájában is értesítést kap a hallgató.
+
+A másik ilyen doboz egy kis statisztikát mutat kör diagram formájában, megszámolva a hallgatók státuszát az órán.
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=10cm]{../pictures/screenshots/class_1.png}
+	\caption{Egy óra nézete.}
+	\label{class}
+\end{figure}
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=6cm]{../pictures/screenshots/class_2.png}
+	\includegraphics[width=6cm]{../pictures/screenshots/class_3.png}
+	\caption{Egy óra kártyái.}
+	\label{class2}
+\end{figure}
+
+\subsection{Igazolások}
+
+
+
 \section{Hallgatói nézet, funkciók}
 
 \chapter{Felhasznált technológiák, csomagok}
@@ -233,6 +263,11 @@ Az alkalmazás a szakdolgozat védés, illetve a záróvizsga időszak alatt el�
 \textsc{MDN web docs}: \emph{Progressive web apps}
 \\
 \url{https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps}, Megtekintés dátuma: 2024.03.21.
+
+\bibitem{QR}
+\textsc{Kaspersky}: \emph{QR Code Security: What are QR codes and are they safe to use?}
+\\
+\url{https://www.kaspersky.com/resource-center/definitions/what-is-a-qr-code-how-to-scan}, Megtekintés dátuma: 2024.03.21.
 
 \end{thebibliography}
 

@@ -46,7 +46,7 @@ A megvalósításhoz a Laravel keretrendszert használtam, mely egy PHP alapú, 
 \end{figure}
 
 \begin{itemize}
-	\item \emph{users}: ez a tábla tárolja a felhasználók adatait. Minden felhasználóról tárolunk egy azonosítót, egy Neptun\cite{Neptun} kódot\footnote{A neptun kód egy 6 karakter hosszú, egyedi azonosító.}, nevet, email címet, egy titkosított jelszót, egy profilképet, a felhasználó által használt nyelvet, illetve egy UUID-t, azaz egy egyedi azonosítót, amit az órarend exportálásához lehet használni, erről később. Az azonosító oszlopra azért van szükség, mivel az alkalmazás fel van készítve arra, hogy Neptun kód nélkül rendelkező felhasználókat is tudjon kezelni.
+	\item \emph{users, user\_roles}: ez a tábla tárolja a felhasználók adatait, illetve a felhasználókhoz tartozó jogosultsági köröket. Minden felhasználóról tárolunk egy azonosítót, egy Neptun\cite{Neptun} kódot\footnote{A neptun kód egy 6 karakter hosszú, egyedi azonosító.}, nevet, email címet, egy titkosított jelszót, egy profilképet, a felhasználó által használt nyelvet, illetve egy UUID-t, azaz egy egyedi azonosítót, amit az órarend exportálásához lehet használni, erről később. Az azonosító oszlopra azért van szükség, mivel az alkalmazás fel van készítve arra, hogy Neptun kód nélkül rendelkező felhasználókat is tudjon kezelni.
 	\item \emph{terms, places}: a félévek és termek (helyek) tárolására szolgáló táblák.
 	\item \emph{subjects, courses, course\_classe, class\_login\_links}: ezen táblák tárolják a tantárgyakat (amik többek között rendelkeznek egy azonosítóval, névvel, leírással, kreditértékkel, és egy tantárgyfelelőssel), a tantárgyakhoz tartozó kurzusokat (amihez tárolok egy azonosítót, ami minden esetben egyedi, egy kurzus azonosítót, ami minden félév és tantárgy esetében kell egyedinek lennie, tartozik hozzá egy félév, illetve egy létszám limit), illetve kurzusokhoz pedig órák (amiknek van egy kezdete, vége, illetve egy terem, ahol tartják). Az utolsó tábla pedig az órákhoz tartozó bejelentkező linkeket tartalmazza, ennek jelentőségéről kicsit később.
 	\item  \emph{attendances}: itt tárolom az egyes kurzusok résztvevőinek az órai jelenléteit, melyek lehetnek: nincs kitöltve, jelen, késés (mely esetben percben lehet tárolni a mértékét), hiányzás, igazolt hiányzás.
@@ -138,9 +138,9 @@ A kurzusokhoz órák hozhatóak létre, amik a féléven belül lehetnek. Minden
 
 A tanárok megtekinthetik az általuk oktatott -- vagy tantárgyfelelősként hozzáadott -- tárgyakat, és az azokhoz kapcsolódó adatokat. Igény szerint szűrhetnek kód, név, vagy félévre is. Minden kurzus esetén megtekinthetik az alap adatokat, a kurzushoz tartozó órákat, hallgatókat. Itt van lehetősége a tanárnak hozzáadni hallgatókat a kurzushoz, illetve egy listában megtekinteni diákokra lebontva, hogy mennyit hiányoztak, mennyit késtek, ebből mennyi az igazolatlan.
 
-A kurzus órái listában érhetik el az egyes órákat, ahol adminisztrálhatják a jelenlétet. Egy órát megnyitva láthatják az ahhoz kapcsolódó adatok, illetve bal oldalon egy listát a kurzus tanulóiról, ahol beállíthatják a hallgató státuszát. Amennyiben az adott hallgató a tanár által elfogadott igazolással rendelkezik, akkor ebben az esetben csak ,,jelen'' státusz -- ha esetleg mégis megjelent az órán --, vagy pedig ,,igazol hiányzás'' státusz állítható be, illetve egy figyelmeztető üzenet is megjelenik. Ezek mellett megjelenik az adott kurzuson való összes hiányzás és igazol hiányzások száma is.
+A kurzus órái listában érhetik el az egyes órákat, ahol adminisztrálhatják a jelenlétet. Egy órát megnyitva láthatják az ahhoz kapcsolódó adatok, illetve bal oldalon egy listát a kurzus tanulóiról, ahol beállíthatják a hallgató státuszát. Amennyiben az adott hallgató a tanár által elfogadott igazolással rendelkezik, akkor ebben az esetben csak ,,jelen'' státusz -- ha esetleg mégis megjelent az órán --, vagy pedig ,,igazol hiányzás'' státusz állítható be, illetve egy figyelmeztető üzenet is megjelenik. Ezek mellett megjelenik az adott kurzuson való összes hiányzás és igazolt hiányzások száma is. Hiányzás rögzítése esetén email üzenet formájában is értesítést kap a hallgató.
 
-A jobb oldalt kettő doboz foglal helyet. Az első egy Qr\footnote{A Qr kód egy információt tartalmazó kép,  amit kamerával lehet leolvasni.\cite{QR}} kódot tartalmaz. Ennek segítségével, ha az oktató látható teszi, a diákok a kódot a telefonjukon beolvasva, majd bejelentkezve is ,,beírhatják magukat'' az órára, ezzel felgyorsítva a folyamatot, és a tanárnak sem kell végig mennie a listán. A kód csak az óra végéig működik, illetve ha az oktató úgy sejti, hogy a hallgatók visszaélnek ezzel, akkor hamarabb is letilthatja, illetve generálhat egy másikat. Amikor a hallgató íj módon bejelentkezik az órára, a tanári felületen automatikusan frissítésre kerül a státusz. A hallgató csak abban az esetben tudja ezt a funkciót használni, hogy ha fel van iratkozva a kurzusra, és még nem állították be az adott órára a státuszát, ezzel elkerülve, hogy magától átírja esetleges hiányzását, késését. Hiányzás rögzítése esetén email üzenet formájában is értesítést kap a hallgató.
+A jobb oldalt kettő doboz foglal helyet. Az első egy Qr\footnote{A Qr kód egy információt tartalmazó kép,  amit kamerával lehet leolvasni.\cite{QR}} kódot tartalmaz. Ennek segítségével, ha az oktató látható teszi, a diákok a kódot a telefonjukon beolvasva, majd bejelentkezve is ,,beírhatják magukat'' az órára, ezzel felgyorsítva a folyamatot, és a tanárnak sem kell végig mennie a listán. A kód csak az óra végéig működik, illetve ha az oktató úgy sejti, hogy a hallgatók visszaélnek ezzel, akkor hamarabb is letilthatja, illetve generálhat egy másikat. Amikor a hallgató íj módon bejelentkezik az órára, a tanári felületen automatikusan frissítésre kerül a státusz. A hallgató csak abban az esetben tudja ezt a funkciót használni, hogy ha fel van iratkozva a kurzusra, és még nem állították be az adott órára a státuszát, ezzel elkerülve, hogy magától átírja esetleges hiányzását, késését.
 
 A másik ilyen doboz egy kis statisztikát mutat kör diagram formájában, megszámolva a hallgatók státuszát az órán.
 
@@ -161,19 +161,50 @@ A másik ilyen doboz egy kis statisztikát mutat kör diagram formájában, megs
 
 \subsection{Igazolások}
 
+Amikor egy hallgató igazolást ad le, akkor azt minden érintett tanár megkapja, és reagálhat rá; vagy elfogadja, vagy indoklással elutasítja. A lista alapból szűrésre kerül, hogy csak a még nem meg válaszolt igazolásokat mutassa az oktatónak. Amikor a tanár megnyit egy ilyen igazolást, láthatja, hogy ki küldte be az igazolást, a típusát (orvosi vagy egyéb), az kezdeti és vég időpontot, illetve az esetlegesen feltöltött képeket is megtekintheti. Ezek mellett listába szedve, és tantárgy, majd kurzus alapján kategorizálva látja az általa oktatott és az igazolásban érintett órákat, azok idejét, illetve a hallgató jelenlegi státuszát az órán. Az igazolás elfogadása esetén azon órák, ahol nem ,,jelen''-re van állítva az állapot, automatikusan ,,igazolt hiányzás'' állapotra kerülnek beállításra. Elfogadás és elutasítás esetén is üzenet kap a hallgató, illetve a főoldalon megtekintheti a még függőben lévő (tehát nem minden érintett tanár által megválaszolt) igazolásait is.
 
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=15cm]{../pictures/screenshots/just_teacher.png}
+	\caption{Egy elfogadott igazolás, ahogy a tanár látja.}
+	\label{justTeacher}
+\end{figure}
 
 \section{Hallgatói nézet, funkciók}
 
-\chapter{Felhasznált technológiák, csomagok}
+\subsection{Tantárgyak, kurzusok}
 
+A hallgatók természetesen láthatják a tantárgyaikat, amiket csakugyan szűrhetnek név, kód, félév szerint. Itt egy helyen megtekinthetik kurzusokra lebontva, hogy melyik órán milyen státusz van rögzítve, illetve egy diagramon ezeknek az eloszlását. Megtekinthetik még a kurzuson lévő hallgatótársaikat is.
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=12cm]{../pictures/screenshots/student_course.png}
+	\caption{A hallgató által látott egy kurzus részlete.}
+	\label{studentCourse}
+\end{figure}
+
+\subsection{Hallgató által létrehozott igazolások}
+
+A hallgató a hiányzásainak igazolására igazolásokat adhat le a rendszerben. A létrehozáskor meg kell adnia a típusát (orvosi vagy egyéb), a kezdeti és vég dátumát, illetve szükség szerint megjegyzést fűzhet, illetve képeket tölthet fel, például az orvosi igazolást lefényképezheti. A dátumok megadása után a hallgató is látja az érintett óráit listába szedve.
+
+Helyes adatok megadása és mentés után a listában is megjelenik az igazolás, amit lenyitva látja a megadott részelteket, illetve az egyes tanárok visszajelzését is, hogy elfogadták-e vagy sem. Amennyiben úgy látja, hogy elrontott valamit, akkor itt törölheti az igazolást, és hozhatja újra létre.
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=12cm]{../pictures/screenshots/newJust.png}
+	\caption{A hallgató által látott egy kurzus részlete.}
+	\label{studentJustification}
+\end{figure}
+
+\chapter{Felhasznált technológiák, csomagok}
 \section{Laravel}
 \subsection{Keretrendszer alapjai}
 \subsection{MVC architektúra}
 \subsection{Eloquent ORM}
 \subsection{Blade templating engine}
+\subsection{Jogosultság kezelés}
 \subsection{Laravel Fortify}
-\subsection{Események, queue}
+\subsection{Események, queue, nyelvesítés}
 \subsection{Email küldés}
 
 \section{Tailwind}

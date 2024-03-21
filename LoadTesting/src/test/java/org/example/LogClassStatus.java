@@ -336,6 +336,6 @@ public class LogClassStatus extends Simulation {
             );
 
     {
-        setUp(scn.injectOpen(atOnceUsers(5))).protocols(httpProtocol);
+        setUp(scn.injectOpen(atOnceUsers(Constant.USERCOUNT))).protocols(httpProtocol);
     }
 }

@@ -46,6 +46,10 @@ class CoursePolicy
      */
     public function update(User $user, Course $course): bool
     {
+        if ($course->Teachers()->where('users.id', $user->id)->exists()) {
+            return true;
+        }
+
         return false;
     }
 

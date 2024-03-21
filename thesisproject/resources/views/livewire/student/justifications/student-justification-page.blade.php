@@ -22,6 +22,7 @@
         @endforelse
     </div>
 
+    @teleport('body')
     <div class="drawer z-[200]" wire:ignore.self>
         <input id="newJustification" type="checkbox" class="drawer-toggle"/>
         <div class="drawer-side">
@@ -35,7 +36,7 @@
                 <div class="absolute inset-0 flex items-center justify-center z-[9999]" wire:loading>
                 </div>
                 <div
-                        class="prose mb-3 flex flex-row flex-wrap justify-between min-w-full max-w-full md:flex-row">
+                    class="prose mb-3 flex flex-row flex-wrap justify-between min-w-full max-w-full md:flex-row">
                     <h1 class="mb-0 mx-auto md:mx-0 md:ms-1">{{__('student.newJustification')}}</h1>
                 </div>
                 <label for="newJustification"
@@ -186,7 +187,7 @@
                                                         <li>
                                                             <details open>
                                                                 <summary
-                                                                        class="text-lg text-info">{{$course->course_id}}
+                                                                    class="text-lg text-info">{{$course->course_id}}
                                                                     ( {{__('general.teachers')}}
                                                                     : @foreach($course->Teachers as $teacher)
                                                                         {{$teacher->name}}@if(! $loop->last), @endif
@@ -254,6 +255,7 @@
             </div>
         </div>
     </div>
+    @endteleport
     {{ $justifications->links()}}
 
     @script

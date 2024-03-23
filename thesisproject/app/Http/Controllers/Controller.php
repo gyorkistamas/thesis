@@ -37,8 +37,8 @@ class Controller extends BaseController
             ->map(function ($class) {
                 return [
                     'title' => $class->Course->Subject->name.' - '.$class->Course->course_id,
-                    'start' => $class->start_time->format('Ymd\THis\Z'),
-                    'end' => $class->end_time->format('Ymd\THis\Z'),
+                    'start' => $class->start_time->subHour()->format('Ymd\THis\Z'),
+                    'end' => $class->end_time->subHour()->format('Ymd\THis\Z'),
                     'location' => $class->Place->name,
                     'stamp' => Carbon::now()->format('Ymd\THis\Z'),
                 ];

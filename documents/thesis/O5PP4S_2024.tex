@@ -31,7 +31,7 @@ Amikor szakdolgozati témaválasztás előtt álltam, sokat gondolkoztam a tém�
 
 A megvalósítás során törekedtem arra, hogy egy jól átlátható, ergonomikus weboldalt készítsek, amit -- esetleges kisebb módosításokkal -- ne csak egyetemi környezetben lehessen használni. Ezekből kifolyólag egy webalkalmazást készítettem, mivel ezt a legegyszerűbb elérni, hiszen csak egy webböngésző szükséges hozzá. A tanulók és tanárok által használt oldalak reszponzívan lettek elkészítve, ezáltal biztosítva, hogy mobiltelefonon is használni lehessen. Illetve az alkalmazás PWA\footnote{Jelentése: Progressive Web App: egy olyan alkalmazás, ami webes technológiákat használ, de platform specifikus alkalmazásként viselkedik.\cite{PWA}}  funkciókkal rendelkezik, aminek jelentőségére később térek ki, de előjáróban annyit érdemes megemlíteni róla, hogy lehetővé teszi a weboldal alkalmazásként való telepítését számítógép és telefon esetén is, ezáltal egy rendes alkalmazás érzését keltve.
 
-A megvalósításhoz a Laravel keretrendszert használtam, mely egy PHP alapú, MVC keretrendszer, amivel tanulmányaim során találkoztam, és egyből megkedveltem. Nem titkolt célom a szakdolgozatommal, hogy bemutassam, hogy a mai, JavaScript preferált világban, továbbra is lehetséges modern, a mai kort kielégítő weboldalt készíteni PHP segítségével, amihez különböző csomagokat alkalmaztam, amiknek működését, illetve egymással való működését a későbbiekben fogom kifejteni.
+A megvalósításhoz a Laravel keretrendszert használtam, mely egy PHP alapú, MVC\footnote{Jelentése: Model-View-Controller.} keretrendszer, amivel tanulmányaim során találkoztam, és egyből megkedveltem. Nem titkolt célom a szakdolgozatommal, hogy bemutassam, hogy a mai, JavaScript preferált világban, továbbra is lehetséges modern, a mai kort kielégítő weboldalt készíteni PHP segítségével, amihez különböző csomagokat alkalmaztam, amiknek működését, illetve egymással való működését a későbbiekben fogom kifejteni.
 
 \chapter{Alkalmazás bemutatása}
 \section{Adatbázis}
@@ -273,6 +273,40 @@ Az alkalmazás a szakdolgozat védés, illetve a záróvizsga időszak alatt el�
 \end{itemize}
 \section{Laravel Forge}
 \section{Kézi telepítés lépései}
+\begin{enumerate}
+	\item Töltsük le az alkalmazás fájljait.
+	\item A futtatáshoz szükségünk van egy adatbázis szerverre. Javasolt MySQL vagy PostgreSQL használata. Ezeknek a telepítéséről az adott adatbázisszerver weboldalán lehet tájékozódni.
+	\item Telepítsük a PHP-t számítógépünkre, legalább a 8.1-es verziót, melyet a Laravel keretrendszer 10-es verziója követel meg. Alternatívaként telepíthetjük a XAMPP nevezetű programot is, mely feltelepít egy adatbázis és PHP disztribúciót is.
+	\item Konfiguráljuk az adatbázist: hozzunk létre egy felhasználót és egy sémát, amihez hozz fog tudni férni az oldalunk.
+	\item Az alábbi php kiegészítő csomagok engedélyezése szükséges: Ctype, cURL, DOM, Fileinfo, Filter, Hash, Mbstring, OpenSSL, PCRE, PDO, Session, Tokenizer, XML.
+	\item Telepítsük a Composer nevű PHP csomagkezelő rendszert.
+	\item Telepítsük a Node.js nevű JavaScript futtatókörnyezetet.
+	\item A sikeres telepítések után navigáljunk el a \emph{thesisproject} nevű mappába a letöltött fájlok között. Ez tartalmazza a program fájljait, a továbbiakban itt dolgozunk, itt adunk ki parancsokat.
+	\item Készítsünk egy másolatot a \emph{.env.example} nevű fájlról és nevezzük azt át \emph{.env} névre. Nyissuk meg, és töltsük ki az alábbi adatokat:
+	\begin{itemize}
+		\item APP\_URL: amennyiben nem helyi környezetben, kipróbálásra telepítjük, akkor itt adjuk meg az alkalmazás elérési útját.
+		\item DB prefixummal kezdődő értékek: itt állítsuk be az adatbázis kapcsolat adatait.
+		\item BROADCAST\_DRIVER: értékét állítsuk át \emph{pusher}-re.
+		\item QUEUE\_CONNECTION: értékét állítsuk át \emph{database}-re, amennyiben az adatbázist szeretnék használni a sor-hoz.
+		\item MAIL prefixummal kezdődő értékek: itt állíthatjuk be a levelezéshez használt hozzáférési értékeket. Ezekről az email szolgáltatótól kaphatunk információt.
+		\item PUSHER prefixummal kezdődő értékek: itt a Pusher hozzáférési adatok beállítása szükséges. Ezekhez fiókot kell regisztrálnunk, miután elérhetővé válnak a szükséges értékek. 
+	\end{itemize}
+	A többi értéket az alkalmazáson belül tudjuk módosítani.
+
+	\item Ezek után a csomagok telepítése szükséges. Adjuk ki a terminálban a \textbf{composer install -\/-optimize-autoloader -\/-no-dev} parancsot.
+	\item Majd pedig a \textbf{npm ci} és az \textbf{npm run build} parancsokat.
+	\item Ezek után az alábbi parancsok kiadása szükséges:
+	\begin{itemize}
+		\item \textbf{php artisan key:generate}: alkalmazás kulcs generálása.
+		\item \textbf{php artisan migrate -\/-seed}: adatbázis felépítése.
+		\item \textbf{php artisan route:cache}: útvonalak gyorsítótárazása.
+		\item \textbf{php artisan config:cache}: konfiguráció gyorsítótárazása.
+		\item \textbf{php artisan storage:link}: a képek tárolására használt könyvtár elérhetővé tétele.
+		\item A keretrendszerben jártas olvasó észreveheti, hogy kihagytam a nézetek gyorsítótárazására szolgáló parancsot. A Livewire általam használt verziójában van egy olyan probléma, miszerint a gyorsítótárazás esetén a egyes elemek nem működnek megfelelően. Ennek kiküszöbölésére döntöttem úgy, hogy a nézeteket nem gyorsító tárazom.
+	\end{itemize}
+	\item A fejlesztői szerver elindítható a \textbf{php artisan serve} paranccsal. Ugyan csak szükséges a sor elindítása is egy másik terminál ablakban: \textbf{php artisan queue:work}.
+	\item Az alkalmazást megnyithatjuk a böngészőben, az alapértelmezett \textbf{SADMIN/superadmin} kombinációval tudunk belépni.
+\end{enumerate}
 
 \chapter*{Összegzés}
 \addcontentsline{toc}{chapter}{Összegzés}

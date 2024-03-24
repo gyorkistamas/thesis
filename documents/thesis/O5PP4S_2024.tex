@@ -58,7 +58,7 @@ A megvalósítás során törekedtem arra, hogy egy jól átlátható, ergonomik
 
 A megvalósításhoz a Laravel keretrendszert használtam, mely egy PHP alapú, MVC\footnote{Jelentése: Model-View-Controller.\cite{mvc}} keretrendszer, amivel tanulmányaim során találkoztam, és egyből megkedveltem. Nem titkolt célom a szakdolgozatommal, hogy bemutassam, hogy a mai, JavaScript preferált világban, továbbra is lehetséges modern, a mai kort kielégítő weboldalt készíteni PHP segítségével, amihez különböző csomagokat alkalmaztam, amiknek működését, illetve egymással való működését a későbbiekben fogom kifejteni.
 
-Szakdolgozatom négy részre osztottam: \aref{appDescription}. fejezetben magát az alkalmazást mutatom be. \Aref{packages}. fejezetben magát a keretrendszert, illetve a használt csomagokat, ezek hogy működnek együtt. Végül \aref{testing}. és \aref{setup}. fejezetben a tesztelést és a telepítést részletezem.
+Szakdolgozatom négy részre osztottam: \aref{appDescription}. fejezetben magát az alkalmazást mutatom be. \Aref{packages}. fejezetben magát a keretrendszert, illetve a használt csomagokat, a technikai részleteket tárgyalom. Végül \aref{testing}. és \aref{setup}. fejezetben a tesztelést és a telepítést részletezem.
 
 \chapter{Alkalmazás bemutatása}
 \label{appDescription}
@@ -220,7 +220,7 @@ Helyes adatok megadása és mentés után a listában is megjelenik az igazolás
 \begin{figure}[ht!]
 	\centering
 	\includegraphics[width=12cm]{../pictures/screenshots/newJust.png}
-	\caption{A hallgató által látott egy kurzus részlete.}
+	\caption{Új igazolás létrehozása képernyő.}
 	\label{studentJustification}
 \end{figure}
 
@@ -260,6 +260,27 @@ A middleware arra alkalmas, hogy a kérés feldolgozása előtt végezzünk el t
 A \emph{config} mappában találhatók a konfigurációs. Ha jobban megnézzük, ezek igazából PHP fájlok, amik egy tömb-ként adják vissza a konfigurációs értékeket. Ezeket módosíthatjuk, illetve mi is hozhatunk újakat létre. Én is így tettem: az olyan beállításokat, mint például, hogy engedélyezve van-e a regisztráció, vagy hogy a felhasználók módosíthatják-e a kódjukat, innen kérdezem le. Sok esetben az értékeket a környezeti konfigurációs fájlból olvassa be a program, ezáltal a gyakran változó értékek egy helyen módosíthatók anélkül, hogy keresni kéne őket, hogy hol vannak.
 
 \subsubsection{Nyelvesítés}
+
+Az alkalmazás két nyelvet támogat: Angolt és Magyart. A nyelvesítést tartalmazó fájlokat a \emph{lang} mappában találhatjuk, nyelvek szerint almappákra bontva. Az egyes kifejezések kulcs-érték párokként vannak eltárolva, ezen kulcs segítségével tudjuk elérni őket a \emph{\_\_('kulcs')} segédfüggvény segítségével, ami globálisan elérhető a Kontroller és a Nézet fájlokban is. A keretrendszer automatikusan a beállított nyelv alapján visszaadja a megfelelő fordítást. Ha esetleg hiányozna az egyik fordítás, akkor a konfigurációban alapértelmezettként megadott nyelvből próbálja kikeresni az értéket. Ha ott sem találja meg, akkor a paraméterként megadott kulcsot adja vissza.
+
+\subsection{Adatbázis és modellek}
+
+Az adatbázis felépítése a keretrendszer adta módon van megoldva. Ez azt jelenti, hogy minden, a Laravel által támogatott adatbázis disztribúcióval működni fog a felépített adatbázis séma. A táblák úgynevezett migrációk segítségével vannak leírva. Ez egyrészt segíti az adatbázis megosztását a fejlesztők között, hiszen nem kell külön adatbázis fájlokat küldözgetni egymás között, másrészt egyfajta verziókezelést tesz lehetővé: hogyha valamit módosítunk az adatbázison, akkor új migrációt hozunk létre. Amikor egy másik fél letölti a változtatásokat, és elindítja a migrációt, a keretrendszer felismeri melyik változtatásokat kell alkalmaznia, és melyek azok, amik már alkalmazva lettek.\cite{migrations}
+
+\subsubsection{Migrációk}
+
+A migrációk a \emph{database} mappán belül a \emph{migrations} mappában találhatók. Egy fájl általában egy tábla leírását vagy módosítását tartalmazza a jobb átláthatóság érdekében. Minden migráció két eljárást tartalmaz: az \emph{up()} eljárás az adatbázis migráció futtatásakor fut le, míg a \emph{down()} az adatbázis törlése vagy teljes újraépítése esetén, tehát az előbbi eljárás ellentettjét végzi el.
+
+A táblákat a \emph{Schema} osztály \emph{create} metódusával tudjuk létrehozni. Ez két paramétert vár: a tábla nevét, illetve a tábla felépítését leíró függvényt. Ezen függvény belül írhatjuk le a tábla mezőit.
+
+\Aref{migrationCode}. kódrészletben egy ilyen migrációt láthatunk, ahol egy kurzusok tárolására szolgáló táblát hozom létre. Itt több, különböző mező létrehozása megfigyelhető:
+\begin{itemize}
+	\item Az egyik első lépés szokott lenni a tábla elsődleges kulcsának meghatározása. Éppen ezért a Laravel biztosít erre egy gyorsabb módszert: a második sorban látható \emph{\$table->id()} segítségével létrehozható egy id nevű, szám típusú, automatikusan növekvő oszlop.
+	\item Természetesen sima oszlopokat is létrehozhatunk, ehhez a típusát, a nevét, és egyéb opciókat adhatunk meg, mint például az alapértelmezett értékét, vagy hogy a mező null-ra állítható-e. Ilyet például a negyedik vagy a nyolcadik sor.
+	\item Tudunk idegen kulcsokat is definiálni, ahogy azt a hatodik és hetedik sorban láthatjuk. Ehhez a \emph{foreign} függvényt kell használni, megadni a mező nevét, illetve hogy melyik tábla melyik mezőjét referáljuk ezzel az idegenkulccsal. Megadható az is, hogy törlés vagy módosítás esetén mi történjen. A példán egyik esetben törlése kerül a rekord, más esetben null-ra állítódik a mező.
+\end{itemize}
+
+\lstinputlisting[caption={A kurzusokat tároló tábla migrációja.}, label=migrationCode, style=php]{../codes/migration.php}
 
 \subsection{Eloquent ORM}
 \subsection{Blade templating engine}
@@ -367,7 +388,7 @@ Az alkalmazás a szakdolgozat védés, illetve a záróvizsga időszak alatt el�
 		\item \textbf{php artisan route:cache}: útvonalak gyorsítótárazása.
 		\item \textbf{php artisan config:cache}: konfiguráció gyorsítótárazása.
 		\item \textbf{php artisan storage:link}: a képek tárolására használt könyvtár elérhetővé tétele.
-		\item A keretrendszerben jártas olvasó észreveheti, hogy kihagytam a nézetek gyorsítótárazására szolgáló parancsot. A Livewire általam használt verziójában van egy olyan probléma, miszerint a gyorsítótárazás esetén a egyes elemek nem működnek megfelelően. Ennek kiküszöbölésére döntöttem úgy, hogy a nézeteket nem gyorsító tárazom.
+		\item A keretrendszerben jártas olvasó észreveheti, hogy kihagytam a nézetek gyorsítótárazására szolgáló parancsot. A Livewire általam használt verziójában van egy olyan probléma, miszerint gyorsítótárazás esetén az egyes elemek nem működnek megfelelően. Ennek kiküszöbölésére döntöttem úgy, hogy a nézeteket nem gyorsítótárazom.
 	\end{itemize}
 	\item A fejlesztői szerver elindítható a \textbf{php artisan serve} paranccsal. Ugyan csak szükséges a sor elindítása is egy másik terminál ablakban: \textbf{php artisan queue:work}.
 	\item Az alkalmazást megnyithatjuk a böngészőben, az alapértelmezett \textbf{SADMIN/superadmin} kombinációval tudunk belépni.
@@ -376,7 +397,7 @@ Az alkalmazás a szakdolgozat védés, illetve a záróvizsga időszak alatt el�
 \chapter*{Összegzés}
 \addcontentsline{toc}{chapter}{Összegzés}
 
-\begin{thebibliography}{2}
+\begin{thebibliography}{10}
 \addcontentsline{toc}{chapter}{\bibname}
 
 \bibitem{Neptun}
@@ -428,6 +449,11 @@ Az alkalmazás a szakdolgozat védés, illetve a záróvizsga időszak alatt el�
 \textsc{Laravel}: \emph{Blade templates}
 \\
 \url{https://laravel.com/docs/10.x/blade}, Megtekintés dátuma: 2024.03.24.
+
+\bibitem{migrations}
+\textsc{Laravel}: \emph{Database: Migrations}
+\\
+\url{https://laravel.com/docs/10.x/migrations}, Megtekintés dátuma: 2024.03.24.
 
 \end{thebibliography}
 

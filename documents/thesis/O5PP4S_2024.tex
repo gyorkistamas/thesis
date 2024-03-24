@@ -6,18 +6,43 @@
 \usepackage[T1]{fontenc}
 \PassOptionsToPackage{defaults=hu-min}{magyar.ldf}
 \usepackage[magyar]{babel}
-\usepackage{mathtools,amssymb,amsthm,pdfpages}
-\footnotestyle{rule=fourth}
 
+\usepackage{listings,lmodern,caption,mathtools,amssymb,amsthm,pdfpages}
+\footnotestyle{rule=fourth}
+\usepackage[usenames,dvipsnames]{xcolor}
 \newtheorem{tetel}{Tétel}[chapter]
 \theoremstyle{definition}
 \newtheorem{definicio}[tetel]{Definíció}
 \theoremstyle{remark}
 \newtheorem{megjegyzes}[tetel]{Megjegyzés}
 
+\definecolor{darkgreen}{rgb}{0, .7, 0}
+\definecolor{lightorange}{rgb}{255, 165, 0}
+
+\lstdefinestyle{php}{
+	inputencoding=utf8/latin2,
+	language=PHP,
+	basicstyle=\footnotesize\ttfamily,
+	columns=fullflexible,
+	numbers=left,
+	breaklines,
+	xleftmargin=1cm,
+	xrightmargin=1cm,
+	postbreak=\hbox{$\color{red}\hookrightarrow$\ },
+	backgroundcolor=\color{gray!30},
+	frame=ltrb,
+	keywordstyle=\bfseries\color{RoyalBlue},
+	commentstyle=\itshape\color{teal},
+	stringstyle=\bfseries\color{PineGreen},
+	identifierstyle = \bfseries\color{YellowOrange},
+	morekeywords=[1]{},
+	keywordstyle=[3]{\bfseries\color{red}}
+}
+\renewcommand{\lstlistingname}{kódrészlet}
+
 \begin{document}
 \institute{Matematikai és Informatikai Intézet}
-\title{Jelenlét követő alkalmazás fejlesztése}
+\title{Jelenlét és hiányzás követő alkalmazás fejlesztése}
 \author{Györkis Tamás\\Programtervező informatikus BSc}
 \supervisor{Dr. Király Roland\\Egyetemi docens}
 \city{Eger}
@@ -31,9 +56,12 @@ Amikor szakdolgozati témaválasztás előtt álltam, sokat gondolkoztam a tém�
 
 A megvalósítás során törekedtem arra, hogy egy jól átlátható, ergonomikus weboldalt készítsek, amit -- esetleges kisebb módosításokkal -- ne csak egyetemi környezetben lehessen használni. Ezekből kifolyólag egy webalkalmazást készítettem, mivel ezt a legegyszerűbb elérni, hiszen csak egy webböngésző szükséges hozzá. A tanulók és tanárok által használt oldalak reszponzívan lettek elkészítve, ezáltal biztosítva, hogy mobiltelefonon is használni lehessen. Illetve az alkalmazás PWA\footnote{Jelentése: Progressive Web App: egy olyan alkalmazás, ami webes technológiákat használ, de platform specifikus alkalmazásként viselkedik.\cite{PWA}}  funkciókkal rendelkezik, aminek jelentőségére később térek ki, de előjáróban annyit érdemes megemlíteni róla, hogy lehetővé teszi a weboldal alkalmazásként való telepítését számítógép és telefon esetén is, ezáltal egy rendes alkalmazás érzését keltve.
 
-A megvalósításhoz a Laravel keretrendszert használtam, mely egy PHP alapú, MVC\footnote{Jelentése: Model-View-Controller.} keretrendszer, amivel tanulmányaim során találkoztam, és egyből megkedveltem. Nem titkolt célom a szakdolgozatommal, hogy bemutassam, hogy a mai, JavaScript preferált világban, továbbra is lehetséges modern, a mai kort kielégítő weboldalt készíteni PHP segítségével, amihez különböző csomagokat alkalmaztam, amiknek működését, illetve egymással való működését a későbbiekben fogom kifejteni.
+A megvalósításhoz a Laravel keretrendszert használtam, mely egy PHP alapú, MVC\footnote{Jelentése: Model-View-Controller.\cite{mvc}} keretrendszer, amivel tanulmányaim során találkoztam, és egyből megkedveltem. Nem titkolt célom a szakdolgozatommal, hogy bemutassam, hogy a mai, JavaScript preferált világban, továbbra is lehetséges modern, a mai kort kielégítő weboldalt készíteni PHP segítségével, amihez különböző csomagokat alkalmaztam, amiknek működését, illetve egymással való működését a későbbiekben fogom kifejteni.
+
+Szakdolgozatom négy részre osztottam: \aref{appDescription}. fejezetben magát az alkalmazást mutatom be. \Aref{packages}. fejezetben magát a keretrendszert, illetve a használt csomagokat, ezek hogy működnek együtt. Végül \aref{testing}. és \aref{setup}. fejezetben a tesztelést és a telepítést részletezem.
 
 \chapter{Alkalmazás bemutatása}
+\label{appDescription}
 \section{Adatbázis}
 
 \Aref{database} ábrán látható az alkalmazás által használt adatbázis, egyed-kapcsolat diagrammal ábrázolva, melyről szeretnék néhány szót ejteni.
@@ -197,20 +225,55 @@ Helyes adatok megadása és mentés után a listában is megjelenik az igazolás
 \end{figure}
 
 \chapter{Felhasznált technológiák, csomagok}
+\label{packages}
 \section{Laravel}
+
+Ahogy a bevezetőben említettem, a megvalósításhoz a Laravel nevezetű keretrendszert használtam. A keretrendszer sok funkciót alapból elkészít, amit hosszadalmas lenne újra és újra megírni, ezáltal a programozó a lényegre fókuszálhat: az elkészítendő programra.\cite{meetlaravel}
+
 \subsection{Keretrendszer alapjai}
-\subsection{MVC architektúra}
+
+\subsubsection{MVC architektúra}
+
+A keretrendszer az MVC architektúrát követi, ami segíti a kód karbantartását, áttekinthetőségét.\cite{mvc} Ez azt jelenti, hogy logikailag a kód három része bomlik:
+\begin{itemize}
+	\item Modellek (Model): ezek tartalmazzák az adatbázis táblák modelljeit, ezeken keresztül tudjuk elérni az adatbázisunkat, illetve az adatbázisban tárolt adatokat is modellek formájában kapjuk meg, így ezeknek követni kell a táblák felépítését. Ezek mellett kapcsolatokat is meg tudunk adni a modellek között.
+	\item Nézet (View): itt magára a nézetekre kell gondolni, amit látni fog a felhasználó. Ezek jelen esetben a Blade\cite{blade} fájlok, amire \aref{bladeSection}. alfejezetben térek ki.
+	\item Kontroller (Controller): az üzleti logikát tartalmazza. Itt kapnak helyet a függvények például, amik egy kérés fogadásakor futnak le.
+\end{itemize}
+
+\subsubsection{Útvonalak}
+
+A keretrendszerben az útvonalakat a \emph{routes} mappában található fájlokban találjuk. Mivel a keretrendszer képes nem csak webes kéréseket kiszolgálni, így több fájlra vannak szedve, viszont én csak a webes útvonalakhoz tartozó fájlt használtam.
+
+Útvonalakat a \emph{Route} osztály metódusaival tudunk létrehozni. Ezek után meg kell adnunk a útvonal típusát (tehát hogy \emph{Get, Post, Put vagy Delete} típusú útvonalat szeretnénk létrehozni), magát az elérési útvonalat, illetve a meghívandó programkódot, ami ki fogja szolgálni a kérést. Opcionálisan megadhatunk egy nevet is, amivel referálni tudunk rá a kódunk többi részéből, illetve adhatunk meg egy vagy több köztes program kódot (angolul: middleware), mellyel kontrollálhatjuk az útvonal elérést és egyéb más dolgokat tehetünk meg a kérés kiszolgálása előtt.\cite{routing} Erre láthatunk egy példát \aref{routesandMiddleware} kódban.
+
+Amennyiben az olvasó megnézi az elkészült programban található útvonalakat, azt láthatja, hogy csak \emph{Get} típusú útvonalak találhatóak benne. Ennek fő oka a Livewire\cite{livewire} használata, ahol útvonalak létrehozása helyett metódushívásokkal történik sok interakció, erről \aref{livewireSection}. alfejezetben lesz szó.
+
+\subsubsection{Middleware}
+
+A middleware arra alkalmas, hogy a kérés feldolgozása előtt végezzünk el teendőket, akár szűrjük őket.\cite{middleware} A program során én három fő dologra használtam ezt fel: bejelentkezés vizsgálata, hozzáférési jogosultság vizsgálata, illetve a kérés elején az alkalmazás nyelvének beállítása. Az utolsóra azért volt szükség, mivel Laravel esetén a nyelv beállítása mindig csak az adott kérésre vonatkozik. Így minden esetben meg kellett vizsgálni, hogy a felhasználó átállította-e a nyelvet, és ha igen, akkor alkalmazzuk a kiválasztott nyelvet a kérésre. A middleware futása során dönthetünk úgy is, hogy a kérést megszakítjuk, például ha a felhasználó nem rendelkezik kellő jogosultsággal. Hozzá is tudjuk rendelni ezeket az egyes útvonalakhoz, ahogy az \aref{routesandMiddleware}. kódrészleten látható, vagy akár beállíthatjuk, hogy globálisan, minden kérés esetén lefusson az adott kód.
+
+\lstinputlisting[caption={Egy \emph{Get} típusú útvonal, ami az órarendet nyitja meg. Az útvonal meghívásakor a \emph{Controller} nevű osztály \emph{getTimetable} metódusa fut le. Az útvonalat csak bejelentkezett felhasználók ('auth') és diákok vagy tanárok ('studentorteacher') érhetik el.}, label=routesandMiddleware, style=php]{../codes/route.php}
+
+\subsubsection{Konfiguráció}
+
+A \emph{config} mappában találhatók a konfigurációs. Ha jobban megnézzük, ezek igazából PHP fájlok, amik egy tömb-ként adják vissza a konfigurációs értékeket. Ezeket módosíthatjuk, illetve mi is hozhatunk újakat létre. Én is így tettem: az olyan beállításokat, mint például, hogy engedélyezve van-e a regisztráció, vagy hogy a felhasználók módosíthatják-e a kódjukat, innen kérdezem le. Sok esetben az értékeket a környezeti konfigurációs fájlból olvassa be a program, ezáltal a gyakran változó értékek egy helyen módosíthatók anélkül, hogy keresni kéne őket, hogy hol vannak.
+
+\subsubsection{Nyelvesítés}
+
 \subsection{Eloquent ORM}
 \subsection{Blade templating engine}
-\subsection{Jogosultság kezelés}
+\label{bladeSection}
 \subsection{Laravel Fortify}
-\subsection{Események, queue, nyelvesítés}
+\subsection{Jogosultság kezelés}
+\subsection{Események, queue}
 \subsection{Email küldés}
 
 \section{Tailwind}
 \subsection{DaisyUI}
 
 \section{LiveWire}
+\label{livewireSection}
 \subsection{Ismertető, a csomag működése}
 \subsection{LiveWire és SPA}
 \subsection{Komponensek és data binding}
@@ -242,12 +305,14 @@ Helyes adatok megadása és mentés után a listában is megjelenik az igazolás
 \subsection{Service Worker}
 
 \chapter{Az alkalmazás tesztelése}
+\label{testing}
 \section{Manuális tesztelés}
 \section{Automatizált tesztelés}
 \section{Terheléses tesztelés}
 \section{Laravel Pint és Github actions}
 
 \chapter{Alkalmazás telepítése}
+\label{setup}
 Az alkalmazás a szakdolgozat védés, illetve a záróvizsga időszak alatt elérhető a \url{https://szakdolgozat.ddns.net} címen, ahol ki lehet próbálni az alkalmazást. Pár alapértelmezett felhasználó elérhető:
 \begin{itemize}
 	\item Szuper adminisztrátor:
@@ -333,6 +398,36 @@ Az alkalmazás a szakdolgozat védés, illetve a záróvizsga időszak alatt el�
 \textsc{Kaspersky}: \emph{QR Code Security: What are QR codes and are they safe to use?}
 \\
 \url{https://www.kaspersky.com/resource-center/definitions/what-is-a-qr-code-how-to-scan}, Megtekintés dátuma: 2024.03.21.
+
+\bibitem{meetlaravel}
+\textsc{Laravel}: \emph{Meet Laravel}
+\\
+\url{https://laravel.com/docs/11.x#meet-laravel}, Megtekintés dátuma: 2024.03.24.
+
+\bibitem{livewire}
+\textsc{Livewire}: \emph{Főoldal}
+\\
+\url{https://livewire.laravel.com/}, Megtekintés dátuma: 2024.03.24.
+
+\bibitem{routing}
+\textsc{Livewire}: \emph{Routing}
+\\
+\url{https://laravel.com/docs/10.x/routing}, Megtekintés dátuma: 2024.03.24.
+
+\bibitem{middleware}
+\textsc{Livewire}: \emph{Middlewares}
+\\
+\url{https://laravel.com/docs/10.x/middleware}, Megtekintés dátuma: 2024.03.24.
+
+\bibitem{mvc}
+\textsc{MDN web docs}: \emph{MVC}
+\\
+\url{https://developer.mozilla.org/en-US/docs/Glossary/MVC}, Megtekintés dátuma: 2024.03.24.
+
+\bibitem{blade}
+\textsc{Laravel}: \emph{Blade templates}
+\\
+\url{https://laravel.com/docs/10.x/blade}, Megtekintés dátuma: 2024.03.24.
 
 \end{thebibliography}
 

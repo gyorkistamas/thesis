@@ -269,7 +269,7 @@ Az adatbázis felépítése a keretrendszer adta módon van megoldva. Ez azt jel
 
 \subsubsection{Migrációk}
 
-A migrációk a \emph{database} mappán belül a \emph{migrations} mappában találhatók. Egy fájl általában egy tábla leírását vagy módosítását tartalmazza a jobb átláthatóság érdekében. Minden migráció két eljárást tartalmaz: az \emph{up()} eljárás az adatbázis migráció futtatásakor fut le, míg a \emph{down()} az adatbázis törlése vagy teljes újraépítése esetén, tehát az előbbi eljárás ellentettjét végzi el.
+A migrációk a \emph{database} mappán belül a \emph{migrations} mappában találhatók. Egy fájl általában egy tábla leírását vagy módosítását tartalmazza a jobb átláthatóság érdekében. Minden migráció két eljárást tartalmaz: az \emph{up()} eljárás az adatbázis migráció futtatásakor fut le, míg a \emph{down()} az adatbázis törlése vagy teljes újraépítése esetén, tehát az előbbi eljárás ellentettjét végzi el.\cite{migrations}
 
 A táblákat a \emph{Schema} osztály \emph{create} metódusával tudjuk létrehozni. Ez két paramétert vár: a tábla nevét, illetve a tábla felépítését leíró függvényt. Ezen függvény belül írhatjuk le a tábla mezőit.
 
@@ -278,17 +278,33 @@ A táblákat a \emph{Schema} osztály \emph{create} metódusával tudjuk létreh
 	\item Az egyik első lépés szokott lenni a tábla elsődleges kulcsának meghatározása. Éppen ezért a Laravel biztosít erre egy gyorsabb módszert: a második sorban látható \emph{\$table->id()} segítségével létrehozható egy id nevű, szám típusú, automatikusan növekvő oszlop.
 	\item Természetesen sima oszlopokat is létrehozhatunk, ehhez a típusát, a nevét, és egyéb opciókat adhatunk meg, mint például az alapértelmezett értékét, vagy hogy a mező null-ra állítható-e. Ilyet például a negyedik vagy a nyolcadik sor.
 	\item Tudunk idegen kulcsokat is definiálni, ahogy azt a hatodik és hetedik sorban láthatjuk. Ehhez a \emph{foreign} függvényt kell használni, megadni a mező nevét, illetve hogy melyik tábla melyik mezőjét referáljuk ezzel az idegenkulccsal. Megadható az is, hogy törlés vagy módosítás esetén mi történjen. A példán egyik esetben törlése kerül a rekord, más esetben null-ra állítódik a mező.
+	\item Laravel esetében szokás két dátumot is adni a táblákhoz: egyet, hogy mikor jött létre az egyed, és egyet, hogy mikor módosították utoljára. Ezt könnyen meg lehet tenni a kilencedik sorban látható módon.
 \end{itemize}
 
 \lstinputlisting[caption={A kurzusokat tároló tábla migrációja.}, label=migrationCode, style=php]{../codes/migration.php}
 
+Lehetőségünk van már létező táblákat módosító migrációt is írni. Ilyenkor a \emph{create} helyett a \emph{table} függvényt kell használni. A \emph{down()} függvény általában a tábla törlésére szolgáló kódsort tartalmazza.
+
+\subsubsection{Modellek}
+
+Az adatbázis modellek a \emph{app} könyvtáron belül a \emph{Models} mappában találhatók. Minden modellt egy osztállyal lehet leírni. Amennyiben követjük a Laravel elnevezési konvencióját\cite{tableNames}, akkor nem szükséges megadnunk a modellhez kapcsolódó tábla nevét, egyébként igen.
+
+A modellen belül megadhatunk több információt, mint a tábla neve, ha szükséges, illetve beállíthatjuk, hogy az elsődleges kulcs az automatikusan növekedjen-e vagy sem. Megadhatjuk azt is, hogy mely mezőket lehet kitölteni a \emph{\$fillable} mező segítségével. A \emph{\$hidden} mezővel megadhatjuk, hogy mely attribútumokat nem szeretnénk szerializálni (ilyen lehet például a jelszó), és azt is megadhatjuk, hogy ha egyes adatbázis mezőket szeretnénk átkonvertálni más típusúra (ilyen például ha a tárolt dátumot a keretrendszer által biztosított dátum objektummá szeretnénk alakítani). Az adatbázis mezőit ezeken felül nem kell megadnunk, azokat úgynevezett ,,magic method''-on\cite{magicMethod} keresztül tudjuk elérni.
+
+A másik nagyobb ,,kategória'', amit meg szoktunk írni a modellek esetén, azok a kapcsolatok. A keretrendszer lehetőséget nyújt a szokásos kapcsolatok (egy az egyhez, egy a többhöz stb.) kialakítására függvények segítségével. \Aref{onetomany}. kódrészletben egy a többhöz kapcsolatot lehet látni. \Aref{manytomany}. kódrészletben pedig egy több a többhöz kapcsolatot, ami kettő egy a többhöz kapcsolattal van feloldva, ahol a kapcsoló tábla a \emph{course\_students}. Érdemes megfigyelni, hogy nincsenek megadva a kapcsolatoknál az azokat megvalósító idegenkulcsok nevei. Ahogy az fentebb említettem, ha követjük az elnevezés konvenciót, akkor azokat itt sem kell megadni. Ez alól a több a többhöz kapcsolat esetén a kapcsolótábla neve jelent kivételt.
+
+\lstinputlisting[caption={Egy a többhöz kapcsolat: egy tantárgynak több kurzusra van.}, label=onetomany, style=php]{../codes/onetomany.php}
+\lstinputlisting[caption={Több a többhöz kapcsolat: egy kurzusnak több hallgatója van, egy hallgató több kurzusra van felíratkozva.}, label=manytomany, style=php]{../codes/manytomany.php}
+
 \subsection{Eloquent ORM}
+asd
 \subsection{Blade templating engine}
 \label{bladeSection}
 \subsection{Laravel Fortify}
 \subsection{Jogosultság kezelés}
 \subsection{Események, queue}
 \subsection{Email küldés}
+\subsection{Naptár exportálása}
 
 \section{Tailwind}
 \subsection{DaisyUI}
@@ -454,6 +470,16 @@ Az alkalmazás a szakdolgozat védés, illetve a záróvizsga időszak alatt el�
 \textsc{Laravel}: \emph{Database: Migrations}
 \\
 \url{https://laravel.com/docs/10.x/migrations}, Megtekintés dátuma: 2024.03.24.
+
+\bibitem{tableNames}
+\textsc{Laravel}: \emph{Eloquent: Table Names}
+\\
+\url{https://laravel.com/docs/10.x/eloquent#table-names}, Megtekintés dátuma: 2024.03.24.
+
+\bibitem{magicMethod}
+\textsc{PHP}: \emph{Magic Methods}
+\\
+\url{https://www.php.net/manual/en/language.oop5.magic.php}, Megtekintés dátuma: 2024.03.24.
 
 \end{thebibliography}
 

@@ -50,6 +50,26 @@
 	keywordstyle=[3]{\bfseries\color{red}}
 }
 
+\lstdefinestyle{html}{
+	inputencoding=utf8/latin2,
+	language=HTML,
+	basicstyle=\footnotesize\ttfamily,
+	columns=fullflexible,
+	numbers=left,
+	breaklines,
+	xleftmargin=1cm,
+	xrightmargin=1cm,
+	postbreak=\hbox{$\color{red}\hookrightarrow$\ },
+	backgroundcolor=\color{gray!30},
+	frame=ltrb,
+	keywordstyle=\bfseries\color{RoyalBlue},
+	commentstyle=\itshape\color{teal},
+	stringstyle=\bfseries\color{PineGreen},
+	identifierstyle = \bfseries\color{YellowOrange},
+	morekeywords=[1]{},
+	keywordstyle=[3]{\bfseries\color{red}}
+}
+
 \lstdefinestyle{general}{
 	inputencoding=utf8/latin2,
 	basicstyle=\footnotesize\ttfamily,
@@ -343,7 +363,7 @@ A Blade különböző direktívák használatát teszi lehetővé, ami megkönny
 
 Hasznos segítséget nyújt a kinézet felépítésében is: az egyes nézetek kibővíthetnek másik nézeteket, ezáltal könnyedén létrehozható egy egységes nézet, mivel a főbb formázásokat és részleteket (például a navigációs sávot) elegendő egyszer megírni, a többi oldalunkat pedig ebből a fájlból kiterjeszteni.
 
-Ezek mellett komponenseket is létrehozhatunk, amik újra és újra felhasználóható kódokat tartalmaznak. Én ezt első sorban az ikonoknál használtam ki. Minden olyan ikon esetében, amit többször használtam, egy komponenst hoztam létre neki, ami tartalmazta a ikont leíró SVG kódot, így azt csak be kellett hivatkozni, ahogy az \aref{component}. kódrészletben látható. A komponens egy HTML tag-ként jelenik meg, illetve egy \emph{x-} előtaggal rendelkezik.
+Ezek mellett komponenseket is létrehozhatunk, amik újra és újra felhasználóható kódokat tartalmaznak. Én ezt első sorban az ikonoknál használtam ki, a többi esetben egy speciális, Livewire komponenseket használtam, erről többet \aref{livewireSection}. alfejezetben olvashatnak. Minden olyan ikon esetében, amit többször használtam, egy komponenst hoztam létre neki, ami tartalmazta a ikont leíró SVG kódot, így azt csak be kellett hivatkozni, ahogy az \aref{component}. kódrészletben látható. A komponens egy HTML tag-ként jelenik meg, illetve egy \emph{x-} előtaggal rendelkezik.
 
 \lstinputlisting[caption={Komponens meghívása.}, label=component, style=php]{../codes/component.blade.php}
 
@@ -368,6 +388,7 @@ Ahogy azt \aref{users}. alfejezetben említettem, több szerepkört különbözt
 Ahogy azt fentebb említettem, a middleware csak az egyik hely, ahol a szerepköröket használtam. A Policy-k\cite{policies} segítségével egy helyre lehet gyűjteni, hogy a felhasználó egy adott modell esetén milyen jogokkal rendelkezik: megtekintheti, újat hozhat lére, esetleg módosíthatja vagy törölheti. Minden modellhez készíthető ilyen szabály, egyszóval itt lehet definiálni a felhasználó jogait. Ez nálam a legtöbb esetben úgy nézett ki, hogy adminisztrátor (vagy szuper adminisztrátor) esetén mindenhez joga van, a modellek megtekintéséhez be kell jelentkezni, többi esetben a szituációtól függ a dolog, például tantárgyakat csak adminisztrátorok tudnak létrehozni, kezelni, de bármely bejelentkezett felhasználó megtekintheti.
 
 \Aref{policyPart}. kódban egy részletet láthatunk a jogosultság vizsgálatra: a \emph{before} függvény minden függvény előtt lefut, itt vizsgálom meg, hogy adminisztrátorról van szó. Ha nem, akkor megy tovább a vizsgálat. Megtekinteni mindenki megtudja, létrehozni pedig csak adminisztrátor tud, viszont ezt már az előbb említett függvény levizsgálja, így itt elegendő egy hamis értéket vissza adni. \Aref{check}. részletben pedig magát a vizsgálatot láthatjuk egy konkrét esetben: a felhasználó rendelkezik egy \emph{can} és a fordítottja, egy \emph{cannot} függvénnyel, ezekkel lehet eldönti, hogy van-e jogosultsága a felhasználónak, vagy sem. Ha nincs, akkor megjelenítek egy hibaüzenetet, és visszalépek a függvényemben.
+\pagebreak
 
 \lstinputlisting[caption={Részlet a tárgyakhoz tartó szabályból.}, label=policyPart, style=php]{../codes/policies.php}
 
@@ -385,18 +406,45 @@ A levelek egy sorra kerülnek rá, így azok a háttérben kerülnek elküldésr
 
 \subsection{Naptár exportálása}
 
-Az első fejezetben említettem, hogy az órarendet lehetőség van exportálni. Ha a felhasználó engedélyezi ezt, akkor egy egyedi azonosító kerül létrehozásra. Az ezt az azonosítót tartalmazó útvonalat meg lehet adni a naptár programban. Az importálás során, amikor meglátogatja ezt az útvonalat a naptár, a programom egy ICS kiterjesztésű fájlt hoz létre. Ebbe a fájlba menti ki a program a felhasználó naptárában található órákat a fájltípus által megadott struktúrában.\cite{icsFormat} Mivel ez egy gyakori fájlformátum, így a legtöbb naptár program kezelni tudja ezt. A megadott linken keresztül periodikusan frissíteni is tudja a naptár magát, azáltal hogy megint lekérdezi ezt a fájlt a programtól.
+Az első fejezetben említettem, hogy az órarendet lehetőség van exportálni. Ha a felhasználó engedélyezi ezt, akkor egy egyedi azonosító kerül létrehozásra. Az ezt az azonosítót tartalmazó útvonalat szükséges megadni a naptár programban. Az importálás során, amikor meglátogatja ezt az útvonalat a naptár, a programom egy ICS kiterjesztésű fájlt hoz létre. Ebbe a fájlba menti ki a program a felhasználó naptárában található órákat a fájltípus által megadott struktúrában.\cite{icsFormat} Mivel ez egy gyakori fájlformátum, így a legtöbb naptár program kezelni tudja ezt. A megadott linken keresztül periodikusan frissíteni is tudja a naptár magát, azáltal hogy megint lekérdezi ezt a fájlt a programtól.
 
 \lstinputlisting[caption={Részlet egy generált fájlból: egy esemény (jelen esetben óra) leírása.}, label=icsExport, style=general]{../codes/export.txt} 
 
 \section{Tailwind}
+
+Amikor a nézetek kialakítását elkezdtem, elgondolkoztam azon, hogy milyen segédeszközöket használhatnék. Szaktársaim ajánlására kipróbáltam a \emph{Tailwind} nevezetű keretrendszert, ami gyorsan elnyerte a tetszésemet. A Tailwind egy  úgynevezett ,,utility-first'' keretrendszer.\cite{tailwind} Ez gyakorlatban azt jelenti, hogy CSS osztályok és szelektorok írása helyett a kívánt formázási szabályokat közvetlen az adott elemen adhatjuk meg.
+
+\lstinputlisting[caption={Tailwind példa: az elemre flex megjelenítést alkalmaz, horizontális elrendezéssel, 4-es térközzel az elemek között.}, label=tailwind, style=html]{../codes/tailwind.html}
+
+Az online fórumokon több helyen is láttam, hogy kritika éri a Tailwind-et abból a szempontból, hogy pont a CSS fájlok lényegét veszi el, és ezáltal átláthatatlanabb HTML kód keletkezik. Bár valamilyen szinten egyet értek ezekkel a kritikákkal, a fejlesztés során úgy éreztem, hogy nagyban meggyorsította és könnyebbé tette a fejlesztést ezen keretrendszer használata, mivel nem kellett elhagynom a fájlt. Azt, hogy átláthatatlanabb lenne a fájl, kétféleképpen is ki lehet védeni: egyrészt érdemes komponensekre szedni az alkalmazást, másrészt más, a Tailwind-be beépülő komponens könyvtárak használata is segíthet.
+
+Itt emelném még ki, hogy a programomban használt ikonok a csakugyan a Tailwind készítőitől származó \emph{Heroicons}\cite{heroicons} csomagból kerültek felhasználásra.
+
 \subsection{DaisyUI}
+
+Azért, hogy egységesen megjelenő oldalt készítsek, a \emph{DaisyUI}\cite{daisyui} nevezetű komponens könyvtár használata mellett döntöttem. Ez a könyvtár kifejezetten a Tailwind-hez készült. A komponensek között megtalálható egyszerű gombok, bementi mezőktől kezdve kártyák, összecsukható menükön át egészen felugró ablakokig sok fajta komponens. Ezek mellett a DaisyUI témák kialakítását is lehetővé teszi, ezért is rendelkezik az alkalmazásom sötét és fehér kinézettel. Ezeket a témákat személyre is lehet szabni. Mivel a front-end területén nem rendelkezem sok tapasztalattal, így sok segítséget nyújtott ez a könyvtár, hogy egy esztétikus oldalt alakítsak ki.
+
+\begin{figure}[ht!]
+	\begin{tabular}{p{0.6\textwidth}p{0.4\textwidth}}
+		\begin{minipage}{.6\textwidth}
+			\lstinputlisting[caption={DaisyUI: gomb létrehozása}, label=buttonCode, style=html]{../codes/savebutton.html}
+		\end{minipage}
+		&
+		\begin{minipage}{.4\textwidth}
+			\centering
+			\caption{A megjelenő gomb.}
+			\includegraphics[width=3cm]{../pictures/screenshots/button.png}
+			\label{button}
+		\end{minipage}
+		
+	\end{tabular}
+\end{figure}
 
 \section{LiveWire}
 \label{livewireSection}
-\subsection{Ismertető, a csomag működése}
-\subsection{LiveWire és SPA}
+asd
 \subsection{Komponensek és data binding}
+\subsection{LiveWire és SPA}
 \subsection{Események, lapozás}
 \subsection{Alpine.js: LiveWire és JavaScript kapcsolata}
 \subsection{WireToast: LiveWire alapú értesítések}
@@ -603,6 +651,21 @@ Az alkalmazás a szakdolgozat védés, illetve a záróvizsga időszak alatt el�
 \textsc{WebDavSystem}: \emph{Calendar (.ics) File Structure}
 \\
 \url{https://www.webdavsystem.com/server/creating_caldav_carddav/calendar_ics_file_structure/}, Megtekintés dátuma: 2024.03.25.
+
+\bibitem{tailwind}
+\textsc{Tailwind}: \emph{Főoldal}
+\\
+\url{https://tailwindcss.com/}, Megtekintés dátuma: 2024.03.25.
+
+\bibitem{daisyui}
+\textsc{DaisyUI}: \emph{Főoldal}
+\\
+\url{https://daisyui.com/}, Megtekintés dátuma: 2024.03.25.
+
+\bibitem{heroicons}
+\textsc{Heroicons}: \emph{Főoldal}
+\\
+\url{https://heroicons.com/}, Megtekintés dátuma: 2024.03.25.
 \end{thebibliography}
 
 %\includepdf{nyilatkozat.pdf}

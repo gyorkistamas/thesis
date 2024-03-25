@@ -7,7 +7,7 @@
 \PassOptionsToPackage{defaults=hu-min}{magyar.ldf}
 \usepackage[magyar]{babel}
 
-\usepackage{listings,lmodern,caption,mathtools,amssymb,amsthm,pdfpages}
+\usepackage{listingsutf8,lmodern,caption,mathtools,amssymb,amsthm,pdfpages, xurl}
 \footnotestyle{rule=fourth}
 \usepackage[usenames,dvipsnames]{xcolor}
 \newtheorem{tetel}{Tétel}[chapter]
@@ -18,6 +18,17 @@
 
 \definecolor{darkgreen}{rgb}{0, .7, 0}
 \definecolor{lightorange}{rgb}{255, 165, 0}
+
+\makeatletter
+\expandafter\let\csname active@char\string?\endcsname\relax
+\expandafter\let\csname active@char\string!\endcsname\relax
+\expandafter\let\csname active@char\string:\endcsname\relax
+
+
+\initiate@active@char{?}
+\initiate@active@char{!}
+\initiate@active@char{:}
+\makeatother
 
 \lstdefinestyle{php}{
 	inputencoding=utf8/latin2,
@@ -36,6 +47,22 @@
 	stringstyle=\bfseries\color{PineGreen},
 	identifierstyle = \bfseries\color{YellowOrange},
 	morekeywords=[1]{},
+	keywordstyle=[3]{\bfseries\color{red}}
+}
+
+\lstdefinestyle{general}{
+	inputencoding=utf8/latin2,
+	basicstyle=\footnotesize\ttfamily,
+	columns=fullflexible,
+	numbers=left,
+	breaklines,
+	xleftmargin=1cm,
+	xrightmargin=1cm,
+	postbreak=\hbox{$\color{red}\hookrightarrow$\ },
+	backgroundcolor=\color{gray!30},
+	frame=ltrb,
+	keywordstyle=\bfseries\color{RoyalBlue},
+	morekeywords=[1]{BEGIN,UID,DTSTAMP,DTSTART,DTEND,SUMMARY,LOCATION,END},
 	keywordstyle=[3]{\bfseries\color{red}}
 }
 \renewcommand{\lstlistingname}{kódrészlet}
@@ -87,6 +114,7 @@ Itt érdemes még megemlíteni, hogy a fejlesztés során a MySQL nevezetű, rel
 \section{Általános információk}
 
 \subsection{Felhasználók}
+\label{users}
 
 Az alkalmazás 4 különböző jogkört különböztet meg a felhasználók esetén, melyekből egyszerre többet is birtokolhat a felhasználó:
 
@@ -251,17 +279,17 @@ Amennyiben az olvasó megnézi az elkészült programban található útvonalaka
 
 \subsubsection{Middleware}
 
-A middleware arra alkalmas, hogy a kérés feldolgozása előtt végezzünk el teendőket, akár szűrjük őket.\cite{middleware} A program során én három fő dologra használtam ezt fel: bejelentkezés vizsgálata, hozzáférési jogosultság vizsgálata, illetve a kérés elején az alkalmazás nyelvének beállítása. Az utolsóra azért volt szükség, mivel Laravel esetén a nyelv beállítása mindig csak az adott kérésre vonatkozik. Így minden esetben meg kellett vizsgálni, hogy a felhasználó átállította-e a nyelvet, és ha igen, akkor alkalmazzuk a kiválasztott nyelvet a kérésre. A middleware futása során dönthetünk úgy is, hogy a kérést megszakítjuk, például ha a felhasználó nem rendelkezik kellő jogosultsággal. Hozzá is tudjuk rendelni ezeket az egyes útvonalakhoz, ahogy az \aref{routesandMiddleware}. kódrészleten látható, vagy akár beállíthatjuk, hogy globálisan, minden kérés esetén lefusson az adott kód.
+A middleware arra alkalmas, hogy a kérés feldolgozása előtt végezzünk el teendőket, akár szűrjük őket.\cite{middleware} A program során én három fő dologra használtam ezt fel: bejelentkezés vizsgálata, hozzáférési jogosultság vizsgálata, illetve a kérés elején az alkalmazás nyelvének beállítása. Az utolsóra azért volt szükség, mivel Laravel esetén a nyelv beállítása mindig csak az adott kérésre vonatkozik. Így minden esetben meg kellett vizsgálni, hogy a felhasználó átállította-e a nyelvet, és ha igen, akkor alkalmazzuk a kiválasztott nyelvet a kérésre. A middleware futása során dönthetünk úgy is, hogy a kérést megszakítjuk, például ha a felhasználó nem rendelkezik kellő jogosultsággal. Hozzá is tudjuk rendelni ezeket az egyes útvonalakhoz, ahogy az \aref{routesandMiddleware}. kódrészleten látható, vagy akár beállíthatjuk, hogy globálisan, minden kérés esetén lefusson az adott kód. \Aref{middleware}. kódrészletben egy middleware-ből látható egy részlet, ami adminisztrátorok esetén engedélyezi a kérést.
 
 \lstinputlisting[caption={Egy \emph{Get} típusú útvonal, ami az órarendet nyitja meg. Az útvonal meghívásakor a \emph{Controller} nevű osztály \emph{getTimetable} metódusa fut le. Az útvonalat csak bejelentkezett felhasználók ('auth') és diákok vagy tanárok ('studentorteacher') érhetik el.}, label=routesandMiddleware, style=php]{../codes/route.php}
 
 \subsubsection{Konfiguráció}
 
-A \emph{config} mappában találhatók a konfigurációs. Ha jobban megnézzük, ezek igazából PHP fájlok, amik egy tömb-ként adják vissza a konfigurációs értékeket. Ezeket módosíthatjuk, illetve mi is hozhatunk újakat létre. Én is így tettem: az olyan beállításokat, mint például, hogy engedélyezve van-e a regisztráció, vagy hogy a felhasználók módosíthatják-e a kódjukat, innen kérdezem le. Sok esetben az értékeket a környezeti konfigurációs fájlból olvassa be a program, ezáltal a gyakran változó értékek egy helyen módosíthatók anélkül, hogy keresni kéne őket, hogy hol vannak.
+A \emph{config} mappában találhatók a konfigurációs fájlok. Ha jobban megnézzük, ezek igazából PHP fájlok, amik egy tömb-ként adják vissza a konfigurációs értékeket. Ezeket módosíthatjuk, illetve mi is hozhatunk újakat létre. Én is így tettem: az olyan beállításokat, mint például, hogy engedélyezve van-e a regisztráció, vagy hogy a felhasználók módosíthatják-e a kódjukat, innen kérdezem le. Sok esetben az értékeket a környezeti konfigurációs fájlból olvassa be a program, ezáltal a gyakran változó értékek egy helyen módosíthatók anélkül, hogy keresni kéne őket, hogy hol vannak.
 
 \subsubsection{Nyelvesítés}
 
-Az alkalmazás két nyelvet támogat: Angolt és Magyart. A nyelvesítést tartalmazó fájlokat a \emph{lang} mappában találhatjuk, nyelvek szerint almappákra bontva. Az egyes kifejezések kulcs-érték párokként vannak eltárolva, ezen kulcs segítségével tudjuk elérni őket a \emph{\_\_('kulcs')} segédfüggvény segítségével, ami globálisan elérhető a Kontroller és a Nézet fájlokban is. A keretrendszer automatikusan a beállított nyelv alapján visszaadja a megfelelő fordítást. Ha esetleg hiányozna az egyik fordítás, akkor a konfigurációban alapértelmezettként megadott nyelvből próbálja kikeresni az értéket. Ha ott sem találja meg, akkor a paraméterként megadott kulcsot adja vissza.
+Az alkalmazás két nyelvet támogat jelenleg: Angolt és Magyart, ezekhez készítettem el a fordítást. A nyelvesítést tartalmazó fájlokat a \emph{lang} mappában találhatjuk, nyelvek szerint almappákra bontva. Az egyes kifejezések kulcs-érték párokként vannak eltárolva, ezen kulcs segítségével tudjuk elérni őket a \emph{\_\_('kulcs')} segédfüggvény segítségével, ami globálisan elérhető a Kontroller és a Nézet fájlokban is. A keretrendszer automatikusan a beállított nyelv alapján visszaadja a megfelelő fordítást. Ha esetleg hiányozna az egyik fordítás, akkor a konfigurációban alapértelmezettként megadott nyelvből próbálja kikeresni az értéket. Ha ott sem találja meg, akkor a paraméterként megadott kulcsot adja vissza.
 
 \subsection{Adatbázis és modellek}
 
@@ -275,9 +303,9 @@ A táblákat a \emph{Schema} osztály \emph{create} metódusával tudjuk létreh
 
 \Aref{migrationCode}. kódrészletben egy ilyen migrációt láthatunk, ahol egy kurzusok tárolására szolgáló táblát hozom létre. Itt több, különböző mező létrehozása megfigyelhető:
 \begin{itemize}
-	\item Az egyik első lépés szokott lenni a tábla elsődleges kulcsának meghatározása. Éppen ezért a Laravel biztosít erre egy gyorsabb módszert: a második sorban látható \emph{\$table->id()} segítségével létrehozható egy id nevű, szám típusú, automatikusan növekvő oszlop.
-	\item Természetesen sima oszlopokat is létrehozhatunk, ehhez a típusát, a nevét, és egyéb opciókat adhatunk meg, mint például az alapértelmezett értékét, vagy hogy a mező null-ra állítható-e. Ilyet például a negyedik vagy a nyolcadik sor.
-	\item Tudunk idegen kulcsokat is definiálni, ahogy azt a hatodik és hetedik sorban láthatjuk. Ehhez a \emph{foreign} függvényt kell használni, megadni a mező nevét, illetve hogy melyik tábla melyik mezőjét referáljuk ezzel az idegenkulccsal. Megadható az is, hogy törlés vagy módosítás esetén mi történjen. A példán egyik esetben törlése kerül a rekord, más esetben null-ra állítódik a mező.
+	\item Az egyik első lépés szokott lenni a tábla elsődleges kulcsának meghatározása. Éppen ezért a Laravel biztosít erre egy gyorsabb módszert: a második sorban látható \emph{\$table->id()} segítségével létrehozható egy id nevű, szám típusú, automatikusan növekvő mező.
+	\item Természetesen sima mezőket is létrehozhatunk, ehhez a típusát, a nevét, és egyéb opciókat adhatunk meg, mint például az alapértelmezett értékét, vagy hogy a mező null-ra állítható-e. Ilyet például a negyedik vagy a nyolcadik sor.
+	\item Tudunk idegen kulcsokat is definiálni, ahogy azt a hatodik és hetedik sorban láthatjuk. Ehhez a \emph{foreign()} függvényt kell használni, megadni a mező nevét, illetve hogy melyik tábla melyik mezőjét referáljuk ezzel az idegenkulccsal. Megadható az is, hogy törlés vagy módosítás esetén mi történjen. A példán egyik esetben törlése kerül a rekord, más esetben null-ra állítódik a mező.
 	\item Laravel esetében szokás két dátumot is adni a táblákhoz: egyet, hogy mikor jött létre az egyed, és egyet, hogy mikor módosították utoljára. Ezt könnyen meg lehet tenni a kilencedik sorban látható módon.
 \end{itemize}
 
@@ -291,20 +319,75 @@ Az adatbázis modellek a \emph{app} könyvtáron belül a \emph{Models} mappába
 
 A modellen belül megadhatunk több információt, mint a tábla neve, ha szükséges, illetve beállíthatjuk, hogy az elsődleges kulcs az automatikusan növekedjen-e vagy sem. Megadhatjuk azt is, hogy mely mezőket lehet kitölteni a \emph{\$fillable} mező segítségével. A \emph{\$hidden} mezővel megadhatjuk, hogy mely attribútumokat nem szeretnénk szerializálni (ilyen lehet például a jelszó), és azt is megadhatjuk, hogy ha egyes adatbázis mezőket szeretnénk átkonvertálni más típusúra (ilyen például ha a tárolt dátumot a keretrendszer által biztosított dátum objektummá szeretnénk alakítani). Az adatbázis mezőit ezeken felül nem kell megadnunk, azokat úgynevezett ,,magic method''-on\cite{magicMethod} keresztül tudjuk elérni.
 
-A másik nagyobb ,,kategória'', amit meg szoktunk írni a modellek esetén, azok a kapcsolatok. A keretrendszer lehetőséget nyújt a szokásos kapcsolatok (egy az egyhez, egy a többhöz stb.) kialakítására függvények segítségével. \Aref{onetomany}. kódrészletben egy a többhöz kapcsolatot lehet látni. \Aref{manytomany}. kódrészletben pedig egy több a többhöz kapcsolatot, ami kettő egy a többhöz kapcsolattal van feloldva, ahol a kapcsoló tábla a \emph{course\_students}. Érdemes megfigyelni, hogy nincsenek megadva a kapcsolatoknál az azokat megvalósító idegenkulcsok nevei. Ahogy az fentebb említettem, ha követjük az elnevezés konvenciót, akkor azokat itt sem kell megadni. Ez alól a több a többhöz kapcsolat esetén a kapcsolótábla neve jelent kivételt.
+A másik nagyobb ,,kategória'', amit meg szoktak írni a modellek esetén, azok a kapcsolatok. A keretrendszer lehetőséget nyújt a szokásos kapcsolatok (egy az egyhez, egy a többhöz stb.) kialakítására függvények segítségével. \Aref{onetomany}. kódrészletben egy a többhöz kapcsolatot lehet látni. \Aref{manytomany}. kódrészletben pedig egy több a többhöz kapcsolatot, ami kettő, egy a többhöz kapcsolattal van feloldva, ahol a kapcsoló tábla a \emph{course\_students}. Érdemes megfigyelni, hogy nincsenek megadva a kapcsolatoknál az azokat megvalósító idegenkulcsok nevei. Ahogy az fentebb említettem, ha követjük az elnevezés konvenciót, akkor azokat itt sem kell megadni. Ez alól a több a többhöz kapcsolat esetén a kapcsolótábla neve jelent kivételt.
 
 \lstinputlisting[caption={Egy a többhöz kapcsolat: egy tantárgynak több kurzusra van.}, label=onetomany, style=php]{../codes/onetomany.php}
 \lstinputlisting[caption={Több a többhöz kapcsolat: egy kurzusnak több hallgatója van, egy hallgató több kurzusra van felíratkozva.}, label=manytomany, style=php]{../codes/manytomany.php}
 
 \subsection{Eloquent ORM}
-asd
-\subsection{Blade templating engine}
+
+Az ORM, avagy az Object Relational Mapping rendszerek abban nyújtanak segítséget, hogy összekössék az adatbázist a modelljeinkkel, ezáltal a modelleket használhatjuk az adatbázissal való kommunikáció során SQL parancsok írása helyett.\cite{orm} A Laravel egy nagyszer ORM rendszerrel készül, amit Eloquent-nek\cite{eloquentORM} hívnak. Segítségével bonyolult lekérdezéseket, frissítéseket, létrehozásokat tudunk elvégezni a modelleken keresztül. Bár a bonyolultabb lekérdezések megírása elsőre nehézséget jelentett, könnyen megtanulható és megszokható volt ez az ORM, és gyorsan meg is szerettem.
+
+\Aref{eloquent} kódrészletben egy ilyen lekérdezést láthatunk: lekérdezem a tantárgyakat, illetve szűröm őket, ha adott meg szűrési feltételeket a felhasználó. Emellett látható az is, hogy a lapozás is keretrendszer szinten támogatott a \emph{paginate} függvény segítségével. Ehhez meg kell adni, hogy hány elemet szeretnénk megjeleníteni egy oldalon, és opcionálisan egy nevet is adhatunk neki, ami akkor hasznos, ha több ilyen lapozó szakaszt is tartalmaz az oldal. 
+
+\lstinputlisting[caption={Tantárgyak lekérdezése, szűrése ha adtak meg értéket.}, label=eloquent, style=php]{../codes/eloquent.php}
+
+\subsection{Blade sablon fájlok}
 \label{bladeSection}
-\subsection{Laravel Fortify}
+
+A nézetek és komponensek létrehozására is megoldást nyújt a keretrendszer a Blade\cite{blade} fájlok formájában. Ezek szokványos HTML kódot tartalmaznak, illetve a Blade által nyújtott direktívákat, de akár egyszerű PHP kódot is tartalmazhat, mivel végső soron ezekből PHP fájlokat készít a keretrendszer.
+
+A Blade különböző direktívák használatát teszi lehetővé, ami megkönnyíti a nézetek létrehozását. Ezek általában egy \emph{@} jellel kezdődnek. Segítségükkel feltételeket rakhatunk a HTML kódunkba, ciklusokat a kollekciók kiíratására, de például gyors megoldást ad arra is, hogy az oldal egyes részeit csak bejelentkezett felhasználóknak jelenítsük meg a \emph{@auth} direktíva segítségével, csak hogy párat említsek. Ilyen direktívák láthatók \aref{directives}. kódrészletben példaképpen.
+
+\lstinputlisting[caption={Bejelentkezett felhasználó esetén a jelenleg nem aktív félévek nevének kiíratása.}, label=directives, style=php]{../codes/directives.blade.php}
+
+Hasznos segítséget nyújt a kinézet felépítésében is: az egyes nézetek kibővíthetnek másik nézeteket, ezáltal könnyedén létrehozható egy egységes nézet, mivel a főbb formázásokat és részleteket (például a navigációs sávot) elegendő egyszer megírni, a többi oldalunkat pedig ebből a fájlból kiterjeszteni.
+
+Ezek mellett komponenseket is létrehozhatunk, amik újra és újra felhasználóható kódokat tartalmaznak. Én ezt első sorban az ikonoknál használtam ki. Minden olyan ikon esetében, amit többször használtam, egy komponenst hoztam létre neki, ami tartalmazta a ikont leíró SVG kódot, így azt csak be kellett hivatkozni, ahogy az \aref{component}. kódrészletben látható. A komponens egy HTML tag-ként jelenik meg, illetve egy \emph{x-} előtaggal rendelkezik.
+
+\lstinputlisting[caption={Komponens meghívása.}, label=component, style=php]{../codes/component.blade.php}
+
+\subsection{Autentikáció}
+
+A modellek és az adatbázis elkészítése után az egyik első dolgom volt az autentikáció kialakítása. Ez egy elég repetitív folyamat tud lenni, ezért ennek felgyorsítására a \emph{Laravel Fortify}\cite{fortify} nevű csomagot alkalmaztam.
+
+Ezen csomag abban nyújt segítséget, hogy előre elkészíti az autentikációhoz szükséges útvonalakat, funkciókat, mint a bejelentkezés, regisztráció, jelszó visszaállítás. Magát a nézetek továbbra is nekünk kell létrehozni, illetve szükség esetén személyre szabhatjuk a különböző folyamatokat is. Gondolok itt arra, ha mondjuk nem email cím segítségével jelentkeznek be a felhasználók (például az én programomban beléphetnek email vagy Neptun kód segítségéve is), vagy ha több mezőt kell megadni regisztrációkor, mint amit a Fortify alapértelmezetten felajánl.
+
+Amennyiben egy egyszerűbb alkalmazást készítünk, akkor lehetőségünk van használni több olyan csomagot, amik telepítéstől kezdve egy félkész alkalmazást adnak, amiben sok általános funkció (bejelentkezés, felhasználókezelés stb.) alapból el vannak készítve. Bár csábítóan hangzik, véleményem szerint ezeket nem érdemes használni, mivel egy nagyon általános, nem túl egyedi élményt nyújtanak, amit nehézkes lehet személyre szabni. Emiatt döntöttem inkább a Fortify használata mellett, és alakítottam ki a én a nézeteket.
+
 \subsection{Jogosultság kezelés}
-\subsection{Események, queue}
+
+\subsubsection{Szerepkörök}
+
+Ahogy azt \aref{users}. alfejezetben említettem, több szerepkört különböztetek meg a programban: szuper adminisztrátor, sima adminisztrátor, tanár és hallgató. Ezeknek a gyors létrehozására a Laravel Ladder\cite{ladder} csomagot alkalmaztam. Ennek segítségével gyorsan definiálhatók szerepkörök. A felhasználó modellt módosítja úgy a csomag, hogy gyorsan letudjuk ellenőrizni, hogy milyen szerepkör(ökk)el rendelkezik a felhasználó. Ezt elsősorban három helyen használtam: a middleware-ek esetén, hogy egy útvonal kinek elérhető, a nézetekben, hogy mely menüpontokat jelenítsem meg a felhasználónak, és a Policy-k esetén, erről bővebben lentebb.
+
+\lstinputlisting[caption={Admin middleware részlet: az ez által védett útvonalak csak adminoknak érhetők el.}, label=middleware, style=php]{../codes/middleware.php}
+
+\subsubsection{Jogosultság ellenőrzése}
+
+Ahogy azt fentebb említettem, a middleware csak az egyik hely, ahol a szerepköröket használtam. A Policy-k\cite{policies} segítségével egy helyre lehet gyűjteni, hogy a felhasználó egy adott modell esetén milyen jogokkal rendelkezik: megtekintheti, újat hozhat lére, esetleg módosíthatja vagy törölheti. Minden modellhez készíthető ilyen szabály, egyszóval itt lehet definiálni a felhasználó jogait. Ez nálam a legtöbb esetben úgy nézett ki, hogy adminisztrátor (vagy szuper adminisztrátor) esetén mindenhez joga van, a modellek megtekintéséhez be kell jelentkezni, többi esetben a szituációtól függ a dolog, például tantárgyakat csak adminisztrátorok tudnak létrehozni, kezelni, de bármely bejelentkezett felhasználó megtekintheti.
+
+\Aref{policyPart}. kódban egy részletet láthatunk a jogosultság vizsgálatra: a \emph{before} függvény minden függvény előtt lefut, itt vizsgálom meg, hogy adminisztrátorról van szó. Ha nem, akkor megy tovább a vizsgálat. Megtekinteni mindenki megtudja, létrehozni pedig csak adminisztrátor tud, viszont ezt már az előbb említett függvény levizsgálja, így itt elegendő egy hamis értéket vissza adni. \Aref{check}. részletben pedig magát a vizsgálatot láthatjuk egy konkrét esetben: a felhasználó rendelkezik egy \emph{can} és a fordítottja, egy \emph{cannot} függvénnyel, ezekkel lehet eldönti, hogy van-e jogosultsága a felhasználónak, vagy sem. Ha nincs, akkor megjelenítek egy hibaüzenetet, és visszalépek a függvényemben.
+
+\lstinputlisting[caption={Részlet a tárgyakhoz tartó szabályból.}, label=policyPart, style=php]{../codes/policies.php}
+
+\lstinputlisting[caption={Jogosultság vizsgálata tárgy létrehozásakor.}, label=check, style=php]{../codes/authcheck.php}
+
+Ezen szabályok nagy előnye, hogy ha bármely okból kifolyólag módosítani kell a kialakított szabályrendszeren, akkor ezt csak egy helyen kell megtenni, és nem kell végig nézni a kódot, hogy hol kell módosítást végezni.
+
 \subsection{Email küldés}
+
+A programomban több helyen is használok email küldést értesítésék küldésére, például hiányzás rögzítésekor. Egy email küldéséhez egy értesítés osztályt kell létrehozni, ahol definiálni kell, hogy az értesítést email-ként kell elküldeni, és hogy mi legyen az üzenet tartalma. Ehhez a Laravel biztosít egy leírónyelvhez hasonló módszert, így nem szükséges minden fajta levél esetén leírni annak kinézetét, csak a tartalmát kell definiálni.\cite{mail} Az elkészül emailt a felhasználó modelljén keresztül tudjuk elküldeni, ahol akár a levél nyelvét is beállíthatjuk. Én például a modellben tárolt \emph{lang} mező alapján tettem ezt, így a leveleket a beállított nyelvük alapján kapják meg a felhasználók.
+
+A levelek egy sorra kerülnek rá, így azok a háttérben kerülnek elküldésre. Ezáltal elkerülhető, hogy a küldés során az oldal sokáig töltsön, vagy esetleg hibára fusson, ha nem sikerült elküldeni a levelet.
+
+\lstinputlisting[caption={Egy példa az email felépítsére. A szövegek helyén a fordítás behelyettesítésére szolgáló függvények és kulcsak láthatók.}, label=mail, style=php]{../codes/mail.php}
+
 \subsection{Naptár exportálása}
+
+Az első fejezetben említettem, hogy az órarendet lehetőség van exportálni. Ha a felhasználó engedélyezi ezt, akkor egy egyedi azonosító kerül létrehozásra. Az ezt az azonosítót tartalmazó útvonalat meg lehet adni a naptár programban. Az importálás során, amikor meglátogatja ezt az útvonalat a naptár, a programom egy ICS kiterjesztésű fájlt hoz létre. Ebbe a fájlba menti ki a program a felhasználó naptárában található órákat a fájltípus által megadott struktúrában.\cite{icsFormat} Mivel ez egy gyakori fájlformátum, így a legtöbb naptár program kezelni tudja ezt. A megadott linken keresztül periodikusan frissíteni is tudja a naptár magát, azáltal hogy megint lekérdezi ezt a fájlt a programtól.
+
+\lstinputlisting[caption={Részlet egy generált fájlból: egy esemény (jelen esetben óra) leírása.}, label=icsExport, style=general]{../codes/export.txt} 
 
 \section{Tailwind}
 \subsection{DaisyUI}
@@ -413,7 +496,7 @@ Az alkalmazás a szakdolgozat védés, illetve a záróvizsga időszak alatt el�
 \chapter*{Összegzés}
 \addcontentsline{toc}{chapter}{Összegzés}
 
-\begin{thebibliography}{10}
+\begin{thebibliography}{19}
 \addcontentsline{toc}{chapter}{\bibname}
 
 \bibitem{Neptun}
@@ -481,6 +564,45 @@ Az alkalmazás a szakdolgozat védés, illetve a záróvizsga időszak alatt el�
 \\
 \url{https://www.php.net/manual/en/language.oop5.magic.php}, Megtekintés dátuma: 2024.03.24.
 
+\bibitem{orm}
+\textsc{FreeCodeCamp}: \emph{What is an ORM – The Meaning of Object Relational Mapping Database Tools}
+\\
+\url{https://www.freecodecamp.org/news/what-is-an-orm-the-meaning-of-object-relational-mapping-database-tools/}, Megtekintés dátuma: 2024.03.25.
+
+\bibitem{eloquentORM}
+\textsc{Laravel}: \emph{Eloquent}
+\\
+\url{https://laravel.com/docs/10.x/eloquent}, Megtekintés dátuma: 2024.03.25.
+
+\bibitem{blade}
+\textsc{Laravel}: \emph{Blade Templates}
+\\
+\url{https://laravel.com/docs/10.x/blade}, Megtekintés dátuma: 2024.03.25.
+
+\bibitem{fortify}
+\textsc{Laravel}: \emph{Laravel Fortify}
+\\
+\url{https://laravel.com/docs/10.x/fortify}, Megtekintés dátuma: 2024.03.25.
+
+\bibitem{ladder}
+\textsc{Github}: \emph{Ladder}
+\\
+\url{https://github.com/eneadm/ladder}, Megtekintés dátuma: 2024.03.25.
+
+\bibitem{policies}
+\textsc{Laravel}: \emph{Creating Policies}
+\\
+\url{https://laravel.com/docs/10.x/authorization#creating-policies}, Megtekintés dátuma: 2024.03.25.
+
+\bibitem{mail}
+\textsc{Laravel}: \emph{Mail Notifications}
+\\
+\url{https://laravel.com/docs/10.x/notifications#mail-notifications}, Megtekintés dátuma: 2024.03.25.
+
+\bibitem{icsFormat}
+\textsc{WebDavSystem}: \emph{Calendar (.ics) File Structure}
+\\
+\url{https://www.webdavsystem.com/server/creating_caldav_carddav/calendar_ics_file_structure/}, Megtekintés dátuma: 2024.03.25.
 \end{thebibliography}
 
 %\includepdf{nyilatkozat.pdf}

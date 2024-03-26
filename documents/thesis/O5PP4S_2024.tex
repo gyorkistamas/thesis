@@ -473,7 +473,7 @@ A fentebb említettek alapján sikerült kialakítani dinamikusan frissülő né
 Ezáltal egy SPA típusú oldal hozható létre, melynek jelentése: Single Page Application, avagy Egy oldalból álló alkalmazás. Ahogy a neve is sugallja, ezek olyan alkalmazások, amik egy oldalt töltenek be teljesen, a későbbiek során ennek az oldalnak a felépítését módosítják háttérben történő kérésekkel, mint ami \aref{livewireUpdate}. ábrán is látható.\cite{spa}
 
 \subsection{Események}
-
+\label{livewireevents}
 A csomag lehetőséget ad események küldésére és fogadására is. Ezt én elsősorban kettő funkció megoldására használtam fel. Az egyik a legördülő kiválasztó mezők esetén volt. Ezek a mezők külön komponensek, így amikor annak az értéke frissül, akkor egy eseményt hozok létre, amit fogad az a komponens, amibe a mező be van ágyazva, ezáltal módosítva az értéket. A másik ilyen a felugró ablakok bezárása: ha valamilyen modell létrehozására szolgáló felugró ablakot nyit meg a felhasználó, majd a mezők megfelelő kitöltése után a mentésre kattint a felhasználó, akkor -- amennyiben nem lép közbe validációs probléma -- a mentést megvalósító függvény egy eseményt küld, hogy záródjon be az ablak.
 
 Ilyen eseményeket a komponensben belül a \emph{dispatch()} függvény segítségével küldhetünk, ahol adni kell egy nevet az eseménynek, illetve igény szerint egyéb adatokat, amiket szeretnék mellékelni az eseményhez.
@@ -499,14 +499,24 @@ Az értesítések kinézete természetesen személyre szabható, én például a
 	\label{toastUI}
 \end{figure}
 
-\section{Websocket és Pusher szerviz}
+\section{Websocket és Pusher}
 
-Amikor \aref{class}. képen látható oldalt készítettem, akkor mindenképpen szerettem volna megoldani, hogy amikor a tanuló a Qr kód segítségével bejelentkezik az órára, a státusza automatikusan frissüljön a tanár által látott oldalon is. Első gondolom az volt, hogy periodikusan, pár másodpercenként frissítem az oldalt, viszont ezt az ötletet hamar elvetettem, mivel ez rengeteg fölösleges kéréssel járna, ami sok töltést jelentene a felhasználóknak, illetve terhet a szervernek. Így másik megoldás után néztem, ekkor találtam rá a Websocket-ekre és a Pusher szolgáltatásra.
+Amikor \aref{class}. képen látható oldalt készítettem, akkor mindenképpen szerettem volna megoldani, hogy amikor a tanuló a Qr kód segítségével bejelentkezik az órára, a státusza automatikusan frissüljön a tanár által látott oldalon is. Első gondolatom az volt, hogy periodikusan, pár másodpercenként frissítem az oldalt, viszont ezt az ötletet hamar elvetettem, mivel ez rengeteg fölösleges kéréssel járna, ami sok töltést jelentene a felhasználóknak, illetve terhet a szervernek. Így másik megoldás után néztem, ekkor találtam rá a Websocket-ekre és a Pusher szolgáltatásra.
 
-\subsection{Websocket jelentősége}
-\subsection{Pusher}
-\subsection{Websocket integrálása a keretrendszerbe}
+\subsection{Websocket}
+
+A Websocket technológia kétirányú kommunikációt tesz lehető a szerver és a kliensek között. Ezáltal a folytonos frissítést, amit először terveztem, eseményekkel lehet kiváltani.\cite{websocket}Amikor valaki bejelentkezik az órára, akkor egy esemény jön létre, ezt a tanári oldal fogadja, és innen tudja, hogy frissíteni kell az adott tanulóhoz tartozó sort. Ezek nem azok az események, amiket \aref{livewireevents}. fejezetben taglaltam. Azok az események az adott felhasználói munkamenetre korlátozódnak, míg ezek az események küldése, fogadása eszközök, felhasználók között történnek.
+
+\subsection{Pusher channels}
+
+A Pusher Channels\cite{pusher} tulajdonképpen egy megvalósítása a Websocketeknek, amit kifejezetten webalkalmazásokhoz terveztek. Ingyenes fiókot lehet hozzá létrehozni, ami bár korlátolt, a szakdolgozat készítéséhez és kipróbálásához bőven elegendő. A Laravel keretrendszer is támogatja a Pusher technológiát, így könnyen integrálható volt a programba. Mondhatni a Pusher a szerver és a kliensek között áll: ide érkeznek be az események, és innen kerülnek kiküldésre.
+
+Természetesen más, akár nyílt forrású megoldások is elérhetők, illetve a dolgozat készítésekor is fejlesztés alatt volt egy kifejezetten a Laravel-hez készülő változat, viszont a fejlesztők későn lettek készek vele ahhoz, hogy fel tudjam használni szakdolgozatomban, így ez egy jövőbeli fejlesztés lesz.
+
 \subsection{Csatornák, események létrehozása}
+
+
+
 \subsection{Események fogadása JavaScript, LiveWire esetén}
 
 \section{QR-kód generálás}
@@ -745,6 +755,16 @@ Az alkalmazás a szakdolgozat védés, illetve a záróvizsga időszak alatt el�
 \textsc{Github: usernotnull}: \emph{Tall toasts}
 \\
 \url{https://github.com/usernotnull/tall-toasts}, Megtekintés dátuma: 2024.03.26.
+
+\bibitem{websocket}
+\textsc{MDN web docs}: \emph{The WebSocket API (WebSockets)}
+\\
+\url{https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API}, Megtekintés dátuma: 2024.03.26.
+
+\bibitem{pusher}
+\textsc{Pusher}: \emph{Pusher channels}
+\\
+\url{https://pusher.com/channels/}, Megtekintés dátuma: 2024.03.26.
 \end{thebibliography}
 
 %\includepdf{nyilatkozat.pdf}

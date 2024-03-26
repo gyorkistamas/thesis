@@ -1,0 +1,16 @@
+{
+  "_token": "SZeWm3x5vSrRBPw8o8q1k8olueDJbU63hsVC3448",
+  "components": [
+    {
+      "snapshot": "{\"data\":{\"codeSearch\":null,\"nameSearch\":null,\"semesterSearch\":1},\"memo\":{\"id\":\"9cpOZOvCXUInW5tUKhWQ\",\"name\":\"student.my-subjects\",\"path\":\"student-subjects\",\"method\":\"GET\",\"children\":{\"lw-1411962227-0\":[\"div\",\"LtmG30yxRjzrSvK1VjiS\"],\"NBT_IM733K2\":[\"div\",\"I2ulhKVJIMZmpkgtuKB2\"],\"NBT_PI216G2\":[\"div\",\"luN2F3L9QSvjPQJuPtib\"]},\"scripts\":[],\"assets\":[],\"errors\":[],\"locale\":\"hu\"},\"checksum\":\"324e1260eb8a5428877a73af164ace76d06c80c4bbd1c23a133f312da75a454c\"}",
+      "updates": {},
+      "calls": [
+        {
+          "path": "",
+          "method": "__dispatch",
+          "params": ["single-select-term.-1", { "data": "" }]
+        }
+      ]
+    }
+  ]
+}

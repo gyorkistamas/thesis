@@ -1,0 +1,1 @@
+toast()->success(__('general.subjectCreated'), __('general.success'))->push();

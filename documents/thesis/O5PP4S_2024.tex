@@ -211,6 +211,7 @@ A kurzusokhoz órák hozhatóak létre, amik a féléven belül lehetnek. Minden
 \section{Tanári nézet, funkciók}
 
 \subsection{Oktatott tárgyak}
+\label{taugthClass}
 
 A tanárok megtekinthetik az általuk oktatott -- vagy tantárgyfelelősként hozzáadott -- tárgyakat, és az azokhoz kapcsolódó adatokat. Igény szerint szűrhetnek kód, név, vagy félévre is. Minden kurzus esetén megtekinthetik az alap adatokat, a kurzushoz tartozó órákat, hallgatókat. Itt van lehetősége a tanárnak hozzáadni hallgatókat a kurzushoz, illetve egy listában megtekinteni diákokra lebontva, hogy mennyit hiányoztak, mennyit késtek, ebből mennyi az igazolatlan.
 
@@ -461,21 +462,47 @@ Nagy előnye a csomagnak, hogy nem kell kilépnünk a PHP nyelvből, hiszen a Li
 
 Ahogy ez fentebb említettem, a csomag használatához komponenseket kell létrehozni, melyek egy PHP osztályból, és az ahhoz tartozó nézetből állnak. Az osztályban létrehozott mezőkhöz és függvényekhez hozzá tudunk férni a nézetünkben, és akár hozzá is tudjuk ezeket az értékeket kötni egyes beviteli mezőkhöz a \emph{wire:model} segítségével. A függvények meghívásait pedig gombnyomásokhoz, vagy űrlapok elküldéséhez is köthetjük a \emph{wire:click} és \emph{wire:submit} használatával. Így amikor a felhasználó begépel valamit egy mezőbe, és/vagy megnyom egy gombot, a mögöttes PHP osztály állapota frissül, ez kerül elküldésre \aref{livewireUpdate}. kódrészletben látható módon, amit kiértékel a szerver, és visszaküldi. Ezek a komponensek egyébként Blade fájlok egyben, így \aref{bladeSection}. fejezetben írt direktívák továbbra is használhatók. Amennyiben azt szeretnénk, hogy minden  gombnyomásra frissüljön az oldal-- ez akkor hasznos például, ha az űrlap kitöltése során egyből szeretnénk frissíteni az oldalt esetleges hibaüzenetekkel --, akkor ezt is megtehetjük, ha a direktívát kiegészítjük a \emph{live} kulcsszóval.
 
-\lstinputlisting[caption={A komponens osztályának egy mezője és egy bemeneti mező összekapcsolása, ami a harmadik sorban található.}, label=php, style=php]{../codes/binding.blade.php}
+\lstinputlisting[caption={A komponens osztályának egy mezője és egy bemeneti mező összekapcsolása, ami a harmadik sorban található.}, label=binding, style=php]{../codes/binding.blade.php}
 
 A programomban főként ilyen Livewire komponenseket használtam . Ez alól egyedül a bejelentkezés és a regisztráció képez kivételt, mivel azokhoz \aref{fortifyAuth}. fejezetben írt csomagot használtam, és ott sima Blade fájlokkal kellett dolgozni.
 
-\subsection{LiveWire és SPA}
+\subsection{Livewire és SPA}
 
 A fentebb említettek alapján sikerült kialakítani dinamikusan frissülő nézeteket, viszont egy probléma továbbra is fent állt: az oldalak közötti navigáció esetén továbbra is az egész oldal újra töltődött. Ennek megoldására született a Livewire \emph{Navigate}\cite{navigate} funkciója. Használata egyszerű: a navigálásra szánt gombokra, hivatkozásokra a \emph{wire:navigate} direktívát kell alkalmazni. Ezután amikor rákattint a felhasználó, az oldal teljes újratöltése helyett a háttérben kéri le a weboldalt a szervertől, majd a kapott adatok alapján módosítja a dokumentum struktúráját a Livewire.
 
 Ezáltal egy SPA típusú oldal hozható létre, melynek jelentése: Single Page Application, avagy Egy oldalból álló alkalmazás. Ahogy a neve is sugallja, ezek olyan alkalmazások, amik egy oldalt töltenek be teljesen, a későbbiek során ennek az oldalnak a felépítését módosítják háttérben történő kérésekkel, mint ami \aref{livewireUpdate}. ábrán is látható.\cite{spa}
 
 \subsection{Események}
-\subsection{Alpine.js: LiveWire és JavaScript kapcsolata}
-\subsection{WireToast: LiveWire alapú értesítések}
+
+A csomag lehetőséget ad események küldésére és fogadására is. Ezt én elsősorban kettő funkció megoldására használtam fel. Az egyik a legördülő kiválasztó mezők esetén volt. Ezek a mezők külön komponensek, így amikor annak az értéke frissül, akkor egy eseményt hozok létre, amit fogad az a komponens, amibe a mező be van ágyazva, ezáltal módosítva az értéket. A másik ilyen a felugró ablakok bezárása: ha valamilyen modell létrehozására szolgáló felugró ablakot nyit meg a felhasználó, majd a mezők megfelelő kitöltése után a mentésre kattint a felhasználó, akkor -- amennyiben nem lép közbe validációs probléma -- a mentést megvalósító függvény egy eseményt küld, hogy záródjon be az ablak.
+
+Ilyen eseményeket a komponensben belül a \emph{dispatch()} függvény segítségével küldhetünk, ahol adni kell egy nevet az eseménynek, illetve igény szerint egyéb adatokat, amiket szeretnék mellékelni az eseményhez.
+
+Az eseményeket fogadni többféleképpen tudjuk. Például a legördülő mezők esetén közvetlen a komponens osztályában fogadtam az eseményt. Ehhez egy függvényt kellett írni, aminél az \emph{On} attribútumot kellett alkalmazni. Amennyiben egyéb adatok is várunk az eseménynél, akkor azt a függvény paraméterein keresztül tudjuk megkapni. Ezt felhasználva, amikor változott a legördülő mező értéke, akkor egy eseményben kiküldtem a szülő komponensnek az új értéket, azt ő fogadta, és eltárolta azt.
+
+Eseményt nem csak a PHP kódban, hanem a nézetekben, JavaScript-ben belül is tudunk fogadni. Ez a felugró ablakok bezárásánál volt előnyös, hiszen a nézetből férek hozzá az egyes HTML elemekhez az oldalon. Ilyenkor a JavaScript kódunkban a \emph{Livewire.on} függvényt kell használni, megadni az esemény nevét, illetve hogy mi történjen az esemény bekövetkezésekor, tehát jelen példában záródjon be az ablak.
+
+\lstinputlisting[caption={Események küldése és fogadása.}, label=events, style=php]{../codes/events.php}
+
+\subsection{WireToast: Livewire alapú értesítések}
+
+Az utolsó Livewire-el kapcsolat téma, amit szeretnék megemlíteni, az az oldalon megjelenő értesítések egyes interakciók után, mint például létrehozás. Ehhez a \emph{Tall toasts}\cite{talltoasts} nevű csomagot használtam. Ez a Livewire-rel együtt működő csomag, így csak ilyen komponenseken belül lehet használni. Működéséhez a komponensek használnia kell a \emph{WireToasts} nevezetű trait-et, majd pedig a \emph{toast()} függvény meghívásával hozható létre ilyen értesítés. Ezután a típusát kell megadni (információ, siker, esetleg hiba), illetve a megjelenítendő szöveget és címet. Majd a \emph{push()} függvénnyel tudjuk kiküldeni az értesítést.
+
+\lstinputlisting[caption={Oldalon megjelenő sikeres értesítés küldése.}, label=wiretoast, style=php]{../codes/toast.php}
+
+Az értesítések kinézete természetesen személyre szabható, én például a DaisyUi által szolgáltatott értesítés komponensre írtam át az eredeti nézeteket.
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=10cm]{../pictures/screenshots/notif.png}
+	\caption{A létrejövő értesítés kinézete.}
+	\label{toastUI}
+\end{figure}
 
 \section{Websocket és Pusher szerviz}
+
+Amikor \aref{class}. képen látható oldalt készítettem, akkor mindenképpen szerettem volna megoldani, hogy amikor a tanuló a Qr kód segítségével bejelentkezik az órára, a státusza automatikusan frissüljön a tanár által látott oldalon is. Első gondolom az volt, hogy periodikusan, pár másodpercenként frissítem az oldalt, viszont ezt az ötletet hamar elvetettem, mivel ez rengeteg fölösleges kéréssel járna, ami sok töltést jelentene a felhasználóknak, illetve terhet a szervernek. Így másik megoldás után néztem, ekkor találtam rá a Websocket-ekre és a Pusher szolgáltatásra.
+
 \subsection{Websocket jelentősége}
 \subsection{Pusher}
 \subsection{Websocket integrálása a keretrendszerbe}
@@ -485,6 +512,7 @@ Ezáltal egy SPA típusú oldal hozható létre, melynek jelentése: Single Page
 \section{QR-kód generálás}
 
 \section{Naptár - FullCalendar.js}
+\subsection{Alpine.js: PHP kód eredményének lekérése JavaScript-ben}
 \subsection{Beállításai}
 \subsection{Kapcsolat a keretrendszerrel LiveWire segítségével}
 
@@ -707,6 +735,16 @@ Az alkalmazás a szakdolgozat védés, illetve a záróvizsga időszak alatt el�
 \textsc{MDN web docs}: \emph{SPA (Single-page application)}
 \\
 \url{https://developer.mozilla.org/en-US/docs/Glossary/SPA}, Megtekintés dátuma: 2024.03.26.
+
+\bibitem{spa}
+\textsc{Livewire}: \emph{Events}
+\\
+\url{https://livewire.laravel.com/docs/events}, Megtekintés dátuma: 2024.03.26.
+
+\bibitem{talltoasts}
+\textsc{Github: usernotnull}: \emph{Tall toasts}
+\\
+\url{https://github.com/usernotnull/tall-toasts}, Megtekintés dátuma: 2024.03.26.
 \end{thebibliography}
 
 %\includepdf{nyilatkozat.pdf}

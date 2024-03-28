@@ -516,20 +516,36 @@ Természetesen más, akár nyílt forrású megoldások is elérhetők, illetve 
 
 \subsection{Csatornák, események létrehozása}
 
-A Websocketek konfigurálása és használata két részre tehető: a szerver és a kliens beállítása. 
+A Websocketek konfigurálása és használata két részre tehető: a szerver és a kliens beállítására és az ezekhez szükséges csomagok telepítésére.
+
+Pusher használata esetén regisztrálnunk kell magunkat, majd a kapott hozzáférési kulcsokat és adatokat megadni a környezeti fájlban, illetve engedélyezni kell az események közvetítését a konfigurációs fájlokban. Végezetül a Pusher-hez szükséges csomag telepítését kell elvégezni, illetve beállítani -- szintén a környezeti fájlban --, hogy a közvetítésre a Pusher-t használjon a keretrendszer. Szükséges még egy sor(Queue) beállítása is, mivel innen kerülnek az események kiküldésre, de mivel az emailek esetén is szükség volt erre, így ezzel a lépéssel már készen voltam.\cite{broadcasting}
+
+Ezután készen állunk az események létrehozására. A jelenlét megváltozására létrehoztam a \emph{ClassPresenceChanged} eseményt. Ez az esemény kerül kiküldésre ha a hallgató bejelentkezik az órára a QR kódon keresztül. Az osztálynak implementálnia kell a \emph{ShouldBroadcast} interfészt, ami egy függvényt tartalmaz, a \emph{broadcastOn} függvényt. Itt kell definiálunk azon csatorná(ka)t, ahol szeretnék az eseményt hirdetni. Lehetőség van privát csatornák létrehozására is, de nekem elegendő volt a publikus csatorna is ebben az esetben. Az eseményeket a \emph{updatePresence} csatornánkon hirdetem, amihez hozzáfűzöm a jelenlétet leíró entitás azonosítóját, ez látható \aref{broadcastOn}. részletben. Hogy ezt megtehessem, az esemény osztályának konstruktorában bekérem a jelenlét entitást. Így minden tanuló minden órájához külön csatorna tartozik azért, hogy az óránál egyszerre csak egy sor frissüljön, ne az összes mindig.
+\pagebreak
+
+\lstinputlisting[caption={Csatorna definiálása az esemény osztályában.}, label=broadcastOn, style=php]{../codes/event.php}
+
+Az események létrehozása után az osztálynevük, majd a \emph{dispatch} függvényhasználatával, illetve az esetleges konstruktor értékek megadásával küldhetjük el az eseményt.
+
+\lstinputlisting[caption={Esemény elküldése.}, label=sendEvent, style=php]{../codes/sendEvent.php}
 
 \subsection{Események fogadása JavaScript, LiveWire esetén}
 
-\section{QR-kód generálás}
+Természetesen ezeket az eseményeket fogadni is kell. Ehhez nyújt megoldást a Laravel Echo\cite{broadcasting}. Itt is szükséges maga az Echo és a Pusher-hez tartozó csomagok telepítése. Ezek után egy Echo példányt kell létrehoznunk a JavaScript kódunkban. Ez a példány kapja meg a csatornákhoz való csatlakozás adatait, és ez fogja fogadni az eseményeket. A keretrendszer alapból tartalmaz egy ilyen példányt, amit csak ki kell vennünk a  kommentekből. Az autentikációs adatokat a környezeti fájlból kiolvassa, így ez használatra kész.
 
-\section{Naptár - FullCalendar.js}
-\subsection{Alpine.js: PHP kód eredményének lekérése JavaScript-ben}
-\subsection{Beállításai}
-\subsection{Kapcsolat a keretrendszerrel LiveWire segítségével}
+Az Echo példány létrehozása után JavaScript kódból tudunk az eseményekre figyelni, viszont én nem ezt az utat választottam. Helyette Livewire komponensből figyeltem az eseményeket. Ehhez továbbra is szükség van a Laravel Echo csomagra az események fogadásához, viszont azt, hogy mi történik, és hogy milyen csatornákat, eseményeket figyelek, azt már a PHP osztályon belül tudom megadni, hasonlóan \aref{livewireevents}. alfejezetben írt módon.
 
-\section{Diagramok - Chart.js}
-\subsection{Beállításai}
-\subsection{Kapcsolat a keretrendszerrel LiveWire segítségével}
+Továbbra is az \emph{\#On[]} attribútumot kell alkalmazni, viszont az esemény leírásában az \emph{echo} előtagot, a csatorna nevét, majd az esemény nevét kell leírni.\cite{livewireEcho}. Az esemény nevénél szükség lehet az egész névteret megadni, ahol az esemény osztálya található.
+
+\lstinputlisting[caption={Esemény fogadása Livewire komponensből. A \emph{pivot.id} helyére az osztály \emph{pivot} mezőjének \emph{id} értéke kerül behelyettesítésre. Esemény érkezésekor frissítem az adatokat, és egy másik eseménnyel a diagrammot.}, label=getEvent, style=php]{../codes/receiveEvent.php}
+
+\section{Egyéb csomagok}
+
+\subsection{Qr kód generálás}
+
+\subsection{Naptár - FullCalendar.js}
+
+\subsection{Diagramok - Chart.js}
 
 \section{Progressive Web Apps}
 \subsection{A PWA jelentése, jelentősége}
@@ -766,6 +782,16 @@ Az alkalmazás a szakdolgozat védés, illetve a záróvizsga időszak alatt el�
 \textsc{Pusher}: \emph{Pusher channels}
 \\
 \url{https://pusher.com/channels/}, Megtekintés dátuma: 2024.03.26.
+
+\bibitem{broadcasting}
+\textsc{Laravel}: \emph{Broadcasting}
+\\
+\url{https://laravel.com/docs/10.x/broadcasting}, Megtekintés dátuma: 2024.03.28.
+
+\bibitem{livewireEcho}
+\textsc{Livewire}: \emph{Real-time events using Laravel Echo}
+\\
+\url{https://livewire.laravel.com/docs/events#real-time-events-using-laravel-echo}, Megtekintés dátuma: 2024.03.28.
 \end{thebibliography}
 
 %\includepdf{nyilatkozat.pdf}

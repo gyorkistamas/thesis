@@ -1,0 +1,1 @@
+ClassPresenceChanged::dispatch($this->attendance);

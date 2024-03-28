@@ -538,9 +538,9 @@ Azért, hogy egységesen megjelenő oldalt készítsek, a \emph{DaisyUI}\cite{da
 
 A program megtervezésekor célom volt, hogy egy modernnek érződő alkalmazást készítsek. Ezért esett egy rövidebb keresés után a Livewire-re a választásom, ami egy dinamikus oldalak létrehozására szolgáló keretrendszer, kifejezetten a Laravel-hez készítve.\cite{livewire}
 
-Nagy előnye a csomagnak, hogy nem kell kilépnünk a PHP nyelvből, hiszen a Livewire által létrehozott komponensek nagyon hasonlítanak \aref{bladeSection}. fejezetben említett komponensekhez. Az így létrehozott komponensek dinamikusan viselkednek. Ez e felhasználók szemszögéből abban jelenik meg, hogy az oldallal való interakció esetén (gombnyomás, mező kitöltése stb) nem töltődik újra a teljes oldal, csak azon részei, amik változtak. Ezt a livewire úgy oldja meg, hogy ha olyan interakciót végzünk az oldalon, ami változtatna a komponens állapotán, akkor a háttérben egy kérést küld a szerver felé, ami tartalmazza a komponens (illetve a komponenshez tartozó PHP osztály) új állapotát, amit a szerver kiértékel, és az visszaküldi a komponens új állapotát. Ekkor a beérkezett adatok alapján megváltoztatja a DOM-ot\footnote{Jelentése: Document Object Model, avagy Dokumentum Objektum Modell\cite{dom}} a Livewire, ezáltal kikerülve az oldal teljes újratöltését.
+Nagy előnye a csomagnak, hogy nem kell kilépnünk a PHP nyelvből, hiszen a Livewire által létrehozott komponensek nagyon hasonlítanak \aref{bladeSection}. fejezetben említett komponensekhez. Az így létrehozott komponensek dinamikusan viselkednek. Ez a felhasználók szemszögéből abban jelenik meg, hogy az oldallal való interakció esetén (gombnyomás, mező kitöltése stb) nem töltődik újra a teljes oldal, csak azon részei, amik változtak. Ezt a livewire úgy oldja meg, hogy ha olyan interakciót végzünk az oldalon, ami változtatna a komponens állapotán, akkor a háttérben egy kérést küld a szerver felé, ami tartalmazza a komponens (illetve a komponenshez tartozó PHP osztály) új állapotát, amit a szerver kiértékel, és az visszaküldi a komponens új állapotát. Ekkor a beérkezett adatok alapján megváltoztatja a DOM-ot\footnote{Jelentése: Document Object Model, avagy Dokumentum Objektum Modell\cite{dom}} a Livewire, ezáltal kikerülve az oldal teljes újratöltését.
 
-Így bár a háttérben továbbra is JavaScript alapú kérések történnek, a programozó továbbra is a PHP kényelmében maradhat a programozás során.
+Így bár a háttérben továbbra is JavaScript alapú kérések történnek, a programozó a PHP kényelmében maradhat a programozás során.
 
 \begin{figure}[ht!]
 	\centering
@@ -681,9 +681,40 @@ A főoldalon és az óráknál megjelenő diagramokat a Chart.js\cite{chartjs} n
 
 \chapter{Az alkalmazás tesztelése}
 \label{testing}
-\section{Manuális tesztelés}
+
+A fejlesztés során folyamatosan manuális tesztelést végeztem annak érdekében, hogy a lehető legkevesebb hiba merüljön fel a programban. Ugyan akkor más tesztelési módokat is igénybe vettem, illetve a kód minőségének ellenőrzésére is alkalmaztam eszközöket.
+
 \section{Automatizált tesztelés}
+
+A tesztelést a Cypress\cite{cypress} segítségével automatizáltam. Ez egy kifejezetten weboldalak automatizált tesztelésére készült szoftver. Segítségével akár külön komponenseket is tudunk tesztelni, vagy az egész oldalt egyszerre. Az utóbbit \emph{End to end} tesztelésnek hívnak, melynek az előnye, hogy a tesztelő szoftver, pontosan úgy interaktál az alkalmazással, mint a felhasználó tenné. \cite{e2e}
+
+\subsection{Működése}
+
+A tesztek során először egy leírást kell adni, hogy mit tesztel az adott fájl, ezt a \emph{describe} segítségével tehetjük meg. Majd az egyes teszt részeket az \emph{it} segítségével írhatjuk le. Itt van sok lehetőségünk: meglátogathatunk egy oldalt, rákattinthatunk valami, beírhatunk karaktereket egy mezőbe, fájlt tölthetünk fel, csak hogy a leggyakoribbakat említsem.
+
+A tesztjeim nagy része is ezekből épült fel: meglátogattam a teszteni kívánt oldalt, megpróbáltam helyes értékek megadásával elvégezni az adott funkciót, majd pedig hiányzó értékekkel -- hibát várva természetesen --, és végül rossz értékek megadásával. Egy ilyen tesztet láthatunk \aref{userTest}. kódrészletben:
+\begin{itemize}
+	\item 9. sor: El látogat a főoldalra.
+	\item 10. sor: kikeresi és rákattint a bejelentkezés gombra, ami átnavigálja a bejelentkezés oldalára.
+	\item 11. sor: kikeresi és beírja a felhasználónév mezőbe, hogy ,,SDAMIN''.
+	\item 12. sor: kikeresi és beírja a jelszó mezőbe, hogy ,,superadmin''.
+	\item 13. sor: kikeresi és rákattint a \emph{Bejelentkezés} gombra
+	\item 14. sor: itt történik a tényleges ellenőrzés. Megnézi, hogy az oldal tartalmazza-e az ,,Oldal adminisztráció'' szöveget. Mivel ezt csak akkor látja a felhasználó, ha sikerült szuper adminisztrátori jogokkal bejelentkeznie, ez egy megfelelő ellenőrzési pont.
+\end{itemize}
+
+\lstinputlisting[caption={Részlet a bejelentkezés teszteléséből.}, label=userTest, style=js]{../codes/user_testing.cy.js}
+
+\subsection{Laravel Cypress}
+
+\Aref{userTest}. részletben látható egy \emph{before} függvény. Ennek segítségével a teszt előtt futtathatunk le parancsokat, mely elsődleges célja a tesztelési környezet előkészítése. Én ezt arra használtam ki, hogy egy kifejezetten a Cypress és a Laravel összekapcsolására használt csomag\cite{laravelCypress} parancsait használjam itt. Ezen csomag segítségével a Cypress interaktálni tud közvetlen az alkalmazásunkkal. Ez tette lehetővé, hogy a tesztek futása előtt egy másik adatbázisra váltson automatikusan a Cypress, majd pedig a \emph{before} függvényben látható két sor frissíti az adatbázist a tesztek előtt, illetve feltölti pár alap felhasználóval. Emellett a későbbiekben -- amikor nem a bejelentkezés tesztelése volt a fő cél -- használtam gyors bejelentkezésre is, illetve lehetőség ad a csomag a modelljeink lekérdezésére is, ami akkor volt hasznos, ha létrehoztam valamilyen entitást, akkor levizsgáljam, hogy tényleg létre jött-e az adatbázisban.
+
 \section{Terheléses tesztelés}
+
+A fejlesztés vége felé kíváncsi lettem egy kicsit az alkalmazás teljesítményére is, ezért egy minimális terheléses tesztelést is végeztem. Ehhez a Gatling\cite{gatling} nevezetű szoftvert alkalmaztam, mely egy Java nyelven alapú terheléses szoftver.
+
+A tesztelés elején egy felvevő segítségével készíthetjük el a tesztről a forgatókönyvünket. Ekkor felvesszük, hogy hogyan interaktálunk az oldallal a teszt során. Ezt úgy tehetjük meg, hogy egy általunk választott böngésző proxy beállításait átállítjuk a felvevő által megadott értékekre. Így tudja felvenni, hogy milyen kérések kerülnek elküldésre, illetve érkeznek. Ezen adatok alapján épül fel a szimulációs osztály, amit módosítanunk kell.\cite{gatlingRecorder}
+
+A szimulációs osztályokban egy ún. \emph{scenario} jön létre. Ez tartalmazza a kéréseket sorozatát, illetve az ahhoz tartozó adatokat, amik felvételre kerültek. Itt célszerű az egyes kéréseknek nevet adni, hogy be tudjuk őket azonosítani, illetve egyéb módosítások is szükségesek lehetnek. Az én esetemben ez azt jelentette, hogy a felvevő statikus értékekként vette föl a Livewire által használt tokeneket, amiket felvételkor látott, de át kellet ezt írni úgy, hogy minden egyes kérés esetén olvassa ki a kapott tokent, és azt használja. Ezek mellett érdemes lehet olyan kéréseket kiszedni, amiket nem szeretnénk terheléses tesztelés alá vetni, mert mondjuk nem közvetlen az alkalmazásunkhoz tartozik.
 \section{Laravel Pint és Github actions}
 
 \chapter{Alkalmazás telepítése}
@@ -948,6 +979,31 @@ Az alkalmazás a szakdolgozat védés, illetve a záróvizsga időszak alatt el�
 \textsc{Bootstrap}: \emph{Főoldal}
 \\
 \url{https://getbootstrap.com/}, Megtekintés dátuma: 2024.03.28.
+
+\bibitem{cypress}
+\textsc{Cypress}: \emph{Főoldal}
+\\
+\url{https://www.cypress.io/}, Megtekintés dátuma: 2024.03.28.
+
+\bibitem{e2e}
+\textsc{Circleci.com}: \emph{What is end-to-end testing?}
+\\
+\url{https://circleci.com/blog/what-is-end-to-end-testing/}, Megtekintés dátuma: 2024.03.28.
+
+\bibitem{laravelCypress}
+\textsc{Github}: \emph{laracasts: Laravel + Cypress Integration}
+\\
+\url{https://github.com/laracasts/cypress}, Megtekintés dátuma: 2024.03.28.
+
+\bibitem{gatling}
+\textsc{Gatling}: \emph{Főoldal}
+\\
+\url{https://gatling.io/}, Megtekintés dátuma: 2024.03.28.
+
+\bibitem{gatlingRecorder}
+\textsc{Gatling}: \emph{Introduction to the Gatling Recorder}
+\\
+\url{https://docs.gatling.io/tutorials/recorder/}, Megtekintés dátuma: 2024.03.28.
 
 \end{thebibliography}
 

@@ -121,6 +121,26 @@
 	keywordstyle=[3]{\bfseries\color{red}}
 }
 
+\lstdefinestyle{java}{
+	inputencoding=utf8/latin2,
+	language=Java,
+	basicstyle=\footnotesize\ttfamily,
+	columns=fullflexible,
+	numbers=left,
+	breaklines,
+	xleftmargin=1cm,
+	xrightmargin=1cm,
+	postbreak=\hbox{$\color{red}\hookrightarrow$\ },
+	backgroundcolor=\color{gray!30},
+	frame=ltrb,
+	keywordstyle=\bfseries\color{RoyalBlue},
+	commentstyle=\itshape\color{teal},
+	stringstyle=\bfseries\color{PineGreen},
+	identifierstyle = \bfseries\color{YellowOrange},
+	morekeywords=[1]{},
+	keywordstyle=[3]{\bfseries\color{red}}
+}
+
 \lstdefinestyle{html}{
 	inputencoding=utf8/latin2,
 	language=HTML,
@@ -714,7 +734,12 @@ A fejlesztés vége felé kíváncsi lettem egy kicsit az alkalmazás teljesítm
 
 A tesztelés elején egy felvevő segítségével készíthetjük el a tesztről a forgatókönyvünket. Ekkor felvesszük, hogy hogyan interaktálunk az oldallal a teszt során. Ezt úgy tehetjük meg, hogy egy általunk választott böngésző proxy beállításait átállítjuk a felvevő által megadott értékekre. Így tudja felvenni, hogy milyen kérések kerülnek elküldésre, illetve érkeznek. Ezen adatok alapján épül fel a szimulációs osztály, amit módosítanunk kell.\cite{gatlingRecorder}
 
-A szimulációs osztályokban egy ún. \emph{scenario} jön létre. Ez tartalmazza a kéréseket sorozatát, illetve az ahhoz tartozó adatokat, amik felvételre kerültek. Itt célszerű az egyes kéréseknek nevet adni, hogy be tudjuk őket azonosítani, illetve egyéb módosítások is szükségesek lehetnek. Az én esetemben ez azt jelentette, hogy a felvevő statikus értékekként vette föl a Livewire által használt tokeneket, amiket felvételkor látott, de át kellet ezt írni úgy, hogy minden egyes kérés esetén olvassa ki a kapott tokent, és azt használja. Ezek mellett érdemes lehet olyan kéréseket kiszedni, amiket nem szeretnénk terheléses tesztelés alá vetni, mert mondjuk nem közvetlen az alkalmazásunkhoz tartozik.
+A szimulációs osztályokban egy ún. \emph{scenario} jön létre. Ez tartalmazza a kéréseket sorozatát, illetve az ahhoz tartozó adatokat, amik felvételre kerültek. Itt célszerű az egyes kéréseknek nevet adni, hogy be tudjuk őket azonosítani, illetve egyéb módosítások is szükségesek lehetnek. Az én esetemben ez azt jelentette, hogy a felvevő statikus értékekként vette föl a Livewire és oldal által használt tokeneket, amiket felvételkor látott, de át kellet ezt írni úgy, hogy minden egyes kérés esetén olvassa ki a kapott tokent, és azt használja. Ezek mellett érdemes lehet olyan kéréseket kiszedni, amiket nem szeretnénk terheléses tesztelés alá vetni, mert mondjuk nem közvetlen az alkalmazásunkhoz tartozik. Végezetül beállítjuk, hogy egyszerre hány felhasználóval tesztelje az alkalmazást, majd indulhat a tesztelés.\cite{gatlingScenario}
+
+\lstinputlisting[caption={Részlet a bejelentkezés terheléses teszteléséből.}, label=gatlingTest, style=java]{../codes/gatling.java}
+
+A teszt futásának a végén egy HTML dokumentumot kapunk eredményül
+
 \section{Laravel Pint és Github actions}
 
 \chapter{Alkalmazás telepítése}
@@ -1004,6 +1029,12 @@ Az alkalmazás a szakdolgozat védés, illetve a záróvizsga időszak alatt el�
 \textsc{Gatling}: \emph{Introduction to the Gatling Recorder}
 \\
 \url{https://docs.gatling.io/tutorials/recorder/}, Megtekintés dátuma: 2024.03.28.
+
+\bibitem{gatlingScenario}
+\textsc{Gatling}: \emph{Scenario}
+\\
+\url{https://docs.gatling.io/reference/script/core/scenario/}, Megtekintés dátuma: 2024.03.28.
+
 
 \end{thebibliography}
 

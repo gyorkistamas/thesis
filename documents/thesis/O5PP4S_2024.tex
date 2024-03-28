@@ -50,7 +50,58 @@
 \initiate@active@char{:}
 \makeatother
 
+\lstdefinelanguage{json}{
+	numbers=left,
+	numberstyle=\small,
+	frame=single,
+	rulecolor=\color{black},
+	showspaces=false,
+	showtabs=false,
+	breaklines=true,
+	postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{gray}\hookrightarrow\space}},
+	breakatwhitespace=true,
+	basicstyle=\ttfamily\small,
+	upquote=true,
+	morestring=[b]",
+	stringstyle=\color{string},
+	literate=
+	*{0}{{{\color{numb}0}}}{1}
+	{1}{{{\color{numb}1}}}{1}
+	{2}{{{\color{numb}2}}}{1}
+	{3}{{{\color{numb}3}}}{1}
+	{4}{{{\color{numb}4}}}{1}
+	{5}{{{\color{numb}5}}}{1}
+	{6}{{{\color{numb}6}}}{1}
+	{7}{{{\color{numb}7}}}{1}
+	{8}{{{\color{numb}8}}}{1}
+	{9}{{{\color{numb}9}}}{1}
+	{\{}{{{\color{delim}{\{}}}}{1}
+	{\}}{{{\color{delim}{\}}}}}{1}
+	{[}{{{\color{delim}{[}}}}{1}
+	{]}{{{\color{delim}{]}}}}{1},
+}
+
 \lstdefinestyle{php}{
+	inputencoding=utf8/latin2,
+	language=PHP,
+	basicstyle=\footnotesize\ttfamily,
+	columns=fullflexible,
+	numbers=left,
+	breaklines,
+	xleftmargin=1cm,
+	xrightmargin=1cm,
+	postbreak=\hbox{$\color{red}\hookrightarrow$\ },
+	backgroundcolor=\color{gray!30},
+	frame=ltrb,
+	keywordstyle=\bfseries\color{RoyalBlue},
+	commentstyle=\itshape\color{teal},
+	stringstyle=\bfseries\color{PineGreen},
+	identifierstyle = \bfseries\color{YellowOrange},
+	morekeywords=[1]{},
+	keywordstyle=[3]{\bfseries\color{red}}
+}
+
+\lstdefinestyle{jsonstyle}{
 	inputencoding=utf8/latin2,
 	language=PHP,
 	basicstyle=\footnotesize\ttfamily,
@@ -518,7 +569,7 @@ A csomag lehetőséget ad események küldésére és fogadására is. Ezt én e
 
 Ilyen eseményeket a komponensben belül a \emph{dispatch()} függvény segítségével küldhetünk, ahol adni kell egy nevet az eseménynek, illetve igény szerint egyéb adatokat, amiket szeretnék mellékelni az eseményhez.
 
-Az eseményeket fogadni többféleképpen tudjuk. Például a legördülő mezők esetén közvetlen a komponens osztályában fogadtam az eseményt. Ehhez egy függvényt kellett írni, aminél az \emph{On} attribútumot kellett alkalmazni. Amennyiben egyéb adatok is várunk az eseménynél, akkor azt a függvény paraméterein keresztül tudjuk megkapni. Ezt felhasználva, amikor változott a legördülő mező értéke, akkor egy eseményben kiküldtem a szülő komponensnek az új értéket, azt ő fogadta, és eltárolta azt.
+Az eseményeket fogadni többféleképpen tudjuk. Például a legördülő mezők esetén közvetlen a komponens osztályában fogadtam az eseményt. Ehhez egy függvényt kellett írni, aminél az \emph{\#On} attribútumot kellett alkalmazni. Amennyiben egyéb adatok is várunk az eseménynél, akkor azt a függvény paraméterein keresztül tudjuk megkapni. Ezt felhasználva, amikor változott a legördülő mező értéke, akkor egy eseményben kiküldtem a szülő komponensnek az új értéket, azt ő fogadta, és eltárolta azt.
 
 Eseményt nem csak a PHP kódban, hanem a nézetekben, JavaScript-ben belül is tudunk fogadni. Ez a felugró ablakok bezárásánál volt előnyös, hiszen a nézetből férek hozzá az egyes HTML elemekhez az oldalon. Ilyenkor a JavaScript kódunkban a \emph{Livewire.on} függvényt kell használni, megadni az esemény nevét, illetve hogy mi történjen az esemény bekövetkezésekor, tehát jelen példában záródjon be az ablak.
 
@@ -578,6 +629,30 @@ Továbbra is az \emph{\#On[]} attribútumot kell alkalmazni, viszont az esemény
 
 \lstinputlisting[caption={Esemény fogadása Livewire komponensből. A \emph{pivot.id} helyére az osztály \emph{pivot} mezőjének \emph{id} értéke kerül behelyettesítésre. Esemény érkezésekor frissítem az adatokat, és egy másik eseménnyel a diagrammot.}, label=getEvent, style=php]{../codes/receiveEvent.php}
 
+\section{Progressive Web Apps}
+
+Az alkalmazás elkezdése előtt azért döntöttem a weboldal mellett, mivel ez a legkönnyebb módon elérhető alkalmazás, hiszen telepíteni se kell. Ugyan akkor a fejlesztés során elgondolkoztam, hogy jó lenne, ha akár telepíteni is tudnák a felhasználók az alkalmazást, hogy gyorsabban hozzáférjenek. Ezért is lett belőle PWA alkalmazás.
+
+A PWA, avagy a Progressive Web Apps olyan webalkalmazások, melyek webes technológiákkal készültek, webböngészőkben futnak, de képesek platform specifikus alkalmazásként is viselkedni, beépülni a rendszerbe.\cite{PWA} Ez a gyakorlatban azt jelenti, hogy az alkalmazás külön ablakban nyílik meg, nem a böngészőben, a telepített alkalmazások között megjelenik, illetve az is előfordulhat, hogy egyes részei internetkapcsolat nélkül is működnek.
+
+Ennek megvalósításához a Laravel PWA\cite{laravelpwa} csomagot használtam. Ez a könyvtár segítség nyújt a \emph{manifest} fájl és a \emph{service worker} létrehozásában, melyek szükségesek a PWA működéséhez. A csomag létrehozza ezeket, illetve létrehoz egy oldalt is, ami akkor jelenik meg, ha nincs internetkapcsolat. Ezeket szabtam személyre.
+
+Fontos megjegyezni, hogy a PWA alkalmazások csak HTTPS kapcsolat alatt működnek, ez alól kivételt a fejlesztői környezetben futó alkalmazások jelentenek csak. Sajnos egyedüli hátránya, hogy nem minden böngésző támogatja a PWA alkalmazások telepítését, de attól maga az oldal továbbra is működik.
+
+\subsection{A manifest fájl}
+
+A \emph{manifest} fájl tartalmazza az alkalmazás adatait, mint például a nevét is. Ezt a fájlt szükséges behivatkozni a főoldalon. A böngésző érzékeli ezt a fájlt, és innen tudja, hogy a weboldal telepíthető PWA alkalmazásként, illetve a telepített alkalmazás nevét, ikonját is innen szerzi be. \Aref{manytomany}. kódrészleten láthatjuk ezt a fájlt. Itt több beállítást meg lehet adni: az alkalmazás nevét, kezdő címét, háttér színét és az ikonjait, csak hogy párat kiemeljek. Vannak más lehetőségek is, amiket itt nem használtam, például más méretű ikonokat, vagy gyors parancsokat is fel lehet venni.
+
+\lstinputlisting[caption={Az oldal által használt manifest fájl.}, label=manifest, style=jsonstyle]{../codes/manifest.json}
+
+\subsection{Service Worker}
+
+A másik fontos összetevő a a Service worker. Ennek az egyik fő feladata, hogy gyorsító tárazza az oldal egyes elemeit. Az oldal betöltésekor regisztrálja magát, és elmenti a gyorsítótárba a fájlokat. Ezáltal akkor is működni tud, ha nincs kapcsolat a szerverrel. Ezt a szolgáltatását arra használtam ki, hogy egy személyre szabott oldalt jelenítsek meg kapcsolat hiányának esetén. Ez úgy történik, hogy minden kérést és választ megvizsgál a service worker. Amennyiben úgy látja, hogy a szerver nem elérhető, akkor a gyorsítótárból tölti be a hibát jelző oldalt, ellenkező esetben pedig tovább engedi a kérést. 
+
+Sajnos az oldal többi részén használt Tailwind-et itt nem tudtam alkalmazni, mivel a stílusokat tartalmazó fájlok minden újraépítés során kapnak egy egyedi azonosító részt, így nem tudtam őket felvenni a gyorsítótárazandó fájlok közé. Ezért ezen az ,,offline'' oldalon a BootStrap-et\cite{bootstrap} alkalmaztam, amely egy másik komponens keretrendszer, mivel az ehhez szükséges fájlt csak be raktam a publikusan elérhető fájlok közé, és ezt már sikerült gyorsítótárazni.
+
+\lstinputlisting[caption={Részlet a Laravel PWA csomagból származó service worker fájlból.\cite{laravelpwa}}, label=service, style=js]{../codes/service_worker.js}
+
 \section{Egyéb csomagok}
 
 \subsection{Qr kód generálás}
@@ -602,10 +677,7 @@ Ez a megoldás még egy pozitívumot vont magával, amibe először nem is gondo
 
 A főoldalon és az óráknál megjelenő diagramokat a Chart.js\cite{chartjs} nevezet könyvtárral készítettem el, ami szintén a nagy személyre szabhatóság  miatt tetszett meg. Sok különböző típusú diagramot támogat, de nekem leginkább a kördiagramok létrehozására használtam fel. A fent említett probléma itt is megjelent, mely szerint a PHP szolgáltatja az adatokat, viszont itt egyszerűbb volt a megoldás, tekintettel arra, hogy csak pár számot kell a diagramnak megkapnia, nem egész eseményeket. Blade direktívák segítségével beleírtam a komponens nézetbe -- ami tartalmazza a diagram létrehozására szolgáló JavaScript kódot is --, hogy milyen értékeket kell megjeleníteni a kördiagramnak. Illetve ugyan itt figyelek egy \emph{updateChart} eseményre, ami megkapja friss adatokat, és átírja  a diagram-on az értékeket, így a frissítés is meg van oldva.
 
-\section{Progressive Web Apps}
-\subsection{Laravel PWA csomag}
-\subsection{A manifest fájl}
-\subsection{Service Worker}
+\lstinputlisting[caption={Részlet egy kördiagram létrehozásából.}, label=chart, style=js]{../codes/chart.js}
 
 \chapter{Az alkalmazás tesztelése}
 \label{testing}
@@ -867,6 +939,15 @@ Az alkalmazás a szakdolgozat védés, illetve a záróvizsga időszak alatt el�
 \\
 \url{https://www.chartjs.org/}, Megtekintés dátuma: 2024.03.28.
 
+\bibitem{laravelpwa}
+\textsc{Github}: \emph{silviolleite: laravel-pwa}
+\\
+\url{https://www.chartjs.org/}, Megtekintés dátuma: 2024.03.28.
+
+\bibitem{bootstrap}
+\textsc{Bootstrap}: \emph{Főoldal}
+\\
+\url{https://getbootstrap.com/}, Megtekintés dátuma: 2024.03.28.
 
 \end{thebibliography}
 

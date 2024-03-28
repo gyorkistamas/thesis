@@ -20,6 +20,25 @@
 \definecolor{darkgreen}{rgb}{0, .7, 0}
 \definecolor{lightorange}{rgb}{255, 165, 0}
 
+
+\definecolor{lightgray}{rgb}{.9,.9,.9}
+\definecolor{darkgray}{rgb}{.4,.4,.4}
+\definecolor{purple}{rgb}{0.65, 0.12, 0.82}
+\lstdefinelanguage{JavaScript}{
+	keywords={break, case, catch, continue, debugger, default, delete, do, else, false, finally, for, function, if, in, instanceof, new, null, return, switch, this, throw, true, try, typeof, var, void, while, with, then},
+	morecomment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	morestring=[b]',
+	morestring=[b]",
+	ndkeywords={class, export, boolean, throw, implements, import, this, getEvents, events, parse},
+	keywordstyle=\color{blue}\bfseries,
+	ndkeywordstyle=\color{darkgray}\bfseries,
+	identifierstyle=\color{black},
+	commentstyle=\color{purple}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	sensitive=true
+}
+
 \makeatletter
 \expandafter\let\csname active@char\string?\endcsname\relax
 \expandafter\let\csname active@char\string!\endcsname\relax
@@ -54,6 +73,26 @@
 \lstdefinestyle{html}{
 	inputencoding=utf8/latin2,
 	language=HTML,
+	basicstyle=\footnotesize\ttfamily,
+	columns=fullflexible,
+	numbers=left,
+	breaklines,
+	xleftmargin=1cm,
+	xrightmargin=1cm,
+	postbreak=\hbox{$\color{red}\hookrightarrow$\ },
+	backgroundcolor=\color{gray!30},
+	frame=ltrb,
+	keywordstyle=\bfseries\color{RoyalBlue},
+	commentstyle=\itshape\color{teal},
+	stringstyle=\bfseries\color{PineGreen},
+	identifierstyle = \bfseries\color{YellowOrange},
+	morekeywords=[1]{},
+	keywordstyle=[3]{\bfseries\color{red}}
+}
+
+\lstdefinestyle{js}{
+	inputencoding=utf8/latin2,
+	language=JavaScript,
 	basicstyle=\footnotesize\ttfamily,
 	columns=fullflexible,
 	numbers=left,
@@ -405,7 +444,7 @@ A programomban több helyen is használok email küldést értesítésék küld�
 
 A levelek egy sorra kerülnek rá, így azok a háttérben kerülnek elküldésre. Ezáltal elkerülhető, hogy a küldés során az oldal sokáig töltsön, vagy esetleg hibára fusson, ha nem sikerült elküldeni a levelet.
 
-\lstinputlisting[caption={Egy példa az email felépítsére. A szövegek helyén a fordítás behelyettesítésére szolgáló függvények és kulcsak láthatók.}, label=mail, style=php]{../codes/mail.php}
+\lstinputlisting[caption={Egy példa az email felépítsére. A szövegek helyén a fordítás behelyettesítésére szolgáló függvények és azok kulcsa látható.}, label=mail, style=php]{../codes/mail.php}
 
 \subsection{Naptár exportálása}
 
@@ -469,7 +508,7 @@ A programomban főként ilyen Livewire komponenseket használtam . Ez alól egye
 
 \subsection{Livewire és SPA}
 
-A fentebb említettek alapján sikerült kialakítani dinamikusan frissülő nézeteket, viszont egy probléma továbbra is fent állt: az oldalak közötti navigáció esetén továbbra is az egész oldal újra töltődött. Ennek megoldására született a Livewire \emph{Navigate}\cite{navigate} funkciója. Használata egyszerű: a navigálásra szánt gombokra, hivatkozásokra a \emph{wire:navigate} direktívát kell alkalmazni. Ezután amikor rákattint a felhasználó, az oldal teljes újratöltése helyett a háttérben kéri le a weboldalt a szervertől, majd a kapott adatok alapján módosítja a dokumentum struktúráját a Livewire.
+A fentebb említettek alapján sikerült kialakítani dinamikusan frissülő nézeteket, viszont egy probléma továbbra is fent állt: az oldalak közötti navigáció esetén továbbra is az egész oldal újra töltődött. Ennek megoldására találták ki a Livewire \emph{Navigate}\cite{navigate} funkcióját. Használata egyszerű: a navigálásra szánt gombokra, hivatkozásokra a \emph{wire:navigate} direktívát kell alkalmazni. Ezután amikor rákattint a felhasználó, az oldal teljes újratöltése helyett a háttérben kéri le a weboldalt a szervertől, majd a kapott adatok alapján módosítja a dokumentum struktúráját a Livewire.
 
 Ezáltal egy SPA típusú oldal hozható létre, melynek jelentése: Single Page Application, avagy Egy oldalból álló alkalmazás. Ahogy a neve is sugallja, ezek olyan alkalmazások, amik egy oldalt töltenek be teljesen, a későbbiek során ennek az oldalnak a felépítését módosítják háttérben történő kérésekkel, mint ami \aref{livewireUpdate}. ábrán is látható.\cite{spa}
 
@@ -543,12 +582,27 @@ Továbbra is az \emph{\#On[]} attribútumot kell alkalmazni, viszont az esemény
 
 \subsection{Qr kód generálás}
 
+A Qr kódok olyan kétdimenziós, négyzetes képek, amiket azok gyors, kamerával való beolvasására fejlesztettek ki.\cite{qrCodeWhatIsIt} Amikor egy gyorsabb módszeren gondolkoztam, amivel bejelentkezhetnek a diákok az órákra, és nem szükséges hozzá különösebb eszköz, akkor végül ezen kódok használata mellett döntöttem, hiszen a tanárnak csak ki kell ezt vetíteni, a hallgatók pedig telefonjukkal be tudják azt szkennelni.
+
+A QR kódok generálására a \emph{Simple QrCode}\cite{qrCode} nevű csomagot használom. Telepítés után a Blade fájlban közvetlen létre tudjuk hozni a kódot, ahol a méretét, és a kódolandó szöveget kell megadni.
+
+\lstinputlisting[caption={Qr kód generálása 250-es mérettel, ami a bejelentkező linket tartalmazza, ezt a komponens egyik mezőjéből kértem le.}, label=qr, style=php]{../codes/qr.blade.php}
+
 \subsection{Naptár - FullCalendar.js}
+
+Az órarend megjelenítésére használtam a FullCalendar.js\cite{fullcalendar} nevezetű csomagot. Ez egy nagyon személyre szabható csomag, a színek, méretek, felépítések is testre szabhatók. Beállítható a nyelv, a megjelenő napok száma és az események kinézete is többek között.
+
+Mivel ez egy JavaScript alapú csomag, így az órarend létrehozása is azzal történt, ennek kódja a Blade komponens-be van beágyazva. Ez viszont egy problémát hozott magával: az órarendben megjelenő eseményeket a PHP kód szolgáltatja, így a kettőt össze kellett valamilyen módon kötni. Szerencsére sikerült megoldást találnom. A Livewire lehetővé teszi, hogy a PHP komponensben található függvényeket meghívjuk JavaScript kódunkban, és azoknak visszatérési értékét feldolgozzuk. a FullCalender csomag pedig lehetőséget nyújt arra, hogy amennyiben a naptár megjelenítésre kerül, vagy másik időtartományra vált a felhasználó, akkor egy JavaScript függvény fusson le, ami elvégzi a kiválasztott időtartamban található események lekérdezését. Bár ezt elsődlegesen API végpontok meghívására tervezték, jól működik Livewire esetén is. Ilyenkor meghívásra kerül a PHP függvény, ami megkapja a kiválasztott időtartamot, lekérdezi az adatbázisból a felhasználó óráit, ezeket egy asszociatív tömbbe gyűjti, majd vissza adja ezt. Az így kapott adatot a FullCalendar csomag fel tudja használni és megjeleníteni az órákat. Itt volt lehetőség megadni azt is, hogy milyen színe legyen az eseménynek, így azt is könnyű volt megoldani, hogy attól függően, hogy milyen a státusza a hallgatónak az órán, változik a színe.
+
+Ez a megoldás még egy pozitívumot vont magával, amibe először nem is gondoltam bele, csak utólag. Amikor új eseményekre van szüksége a naptárnak, akkor ezek lekérésekor megadja azt is, hogy mely napok láthatóak jelenleg az oldalon, amit tovább lehet küldeni a PHP függvénynek paraméterként. Így nem kell az órarend megnyitásakor a felhasználó összes óráját lekérdezni, elég csak egy részét, ami nagy teljesítménybeli ugrást jelenthet, ha már több félév adata is benne van az adatbázisban.
+
+\lstinputlisting[caption={Események lekérdezése. A második sorban látható a \emph{getEvents} nevű PHP függvény meghívása.}, label=eventGet, style=js]{../codes/calendarEvent.js}
 
 \subsection{Diagramok - Chart.js}
 
+A főoldalon és az óráknál megjelenő diagramokat a Chart.js\cite{chartjs} nevezet könyvtárral készítettem el, ami szintén a nagy személyre szabhatóság  miatt tetszett meg. Sok különböző típusú diagramot támogat, de nekem leginkább a kördiagramok létrehozására használtam fel. A fent említett probléma itt is megjelent, mely szerint a PHP szolgáltatja az adatokat, viszont itt egyszerűbb volt a megoldás, tekintettel arra, hogy csak pár számot kell a diagramnak megkapnia, nem egész eseményeket. Blade direktívák segítségével beleírtam a komponens nézetbe -- ami tartalmazza a diagram létrehozására szolgáló JavaScript kódot is --, hogy milyen értékeket kell megjeleníteni a kördiagramnak. Illetve ugyan itt figyelek egy \emph{updateChart} eseményre, ami megkapja friss adatokat, és átírja  a diagram-on az értékeket, így a frissítés is meg van oldva.
+
 \section{Progressive Web Apps}
-\subsection{A PWA jelentése, jelentősége}
 \subsection{Laravel PWA csomag}
 \subsection{A manifest fájl}
 \subsection{Service Worker}
@@ -792,6 +846,28 @@ Az alkalmazás a szakdolgozat védés, illetve a záróvizsga időszak alatt el�
 \textsc{Livewire}: \emph{Real-time events using Laravel Echo}
 \\
 \url{https://livewire.laravel.com/docs/events#real-time-events-using-laravel-echo}, Megtekintés dátuma: 2024.03.28.
+
+\bibitem{qrCodeWhatIsIt}
+\textsc{keyence.eu}: \emph{Mit nevezünk QR-kódnak?}
+\\
+\url{https://www.keyence.eu/huhu/ss/products/auto_id/codereader/basic_2d/qr.jsp}, Megtekintés dátuma: 2024.03.28.
+
+\bibitem{qrCode}
+\textsc{Github}: \emph{SimpleSoftwareIO: Simple QrCode}
+\\
+\url{https://github.com/SimpleSoftwareIO/simple-qrcode}, Megtekintés dátuma: 2024.03.28.
+
+\bibitem{fullcalendar}
+\textsc{FullCalendar}: \emph{Főoldal}
+\\
+\url{https://fullcalendar.io/}, Megtekintés dátuma: 2024.03.28.
+
+\bibitem{chartjs}
+\textsc{Chart.js}: \emph{Főoldal}
+\\
+\url{https://www.chartjs.org/}, Megtekintés dátuma: 2024.03.28.
+
+
 \end{thebibliography}
 
 %\includepdf{nyilatkozat.pdf}

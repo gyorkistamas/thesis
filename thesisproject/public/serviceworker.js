@@ -1,7 +1,8 @@
 var staticCacheName = "pwa-v" + new Date().getTime();
 var filesToCache = [
     '/offline',
-    '/bootstrap.min.css'
+    '/bootstrap.min.css',
+    '/rsz_def_logo.png'
 ];
 
 // Cache on install

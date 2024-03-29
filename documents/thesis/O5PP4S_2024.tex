@@ -216,7 +216,7 @@ A megvalósítás során törekedtem arra, hogy egy jól átlátható, ergonomik
 
 A megvalósításhoz a Laravel keretrendszert használtam, mely egy PHP alapú, MVC\footnote{Jelentése: Model-View-Controller.\cite{mvc}} keretrendszer, amivel tanulmányaim során találkoztam, és egyből megkedveltem. Nem titkolt célom a szakdolgozatommal, hogy bemutassam, hogy a mai, JavaScript preferált világban, továbbra is lehetséges modern, a mai kort kielégítő weboldalt készíteni PHP segítségével, amihez különböző csomagokat alkalmaztam, amiknek működését, illetve egymással való működését a későbbiekben fogom kifejteni.
 
-Szakdolgozatom négy részre osztottam: \aref{appDescription}. fejezetben magát az alkalmazást mutatom be. \Aref{packages}. fejezetben magát a keretrendszert, illetve a használt csomagokat, a technikai részleteket tárgyalom. Végül \aref{testing}. és \aref{setup}. fejezetben a tesztelést és a telepítést részletezem.
+Szakdolgozatom négy részre osztottam: \aref{appDescription}. fejezetben magát az alkalmazást mutatom be inkább felhasználói szemszögből. \Aref{packages}. fejezetben magát a keretrendszert, illetve a használt csomagokat, a technikai részleteket tárgyalom. Végül \aref{testing}. és \aref{setup}. fejezetben a tesztelést és a telepítést részletezem.
 
 \chapter{Alkalmazás bemutatása}
 \label{appDescription}
@@ -232,7 +232,7 @@ Szakdolgozatom négy részre osztottam: \aref{appDescription}. fejezetben magát
 \end{figure}
 
 \begin{itemize}
-	\item \emph{users, user\_roles}: ez a tábla tárolja a felhasználók adatait, illetve a felhasználókhoz tartozó jogosultsági köröket. Minden felhasználóról tárolunk egy azonosítót, egy Neptun\cite{Neptun} kódot\footnote{A neptun kód egy 6 karakter hosszú, egyedi azonosító.}, nevet, email címet, egy titkosított jelszót, egy profilképet, a felhasználó által használt nyelvet, illetve egy UUID-t\footnote{}, azaz egy egyedi azonosítót, amit az órarend exportálásához lehet használni, erről később. Az azonosító oszlopra azért van szükség, mivel az alkalmazás fel van készítve arra, hogy Neptun kód nélkül rendelkező felhasználókat is tudjon kezelni.
+	\item \emph{users, user\_roles}: ez a tábla tárolja a felhasználók adatait, illetve a felhasználókhoz tartozó jogosultsági köröket. Minden felhasználóról tárolunk egy azonosítót, egy Neptun\cite{Neptun} kódot\footnote{A neptun kód egy 6 karakter hosszú, egyedi azonosító.}, nevet, email címet, egy titkosított jelszót, egy profilképet, a felhasználó által használt nyelvet, illetve egy UUID-t\footnote{Egyedi azonosító.}, azaz egy egyedi azonosítót, amit az órarend exportálásához lehet használni, erről később. Az azonosító oszlopra azért van szükség, mivel az alkalmazás fel van készítve arra, hogy Neptun kód nélkül rendelkező felhasználókat is tudjon kezelni.
 	\item \emph{terms, places}: a félévek és termek (helyek) tárolására szolgáló táblák.
 	\item \emph{subjects, courses, course\_classe, class\_login\_links}: ezen táblák tárolják a tantárgyakat (amik többek között rendelkeznek egy azonosítóval, névvel, leírással, kreditértékkel, és egy tantárgyfelelőssel), a tantárgyakhoz tartozó kurzusokat (amihez tárolok egy azonosítót, ami minden esetben egyedi, egy kurzus azonosítót, ami minden félév és tantárgy esetében kell egyedinek lennie, tartozik hozzá egy félév, illetve egy létszám limit), illetve kurzusokhoz pedig órák (amiknek van egy kezdete, vége, illetve egy terem, ahol tartják). Az utolsó tábla pedig az órákhoz tartozó bejelentkező linkeket tartalmazza, ennek jelentőségéről kicsit később.
 	\item  \emph{attendances}: itt tárolom az egyes kurzusok résztvevőinek az órai jelenléteit, melyek lehetnek: nincs kitöltve, jelen, késés (mely esetben percben lehet tárolni a mértékét), hiányzás, igazolt hiányzás.
@@ -738,9 +738,27 @@ A szimulációs osztályokban egy ún. \emph{scenario} jön létre. Ez tartalmaz
 
 \lstinputlisting[caption={Részlet a bejelentkezés terheléses teszteléséből.}, label=gatlingTest, style=java]{../codes/gatling.java}
 
-A teszt futásának a végén egy HTML dokumentumot kapunk eredményül
+A teszt futásának a végén egy HTML dokumentumot kapunk eredményül, mely tartalmazza az összesített statisztikát, illetve kérésekre lebontva, hogy azok mennyi időbe teltek, vagy hogy egyáltalán sikeresek voltak-e.
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=16cm]{../pictures/screenshots/gatling.png}
+	\caption{Részlet egy tesztelésből.}
+	\label{gatlingResult}
+\end{figure}
 
 \section{Laravel Pint és Github actions}
+
+A Laravel Pint egy kód elemező, ami segít betartani a készítők által megfelelőnek tartott kód formázási szabályokat. Futtatásakor végignézi az összes PHP fájlt a projektben, majd kijavítja az esetleges formázási hibákat, mint például rossz behúzások, kapcsos zárójelek helye és hasonlók.\cite{pint} Futtatható manuálisan is, de akár a fejlesztői környezetbe is be lehet integrálni, így közvetlen a szerkesztőben is megjelennek az értesítések a formázási hibákról. 
+
+Azért, hogy ne felejtsem el ellenőrizni a kódom, a projekt Github repozitóriumában beállítottam a Github Actions\cite{actions} segítségével, hogy minden feltöltés esetén ellenőrizze le a kódot, hogy az megfelel-e a szabályoknak, így mindig láthattam, ha valahol formázási hiba volt.
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=15cm]{../pictures/screenshots/githubActions.png}
+	\caption{A Laravel Pint eredményes futás Github Action esetén.}
+	\label{githubActions}
+\end{figure}
 
 \chapter{Alkalmazás telepítése}
 \label{setup}
@@ -768,6 +786,9 @@ Az alkalmazás a szakdolgozat védés, illetve a záróvizsga időszak alatt el�
 	\end{itemize}
 \end{itemize}
 \section{Laravel Forge}
+
+A kész alkalmazás egy ingyenes Amazon AWS\cite{aws} szerveren fut, ide került kihelyezésre. Ebben nagy segítséget nyújtott a Laravel Forge\cite{forge} nevű szolgáltatás, ami összekötötte a kódot tartalmazó repozitóriumot, illetve az AWS fiókomat. Így egy helyen történt maga a szerver létrehozása, konfigurációja, illetve az alkalmazás telepítése is. Ehhez egy telepítési szkriptet kellet írni, ami nagyjából hasonló lépéseket végez ez, mint a következő fejezetben leírtak. Ezek után a Forge telepítette az alkalmazást, majd egy kis konfiguráció után használható is volt. További előnye, hogy amennyiben töltöttem fel őj vagy módosított fájlokat a repozitóriumba, akkor ezt a Forge automatikusan észlelte, és frissítette a kitelepített alkalmazást.
+
 \section{Kézi telepítés lépései}
 \begin{enumerate}
 	\item Töltsük le az alkalmazás fájljait.
@@ -807,7 +828,11 @@ Az alkalmazás a szakdolgozat védés, illetve a záróvizsga időszak alatt el�
 \chapter*{Összegzés}
 \addcontentsline{toc}{chapter}{Összegzés}
 
-\begin{thebibliography}{19}
+Összegezve a szakdolgozatban leírt és elkészített dolgokat, én elégedett vagyok az elkészült munkával. Egyrészről azért, mert hosszasabb fejlesztési folyamatban vehettem ezáltal részt, egészen a tervezéstől, a fejlesztésen és a tesztelésen át az alkalmazás telepítéséig. Ezek mellett lehetőséget nyújtott, hogy jobban elmerüljek a webfejlesztés világában, és új, érdekes technológiákkal, megoldásokkal találkozzak.
+
+
+
+\begin{thebibliography}{47}
 \addcontentsline{toc}{chapter}{\bibname}
 
 \bibitem{Neptun}
@@ -1034,6 +1059,26 @@ Az alkalmazás a szakdolgozat védés, illetve a záróvizsga időszak alatt el�
 \textsc{Gatling}: \emph{Scenario}
 \\
 \url{https://docs.gatling.io/reference/script/core/scenario/}, Megtekintés dátuma: 2024.03.28.
+
+\bibitem{pint}
+\textsc{Laravel}: \emph{Laravel Pint}
+\\
+\url{https://docs.gatling.io/reference/script/core/scenario/}, Megtekintés dátuma: 2024.03.29.
+
+\bibitem{actions}
+\textsc{Github}: \emph{Github Actions}
+\\
+\url{https://github.com/features/actions}, Megtekintés dátuma: 2024.03.29.
+
+\bibitem{aws}
+\textsc{Amazon}: \emph{Amazon Web Services}
+\\
+\url{https://aws.amazon.com/}, Megtekintés dátuma: 2024.03.29.
+
+\bibitem{forge}
+\textsc{Forge}: \emph{Főoldal}
+\\
+\url{https://forge.laravel.com/}, Megtekintés dátuma: 2024.03.29.
 
 
 \end{thebibliography}

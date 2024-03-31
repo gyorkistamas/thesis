@@ -320,7 +320,7 @@ A kurzusokhoz órák hozhatóak létre, amik a féléven belül lehetnek. Minden
 
 \begin{figure}[ht!]
 	\centering
-	\includegraphics[width=15cm]{../pictures/screenshots/newclass.png}
+	\includegraphics[width=15.5cm]{../pictures/screenshots/newclass.png}
 	\caption{Új óra hozzáadása.}
 	\label{newclass}
 \end{figure}
@@ -331,13 +331,13 @@ A kurzusokhoz órák hozhatóak létre, amik a féléven belül lehetnek. Minden
 \subsection{Oktatott tárgyak}
 \label{taugthClass}
 
-A tanárok megtekinthetik az általuk oktatott -- vagy tantárgyfelelősként hozzáadott -- tárgyakat, és az azokhoz kapcsolódó adatokat. Igény szerint szűrhetnek kód, név, vagy félévre is. Minden kurzus esetén megtekinthetik az alap adatokat, a kurzushoz tartozó órákat, hallgatókat. Itt van lehetősége a tanárnak hozzáadni hallgatókat a kurzushoz, illetve egy listában megtekinteni diákokra lebontva, hogy mennyit hiányoztak, mennyit késtek, ebből mennyi az igazolatlan.
+A tanárok megtekinthetik az általuk oktatott -- vagy tantárgyfelelősként hozzáadott -- tárgyakat, és az azokhoz kapcsolódó adatokat. Igény szerint szűrhetnek kód, név, vagy félévre is. Minden kurzus esetén megtekinthetik az alap adatokat, a kurzushoz tartozó órákat, hallgatókat. Itt van lehetősége a tanárnak hozzáadni hallgatókat a kurzushoz, illetve egy listában megtekinteni diákokra lebontva, hogy mennyit hiányoztak, mennyit késtek és ebből mennyi az igazolatlan.
 
-A kurzus órái listában érhetik el az egyes órákat, ahol adminisztrálhatják a jelenlétet. Egy órát megnyitva láthatják az ahhoz kapcsolódó adatokat, illetve bal oldalon egy listát a kurzus tanulóiról, ahol beállíthatják a hallgató státuszát. Amennyiben az adott hallgató a tanár által elfogadott igazolással rendelkezik, akkor ebben az esetben csak ,,jelen'' státusz -- ha esetleg mégis megjelent az órán --, vagy pedig ,,igazolt hiányzás'' státusz állítható be, illetve egy figyelmeztető üzenet is megjelenik. Ezek mellett megjelenik az adott kurzuson való összes hiányzás és igazolt hiányzások száma is. Hiányzás rögzítése esetén email üzenet formájában is értesítést kap a hallgató.
+A kurzus órái listában érhetik el az egyes órákat, ahol adminisztrálhatják a jelenlétet. Egy órát megnyitva láthatják az ahhoz kapcsolódó adatokat, illetve bal oldalon egy listát a kurzus tanulóiról, ahol beállíthatják a hallgató státuszát. Amennyiben az adott hallgató a tanár által elfogadott igazolással rendelkezik, akkor ebben az esetben csak ,,jelen'' státusz -- ha esetleg mégis megjelent az órán --, vagy pedig ,,igazolt hiányzás'' státusz állítható be, illetve egy figyelmeztető üzenet is megjelenik. Emellett megjelenik az adott kurzuson való összes hiányzás és igazolt hiányzások száma is. Hiányzás rögzítése esetén email üzenet formájában is értesítést kap a hallgató.
 
-A jobb oldalt kettő doboz foglal helyet. Az első egy Qr\footnote{A Qr kód egy információt tartalmazó kép,  amit kamerával lehet leolvasni.\cite{QR}} kódot tartalmaz. Ennek segítségével, ha az oktató látható teszi, a diákok a kódot a telefonjukon beolvasva, majd bejelentkezve is ,,beírhatják magukat'' az órára, ezzel felgyorsítva a folyamatot, és a tanárnak sem kell végig mennie a listán. A kód csak az óra végéig működik, illetve ha az oktató úgy sejti, hogy a hallgatók visszaélnek ezzel, akkor hamarabb is letilthatja, illetve generálhat egy másikat. Amikor a hallgató íj módon bejelentkezik az órára, a tanári felületen automatikusan frissítésre kerül a státusz. A hallgató csak abban az esetben tudja ezt a funkciót használni, hogy ha fel van iratkozva a kurzusra, és még nem állították be az adott órára a státuszát, ezzel elkerülve, hogy magától átírja esetleges hiányzását, késését.
+A jobb oldalt kettő doboz foglal helyet. Az első egy QR\footnote{A QR kód egy információt tartalmazó kép, amit kamerával lehet beolvasni.\cite{QR}} kódot tartalmaz. Ennek segítségével, ha az oktató láthatóvá teszi, akkor a diákok ezt a kódot a telefonjukon beolvasva, majd bejelentkezve is feljegyezhetik jelenlétüket az órán, ezzel felgyorsítva a folyamatot, és a tanárnak sem kell végig mennie a listán. A kód csak az óra végéig működik, illetve ha az oktató úgy sejti, hogy a hallgatók visszaélnek ezzel, akkor hamarabb is letilthatja, illetve generálhat egy másikat. Amikor a hallgató íj módon jelentkezik be az órára, akkor a tanári felületen automatikusan frissítésre kerül a státusz. A hallgató csak abban az esetben tudja ezt a funkciót használni, hogy ha fel van iratkozva a kurzusra, és még nem állították be az adott órára a státuszát, ezzel elkerülve, hogy magától átírja esetleges hiányzását, késését.
 
-A másik ilyen doboz egy kis statisztikát mutat kör diagram formájában, megszámolva a hallgatók státuszát az órán, ezzel is egy visszajelzést nyújtva az oktatónak.
+A másik ilyen doboz egy kis statisztikát mutat kördiagram formájában, megszámolva a hallgatók státuszát az órán, ezzel is egy visszajelzést nyújtva az oktatónak.
 
 \begin{figure}[ht!]
 	\centering
@@ -356,11 +356,11 @@ A másik ilyen doboz egy kis statisztikát mutat kör diagram formájában, megs
 
 \subsection{Igazolások}
 
-Amikor egy hallgató igazolást ad le, akkor azt minden érintett tanár megkapja, és reagálhat rá; vagy elfogadja, vagy indoklással elutasítja. A lista alapból szűrésre kerül, hogy csak a még nem meg válaszolt igazolásokat mutassa az oktatónak. Amikor a tanár megnyit egy ilyen igazolást, láthatja, hogy ki küldte be az igazolást, a típusát (orvosi vagy egyéb), a kezdeti és vég időpontot, illetve az esetlegesen feltöltött képeket is megtekintheti, azokra rákattintva kinagyíthatja őket. Ezek mellett listába szedve, és tantárgy, majd kurzus alapján kategorizálva látja az általa oktatott és az igazolásban érintett órákat, azok idejét, illetve a hallgató jelenlegi státuszát az órán. Az igazolás elfogadása esetén azon órák, ahol nem ,,jelen''-re van állítva az állapot, automatikusan ,,igazolt hiányzás'' állapotra kerülnek beállításra. Elfogadás és elutasítás esetén is üzenet kap a hallgató, illetve a főoldalon megtekintheti a még függőben lévő (tehát az olyan igazolásokat, amire nem válaszolt minden érintett tanár) igazolásait is.
+Amikor egy hallgató igazolást ad le, akkor azt minden érintett tanár megkapja, és reagálhat rá; vagy elfogadja, vagy indoklással elutasítja. A lista alapból szűrésre kerül, hogy csak a még meg nem válaszolt igazolásokat mutassa az oktatónak. Amikor a tanár megnyit egy ilyen igazolást, láthatja, hogy ki küldte be az igazolást, annak típusát (orvosi vagy egyéb), a kezdeti és vég időpontot, illetve az esetlegesen feltöltött képeket is megtekintheti, azokra rákattintva kinagyíthatja őket. Ezek mellett listába szedve, és tantárgy, majd kurzus alapján kategorizálva láthatja az általa oktatott és az igazolásban érintett órákat, azok idejét, illetve a hallgató jelenlegi státuszát az órán. Az igazolás elfogadása esetén azokon az órákon, ahol nem ,,jelen''-re van állítva az állapot, automatikusan ,,igazolt hiányzás'' állapot kerül beállításra. Elfogadás és elutasítás esetén is üzenet kap a hallgató, illetve a főoldalon megtekintheti a még függőben lévő (tehát az olyan igazolásokat, amire nem válaszolt minden érintett tanár) igazolásait is.
 
 \begin{figure}[ht!]
 	\centering
-	\includegraphics[width=15cm]{../pictures/screenshots/just_teacher.png}
+	\includegraphics[width=15.5cm]{../pictures/screenshots/just_teacher.png}
 	\caption{Egy elfogadott igazolás, ahogy a tanár látja.}
 	\label{justTeacher}
 \end{figure}
@@ -373,7 +373,7 @@ A hallgatók természetesen láthatják a tantárgyaikat, amiket csakugyan szűr
 
 \begin{figure}[ht!]
 	\centering
-	\includegraphics[width=12cm]{../pictures/screenshots/student_course.png}
+	\includegraphics[width=13cm]{../pictures/screenshots/student_course.png}
 	\caption{A hallgató által látott egy kurzus részlete.}
 	\label{studentCourse}
 \end{figure}

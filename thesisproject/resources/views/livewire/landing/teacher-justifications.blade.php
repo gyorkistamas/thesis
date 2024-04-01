@@ -14,13 +14,6 @@
                                 <h2 class="card-title">{{$justification->start_date->isoFormat('Y.MM.D')}}
                                     - {{$justification->end_time->isoFormat('Y.MM.D')}}</h2>
                             </div>
-
-                            <div class="flex flex-row items-center justify-end">
-                                <!--TODO NAVIGATE TO JUSTIFICATION -->
-                                <a class="btn btn-success btn-sm">
-                                    <x-icons.view_fill_small/>
-                                </a>
-                            </div>
                         </div>
                     </div>
                 </div>

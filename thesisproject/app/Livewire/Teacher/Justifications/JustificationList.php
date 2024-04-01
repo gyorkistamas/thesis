@@ -28,7 +28,7 @@ class JustificationList extends Component
                 if ($this->studentName != '') {
                     $query->whereHas('User', function ($query) {
                         $query->where('name', 'like', '%'.$this->studentName.'%')
-                        ->orWhere('neptun', 'like', '%'.$this->studentName.'%');
+                            ->orWhere('neptun', 'like', '%'.$this->studentName.'%');
                     });
                 }
             })

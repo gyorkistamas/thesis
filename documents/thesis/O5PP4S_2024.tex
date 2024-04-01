@@ -428,7 +428,7 @@ A \emph{config} mappában találhatók a konfigurációs fájlok. Ha jobban megn
 
 \subsubsection{Nyelvesítés}
 
-Az alkalmazás két nyelvet támogat jelenleg: Angolt és Magyart, ezekhez készítettem el a fordítást. A nyelvesítést tartalmazó fájlokat a \emph{lang} mappában találhatjuk, nyelvek szerint almappákra bontva. Az egyes kifejezések kulcs-érték párokként vannak eltárolva, ezen kulcs segítségével tudjuk elérni őket a \emph{\_\/\_('kulcs')} segédfüggvény segítségével, ami globálisan elérhető a Kontroller és a Nézet fájlokban is. A keretrendszer automatikusan a beállított nyelv alapján visszaadja a megfelelő fordítást. Ha esetleg hiányozna az egyik fordítás, akkor a konfigurációban alapértelmezettként megadott nyelvből próbálja kikeresni az értéket. Ha ott sem találja meg, akkor a paraméterként megadott kulcsot adja vissza.
+Az alkalmazás két nyelvet támogat jelenleg: Angolt és Magyart, ezekhez készítettem el a fordítást. A nyelvesítést tartalmazó fájlokat a \emph{lang} mappában találhatjuk, nyelvek szerint almappákra bontva. Az egyes kifejezések kulcs-érték párokként vannak eltárolva, ezen kulcs segítségével tudjuk elérni őket a \emph{\_\,\_('kulcs')} segédfüggvény használatával, ami globálisan elérhető a Kontroller és a Nézet fájlokban is. A keretrendszer automatikusan a beállított nyelv alapján visszaadja a megfelelő fordítást. Ha esetleg hiányozna az egyik fordítás, akkor a konfigurációban alapértelmezettként megadott nyelvből próbálja kikeresni az értéket. Ha ott sem találja meg, akkor a paraméterként megadott kulcsot adja vissza.
 
 \subsection{Adatbázis és modellek}
 
@@ -465,16 +465,16 @@ A másik nagyobb ,,kategória'', amit meg szoktak írni a modellek esetén, azok
 
 \subsection{Eloquent ORM}
 
-Az ORM, avagy az Object Relational Mapping rendszerek abban nyújtanak segítséget, hogy összekössék az adatbázist a modelljeinkkel, ezáltal a modelleket használhatjuk az adatbázissal való kommunikáció során SQL parancsok írása helyett.\cite{orm} A Laravel egy nagyszer ORM rendszerrel készül, amit Eloquent-nek\cite{eloquentORM} hívnak. Segítségével bonyolult lekérdezéseket, frissítéseket, létrehozásokat tudunk elvégezni a modelleken keresztül. Bár a bonyolultabb lekérdezések megírása elsőre nehézséget jelentett, könnyen megtanulható és megszokható volt ez az ORM, és gyorsan meg is szerettem.
+Az ORM, avagy az Object Relational Mapping rendszerek abban nyújtanak segítséget, hogy összekössék az adatbázist a modelljeinkkel, ezáltal a modelleket használhatjuk az adatbázissal való kommunikáció során SQL parancsok írása helyett.\cite{orm} A Laravel egy nagyszerű ORM rendszerrel készül, amit Eloquent-nek\cite{eloquentORM} hívnak. Segítségével bonyolult lekérdezéseket, frissítéseket, szűréseket létrehozásokat tudunk elvégezni a modelleken és azok kapcsolatain keresztül. Bár a bonyolultabb lekérdezések megírása elsőre nehézséget jelentett, könnyen megtanulható és megszokható volt ez az ORM, és gyorsan meg is szerettem.
 
-\Aref{eloquent} kódrészletben egy ilyen lekérdezést láthatunk: lekérdezem a tantárgyakat, illetve szűröm őket, ha adott meg szűrési feltételeket a felhasználó. Emellett látható az is, hogy a lapozás is keretrendszer szinten támogatott a \emph{paginate} függvény segítségével. Ehhez meg kell adni, hogy hány elemet szeretnénk megjeleníteni egy oldalon, és opcionálisan egy nevet is adhatunk neki, ami akkor hasznos, ha több ilyen lapozó szakaszt is tartalmaz az oldal. 
+\Aref{eloquent} kódrészletben egy ilyen lekérdezést láthatunk: lekérdezem a tantárgyakat, illetve szűröm őket azonosító és név szerint, ha adott meg szűrési feltételeket a felhasználó. Emellett látható az is, hogy a lapozás is keretrendszer szinten támogatott a \emph{paginate} függvény segítségével. Ehhez meg kell adni, hogy hány elemet szeretnénk megjeleníteni egy oldalon, és opcionálisan egy nevet is adhatunk neki, ami akkor hasznos, ha több ilyen lapozó szakaszt is tartalmaz az oldal. Ezáltal nem egyszerre kerül lekérdezésre az összes entitás
 
 \lstinputlisting[caption={Tantárgyak lekérdezése, szűrése ha adtak meg értéket.}, label=eloquent, style=php]{../codes/eloquent.php}
 
 \subsection{Blade sablon fájlok}
 \label{bladeSection}
 
-A nézetek és komponensek létrehozására is megoldást nyújt a keretrendszer a Blade\cite{blade} fájlok formájában. Ezek szokványos HTML kódot tartalmaznak, illetve a Blade által nyújtott direktívákat, de akár egyszerű PHP kódot is tartalmazhat, mivel végső soron ezekből PHP fájlokat készít a keretrendszer.
+A nézetek és komponensek létrehozására is megoldást nyújt a keretrendszer a Blade\cite{blade} fájlok formájában. Ezek szokványos HTML\cite{html} kódot tartalmaznak, illetve a Blade által nyújtott direktívákat, de akár egyszerű PHP kódot is tartalmazhat, mivel végső soron ezekből PHP fájlokat készít a keretrendszer.
 
 A Blade különböző direktívák használatát teszi lehetővé, ami megkönnyíti a nézetek létrehozását. Ezek általában egy \emph{@} jellel kezdődnek. Segítségükkel feltételeket rakhatunk a HTML kódunkba, ciklusokat a kollekciók kiíratására, de például gyors megoldást ad arra is, hogy az oldal egyes részeit csak bejelentkezett felhasználóknak jelenítsük meg a \emph{@auth} direktíva segítségével, csak hogy párat említsek. Ilyen direktívák láthatók \aref{directives}. kódrészletben példaképpen.
 
@@ -507,9 +507,9 @@ Ahogy azt \aref{users}. alfejezetben említettem, több szerepkört különbözt
 
 Ahogy azt fentebb említettem, a middleware csak az egyik hely, ahol a szerepköröket használtam. A Policy-k\cite{policies} segítségével egy helyre lehet gyűjteni, hogy a felhasználó egy adott modell esetén milyen jogokkal rendelkezik: megtekintheti, újat hozhat lére, esetleg módosíthatja vagy törölheti. Minden modellhez készíthető ilyen szabály, egyszóval itt lehet definiálni a felhasználó jogait. Ez nálam a legtöbb esetben úgy nézett ki, hogy adminisztrátor (vagy szuper adminisztrátor) esetén mindenhez joga van, a modellek megtekintéséhez be kell jelentkezni, többi esetben a szituációtól függ a dolog, például tantárgyakat csak adminisztrátorok tudnak létrehozni, kezelni, de bármely bejelentkezett felhasználó megtekintheti.
 
-\Aref{policyPart}. kódban egy részletet láthatunk a jogosultság vizsgálatra: a \emph{before} függvény minden jogosultságvizsgálat előtt lefut, itt állapítom meg, hogy adminisztrátorról van-e szó. Ha nem, akkor megy tovább a vizsgálat az egyik függvényre, attól függően, hogy mit szeretnénk tenni a modellel. A tantárgy esetén megtekinteni mindenki megtudja, létrehozni pedig csak adminisztrátor tud, viszont ezt már az előbb említett függvény levizsgálja, így itt elegendő egy hamis értéket vissza adni, mivel más nem tud létrehozni tárgyat.
+\Aref{policyPart}. kódban egy részletet láthatunk a jogosultság vizsgálatra: a \emph{before} függvény minden jogosultságvizsgálat előtt lefut, itt állapítom meg, hogy adminisztrátorról van-e szó. Ha nem, akkor megy tovább a vizsgálat az egyik függvényre, attól függően, hogy mit szeretnénk tenni a modellel. A tantárgy esetén megtekinteni mindenki megtudja (ezért igazat ad vissza a \emph{viewAny} függvény), létrehozni pedig csak adminisztrátor tud, viszont ezt már a \emph{before} függvény levizsgálja, így itt elegendő egy hamis értéket vissza adni, mivel más nem tud létrehozni tárgyat.
 
-\Aref{check}. részletben pedig magát a vizsgálatot láthatjuk egy konkrét esetben: a felhasználó rendelkezik egy \emph{can} és a fordítottja, egy \emph{cannot} függvénnyel, ezekkel lehet eldönti, hogy van-e jogosultsága a felhasználónak az adott művelethez, vagy sem. Ehhez az elvégzendő műveletet kell megadni, illetve az érintett modellt, ami lehet egy konkrét entitás, vagy a modellt leíró osztály, mivel létrehozás esetén még nem rendelkezünk entitással. Ezen adatok alapján tudja a keretrendszer, hogy melyik szabály melyik metódusa tudja eldönteni a jogosultságot. Ha a felhasználó nem végezheti el az adott műveletet, akkor megjelenítek egy hibaüzenetet, és visszalépek a függvényből a legtöbb esetben.
+\Aref{check}. részletben pedig egy konkrét vizsgálatot láthatunk egy tárgy létrehozásának esetében: a felhasználó modellje rendelkezik egy \emph{can} és a fordítottja, egy \emph{cannot} függvénnyel, ezekkel lehet eldönti, hogy van-e jogosultsága a felhasználónak az adott művelethez, vagy sem. Ehhez az elvégzendő műveletet kell megadni, illetve az érintett modellt, ami lehet egy konkrét entitás, vagy a modellt leíró osztály, mivel létrehozás esetén még nem rendelkezünk entitással. Ezen adatok alapján tudja a keretrendszer, hogy melyik szabály melyik metódusa tudja eldönteni a jogosultságot. Ha a felhasználó nem végezheti el az adott műveletet, akkor megjelenítek egy hibaüzenetet, és visszalépek a függvényből a legtöbb esetben.
 
 \lstinputlisting[caption={Részlet a tárgyakhoz tartó szabályból.}, label=policyPart, style=php]{../codes/policies.php}
 
@@ -521,9 +521,16 @@ Ezen szabályok nagy előnye, hogy ha bármely okból kifolyólag módosítani k
 
 A programomban több helyen is használok email küldést értesítésék küldésére, például hiányzás rögzítésekor. Egy email küldéséhez egy értesítés osztályt kell létrehozni, ahol definiálni kell, hogy az értesítést email-ként kell elküldeni, és hogy mi legyen az üzenet tartalma. Ehhez a Laravel biztosít egy leírónyelvhez hasonló módszert, így nem szükséges minden fajta levél esetén leírni annak kinézetét HTML kód segítségével, csak a tartalmát kell definiálni, ezt függvényhívásokkal tehetjük meg.\cite{mail} Az elkészül emailt a felhasználó modelljén keresztül tudjuk elküldeni, ahol akár a levél nyelvét is beállíthatjuk. Én például a modellben tárolt \emph{lang} mező alapján tettem ezt, így a leveleket a beállított nyelvük alapján kapják meg a felhasználók.
 
+\lstinputlisting[caption={Egy példa az email felépítsére. A szövegek helyén a fordítás behelyettesítésére szolgáló függvények és azok kulcsa látható.}, label=mail, style=php]{../codes/mail.php}
+
 A levelek egy sorra (queue) kerülnek rá, így azok a háttérben kerülnek elküldésre. Ezáltal elkerülhető, hogy a küldés során az oldal sokáig töltsön, vagy esetleg hibára fusson, ha nem sikerült elküldeni a levelet.
 
-\lstinputlisting[caption={Egy példa az email felépítsére. A szövegek helyén a fordítás behelyettesítésére szolgáló függvények és azok kulcsa látható.}, label=mail, style=php]{../codes/mail.php}
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=10cm]{../pictures/screenshots/email.png}
+	\caption{Email üzenet regisztráció esetén.}
+	\label{emailExample}
+\end{figure}
 
 \subsection{Naptár exportálása}
 
@@ -533,7 +540,7 @@ Az első fejezetben említettem, hogy az órarendet lehetőség van exportálni.
 
 \section{Tailwind}
 
-Amikor a nézetek kialakítását elkezdtem, elgondolkoztam azon, hogy milyen segédeszközöket használhatnék. Szaktársaim ajánlására kipróbáltam a \emph{Tailwind} nevezetű keretrendszert, ami gyorsan elnyerte a tetszésemet. A Tailwind egy  úgynevezett ,,utility-first'' keretrendszer.\cite{tailwind} Ez gyakorlatban azt jelenti, hogy CSS osztályok és szelektorok írása helyett a kívánt formázási szabályokat közvetlen az adott elemen adhatjuk meg, a Tailwind pedig létrehozza az ezekhez szükséges osztályokat, mely sok esetben 1-1 sorból állnak. 
+Amikor a nézetek kialakítását elkezdtem, elgondolkoztam azon, hogy milyen segédeszközöket használhatnék. Szaktársaim ajánlására kipróbáltam a \emph{Tailwind} nevezetű keretrendszert, ami gyorsan elnyerte a tetszésemet. A Tailwind egy  úgynevezett ,,utility-first'' keretrendszer.\cite{tailwind} Ez gyakorlatban azt jelenti, hogy CSS\cite{css} osztályok és szelektorok írása helyett a kívánt formázási szabályokat közvetlen az adott elemen adhatjuk meg, a Tailwind pedig létrehozza az ezekhez szükséges osztályokat, mely sok esetben 1-1 sorból állnak. 
 
 \lstinputlisting[caption={Tailwind példa: az elemre flex megjelenítést alkalmaz, horizontális elrendezéssel, 4-es térközzel az elemek között.}, label=tailwind, style=html]{../codes/tailwind.html}
 
@@ -880,6 +887,16 @@ A készítés során létrejött programnak és a szakdolgozatnak a forráskódj
 \textsc{Php}: \emph{Főoldal}
 \\
 \url{https://www.php.net/}, Megtekintés dátuma: 2024.03.24.
+
+\bibitem{html}
+\textsc{MDN web docs}: \emph{HTML: HyperText Markup Language}
+\\
+\url{https://developer.mozilla.org/en-US/docs/Web/HTML}, Megtekintés dátuma: 2024.03.24.
+
+\bibitem{css}
+\textsc{MDN web docs}: \emph{CSS: Cascading Style Sheets}
+\\
+\url{https://developer.mozilla.org/en-US/docs/Web/CSS}, Megtekintés dátuma: 2024.03.24.
 
 \bibitem{uuid}
 \textsc{TechTarget}: \emph{UUID (Universal Unique Identifier)}

@@ -158,4 +158,7 @@ return [
     'userInUseCannotDelete' => 'User in use, cannot delete!',
     'colorMeanings' => 'Color meanings',
     'taughtByYou' => 'Taught by you',
+    'studentName' => 'Student name',
+    'DateFrom' => 'Date from',
+    'DateTo' => 'Date to',
 ];

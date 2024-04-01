@@ -158,4 +158,7 @@ return [
     'userInUseCannotDelete' => 'A felhasználó használatban van, nem lehet törölni!',
     'colorMeanings' => 'Színek jelentése',
     'taughtByYou' => 'Oktatott',
+    'studentName' => 'Hallgató neve',
+    'dateFrom' => 'Dátumtól',
+    'dateTo' => 'Dátumig',
 ];

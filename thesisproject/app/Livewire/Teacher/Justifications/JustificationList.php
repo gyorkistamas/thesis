@@ -10,6 +10,12 @@ class JustificationList extends Component
 {
     public $onlyNotResponded = true;
 
+    public $studentName;
+
+    public $dateFrom;
+
+    public $dateTo;
+
     public function render()
     {
         $justifications = Justification::whereHas('Acceptances', function ($query) {
@@ -18,6 +24,22 @@ class JustificationList extends Component
                 $query->where('status', 'na');
             }
         })
+            ->where(function ($query) {
+                if ($this->studentName != '') {
+                    $query->whereHas('User', function ($query) {
+                        $query->where('name', 'like', '%'.$this->studentName.'%');
+                    });
+                }
+            })
+            ->where(function ($query) {
+                if ($this->dateFrom != '') {
+                    $query->where('start_date', '>=', $this->dateFrom);
+                }
+                if ($this->dateTo != '') {
+                    $query->where('start_date', '<=', $this->dateTo);
+                }
+
+            })
             ->orderBy('created_at')
             ->paginate(10);
 

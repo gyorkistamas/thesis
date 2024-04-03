@@ -10,12 +10,12 @@
                     <div class="card-body p-1 ps-3 gap-1 ">
                         <div class="flex flex-row justify-between">
                             <div>
+                                @if($class->isOnGoing())
+                                    <div class="badge badge-success gap-2">
+                                        {{__('general.onGoing')}}
+                                    </div>
+                                @endif
                                 <h2 class="card-title">{{$class->Course->Subject->name}} - {{$class->Course->course_id}}
-                                    @if($class->isOnGoing())
-                                        <div class="badge badge-success gap-2">
-                                            {{__('general.onGoing')}}
-                                        </div>
-                                    @endif
                                 </h2>
                                 <span class="flex flex-row flex-wrap items-center gap-1">
                                     <x-icons.time_fill_small/>

@@ -214,7 +214,7 @@ Amikor szakdolgozati témaválasztás előtt álltam, sokat gondolkoztam a tém�
 
 A megvalósítás során törekedtem arra, hogy egy jól átlátható, ergonomikus weboldalt készítsek, amit -- esetleges kisebb módosításokkal -- ne csak egyetemi környezetben lehessen használni. Ezekből kifolyólag egy webalkalmazást készítettem, mivel ezt a legegyszerűbb elérni, hiszen csak egy webböngésző szükséges hozzá. A tanulók és tanárok által használt oldalak reszponzívan lettek elkészítve, ezáltal biztosítva, hogy mobiltelefonon is használni lehessen. Illetve az alkalmazás PWA\footnote{Jelentése: Progressive Web App: egy olyan alkalmazás, ami webes technológiákat használ, de platform specifikus alkalmazásként viselkedik.\cite{PWA}}  funkciókkal rendelkezik, aminek jelentőségére később térek ki, de előjáróban annyit érdemes megemlíteni róla, hogy lehetővé teszi a weboldal alkalmazásként való telepítését számítógép és telefon esetén is, ezáltal egy rendes alkalmazás érzését keltve.
 
-A megvalósításhoz a Laravel\cite{meetlaravel} keretrendszert használtam, mely egy PHP\cite{php} alapú, MVC\footnote{Jelentése: Model-View-Controller.\cite{mvc}} keretrendszer, amivel tanulmányaim során találkoztam, és egyből megkedveltem. Nem titkolt célom a szakdolgozatommal, hogy bemutassam, hogy a mai, JavaScript-et preferált világban, továbbra is lehetséges modern, a mai kort kielégítő weboldalt készíteni PHP segítségével, amihez különböző csomagokat alkalmaztam, amiknek működését, illetve egymással való működését a későbbiekben fogom kifejteni.
+A megvalósításhoz a Laravel\cite{meetlaravel} keretrendszert használtam, mely egy PHP\cite{php} alapú, MVC\footnote{Jelentése: Model-View-Controller.\cite{mvc}} keretrendszer, amivel tanulmányaim során találkoztam, és egyből megkedveltem. Nem titkolt célom a szakdolgozatommal, hogy bemutassam, hogy a mai, JavaScript-et\cite{javascript} preferáló világban, továbbra is lehetséges modern, a mai kor igényeit kielégítő weboldalt készíteni PHP segítségével, amihez különböző csomagokat alkalmaztam, amiknek működését, illetve egymással való működését a későbbiekben fogom kifejteni.
 
 Szakdolgozatom négy részre osztottam: \aref{appDescription}. fejezetben magát az alkalmazást mutatom be, inkább felhasználói szemszögből. \Aref{packages}. fejezetben magát a keretrendszert, illetve a használt csomagokat, a technikai részleteket tárgyalom. Végül \aref{testing}. és \aref{setup}. fejezetben a tesztelést és a telepítést részletezem.
 
@@ -511,7 +511,7 @@ Ahogy azt fentebb említettem, a middleware csak az egyik hely, ahol a szerepkö
 
 \Aref{check}. részletben pedig egy konkrét vizsgálatot láthatunk egy tárgy létrehozásának esetében: a felhasználó modellje rendelkezik egy \emph{can} és a fordítottja, egy \emph{cannot} függvénnyel, ezekkel lehet eldönti, hogy van-e jogosultsága a felhasználónak az adott művelethez, vagy sem. Ehhez az elvégzendő műveletet kell megadni, illetve az érintett modellt, ami lehet egy konkrét entitás, vagy a modellt leíró osztály, mivel létrehozás esetén még nem rendelkezünk entitással. Ezen adatok alapján tudja a keretrendszer, hogy melyik szabály melyik metódusa tudja eldönteni a jogosultságot. Ha a felhasználó nem végezheti el az adott műveletet, akkor megjelenítek egy hibaüzenetet, és visszalépek a függvényből a legtöbb esetben.
 
-\lstinputlisting[caption={Részlet a tárgyakhoz tartó szabályból.}, label=policyPart, style=php]{../codes/policies.php}
+\lstinputlisting[caption={Részlet a tárgyakhoz tartozó szabályból.}, label=policyPart, style=php]{../codes/policies.php}
 
 \lstinputlisting[caption={Jogosultság vizsgálata tárgy létrehozásakor.}, label=check, style=php]{../codes/authcheck.php}
 
@@ -898,6 +898,11 @@ A készítés során létrejött programnak és a szakdolgozatnak a forráskódj
 \\
 \url{https://developer.mozilla.org/en-US/docs/Web/CSS}, Megtekintés dátuma: 2024.03.24.
 
+\bibitem{javascript}
+\textsc{MDN web docs}: \emph{JavaScript}
+\\
+\url{https://developer.mozilla.org/en-US/docs/Web/JavaScript}, Megtekintés dátuma: 2024.03.24.
+
 \bibitem{uuid}
 \textsc{TechTarget}: \emph{UUID (Universal Unique Identifier)}
 \\
@@ -1151,5 +1156,5 @@ A készítés során létrejött programnak és a szakdolgozatnak a forráskódj
 
 \end{thebibliography}
 
-%\includepdf{nyilatkozat.pdf}
+\includepdf{nyilatkozat.pdf}
 \end{document}

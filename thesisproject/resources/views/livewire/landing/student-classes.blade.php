@@ -8,13 +8,12 @@
             @forelse($classes as $class)
                 <div class="card bg-base-100 mb-2 p-0">
                     <div class="card-body p-1 ps-3 gap-1 ">
-                        <h2 class="card-title">{{$class->Course->Subject->name}} - {{$class->Course->course_id}}
-                            @if($class->isOnGoing())
-                                <div class="badge badge-success gap-2">
+                        @if($class->isOnGoing())
+                            <div class="badge badge-success gap-2">
                                 {{__('general.onGoing')}}
                             </div>
-                            @endif
-                        </h2>
+                        @endif
+                        <h2 class="card-title">{{$class->Course->Subject->name}} - {{$class->Course->course_id}}</h2>
                         <span class="flex flex-row flex-wrap items-center gap-1">
                             <x-icons.time_fill_small />
                             <span class="mr-2">

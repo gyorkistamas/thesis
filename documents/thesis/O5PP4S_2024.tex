@@ -395,40 +395,40 @@ Helyes adatok megadása és mentés után a listában is megjelenik az igazolás
 \label{packages}
 \section{Laravel}
 
-Ahogy a bevezetőben említettem, a megvalósításhoz a Laravel nevezetű keretrendszert használtam. A keretrendszer sok funkciót alapból elkészít, amit hosszadalmas lenne újra és újra megírni, ezáltal a programozó a lényegre fókuszálhat: az elkészítendő programra.\cite{meetlaravel} A keretrendszert tanulmányaim során ismertem meg, a szakdolgozat készítése során pedig jobban elmélyedtem benne.
+Ahogy a bevezetőben említettem, a megvalósításhoz a Laravel nevezetű keretrendszert használtam. Ez a keretrendszer sok funkciót alapból tartalmaz, amit hosszadalmas lenne újra és újra megírni, ezáltal a programozó a lényegre fókuszálhat: az elkészítendő programra.\cite{meetlaravel} A keretrendszert tanulmányaim során ismertem meg, a szakdolgozat készítése során pedig jobban elmélyedtem benne.
 
 \subsection{Keretrendszer alapjai}
 
 \subsubsection{MVC architektúra}
 
-A keretrendszer az MVC architektúrát követi, ami segíti a kód karbantartását, áttekinthetőségét.\cite{mvc} Ez azt jelenti, hogy logikailag a kód három része bomlik:
+A keretrendszer az MVC architektúrát követi, ami segíti a kód karbantartását és az áttekinthetőségét.\cite{mvc} Ez azt jelenti, hogy logikailag a kód három része bomlik:
 \begin{itemize}
 	\item Modellek (Model): ezek tartalmazzák az adatbázis táblák modelljeit, ezeken keresztül tudjuk elérni az adatbázisunkat, illetve az adatbázisban tárolt adatokat is modellek formájában kapjuk meg, így ezeknek követni kell a táblák felépítését. Ezek mellett kapcsolatokat is meg tudunk adni a modellek között.
 	\item Nézet (View): itt magára a nézetekre kell gondolni, amit látni fog a felhasználó. Ezek jelen esetben a Blade\cite{blade} fájlok, amire \aref{bladeSection}. alfejezetben térek ki.
-	\item Kontroller (Controller): az üzleti logikát tartalmazza. Itt kapnak helyet a függvények például, amik egy kérés fogadásakor futnak le, ezek módosítják az adatbázist, kérik le az adatokat.
+	\item Vezérlő (Controller): az üzleti logikát tartalmazza. Itt kapnak helyet a függvények például, amik egy kérés fogadásakor futnak le, ezek módosítják az adatbázist és kérik le az adatokat.
 \end{itemize}
 
 \subsubsection{Útvonalak}
 
-A keretrendszerben az elérhető útvonalakat a \emph{routes} mappában található fájlokban találjuk. Mivel a keretrendszer képes nem csak webes kéréseket kiszolgálni, így több fájlra vannak szedve, viszont én csak a webes útvonalakhoz tartozó fájlt használtam.
+A keretrendszerben az elérhető útvonalakat a \emph{routes} mappában található fájlokban találjuk. Mivel a keretrendszer képes nem csak webes kéréseket is kiszolgálni, így több fájlra vannak szedve, viszont én csak a webes útvonalakhoz tartozó fájlt használtam.
 
-Útvonalakat a \emph{Route} osztály metódusaival tudunk létrehozni. Ezek után meg kell adnunk a útvonal típusát (tehát hogy \emph{Get, Post, Put vagy Delete} típusú útvonalat szeretnénk létrehozni), magát az elérési útvonalat, illetve a meghívandó programkódot, ami ki fogja szolgálni a kérést. Opcionálisan megadhatunk egy nevet is, amivel referálni tudunk rá a kódunk többi részéből, illetve adhatunk meg egy vagy több köztes program kódot (angolul: middleware), mellyel kontrollálhatjuk az útvonal elérést és egyéb más dolgokat tehetünk meg a kérés kiszolgálása előtt.\cite{routing} Erre láthatunk egy példát \aref{routesandMiddleware} kódban.
+Útvonalakat a \emph{Route} osztály metódusaival tudunk létrehozni. Ezek után meg kell adnunk a útvonal típusát (tehát hogy \emph{Get, Post, Put vagy Delete} típusú útvonalat szeretnénk létrehozni), magát az elérési útvonalat, illetve a meghívandó programkódot, ami a kérést fogja kiszolgálni. Opcionálisan megadhatunk egy nevet is, amivel referálni tudunk rá a kódunk többi részéből, illetve megadhatunk egy vagy több köztes program kódot (angolul: middleware), amellyel kontrollálhatjuk az útvonal elérést és egyéb más dolgokat is elvégezhetünk a kérés kiszolgálása előtt.\cite{routing} Erre láthatunk egy példát \aref{routesandMiddleware} kódban.
 
-Amennyiben az olvasó megnézi az elkészült programban található útvonalakat, azt láthatja, hogy csak \emph{Get} típusú útvonalak találhatóak benne. Ennek fő oka a Livewire\cite{livewire} használata, ahol útvonalak létrehozása helyett metódushívásokkal történik sok interakció, erről \aref{livewireSection}. alfejezetben lesz szó.
+Amennyiben az olvasó megnézi az elkészült programban található útvonalakat, azt láthatja, hogy csak \emph{Get} típusú útvonalak találhatóak benne. Ennek fő oka a Livewire\cite{livewire} használata, ahol útvonalak létrehozása helyett metódushívásokkal történik sok interakció, amiről \aref{livewireSection}. alfejezetben lesz szó.
 
 \subsubsection{Middleware}
 
-A middleware arra alkalmas, hogy a kérés feldolgozása előtt végezzünk el teendőket, akár szűrjük őket.\cite{middleware} A program során én három fő dologra használtam ezt fel: bejelentkezés vizsgálata, hozzáférési jogosultság vizsgálata, illetve a kérés elején az alkalmazás nyelvének beállítása. Az utolsóra azért volt szükség, mivel Laravel esetén a nyelv beállítása mindig csak az adott kérésre vonatkozik. Így minden esetben meg kellett vizsgálni, hogy a felhasználó átállította-e a nyelvet, és ha igen, akkor alkalmazzuk a kiválasztott nyelvet a kérésre. A middleware futása során dönthetünk úgy is, hogy a kérést megszakítjuk, például ha a felhasználó nem rendelkezik kellő jogosultsággal. Hozzá is tudjuk rendelni ezeket az egyes útvonalakhoz, ahogy az \aref{routesandMiddleware}. kódrészleten látható, vagy akár beállíthatjuk, hogy globálisan, minden kérés esetén lefusson az adott kód. \Aref{middleware}. kódrészletben egy middleware-ből látható egy részlet, ami adminisztrátorok esetén engedélyezi a kérést.
+A middleware arra alkalmas, hogy a kérés feldolgozása előtt végezzünk el teendőket, akár szűrjük őket.\cite{middleware} A program során én három fő dologra használtam ezt fel: bejelentkezés vizsgálata, hozzáférési jogosultság vizsgálata, illetve a kérés elején az alkalmazás nyelvének beállítása. Az utolsóra azért volt szükség, mivel Laravel esetén a nyelv beállítása mindig csak az adott kérésre vonatkozik. Így minden esetben meg kellett vizsgálni, hogy a felhasználó átállította-e a nyelvet, és ha igen, akkor alkalmazzuk a kiválasztott nyelvet a kérésre. A middleware futása során dönthetünk úgy is, hogy a kérést megszakítjuk, például ha a felhasználó nem rendelkezik kellő jogosultsággal. Hozzá is tudjuk rendelni ezeket az egyes útvonalakhoz, ahogyan az \aref{routesandMiddleware}. kódrészletben látható, vagy akár beállíthatjuk, hogy globálisan, minden kérés esetén lefusson az adott kód. \Aref{middleware}. kódrészletben egy middleware-ből látható egy részlet, ami adminisztrátorok esetén engedélyezi a kérést.
 
 \lstinputlisting[caption={Egy \emph{Get} típusú útvonal, ami az órarendet nyitja meg. Az útvonal meghívásakor a \emph{Controller} nevű osztály \emph{getTimetable} metódusa fut le. Az útvonalat csak bejelentkezett felhasználók ('auth') és diákok vagy tanárok ('studentorteacher') érhetik el.}, label=routesandMiddleware, style=php]{../codes/route.php}
 
 \subsubsection{Konfiguráció}
 
-A \emph{config} mappában találhatók a konfigurációs fájlok. Ha jobban megnézzük, ezek igazából PHP fájlok, amik egy tömb-ként adják vissza a konfigurációs értékeket. Ezeket módosíthatjuk, illetve mi is hozhatunk újakat létre. Én is így tettem: az olyan beállításokat, mint például, hogy engedélyezve van-e a regisztráció, vagy hogy a felhasználók módosíthatják-e a kódjukat, innen kérdezem le. Sok esetben az értékeket a környezeti konfigurációs fájlból olvassa be a program, ezáltal a gyakran változó értékek egy helyen módosíthatók anélkül, hogy keresni kéne őket, hogy hol vannak.
+A \emph{config} mappában találhatók a konfigurációs fájlok. Ha jobban megnézzük, ezek igazából PHP fájlok, amik egy tömbként adják vissza a konfigurációs értékeket. Ezeket módosíthatjuk, illetve mi is hozhatunk létre újakat. Én is így tettem: az olyan beállításokat, mint például, hogy engedélyezve van-e a regisztráció, vagy hogy a felhasználók módosíthatják-e a kódjukat, innen kérdezem le. Sok esetben az értékeket a környezeti konfigurációs fájlból olvassa be a program, ezáltal a gyakran változó értékek egy helyen módosíthatók anélkül, hogy keresni kéne őket, hogy hol vannak.
 
 \subsubsection{Nyelvesítés}
 
-Az alkalmazás két nyelvet támogat jelenleg: Angolt és Magyart, ezekhez készítettem el a fordítást. A nyelvesítést tartalmazó fájlokat a \emph{lang} mappában találhatjuk, nyelvek szerint almappákra bontva. Az egyes kifejezések kulcs-érték párokként vannak eltárolva, ezen kulcs segítségével tudjuk elérni őket a \emph{\_\,\_('kulcs')} segédfüggvény használatával, ami globálisan elérhető a Kontroller és a Nézet fájlokban is. A keretrendszer automatikusan a beállított nyelv alapján visszaadja a megfelelő fordítást. Ha esetleg hiányozna az egyik fordítás, akkor a konfigurációban alapértelmezettként megadott nyelvből próbálja kikeresni az értéket. Ha ott sem találja meg, akkor a paraméterként megadott kulcsot adja vissza.
+Az alkalmazás két nyelvet támogat jelenleg: angolt és magyart, ezekhez készítettem el a fordítást. A nyelvesítést tartalmazó fájlokat a \emph{lang} mappában találhatjuk, nyelvek szerint almappákra bontva. Az egyes kifejezések kulcs-érték párokként vannak eltárolva, ezen kulcs segítségével tudjuk elérni őket a \emph{\_\,\_('kulcs')} segédfüggvény használatával, ami globálisan elérhető a Kontroller és a Nézet fájlokban is. A keretrendszer automatikusan a beállított nyelv alapján visszaadja a megfelelő fordítást. Ha esetleg hiányozna az egyik fordítás, akkor a konfigurációban alapértelmezettként megadott nyelvből próbálja kikeresni az értéket. Ha ott sem találja meg, akkor a paraméterként megadott kulcsot adja vissza.
 
 \subsection{Adatbázis és modellek}
 
@@ -438,9 +438,9 @@ Az adatbázis felépítése a keretrendszer adta módon van megoldva. Ez azt jel
 
 A migrációk a \emph{database} mappán belül a \emph{migrations} mappában találhatók. Egy fájl általában egy tábla leírását vagy módosítását tartalmazza a jobb átláthatóság érdekében. Minden migráció két eljárást tartalmaz: az \emph{up()} eljárás az adatbázis migráció futtatásakor fut le, míg a \emph{down()} az adatbázis törlése vagy teljes újraépítése esetén, tehát az előbbi eljárás ellentettjét végzi el.\cite{migrations}
 
-A táblákat a \emph{Schema} osztály \emph{create} metódusával tudjuk létrehozni. Ez két paramétert vár: a tábla nevét, illetve a tábla felépítését leíró függvényt. Ezen függvény belül írhatjuk le a tábla mezőit.
+A táblákat a \emph{Schema} osztály \emph{create} metódusával tudjuk létrehozni. Ez két paramétert vár: a tábla nevét, illetve a tábla felépítését leíró függvényt. Ezen függvényen belül írhatjuk le a tábla mezőit.
 
-\Aref{migrationCode}. kódrészletben egy ilyen migrációt láthatunk, ahol egy kurzusok tárolására szolgáló táblát hozom létre. Itt több, különböző mező létrehozása megfigyelhető:
+\Aref{migrationCode}. kódrészletben egy ilyen migrációt láthatunk, ahol egy kurzusok tárolására szolgáló táblát hozok létre. Itt több, különböző mező létrehozása megfigyelhető:
 \begin{itemize}
 	\item Az egyik első lépés szokott lenni a tábla elsődleges kulcsának meghatározása. Éppen ezért a Laravel biztosít erre egy gyorsabb módszert: a második sorban látható \emph{\$table->id()} segítségével létrehozható egy id nevű, szám típusú, automatikusan növekvő mező.
 	\item Természetesen sima mezőket is létrehozhatunk, ehhez a típusát, a nevét, és egyéb opciókat adhatunk meg, mint például az alapértelmezett értékét, vagy hogy a mező null-ra állítható-e. Ilyet például a negyedik vagy a nyolcadik sor.
@@ -456,7 +456,7 @@ Lehetőségünk van már létező táblákat módosító migrációt is írni. I
 
 Az adatbázis modellek a \emph{app} könyvtáron belül a \emph{Models} mappában találhatók. Minden modellt egy osztállyal lehet leírni. Amennyiben követjük a Laravel elnevezési konvencióját\cite{tableNames}, akkor nem szükséges megadnunk a modellhez kapcsolódó tábla nevét, egyébként igen.
 
-A modellen belül megadhatunk több információt, mint a tábla neve, ha szükséges, illetve beállíthatjuk, hogy az elsődleges kulcs az automatikusan növekedjen-e vagy sem. Megadhatjuk azt is, hogy mely mezőket lehet kitölteni a \emph{\$fillable} mező segítségével. A \emph{\$hidden} mezővel megadhatjuk, hogy mely attribútumokat nem szeretnénk szerializálni (ilyen lehet például a jelszó), és azt is megadhatjuk, hogy ha egyes adatbázis mezőket szeretnénk átkonvertálni más típusúra (ilyen például ha a tárolt dátumot a keretrendszer által biztosított dátum objektummá szeretnénk alakítani). Az adatbázis mezőit ezeken felül nem kell megadnunk, azokat úgynevezett ,,magic method''-on\cite{magicMethod} keresztül tudjuk elérni.
+A modellen belül megadhatunk több információt is, mint a tábla neve, ha szükséges, illetve beállíthatjuk, hogy az elsődleges kulcs az automatikusan növekedjen-e vagy sem. Megadhatjuk azt is, hogy mely mezőket lehet kitölteni a \emph{\$fillable} mező segítségével. A \emph{\$hidden} mezővel megadhatjuk, hogy mely attribútumokat nem szeretnénk szerializálni (ilyen lehet például a jelszó), és azt is megadhatjuk, hogy ha egyes adatbázis mezőket szeretnénk átkonvertálni más típusúra (ilyen például ha a tárolt dátumot a keretrendszer által biztosított dátum objektummá szeretnénk alakítani). Az adatbázis mezőit ezeken felül nem kell megadnunk, mivel azokat úgynevezett ,,magic method''-on\cite{magicMethod} keresztül tudjuk elérni.
 
 A másik nagyobb ,,kategória'', amit meg szoktak írni a modellek esetén, azok a kapcsolatok. A keretrendszer lehetőséget nyújt a szokásos kapcsolatok (egy az egyhez, egy a többhöz stb.) kialakítására függvények segítségével. \Aref{onetomany}. kódrészletben egy a többhöz kapcsolatot lehet látni. \Aref{manytomany}. kódrészletben pedig egy több a többhöz kapcsolatot, ami kettő, egy a többhöz kapcsolattal van feloldva, ahol a kapcsoló tábla a \emph{course\_students}. Érdemes megfigyelni, hogy nincsenek megadva a kapcsolatoknál az azokat megvalósító idegenkulcsok nevei. Ahogy az fentebb említettem, ha követjük az elnevezés konvenciót, akkor azokat itt sem kell megadni. Ez alól a több a többhöz kapcsolat esetén a kapcsolótábla neve jelent kivételt.
 
@@ -465,7 +465,7 @@ A másik nagyobb ,,kategória'', amit meg szoktak írni a modellek esetén, azok
 
 \subsection{Eloquent ORM}
 
-Az ORM, avagy az Object Relational Mapping rendszerek abban nyújtanak segítséget, hogy összekössék az adatbázist a modelljeinkkel, ezáltal a modelleket használhatjuk az adatbázissal való kommunikáció során SQL parancsok írása helyett.\cite{orm} A Laravel egy nagyszerű ORM rendszerrel készül, amit Eloquent-nek\cite{eloquentORM} hívnak. Segítségével bonyolult lekérdezéseket, frissítéseket, szűréseket létrehozásokat tudunk elvégezni a modelleken és azok kapcsolatain keresztül. Bár a bonyolultabb lekérdezések megírása elsőre nehézséget jelentett, könnyen megtanulható és megszokható volt ez az ORM, és gyorsan meg is szerettem.
+Az ORM, avagy az Object Relational Mapping rendszerek abban nyújtanak segítséget, hogy összekössék az adatbázist a modelljeinkkel, ezáltal a modelleket használhatjuk az adatbázissal való kommunikáció során SQL parancsok írása helyett.\cite{orm} A Laravel egy nagyszerű ORM rendszerrel érkezik, amit Eloquent-nek\cite{eloquentORM} hívnak. Segítségével bonyolult lekérdezéseket, frissítéseket, szűréseket és létrehozásokat tudunk elvégezni a modelleken és azok kapcsolatain keresztül. Bár a bonyolultabb lekérdezések megírása elsőre nehézséget jelentett, könnyen megtanulható és megszokható volt ez az ORM, és gyorsan meg is szerettem.
 
 \Aref{eloquent} kódrészletben egy ilyen lekérdezést láthatunk: lekérdezem a tantárgyakat, illetve szűröm őket azonosító és név szerint, ha adott meg szűrési feltételeket a felhasználó. Emellett látható az is, hogy a lapozás is keretrendszer szinten támogatott a \emph{paginate} függvény segítségével. Ehhez meg kell adni, hogy hány elemet szeretnénk megjeleníteni egy oldalon, és opcionálisan egy nevet is adhatunk neki, ami akkor hasznos, ha több ilyen lapozó szakaszt is tartalmaz az oldal. Ezáltal nem egyszerre kerül lekérdezésre az összes entitás
 
@@ -482,7 +482,7 @@ A Blade különböző direktívák használatát teszi lehetővé, ami megkönny
 
 Hasznos segítséget nyújt a kinézetek egységes felépítésében is: az egyes nézetek kibővíthetnek másik nézeteket, ami sok fölösleges kódismétlést kiküszöböl, mivel a főbb formázásokat és részleteket (például a navigációs sávot) elegendő egyszer megírni, a többi oldalunkat pedig ebből a fájlból kiterjeszteni.
 
-Ezek mellett komponenseket is létrehozhatunk, amik újra és újra felhasználható kódokat tartalmaznak. Én ezt első sorban az ikonoknál használtam ki, a többi esetben egy speciális, Livewire komponenseket használtam, erről többet \aref{livewireSection}. alfejezetben olvashatnak. Minden olyan ikon esetében, amit többször használtam, egy komponenst hoztam létre neki, ami tartalmazta a ikont leíró SVG kódot, így azt csak be kellett hivatkozni, ahogy az \aref{component}. kódrészletben látható. A komponens egy HTML tag-ként jelenik meg, illetve egy \emph{x-} előtaggal rendelkezik.
+Ezek mellett komponenseket is létrehozhatunk, amik újra és újra felhasználható kódokat tartalmaznak. Én ezt első sorban az ikonoknál használtam ki, a többi esetben egy speciális, Livewire komponenseket használtam, erről többet \aref{livewireSection}. alfejezetben lehet olvasni. Minden olyan ikon esetében, amit többször használtam, egy komponenst hoztam létre neki, ami tartalmazta a ikont leíró SVG kódot, így azt csak be kellett hivatkozni, ahogy az \aref{component}. kódrészletben látható. A komponens egy HTML tag-ként jelenik meg, illetve egy \emph{x-} előtaggal rendelkezik.
 
 \lstinputlisting[caption={Komponens meghívása.}, label=component, style=php]{../codes/component.blade.php}
 
@@ -491,7 +491,7 @@ Ezek mellett komponenseket is létrehozhatunk, amik újra és újra felhasználh
 
 A modellek és az adatbázis elkészítése után az egyik első dolgom volt az autentikáció kialakítása. Ez egy elég repetitív folyamat tud lenni, ezért ennek felgyorsítására a \emph{Laravel Fortify}\cite{fortify} nevű csomagot alkalmaztam.
 
-Ezen csomag abban nyújt segítséget, hogy előre elkészíti az autentikációhoz szükséges útvonalakat, funkciókat, mint a bejelentkezés, regisztráció, jelszó visszaállítás. Magát a nézetek továbbra is nekünk kell létrehozni, illetve szükség esetén személyre szabhatjuk a különböző folyamatokat is. Gondolok itt arra, ha mondjuk nem email cím segítségével jelentkeznek be a felhasználók (például az én programomban beléphetnek email vagy Neptun kód segítségéve is), vagy ha több mezőt kell megadni regisztrációkor, mint amit a Fortify alapértelmezetten felajánl.
+Ezen csomag abban nyújt segítséget, hogy előre elkészíti az autentikációhoz szükséges útvonalakat, funkciókat, mint a bejelentkezés, regisztráció, jelszó visszaállítás. Magát a nézeteket továbbra is nekünk kell létrehozni, illetve szükség esetén személyre szabhatjuk a különböző folyamatokat is. Gondolok itt arra, ha mondjuk nem email cím segítségével jelentkeznek be a felhasználók (például az én programomban beléphetnek email vagy Neptun kód segítségéve is), vagy ha több mezőt kell megadni regisztrációkor, mint amit a Fortify alapértelmezetten felajánl.
 
 Amennyiben egy egyszerűbb alkalmazást készítünk, akkor lehetőségünk van használni több olyan csomagot, amik telepítéstől kezdve egy félkész alkalmazást adnak, amiben sok általános funkció (bejelentkezés, felhasználókezelés stb.) alapból el vannak készítve. Bár csábítóan hangzik, véleményem szerint ezeket nem érdemes használni, mivel egy nagyon általános, nem túl egyedi élményt nyújtanak, amit nehézkes lehet személyre szabni. Emiatt döntöttem inkább a Fortify használata mellett, és alakítottam ki én a nézeteket.
 
@@ -756,7 +756,7 @@ A teszt futásának a végén egy HTML dokumentumot kapunk eredményül, mely ta
 
 \begin{figure}[ht!]
 	\centering
-	\includegraphics[width=16cm]{../pictures/screenshots/gatling.png}
+	\includegraphics[width=15cm]{../pictures/screenshots/gatling.png}
 	\caption{Részlet egy tesztelésből.}
 	\label{gatlingResult}
 \end{figure}

@@ -214,9 +214,9 @@ Amikor szakdolgozati témaválasztás előtt álltam, sokat gondolkoztam a tém�
 
 A megvalósítás során törekedtem arra, hogy egy jól átlátható, ergonomikus weboldalt készítsek, amit -- esetleges kisebb módosításokkal -- ne csak egyetemi környezetben lehessen használni. Ezekből kifolyólag egy webalkalmazást készítettem, mivel ezt a legegyszerűbb elérni, hiszen csak egy webböngésző szükséges hozzá. A tanulók és tanárok által használt oldalak reszponzívan lettek elkészítve, ezáltal biztosítva, hogy mobiltelefonon is használni lehessen. Illetve az alkalmazás PWA\footnote{Jelentése: Progressive Web App: egy olyan alkalmazás, ami webes technológiákat használ, de platform specifikus alkalmazásként viselkedik.\cite{PWA}}  funkciókkal rendelkezik, aminek jelentőségére később térek ki, de előjáróban annyit érdemes megemlíteni róla, hogy lehetővé teszi a weboldal alkalmazásként való telepítését számítógép és telefon esetén is, ezáltal egy rendes alkalmazás érzését keltve.
 
-A megvalósításhoz a Laravel\cite{meetlaravel} keretrendszert használtam, mely egy PHP\cite{php} alapú, MVC\footnote{Jelentése: Model-View-Controller.\cite{mvc}} keretrendszer, amivel tanulmányaim során találkoztam, és egyből megkedveltem. Nem titkolt célom a szakdolgozatommal, hogy bemutassam, hogy a mai, JavaScript-et\cite{javascript} preferáló világban, továbbra is lehetséges modern, a mai kor igényeit kielégítő weboldalt készíteni PHP segítségével, amihez különböző csomagokat alkalmaztam, amiknek működését, illetve egymással való működését a későbbiekben fogom kifejteni.
+A megvalósításhoz a Laravel\cite{meetlaravel} keretrendszert használtam, mely egy PHP\cite{php} alapú, MVC\footnote{Jelentése: Model-View-Controller.\cite{mvc}} keretrendszer, amivel tanulmányaim során találkoztam, és egyből megkedveltem. Nem titkolt célom a szakdolgozatommal, hogy bemutassam, hogy a mai, JavaScript-et\cite{javascript} preferáló világban továbbra is lehetséges modern, a mai kor igényeit kielégítő weboldalt készíteni PHP segítségével. Mindehhez különböző csomagokat alkalmaztam, amiknek működését, illetve egymással való működését a későbbiekben fogom kifejteni.
 
-Szakdolgozatom négy részre osztottam: \aref{appDescription}. fejezetben magát az alkalmazást mutatom be, inkább felhasználói szemszögből. \Aref{packages}. fejezetben magát a keretrendszert, illetve a használt csomagokat, a technikai részleteket tárgyalom. Végül \aref{testing}. és \aref{setup}. fejezetben a tesztelést és a telepítést részletezem.
+Szakdolgozatomat négy részre osztottam: \aref{appDescription}. fejezetben magát az alkalmazást mutatom be, elsősorban felhasználói szemszögből. \Aref{packages}. fejezetben magát a keretrendszert, illetve a használt csomagokat és a technikai részleteket tárgyalom. Végül \aref{testing}. és \ref{setup}. fejezetben a tesztelést és a telepítést részletezem.
 
 \chapter{Alkalmazás bemutatása}
 \label{appDescription}
@@ -232,17 +232,17 @@ Szakdolgozatom négy részre osztottam: \aref{appDescription}. fejezetben magát
 \end{figure}
 
 \begin{itemize}
-	\item \emph{users, user\_roles}: ez a tábla tárolja a felhasználók adatait, illetve a felhasználókhoz tartozó jogosultsági köröket. Minden felhasználóról tárolunk egy azonosítót, egy Neptun\cite{Neptun} kódot\footnote{A neptun kód egy 6 karakter hosszú, egyedi azonosító.}, nevet, email címet, egy titkosított jelszót, egy profilképet, a felhasználó által használt nyelvet, illetve egy UUID-t\footnote{Egyedi azonosító.\cite{uuid}}, azaz egy egyedi azonosítót, amit az órarend exportálásához lehet használni, erről később. Az azonosító oszlopra azért van szükség, mivel az alkalmazás fel van készítve arra, hogy Neptun kód nélkül rendelkező felhasználókat is tudjon kezelni. A két tábla között azért nem látható kapcsolat, mivel a \emph{user\_roles} táblát egy csomag hozta létre, ami csak a keretrendszer szintjén hozta létre a kapcsolatokat.
+	\item \emph{users, user\_roles}: ez a tábla tárolja a felhasználók adatait, illetve a felhasználókhoz tartozó jogosultsági köröket. Minden felhasználóról tárolunk egy azonosítót, egy Neptun\cite{Neptun} kódot\footnote{A neptun kód egy 6 karakter hosszú, egyedi azonosító.}, nevet, email címet, egy titkosított jelszót, egy profilképet, a felhasználó által használt nyelvet, illetve egy UUID-t\footnote{Egyedi azonosító.\cite{uuid}}, azaz egy egyedi azonosítót, amit az órarend exportálásához lehet használni, de erről később. Az azonosító oszlopra azért van szükség, mivel az alkalmazás fel van készítve arra, hogy Neptun kód nélkül rendelkező felhasználókat is tudjon kezelni. A két tábla között azért nem látható kapcsolat, mivel a \emph{user\_roles} táblát egy csomag hozta létre, ami csak a keretrendszer szintjén hozta létre a kapcsolatokat.
 	
 	\item \emph{terms, places}: a félévek és termek (helyek) tárolására szolgáló táblák.
 	
-	\item \emph{subjects, courses, course\_classe, class\_login\_links}: ezen táblák tárolják a tantárgyakat (amik többek között rendelkeznek egy azonosítóval, névvel, leírással, kreditértékkel, és egy tantárgyfelelőssel), a tantárgyakhoz tartozó kurzusokat (amihez tárolok egy azonosítót, ami minden esetben egyedi, egy kurzus azonosítót, ami minden félév és tantárgy esetében kell egyedinek lennie, tartozik hozzá egy félév, illetve egy létszám limit), illetve a kurzusokhoz pedig órák (amiknek van egy kezdete, vége, illetve egy terem, ahol tartják). Az utolsó tábla pedig az órákhoz tartozó bejelentkező linkeket tartalmazza, ennek jelentőségéről kicsit később.
+	\item \emph{subjects, courses, course\_classes, class\_login\_links}: ezen táblák tárolják a tantárgyakat, a kurzusokat és az órákat, illetve a órára való bejelentkezéshez szükséges linkeket. A tantárgyak egy azonosítóval, névvel, leírással, kreditértékkel és egy tantárgyfelelőssel rendelkeznek. Kurzusok esetén egy egyedi azonosítót, illetve egy másik, minden félév \emph{és} tantárgy esetén egyedi kódot, egy félévet, illetve egy létszám limitet tárolok. Az utolsó tábla tartalmazza a bejelentkezési linkekben megjelenő azonosítókat.
 	
 	\item  \emph{attendances}: itt tárolom az egyes kurzusok résztvevőinek az órai jelenléteit, melyek lehetnek: nincs kitöltve, jelen, késés (mely esetben percben lehet tárolni a mértékét), hiányzás, igazolt hiányzás.
 	
-	\item \emph{justification, justification\_acceptances, justification\_pictures}: ezek a táblák tárolják az igazolásokat, az igazoláshoz tartozó feltöltött képeket, illetve az igazolásban érintett tanárok válaszát, hogy elfogadják-e , vagy sem.
+	\item \emph{justification, justification\_acceptances, justification\_pictures}: ezek a táblák tárolják az igazolásokat és az igazolásokhoz tartozó feltöltött képeket, illetve az igazolásban érintett tanárok válaszát, hogy elfogadják-e, vagy sem.
 	
-	\item Az egyéb, nem említett táblák inkább kapcsolótábla funkciót töltenek be, vagy a keretrendszernek vannak rá szükségei. Például a \emph{jobs} tábla a háttérben végrehajtandó feladatokat (job) tartalmazza.
+	\item Az egyéb, nem említett táblák inkább kapcsolótábla funkciót töltenek be, vagy a keretrendszernek van rá szüksége. Például a \emph{jobs} tábla a háttérben végrehajtandó feladatokat (job) tartalmazza.
 \end{itemize}
 
 Itt érdemes még megemlíteni, hogy a fejlesztés során a MySQL\cite{mysql} nevezetű, relációs adatbázist használtam, viszont a Laravel keretrendszerből adódóan sok más típusú adatbázis szoftverrel használható az alkalmazás, mivel a táblák felépítése a keretrendszer nyújtotta módon van elkészítve.
@@ -252,33 +252,33 @@ Itt érdemes még megemlíteni, hogy a fejlesztés során a MySQL\cite{mysql} ne
 \subsection{Felhasználók}
 \label{users}
 
-Az alkalmazás 4 különböző jogkört különböztet meg a felhasználók esetén, melyekből egyszerre többet is birtokolhat a felhasználó:
+Az alkalmazás 4 jogkört különböztet meg a felhasználók esetén, melyekből egyszerre többet is birtokolhat a felhasználó:
 
 \begin{itemize}
-	\item Szuper adminisztrátor: képes a felhasználók adatainak -- és jogköreinek -- szerkesztésére, illetve az alkalmazás alapbeállításainak módosítására az adminisztrátor jogain felül.
-	\item Adminisztrátor: a félévek, termek, tantárgyak, kurzusok, órák, készítésére, módosítására, törlésére jogosult.
+	\item Szuper adminisztrátor: képes a felhasználók adatainak szerkesztésére, illetve az alkalmazás alapbeállításainak módosítására az adminisztrátor jogain felül.
+	\item Adminisztrátor: a félévek, termek, tantárgyak, kurzusok, órák, készítésére, módosítására és törlésére jogosult.
 	\item Tanár: megtekintheti a tanított óráit, kurzusait, hallgatóit. Adminisztrálni tudja az órákon való részvételt, illetve megtekintheti és bírálhatja a hozzá érkezett igazolásokat.
-	\item Hallgató: a hozzárendelt óráit, tantárgyait látja, megtekintheti minden kurzus esetén az egyes órák státuszát, illetve igazolásokat hozhat létre
+	\item Hallgató: a hozzárendelt óráit, tantárgyait látja, megtekintheti minden kurzus esetén az egyes órák státuszát, illetve igazolásokat hozhat létre.
 \end{itemize}
 
-Az alkalmazás természetesen rendelkezik bejelentkezés, regisztráció funkciókkal. A felhasználók Neptun\cite{Neptun} kódjuk vagy email címük, illetve a jelszavuk megadásával tudnak bejelentkezni. Regisztrálni csak abban az esetben tudnak, ha az oldal beállításaiban ezt engedélyezték, egyéb esetben a szuper adminisztrátorok tudnak felhasználókat létrehozni vagy importálni. Belépés után  a profil szerkeszthető, a jelszó cserélhető.
+Az alkalmazás természetesen rendelkezik bejelentkezés és regisztráció funkcióval. A felhasználók Neptun\cite{Neptun} kódjuk vagy email címük, illetve a jelszavuk megadásával tudnak bejelentkezni. Regisztrálni csak abban az esetben tudnak, ha az oldal beállításaiban ezt engedélyezték, egyéb esetben a szuper adminisztrátorok tudnak felhasználókat létrehozni vagy importálni. Belépés után  a profil szerkeszthető, a jelszó cserélhető.
 
 \subsection{Általános funkciók}
 
-Bejelentkezés után a főoldalon a felhasználók pár, számukra fontos vagy érdekes információt láthatnak. Tanulók esetében a mai napi óráikat, illetve adminisztrálásra váró igazolásaik jelennek meg. Tanárok esetén szintén a mai óráikat, illetve a kapott igazolásaikat láthatják. Az adminisztrátorok pár statisztikát láthatnak az oldal kapcsán.
+Bejelentkezés után a főoldalon a felhasználók pár, számukra fontos vagy érdekes információt láthatnak. Tanulók esetében az aznapi óráik, illetve adminisztrálásra váró igazolásaik jelennek meg. Tanárok esetén szintén az aznapi óráikat, illetve a kapott igazolásaikat láthatják. Az adminisztrátorok pár statisztikát láthatnak az oldal kapcsán.
 
 \begin{figure}[ht!]
 	\centering
-	\includegraphics[width=10cm]{../pictures/screenshots/landing.png}
+	\includegraphics[width=15cm]{../pictures/screenshots/landing.png}
 	\caption{A főoldal kinézete abban az esetben, ha a felhasználó minden szerepkörrel rendelkezik. A két bal oldali oszlop a hallgatói nézethez tartozik, a két jobb oldali pedig az oktatóihoz, míg a statisztika adminisztrátorok esetén jelenik meg.}
 	\label{landing}
 \end{figure}
 
-A profil kép melletti gombra kattintva a felhasználó meg tudja változtatni az oldal nyelvét, Angol és Magyar nyelv közül választva, illetve az oldalt kinézetét: világos és sötét mód között váltogatva. A nyelv beállítása eltárolódik a felhasználóhoz, így újabb bejelentkezés esetén automatikusan beállításra kerül, míg a téma beállítás az adott böngészőben tárolódik el.
+A profilkép melletti gombra kattintva a felhasználó meg tudja változtatni az oldal nyelvét, angol és magyar nyelv közül választva, illetve az oldalt kinézetét: világos és sötét mód között váltogatva. A nyelv beállítása eltárolódik a felhasználónak, így újabb bejelentkezés esetén automatikusan beállításra kerül, míg a téma beállítás az adott böngészőben tárolódik el.
 
-Tanuló vagy tanár esetén megjelenik az \emph{Órarend} menüpont is, ahol egy helyen láthatják a heti óráikat a felhasználók. Az egyes órák különböző színekkel jelennek meg, ezzel jelezve, hogy az adott órát a felhasználó tanítja-e, vagy hallgató esetén az órán jelen volt, hiányzott, késett, igazoltan hiányzott, vagy még nincs kitöltve a jelenlét. A tanárok az óráikra rá utdnak kattintani, ezáltal közvetlen az óra adminisztrációs felülethez kerülhetnek. Lehetőség van az órarend exportálásra is, mely során egy \emph{.ics} kiterjesztésű fájl áll elő. Ez egy széles körben használt általános naptár formátum, amit a felhasználók be tudnak importálni a gyakorian használt naptár programokba\cite{ICS}. Ezáltal kedvenc naptár alkalmazásukban is nyomon tudják követni óráikat. Importálás után a naptár automatikusan tud frissülni, amennyiben ezt beállítják a felhasználók az általuk használt programban.
+Tanuló vagy tanár esetén megjelenik az \emph{Órarend} menüpont is, ahol egy helyen láthatják a heti óráikat a felhasználók. Az órák különböző színekkel jelennek meg, ezzel jelezve, hogy az adott órát a felhasználó tanítja-e, vagy hallgató esetén az órán jelen volt, hiányzott, késett, igazoltan hiányzott, vagy még nincs kitöltve a jelenlét. A tanárok az óráikra rá tudnak kattintani, ezáltal közvetlen az óra adminisztrációs felülethez kerülnek. Lehetőség van az órarend exportálásra is, mely során egy \emph{.ics} kiterjesztésű fájl áll elő. Ez egy széles körben használt általános naptár formátum, amit a felhasználók be tudnak importálni a gyakorian használt naptár programokba\cite{ICS}. Ezáltal kedvenc naptár alkalmazásukban is nyomon tudják követni óráikat. Importálás után a naptár automatikusan tud frissülni, amennyiben ezt beállítják a felhasználók az általuk használt programban.
 
-Lehetőség van a weboldalt alkalmazásként telepíteni, ahogy az \aref{install} ábrán is látható, így gyorsan hozzáférhetnek az alkalmazás funkcióihoz, egy ,,rendes'' alkalmazás érzését keltve ezzel. Ezt a PWA\footnote{Jelentése: Progressive Web App: egy olyan alkalmazás, ami webes technológiákat használ, de platform specifikus alkalmazásként viselkedik.\cite{PWA}} teszi lehetővé, melynek működésére későbbiekben térek ki. A funkció működik asztali és mobilos környezetben is, ugyan akkor nem minden böngésző támogatja. Ilyen esetben a webböngészőben továbbra is használható az alkalmazás.
+Lehetőség van a weboldalt alkalmazásként telepíteni, ahogy az \aref{install} ábrán is látható, így gyorsan hozzáférhetnek az alkalmazás funkcióihoz, ezzel egy ,,rendes'' alkalmazás érzését keltve. Ezt a PWA\footnote{Jelentése: Progressive Web App: egy olyan alkalmazás, ami webes technológiákat használ, de platform specifikus alkalmazásként viselkedik.\cite{PWA}} teszi lehetővé, melynek működésére későbbiekben térek ki. A funkció működik asztali és mobilos környezetben is, ugyanakkor nem minden böngésző támogatja. Ilyen esetben a webböngészőben továbbra is használható az alkalmazás.
 
 \begin{figure}[ht!]
 	\centering
@@ -291,7 +291,7 @@ Lehetőség van a weboldalt alkalmazásként telepíteni, ahogy az \aref{install
 
 \subsection{Felhasználók kezelése}
 
-Szuper adminisztrátor esetén a felhasználó képes kezelni az alkalmazásban tárolt felhasználókat, kivéve saját magát (személyes adatait továbbra is meg tudja változtatni). A listában képes szűrni a felhasználók között, megváltoztatni profil adataikat, jelszavukat alaphelyzetbe állítani, szerkeszteni jogosultsági szintjeiket, illetve akár törölni is őket, ha szükséges. Tud új felhasználókat létrehozni, illetve képes fájlból is importálni adatokat, így nem kell kézzel felvinni minden egyes felhasználót. Amikor egy új felhasználót hoz létre egy adminisztrátor, akkor a megadott email címre kerül kiküldésre a jelszó beállításához szükséges információ.
+Szuper adminisztrátor esetén a felhasználó képes kezelni az alkalmazásban tárolt felhasználókat, kivéve saját magát (személyes adatait továbbra is meg tudja változtatni). A listában képes szűrni a felhasználók között, megváltoztatni profilhoz tartozó adataikat, jelszavukat alaphelyzetbe állítani, szerkeszteni jogosultsági szintjeiket, illetve akár törölni is őket, ha szükséges. Tud új felhasználókat létrehozni, illetve képes fájlból is importálni adatokat, így nem kell kézzel felvinni minden egyes felhasználót. Amikor egy új felhasználót hoz létre egy adminisztrátor, akkor a megadott email címre kerül kiküldésre a jelszó beállításához szükséges információ.
 
 \subsection{Alkalmazás konfiguráció}
 
@@ -314,7 +314,7 @@ Félévek esetén egy nevet, illetve egy kezdő és vég dátumot szükséges me
 
 A termeknél elegendő egy nevet megadni, ezeket lehet az egyes órákhoz hozzárendelni.
 
-Tantárgyak esetén egy tárgy kódot, egy nevet, egy opcionális leírást, egy kredit értékéket, illetve egy tantárgyfelelőst tárol, akinek rálátása van a tárgy összes kurzusára. Ezen belül minden kurzus egy tárgyhoz kapcsolódik. Ezek szintén rendelkeznek egy kóddal, ami minden tárgy és félév esetén egyedi, szintén egy opcionális leírással, illetve nulla, egy, vagy több tanárral. Minden kurzus egy félévhez van rendelve, ez automatikusan kiválasztásra is kerül, ha van éppen aktív félév. A kurzusokhoz hozzárendelhetők a hallgatók, és csak is a hallgatók.
+Tantárgyak esetén egy tárgy kódot, egy nevet, egy opcionális leírást, egy kredit értéket, illetve egy tantárgyfelelőst tárol, akinek rálátása van a tárgy összes kurzusára. Az adott tantárgynál hozható létre hozzá kurzus. Ezek szintén rendelkeznek egy kóddal, ami minden tárgy és félév esetén egyedi, szintén egy opcionális leírással, illetve nulla, egy, vagy több tanárral. Minden kurzus egy félévhez van rendelve, ez automatikusan kiválasztásra is kerül, ha van éppen aktív félév. A kurzusokhoz hozzárendelhetők a hallgatók, és csak is a hallgatók.
 
 A kurzusokhoz órák hozhatóak létre, amik a féléven belül lehetnek. Minden óra külön kezdés és vég időponttal rendelkezik, illetve egy teremmel, ahol tartják. Az óra létrehozásakor lehetőség van arra is, hogy a félév végig heti ismétléssel hozza létre az órákat -- természetesen később egyenként lehet őket szerkeszteni, törölni --, ezáltal megkönnyítve az adminisztrációt. Az órák nem ütközhetnek egymással.
 
@@ -331,17 +331,17 @@ A kurzusokhoz órák hozhatóak létre, amik a féléven belül lehetnek. Minden
 \subsection{Oktatott tárgyak}
 \label{taugthClass}
 
-A tanárok megtekinthetik az általuk oktatott -- vagy tantárgyfelelősként hozzáadott -- tárgyakat, és az azokhoz kapcsolódó adatokat. Igény szerint szűrhetnek kód, név, vagy félévre is. Minden kurzus esetén megtekinthetik az alap adatokat, a kurzushoz tartozó órákat, hallgatókat. Itt van lehetősége a tanárnak hozzáadni hallgatókat a kurzushoz, illetve egy listában megtekinteni diákokra lebontva, hogy mennyit hiányoztak, mennyit késtek és ebből mennyi az igazolatlan.
+A tanárok megtekinthetik az általuk oktatott -- vagy tantárgyfelelősként hozzáadott -- tárgyakat, és az azokhoz kapcsolódó adatokat. Igény szerint szűrhetnek kód, név, vagy félévre is. Minden kurzus esetén megtekinthetik az alap adatokat, a kurzushoz tartozó órákat és hallgatókat. Itt van lehetősége a tanárnak hozzáadni hallgatókat a kurzushoz, illetve egy listában megtekinteni diákokra lebontva, hogy mennyit hiányoztak, mennyit késtek és ebből mennyi az igazolatlan.
 
-A kurzus órái listában érhetik el az egyes órákat, ahol adminisztrálhatják a jelenlétet. Egy órát megnyitva láthatják az ahhoz kapcsolódó adatokat, illetve bal oldalon egy listát a kurzus tanulóiról, ahol beállíthatják a hallgató státuszát. Amennyiben az adott hallgató a tanár által elfogadott igazolással rendelkezik, akkor ebben az esetben csak ,,jelen'' státusz -- ha esetleg mégis megjelent az órán --, vagy pedig ,,igazolt hiányzás'' státusz állítható be, illetve egy figyelmeztető üzenet is megjelenik. Emellett megjelenik az adott kurzuson való összes hiányzás és igazolt hiányzások száma is. Hiányzás rögzítése esetén email üzenet formájában is értesítést kap a hallgató.
+A kurzus órái listában érhetik el az egyes órákat, ahol adminisztrálhatják a jelenlétet. Egy órát megnyitva láthatják az ahhoz kapcsolódó adatokat, illetve bal oldalon egy listát a kurzus hallgatóiról, ahol beállíthatják a hallgatók státuszát. Amennyiben az adott hallgató a tanár által elfogadott igazolással rendelkezik, akkor ebben az esetben csak ,,jelen'' státusz -- ha esetleg mégis megjelent az órán --, vagy pedig ,,igazolt hiányzás'' státusz állítható be, illetve egy figyelmeztető üzenet is megjelenik. Emellett megjelenik az adott kurzuson való összes hiányzás és igazolt hiányzások száma is. Hiányzás rögzítése esetén email üzenet formájában is értesítést kap a hallgató.
 
-A jobb oldalt kettő doboz foglal helyet. Az első egy QR\footnote{A QR kód egy információt tartalmazó kép, amit kamerával lehet beolvasni.\cite{QR}} kódot tartalmaz. Ennek segítségével, ha az oktató láthatóvá teszi, akkor a diákok ezt a kódot a telefonjukon beolvasva, majd bejelentkezve is feljegyezhetik jelenlétüket az órán, ezzel felgyorsítva a folyamatot, és a tanárnak sem kell végig mennie a listán. A kód csak az óra végéig működik, illetve ha az oktató úgy sejti, hogy a hallgatók visszaélnek ezzel, akkor hamarabb is letilthatja, illetve generálhat egy másikat. Amikor a hallgató íj módon jelentkezik be az órára, akkor a tanári felületen automatikusan frissítésre kerül a státusz. A hallgató csak abban az esetben tudja ezt a funkciót használni, hogy ha fel van iratkozva a kurzusra, és még nem állították be az adott órára a státuszát, ezzel elkerülve, hogy magától átírja esetleges hiányzását, késését.
+A jobb oldalt kettő doboz foglal helyet, ahogy az \aref{class2}. ábrán látható. Az első egy QR\footnote{A QR kód egy információt tartalmazó kép, amit kamerával lehet beolvasni.\cite{QR}} kódot tartalmaz. Ennek segítségével, ha a tanár láthatóvá teszi, akkor a diákok ezt a kódot a telefonjukon beolvasva, majd bejelentkezve is feljegyezhetik jelenlétüket az órán, ezzel felgyorsítva a folyamatot, és a tanárnak sem kell végig mennie a listán. A kód csak az óra végéig működik, illetve ha az oktató úgy sejti, hogy a hallgatók visszaélnek ezzel, akkor hamarabb is letilthatja, illetve generálhat egy másikat. Amikor a hallgató íj módon jelentkezik be az órára, akkor a tanári felületen automatikusan frissítésre kerül a státusz. A hallgató csak abban az esetben tudja ezt a funkciót használni, hogy ha fel van iratkozva a kurzusra, és még nem állították be az adott órára a státuszát, ezzel elkerülve, hogy magától átírja esetleges hiányzását, késését.
 
-A másik ilyen doboz egy kis statisztikát mutat kördiagram formájában, megszámolva a hallgatók státuszát az órán, ezzel is egy visszajelzést nyújtva az oktatónak.
+A másik ilyen doboz egy kis statisztikát mutat kördiagram formájában, megszámolva a hallgatók státuszát az órán, ezzel is egy visszajelzést nyújtva a tanárnak.
 
 \begin{figure}[ht!]
 	\centering
-	\includegraphics[width=10cm]{../pictures/screenshots/class_1.png}
+	\includegraphics[width=15cm]{../pictures/screenshots/class_1.png}
 	\caption{Egy óra nézete.}
 	\label{class}
 \end{figure}
@@ -356,11 +356,11 @@ A másik ilyen doboz egy kis statisztikát mutat kördiagram formájában, megsz
 
 \subsection{Igazolások}
 
-Amikor egy hallgató igazolást ad le, akkor azt minden érintett tanár megkapja, és reagálhat rá; vagy elfogadja, vagy indoklással elutasítja. A lista alapból szűrésre kerül, hogy csak a még meg nem válaszolt igazolásokat mutassa az oktatónak, de lehetőség van név és dátum alapján szűrni az igazolásokat. Amikor a tanár megnyit egy ilyen igazolást, láthatja, hogy ki küldte be az igazolást, annak típusát (orvosi vagy egyéb), a kezdeti és vég időpontot, illetve az esetlegesen feltöltött képeket is megtekintheti, azokra rákattintva kinagyíthatja őket. Ezek mellett listába szedve, és tantárgy, majd kurzus alapján kategorizálva láthatja az általa oktatott és az igazolásban érintett órákat, azok idejét, illetve a hallgató jelenlegi státuszát az órán. Az igazolás elfogadása esetén azokon az órákon, ahol nem ,,jelen''-re van állítva az állapot, automatikusan ,,igazolt hiányzás'' állapot kerül beállításra. Elfogadás és elutasítás esetén is üzenet kap a hallgató, illetve a főoldalon megtekintheti a még függőben lévő (tehát az olyan igazolásokat, amire nem válaszolt minden érintett tanár) igazolásait is.
+Amikor egy hallgató igazolást ad le, akkor azt minden érintett tanár megkapja, és reagálhat rá; vagy elfogadja, vagy indoklással elutasítja. A lista alapból szűrésre kerül, hogy csak a még meg nem válaszolt igazolásokat mutassa az oktatónak, de lehetőség van név és dátum alapján is szűrni az igazolásokat. Amikor a tanár megnyit egy ilyen igazolást, láthatja, hogy ki küldte be az igazolást, annak típusát (orvosi vagy egyéb), a kezdeti és vég időpontot, illetve az esetlegesen feltöltött képeket is megtekintheti, azokra rákattintva kinagyíthatja őket. Ezek mellett listába szedve és tantárgy, majd kurzus alapján kategorizálva láthatja az általa oktatott és az igazolásban érintett órákat, azok idejét, illetve a hallgató jelenlegi státuszát az órán. Az igazolás elfogadása esetén azokon az órákon, ahol nem ,,jelen''-re van állítva az állapot, automatikusan ,,igazolt hiányzás'' állapot kerül beállításra. Elfogadás és elutasítás esetén is üzenet kap a hallgató, illetve a főoldalon megtekintheti a még függőben lévő (tehát az olyan igazolásokat, amire még nem válaszolt minden érintett tanár) igazolásait is.
 
 \begin{figure}[ht!]
 	\centering
-	\includegraphics[width=15.5cm]{../pictures/screenshots/just_teacher.png}
+	\includegraphics[width=15cm]{../pictures/screenshots/just_teacher.png}
 	\caption{Egy elfogadott igazolás, ahogy a tanár látja.}
 	\label{justTeacher}
 \end{figure}
@@ -369,24 +369,24 @@ Amikor egy hallgató igazolást ad le, akkor azt minden érintett tanár megkapj
 
 \subsection{Tantárgyak, kurzusok}
 
-A hallgatók természetesen láthatják a tantárgyaikat, amiket csakugyan szűrhetnek név, kód, félév szerint. Itt egy helyen megtekinthetik kurzusokra lebontva, hogy melyik órán milyen státusz van rögzítve, illetve egy diagramon ezeknek az eloszlását. Megtekinthetik még a kurzuson lévő hallgatótársaikat is.
+A hallgatók természetesen láthatják a tantárgyaikat, amiket csakugyan szűrhetnek név, kód és félév szerint. Itt egy helyen megtekinthetik kurzusokra lebontva, hogy melyik órán milyen státusz van rögzítve, illetve egy diagramon ezeknek az eloszlását, ahogy az \ref{studentCourse}. ábrán látható. Megtekinthetik emellett még a kurzuson lévő hallgatótársaikat is.
 
-\begin{figure}[ht!]
+\begin{figure}[h!]
 	\centering
-	\includegraphics[width=13cm]{../pictures/screenshots/student_course.png}
+	\includegraphics[width=15cm]{../pictures/screenshots/student_course.png}
 	\caption{A hallgató által látott egy kurzus részlete.}
 	\label{studentCourse}
 \end{figure}
 
 \subsection{Hallgató által létrehozott igazolások}
 
-A hallgató a hiányzásainak igazolására igazolásokat adhat le a rendszerben. A létrehozáskor meg kell adnia a típusát (orvosi vagy egyéb), a kezdeti és vég dátumát, illetve szükség szerint megjegyzést fűzhet, illetve képeket tölthet fel, például az orvosi igazolást lefényképezheti. A dátumok megadása után a hallgató is látja az érintett óráit listába szedve, tantárgy és kurzus szerint csoportosítva.
+A hallgató a hiányzásainak igazolására igazolásokat adhat le a rendszerben. A létrehozáskor meg kell adni a típusát (orvosi vagy egyéb), a kezdeti és vég dátumát, illetve szükség szerint megjegyzést fűzhet hozzá, igény szerint képeket tölthet fel, például az orvosi igazolást lefényképezheti. A dátumok megadása után megjelennek az érintett órák listába szedve, tantárgy és kurzus szerint csoportosítva.
 
-Helyes adatok megadása és mentés után a listában is megjelenik az igazolás, amit lenyitva látja a megadott részleteket, illetve az egyes tanárok visszajelzését is, hogy elfogadták-e vagy sem. Amennyiben úgy látja, hogy elrontott valamit, akkor itt törölheti az igazolást, és hozhatja újra létre.
+Helyes adatok megadása és mentés után a listában is megjelenik az igazolás, amit lenyitva látja a megadott részleteket, illetve az egyes tanárok visszajelzését is, hogy elfogadták-e vagy sem. Amennyiben úgy látja, hogy elrontott valamit, akkor itt törölheti az igazolást, és létrehozhatja újra.
 
 \begin{figure}[ht!]
 	\centering
-	\includegraphics[width=12cm]{../pictures/screenshots/newJust.png}
+	\includegraphics[width=15cm]{../pictures/screenshots/newJust.png}
 	\caption{Új igazolás létrehozása képernyő.}
 	\label{studentJustification}
 \end{figure}

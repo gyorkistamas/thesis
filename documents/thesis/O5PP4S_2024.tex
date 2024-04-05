@@ -815,6 +815,7 @@ Az alkalmazás a szakdolgozat védés, illetve a záróvizsga időszak alatt el�
 		\item Jelszó: \emph{student}
 	\end{itemize}
 \end{itemize}
+
 \section{Laravel Forge}
 
 A kész alkalmazás egy ingyenes Amazon AWS\cite{aws} szerveren fut, ide került kihelyezésre. Ebben nagy segítséget nyújtott a Laravel Forge\cite{forge} nevű szolgáltatás, ami összekötötte a kódot tartalmazó repozitóriumot, illetve az AWS fiókomat. Így egy helyen történt maga a szerver létrehozása, konfigurációja, illetve az alkalmazás telepítése is. Ehhez egy telepítési szkriptet kellet írni, ami nagyjából hasonló lépéseket végez el, mint \aref{manualSetup}. fejezetben leírtak. Ezek után a Forge telepítette az alkalmazást, majd egy kis konfiguráció után használható is volt. További előnye, hogy amennyiben töltöttem fel új vagy módosított fájlokat a repozitóriumba, akkor ezt a Forge automatikusan észlelte, és frissítette a telepített alkalmazást.

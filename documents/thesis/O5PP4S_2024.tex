@@ -98,7 +98,8 @@
 	stringstyle=\bfseries\color{PineGreen},
 	identifierstyle = \bfseries\color{YellowOrange},
 	morekeywords=[1]{},
-	keywordstyle=[3]{\bfseries\color{red}}
+	keywordstyle=[3]{\bfseries\color{red}},
+	showstringspaces=false
 }
 
 \lstdefinestyle{jsonstyle}{
@@ -118,7 +119,8 @@
 	stringstyle=\bfseries\color{PineGreen},
 	identifierstyle = \bfseries\color{YellowOrange},
 	morekeywords=[1]{},
-	keywordstyle=[3]{\bfseries\color{red}}
+	keywordstyle=[3]{\bfseries\color{red}},
+	showstringspaces=false
 }
 
 \lstdefinestyle{java}{
@@ -138,7 +140,8 @@
 	stringstyle=\bfseries\color{PineGreen},
 	identifierstyle = \bfseries\color{YellowOrange},
 	morekeywords=[1]{},
-	keywordstyle=[3]{\bfseries\color{red}}
+	keywordstyle=[3]{\bfseries\color{red}},
+	showstringspaces=false
 }
 
 \lstdefinestyle{html}{
@@ -158,7 +161,8 @@
 	stringstyle=\bfseries\color{PineGreen},
 	identifierstyle = \bfseries\color{YellowOrange},
 	morekeywords=[1]{},
-	keywordstyle=[3]{\bfseries\color{red}}
+	keywordstyle=[3]{\bfseries\color{red}},
+	showstringspaces=false
 }
 
 \lstdefinestyle{js}{
@@ -178,7 +182,8 @@
 	stringstyle=\bfseries\color{PineGreen},
 	identifierstyle = \bfseries\color{YellowOrange},
 	morekeywords=[1]{},
-	keywordstyle=[3]{\bfseries\color{red}}
+	keywordstyle=[3]{\bfseries\color{red}},
+	showstringspaces=false
 }
 
 \lstdefinestyle{general}{
@@ -499,17 +504,17 @@ Amennyiben egy egyszerűbb alkalmazást készítünk, akkor lehetőségünk van 
 
 \subsubsection{Szerepkörök}
 
-Ahogy azt \aref{users}. alfejezetben említettem, több szerepkört különböztetek meg a programban: szuper adminisztrátor, sima adminisztrátor, tanár és hallgató. Ezeknek a gyors létrehozására a Laravel Ladder\cite{ladder} csomagot alkalmaztam. Ennek segítségével gyorsan definiálhatók szerepkörök. A felhasználó modellt módosítja úgy a csomag, hogy gyorsan letudjuk ellenőrizni, hogy milyen szerepkör(ökk)el rendelkezik a felhasználó. Ezt elsősorban három helyen használtam: a middleware-ek esetén, hogy egy útvonal kinek elérhető, a nézetekben, hogy mely menüpontokat jelenítsem meg a felhasználónak, és a Policy-k esetén, erről bővebben lentebb.
+Ahogy azt \aref{users}. alfejezetben említettem, több szerepkört különböztetek meg a programban: szuper adminisztrátor, sima adminisztrátor, tanár és hallgató. Ezeknek a gyors létrehozásához a Laravel Ladder\cite{ladder} csomagot alkalmaztam. Ennek segítségével gyorsan definiálhatók szerepkörök. A felhasználó modellt módosítja úgy a csomag, hogy gyorsan letudjuk ellenőrizni, hogy milyen szerepkör(ökk)el rendelkezik a felhasználó. Ezt elsősorban három helyen használtam: a middleware-ek esetén, hogy egy útvonal kinek elérhető, a nézetekben, hogy mely menüpontokat jelenítsem meg a felhasználónak, és a Policy-k esetén, erről bővebben lentebb.
 
 \lstinputlisting[caption={Admin middleware részlet: az ez által védett útvonalak csak adminoknak érhetők el.}, label=middleware, style=php]{../codes/middleware.php}
 
 \subsubsection{Jogosultság ellenőrzése}
 
-Ahogy azt fentebb említettem, a middleware csak az egyik hely, ahol a szerepköröket használtam. A Policy-k\cite{policies} segítségével egy helyre lehet gyűjteni, hogy a felhasználó egy adott modell esetén milyen jogokkal rendelkezik: megtekintheti, újat hozhat lére, esetleg módosíthatja vagy törölheti. Minden modellhez készíthető ilyen szabály, egyszóval itt lehet definiálni a felhasználó jogait. Ez nálam a legtöbb esetben úgy nézett ki, hogy adminisztrátor (vagy szuper adminisztrátor) esetén mindenhez joga van, a modellek megtekintéséhez be kell jelentkezni, többi esetben a szituációtól függ a dolog, például tantárgyakat csak adminisztrátorok tudnak létrehozni, kezelni, de bármely bejelentkezett felhasználó megtekintheti.
+Ahogy azt fentebb említettem, a middleware csak az egyik hely, ahol a szerepköröket használtam. A Policy-k\cite{policies} segítségével egy helyre lehet gyűjteni, hogy a felhasználó egy adott modell esetén milyen jogokkal rendelkezik: megtekintheti, újat hozhat lére, esetleg módosíthatja vagy törölheti. Minden modellhez készíthető ilyen szabály, egyszóval itt lehet definiálni a felhasználó jogait. Ez nálam a legtöbb esetben úgy nézett ki, hogy adminisztrátor (vagy szuper adminisztrátor) esetén mindenhez joga van, a modellek megtekintéséhez be kell jelentkezni, többi esetben a szituációtól függ a jogosultság, például tantárgyakat csak adminisztrátorok tudnak létrehozni és kezelni, de bármely bejelentkezett felhasználó megtekintheti.
 
-\Aref{policyPart}. kódban egy részletet láthatunk a jogosultság vizsgálatra: a \emph{before} függvény minden jogosultságvizsgálat előtt lefut, itt állapítom meg, hogy adminisztrátorról van-e szó. Ha nem, akkor megy tovább a vizsgálat az egyik függvényre, attól függően, hogy mit szeretnénk tenni a modellel. A tantárgy esetén megtekinteni mindenki megtudja (ezért igazat ad vissza a \emph{viewAny} függvény), létrehozni pedig csak adminisztrátor tud, viszont ezt már a \emph{before} függvény levizsgálja, így itt elegendő egy hamis értéket vissza adni, mivel más nem tud létrehozni tárgyat.
+\Aref{policyPart}. kódban egy részletet láthatunk a jogosultság vizsgálatra: a \emph{before} függvény minden jogosultságvizsgálat előtt lefut, itt állapítom meg, hogy adminisztrátorról felhasználóról van-e szó. Ha nem, akkor megy tovább a vizsgálat az egyik függvényre, attól függően, hogy mit szeretnénk tenni a modellel. A tantárgyakat mindenki megtudja tekinteni (ezért ad vissza igazat a \emph{viewAny} függvény), létrehozni pedig csak adminisztrátor tud, viszont ezt már a \emph{before} függvény levizsgálja, így itt elegendő egy hamis értéket vissza adni, mivel más nem tud létrehozni tárgyat.
 
-\Aref{check}. részletben pedig egy konkrét vizsgálatot láthatunk egy tárgy létrehozásának esetében: a felhasználó modellje rendelkezik egy \emph{can} és a fordítottja, egy \emph{cannot} függvénnyel, ezekkel lehet eldönti, hogy van-e jogosultsága a felhasználónak az adott művelethez, vagy sem. Ehhez az elvégzendő műveletet kell megadni, illetve az érintett modellt, ami lehet egy konkrét entitás, vagy a modellt leíró osztály, mivel létrehozás esetén még nem rendelkezünk entitással. Ezen adatok alapján tudja a keretrendszer, hogy melyik szabály melyik metódusa tudja eldönteni a jogosultságot. Ha a felhasználó nem végezheti el az adott műveletet, akkor megjelenítek egy hibaüzenetet, és visszalépek a függvényből a legtöbb esetben.
+\Aref{check}. részletben pedig egy konkrét vizsgálatot láthatunk egy tárgy létrehozásának esetében: a felhasználó modellje rendelkezik egy \emph{can} és a fordítottja, egy \emph{cannot} függvénnyel, amikkel el lehet dönti, hogy van-e jogosultsága a felhasználónak az adott művelethez, vagy sem. Ehhez az elvégzendő műveletet kell megadni, illetve az érintett modellt, ami lehet egy konkrét entitás, vagy a modellt leíró osztály, mivel létrehozás esetén még nem rendelkezünk entitással. Ezen adatok alapján tudja a keretrendszer, hogy melyik szabály melyik metódusa tudja eldönteni a jogosultságot. Ha a felhasználó nem végezheti el az adott műveletet, akkor megjelenítek egy hibaüzenetet, és visszalépek a függvényből a legtöbb esetben.
 
 \lstinputlisting[caption={Részlet a tárgyakhoz tartozó szabályból.}, label=policyPart, style=php]{../codes/policies.php}
 
@@ -519,11 +524,11 @@ Ezen szabályok nagy előnye, hogy ha bármely okból kifolyólag módosítani k
 
 \subsection{Email küldés}
 
-A programomban több helyen is használok email küldést értesítésék küldésére, például hiányzás rögzítésekor. Egy email küldéséhez egy értesítés osztályt kell létrehozni, ahol definiálni kell, hogy az értesítést email-ként kell elküldeni, és hogy mi legyen az üzenet tartalma. Ehhez a Laravel biztosít egy leírónyelvhez hasonló módszert, így nem szükséges minden fajta levél esetén leírni annak kinézetét HTML kód segítségével, csak a tartalmát kell definiálni, ezt függvényhívásokkal tehetjük meg.\cite{mail} Az elkészül emailt a felhasználó modelljén keresztül tudjuk elküldeni, ahol akár a levél nyelvét is beállíthatjuk. Én például a modellben tárolt \emph{lang} mező alapján tettem ezt, így a leveleket a beállított nyelvük alapján kapják meg a felhasználók.
+A programban több helyen is használok email küldést értesítésék küldésére, például hiányzás rögzítésekor. Egy email küldéséhez egy értesítés osztályt kell létrehozni, ahol definiálni kell, hogy az értesítést emailként kell elküldeni, és hogy mi legyen az üzenet tartalma. Ehhez a Laravel biztosít egy leírónyelvhez hasonló módszert, így nem szükséges minden fajta levél esetén leírni annak kinézetét HTML kód segítségével, csak a tartalmát kell definiálni, amit függvényhívásokkal tehetünk meg.\cite{mail} Az elkészült emailt a felhasználó modelljén keresztül tudjuk elküldeni, ahol akár a levél nyelvét is beállíthatjuk. Én például a modellben tárolt \emph{lang} mező alapján tettem ezt, így a leveleket a beállított nyelvük alapján kapják meg a felhasználók.
 
 \lstinputlisting[caption={Egy példa az email felépítsére. A szövegek helyén a fordítás behelyettesítésére szolgáló függvények és azok kulcsa látható.}, label=mail, style=php]{../codes/mail.php}
 
-A levelek egy sorra (queue) kerülnek rá, így azok a háttérben kerülnek elküldésre. Ezáltal elkerülhető, hogy a küldés során az oldal sokáig töltsön, vagy esetleg hibára fusson, ha nem sikerült elküldeni a levelet.
+A levelek egy sorba (queue) kerülnek, így azok a háttérben kerülnek elküldésre. Ezáltal elkerülhető, hogy a küldés során az oldal sokáig töltsön, vagy esetleg hibára fusson, ha nem sikerült elküldeni a levelet.
 
 \begin{figure}[ht!]
 	\centering
@@ -534,13 +539,13 @@ A levelek egy sorra (queue) kerülnek rá, így azok a háttérben kerülnek elk
 
 \subsection{Naptár exportálása}
 
-Az első fejezetben említettem, hogy az órarendet lehetőség van exportálni. Ha a felhasználó engedélyezi ezt, akkor egy egyedi azonosító kerül létrehozásra, illetve megjelenik egy útvonal, ami tartalmazza ezt az azonosítót, ezt kell megadni az importáláshoz. Az importálás során, amikor meglátogatja ezt az útvonalat a naptár, a programom egy ICS kiterjesztésű fájlt hoz létre. Ebbe a fájlba menti ki a program a felhasználó naptárában található órákat a fájltípus által megadott struktúrában.\cite{icsFormat} Mivel ez egy gyakorta használt fájlformátum, így a legtöbb naptár program kezelni tudja ezt. A megadott linken keresztül periodikusan frissíteni is tudja a naptár magát, azáltal hogy megint lekérdezi ezt a fájlt a programtól.
+Az első fejezetben említettem, hogy az órarendet lehetőség van exportálni. Ha a felhasználó engedélyezi ezt, akkor egy egyedi azonosító kerül létrehozásra, illetve megjelenik egy útvonal, ami tartalmazza ezt az azonosítót, ezt kell megadni az importáláshoz. Az importálás során, amikor meglátogatja ezt az útvonalat a naptár, a program egy ICS kiterjesztésű fájlt hoz létre. Ebbe a fájlba menti ki a program a felhasználó naptárában található órákat a fájltípus által megadott struktúrában.\cite{icsFormat} Mivel ez egy gyakorta használt fájlformátum, így ezt a legtöbb naptár program kezelni tudja. A megadott linken keresztül periodikusan frissíteni is tudja a naptár magát azáltal, hogy megint lekérdezi ezt a fájlt a programtól.
 
 \lstinputlisting[caption={Részlet egy generált fájlból: egy esemény (jelen esetben óra) leírása.}, label=icsExport, style=general]{../codes/export.txt} 
 
 \section{Tailwind}
 
-Amikor a nézetek kialakítását elkezdtem, elgondolkoztam azon, hogy milyen segédeszközöket használhatnék. Szaktársaim ajánlására kipróbáltam a \emph{Tailwind} nevezetű keretrendszert, ami gyorsan elnyerte a tetszésemet. A Tailwind egy  úgynevezett ,,utility-first'' keretrendszer.\cite{tailwind} Ez gyakorlatban azt jelenti, hogy CSS\cite{css} osztályok és szelektorok írása helyett a kívánt formázási szabályokat közvetlen az adott elemen adhatjuk meg, a Tailwind pedig létrehozza az ezekhez szükséges osztályokat, mely sok esetben 1-1 sorból állnak. 
+Amikor a nézetek kialakítását elkezdtem, elgondolkoztam azon, hogy milyen segédeszközöket használhatnék. Szaktársaim ajánlására kipróbáltam a \emph{Tailwind} nevezetű keretrendszert, ami gyorsan elnyerte a tetszésemet. A Tailwind egy  úgynevezett ,,utility-first'' keretrendszer.\cite{tailwind} Ez a gyakorlatban azt jelenti, hogy CSS\cite{css} osztályok és szelektorok írása helyett a kívánt formázási szabályokat közvetlen az adott elemen adhatjuk meg, a Tailwind pedig létrehozza az ezekhez szükséges osztályokat, mely sok esetben 1-1 sorból állnak. 
 
 \lstinputlisting[caption={Tailwind példa: az elemre flex megjelenítést alkalmaz, horizontális elrendezéssel, 4-es térközzel az elemek között.}, label=tailwind, style=html]{../codes/tailwind.html}
 
@@ -550,7 +555,7 @@ Itt emelném még ki, hogy a programomban használt ikonok a csakugyan a Tailwin
 
 \subsection{DaisyUI}
 
-Azért, hogy egységesen megjelenő oldalt készítsek, a \emph{DaisyUI}\cite{daisyui} nevezetű komponens könyvtár használata mellett döntöttem. Ez a könyvtár kifejezetten a Tailwind-hez készült. A komponensek között megtalálhatók egyszerű gombok, bementi mezők, kártyák, összecsukható menük, felugró ablakok és sok más. Ezek mellett a DaisyUI témák kialakítását is lehetővé teszi, ezért is rendelkezik az alkalmazásom sötét és fehér kinézettel. Ezeket a témákat személyre is lehet szabni. Mivel a front-end területén nem rendelkezem sok tapasztalattal, így sok segítséget nyújtott ez a könyvtár, hogy egy esztétikus oldalt alakítsak ki.
+Azért, hogy egységesen megjelenő oldalt készítsek, a \emph{DaisyUI}\cite{daisyui} nevezetű komponens könyvtár használata mellett döntöttem. Ez a könyvtár kifejezetten a Tailwind-hez készült. A komponensek között megtalálhatók egyszerű gombok, bementi mezők, kártyák, összecsukható menük, felugró ablakok és sok más. Ezek mellett a DaisyUI témák kialakítását is lehetővé teszi, ezért is rendelkezik az alkalmazásom sötét és világos kinézettel. Ezeket a témákat személyre is lehet szabni. Mivel a front-end területén nem rendelkezem sok tapasztalattal, így sok segítséget nyújtott ez a könyvtár, hogy egy esztétikus oldalt alakítsak ki.
 
 \begin{figure}[ht!]
 	\begin{tabular}{p{0.6\textwidth}p{0.4\textwidth}}
@@ -558,6 +563,8 @@ Azért, hogy egységesen megjelenő oldalt készítsek, a \emph{DaisyUI}\cite{da
 			\lstinputlisting[caption={DaisyUI: gomb létrehozása}, label=buttonCode, style=html]{../codes/savebutton.html}
 		\end{minipage}
 		&
+		\section{Livewire}
+		\label{livewireSection}
 		\begin{minipage}{.4\textwidth}
 			\centering
 			\caption{A megjelenő gomb.}
@@ -568,12 +575,10 @@ Azért, hogy egységesen megjelenő oldalt készítsek, a \emph{DaisyUI}\cite{da
 	\end{tabular}
 \end{figure}
 
-\section{Livewire}
-\label{livewireSection}
 
 A program megtervezésekor célom volt, hogy egy modernnek érződő alkalmazást készítsek. Ezért esett egy rövidebb keresés után a Livewire-re a választásom, ami egy dinamikus oldalak létrehozására szolgáló keretrendszer, kifejezetten a Laravel-hez készítve.\cite{livewire}
 
-Nagy előnye a csomagnak, hogy nem kell kilépnünk a PHP nyelvből, hiszen a Livewire által létrehozott komponensek nagyon hasonlítanak \aref{bladeSection}. fejezetben említett komponensekhez. Az így létrehozott komponensek dinamikusan viselkednek. Ez a felhasználók szemszögéből abban jelenik meg, hogy az oldallal való interakció esetén (gombnyomás, mező kitöltése stb.) nem töltődik újra a teljes oldal, csak azon részei, amik változtak. Ezt a livewire úgy oldja meg, hogy ha olyan interakciót végzünk az oldalon, ami változtatna a komponens állapotán, akkor a háttérben egy kérést küld a szerver felé, ami tartalmazza a komponens (illetve a komponenshez tartozó PHP osztály) új állapotát, amit a szerver kiértékel, és az visszaküldi az eredményt. Ekkor a beérkezett adatok alapján megváltoztatja a DOM-ot\footnote{Jelentése: Document Object Model, avagy Dokumentum Objektum Modell\cite{dom}} a Livewire, ezáltal kikerülve az oldal teljes újratöltését.
+Nagy előnye a csomagnak, hogy nem kell kilépnünk a PHP nyelvből, hiszen a Livewire által létrehozott komponensek nagyon hasonlítanak \aref{bladeSection}. fejezetben említett komponensekhez. Az így létrehozott komponensek dinamikusan viselkednek. Ez a felhasználók szemszögéből abban jelenik meg, hogy az oldallal való interakció esetén (gombnyomás, mező kitöltése stb.) nem töltődik újra a teljes oldal, csak azon részei, amik változtak. Ezt a Livewire úgy oldja meg, hogy ha olyan interakciót végzünk az oldalon, ami változtatna a komponens állapotán, akkor a háttérben egy kérést küld a szerver felé, ami tartalmazza a komponens (illetve a komponenshez tartozó PHP osztály) új állapotát, amit a szerver kiértékel, és az visszaküldi az eredményt. Ekkor a beérkezett adatok alapján megváltoztatja a DOM-ot\footnote{Jelentése: Document Object Model, avagy Dokumentum Objektum Modell\cite{dom}} a Livewire, ezáltal kikerülve az oldal teljes újratöltését.
 
 Így bár a háttérben továbbra is JavaScript alapú kérések történnek, a programozó a PHP kényelmében maradhat a programozás során.
 
@@ -586,11 +591,11 @@ Nagy előnye a csomagnak, hogy nem kell kilépnünk a PHP nyelvből, hiszen a Li
 
 \subsection{Komponensek és data binding}
 
-Ahogy ez fentebb említettem, a csomag használatához komponenseket kell létrehozni, melyek egy PHP osztályból, és az ahhoz tartozó nézetből állnak. Az osztályban létrehozott mezőkhöz és függvényekhez hozzá tudunk férni a nézetünkben, és akár hozzá is tudjuk ezeket az értékeket kötni egyes beviteli mezőkhöz a \emph{wire:model} segítségével. A függvények meghívásait pedig gombnyomásokhoz, vagy űrlapok elküldéséhez is köthetjük a \emph{wire:click} és \emph{wire:submit} használatával. Így amikor a felhasználó begépel valamit egy mezőbe, és/vagy megnyom egy gombot, a mögöttes PHP osztály állapota frissül, ez kerül elküldésre \aref{livewireUpdate}. kódrészletben látható módon, amit kiértékel a szerver, és visszaküldi. Ezek a komponensek egyébként Blade fájlok egyben, így \aref{bladeSection}. fejezetben írt direktívák továbbra is használhatók. Amennyiben azt szeretnénk, hogy minden  gombnyomásra frissüljön az oldal-- ez akkor hasznos például, ha az űrlap kitöltése során egyből szeretnénk frissíteni az oldalt esetleges hibaüzenetekkel --, akkor ezt is megtehetjük, ha a direktívát kiegészítjük a \emph{live} kulcsszóval.
+Ahogy azt fentebb említettem, a csomag használatához komponenseket kell létrehozni, melyek egy PHP osztályból, és az ahhoz tartozó nézetből állnak. Az osztályban létrehozott mezőkhöz és függvényekhez hozzá tudunk férni a nézetünkben, és akár hozzá is tudjuk ezeket az értékeket kötni egyes beviteli mezőkhöz a \emph{wire:model} segítségével. A függvények meghívásait pedig gombnyomásokhoz, vagy űrlapok elküldéséhez is köthetjük a \emph{wire:click} és \emph{wire:submit} használatával. Így amikor a felhasználó begépel valamit egy mezőbe, és/vagy megnyom egy gombot, a mögöttes PHP osztály állapota frissül, ez kerül elküldésre \aref{livewireUpdate}. kódrészletben látható módon, amit kiértékel a szerver, és visszaküldi. Ezek a komponensek egyébként Blade fájlok egyben, így \aref{bladeSection}. fejezetben írt direktívák továbbra is használhatók. Amennyiben azt szeretnénk, hogy minden  gombnyomásra frissüljön az oldal-- ez akkor hasznos például, ha az űrlap kitöltése során egyből szeretnénk frissíteni az oldalt esetleges hibaüzenetekkel --, akkor ezt is megtehetjük, ha a direktívát kiegészítjük a \emph{live} kulcsszóval.
 
 \lstinputlisting[caption={A komponens osztályának egy mezője és egy bemeneti mező összekapcsolása, ami a harmadik sorban található.}, label=binding, style=php]{../codes/binding.blade.php}
 
-A programomban főként ilyen Livewire komponenseket használtam . Ez alól egyedül a bejelentkezés és a regisztráció képez kivételt, mivel azokhoz \aref{fortifyAuth}. fejezetben írt csomagot használtam, és ott sima Blade fájlokkal kellett dolgozni.
+A programban főként ilyen Livewire komponenseket használtam. Ez alól egyedül a bejelentkezés és a regisztráció képez kivételt, mivel azokhoz \aref{fortifyAuth}. fejezetben írt csomagot használtam, és ott sima Blade fájlokkal kellett dolgozni.
 
 \subsection{Livewire és SPA}
 

@@ -743,6 +743,8 @@ A tesztjeim nagy része is ezekből épült fel: meglátogattam a teszteni kív�
 
 \lstinputlisting[caption={Részlet a bejelentkezés teszteléséből.}, label=userTest, style=js]{../codes/user_testing.cy.js}
 
+\Aref{cypressResult}. ábrán látható a tesztek egy részének az eredménye.
+
 \subsection{Laravel Cypress}
 
 \Aref{userTest}. részletben látható egy \emph{before} függvény is. Ennek segítségével a teszt előtt futtathatunk le parancsokat, mely elsődleges célja a tesztelési környezet előkészítése. Én ezt arra használtam ki, hogy egy kifejezetten a Cypress és a Laravel összekapcsolására használt csomag\cite{laravelCypress} parancsait használjam itt. Ezen csomag segítségével a Cypress interaktálni tud közvetlen az alkalmazásunkkal. Ez tette lehetővé, hogy a tesztek futása előtt egy másik adatbázisra váltson automatikusan a Cypress, majd pedig a \emph{before} függvényben látható két sor frissíti az adatbázist a tesztek előtt, illetve feltölti pár alap felhasználóval. Emellett a későbbiekben -- amikor nem a bejelentkezés tesztelése volt a fő cél -- használtam gyors bejelentkezésre is, illetve lehetőség ad a csomag a modelljeink lekérdezésére is, ami akkor volt hasznos, ha létrehoztam valamilyen entitást, akkor levizsgáljam, hogy tényleg létre jött-e az adatbázisban.
@@ -779,6 +781,13 @@ Azért, hogy ne felejtsem el ellenőrizni a kódom, a projekt Github repozitóri
 	\includegraphics[width=15cm]{../pictures/screenshots/githubActions.png}
 	\caption{A Laravel Pint eredményes futása Github Action esetén.}
 	\label{githubActions}
+\end{figure}
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[height=13cm]{../pictures/screenshots/cypress_tests.png}
+	\caption{Részlet a Cypress tesztek eredményéből.}
+	\label{cypressResult}
 \end{figure}
 
 \chapter{Alkalmazás telepítése}

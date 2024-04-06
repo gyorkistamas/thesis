@@ -670,7 +670,7 @@ Továbbra is az \emph{\#On[]} attribútumot kell alkalmazni, viszont az esemény
 
 \section{Progressive Web Apps}
 
-Az alkalmazás elkezdése előtt azért döntöttem weboldal készítése mellett, mivel ez a legkönnyebb módon elérhető alkalmazás, hiszen telepíteni se kell. Ugyan akkor a fejlesztés során elgondolkoztam, hogy jó lenne, ha akár telepíteni is tudnák a felhasználók az alkalmazást, hogy gyorsabban hozzáférjenek, ezáltal kiszolgálva mindkét lehetőséget. Ezért is lett belőle PWA alkalmazás.
+Az alkalmazás tervezésének elején azért döntöttem weboldal készítése mellett, mivel ez a legkönnyebb módon elérhető alkalmazás, hiszen telepíteni se kell. Ugyan akkor a fejlesztés során elgondolkoztam, hogy jó lenne, ha akár telepíteni is tudnák a felhasználók az alkalmazást, hogy gyorsabban hozzáférjenek, ezáltal kiszolgálva mindkét lehetőséget. Ezért is lett belőle PWA alkalmazás.
 
 A PWA, avagy a Progressive Web Apps olyan webalkalmazások, melyek webes technológiákkal készültek, webböngészőkben futnak, de képesek platform specifikus alkalmazásként is viselkedni, beépülni a rendszerbe.\cite{PWA} Ez a gyakorlatban azt jelenti, hogy az alkalmazás külön ablakban nyílik meg, nem a böngészőben, a telepített alkalmazások között megjelenik, illetve az is előfordulhat, hogy egyes részei internetkapcsolat nélkül is működnek.
 
@@ -790,7 +790,7 @@ Azért, hogy ne felejtsem el ellenőrizni a kódom, a projekt Github repozitóri
 	\label{cypressResult}
 \end{figure}
 
-\chapter{Alkalmazás telepítése}
+\chapter{Az alkalmazás telepítése}
 \label{setup}
 Az alkalmazás a szakdolgozat védés, illetve a záróvizsga időszak alatt elérhető a \url{https://szakdolgozat.ddns.net} címen, ahol ki lehet azt próbálni. Pár alapértelmezett felhasználó elérhető:
 \begin{itemize}
@@ -843,7 +843,7 @@ A kész alkalmazás egy ingyenes Amazon AWS\cite{aws} szerveren fut, ide került
 	A többi értéket az alkalmazáson belül tudjuk módosítani.
 
 	\item Ezek után a csomagok telepítése szükséges. Adjuk ki a terminálban a \textbf{composer install -\/-optimize-autoloader -\/-no-dev} parancsot.
-	\item Majd pedig a \textbf{npm ci} és az \textbf{npm run build} parancsokat.
+	\item Majd pedig a \textbf{npm install} és az \textbf{npm run build} parancsokat.
 	\item Ezek után az alábbi parancsok kiadása szükséges:
 	\begin{itemize}
 		\item \textbf{php artisan key:generate}: alkalmazás kulcs generálása.
@@ -851,22 +851,22 @@ A kész alkalmazás egy ingyenes Amazon AWS\cite{aws} szerveren fut, ide került
 		\item \textbf{php artisan route:cache}: útvonalak gyorsítótárazása.
 		\item \textbf{php artisan config:cache}: konfiguráció gyorsítótárazása.
 		\item \textbf{php artisan storage:link}: a képek tárolására használt könyvtár elérhetővé tétele.
-		\item A keretrendszerben jártas olvasó észreveheti, hogy kihagytam a nézetek gyorsítótárazására szolgáló parancsot. A Livewire általam használt verziójában van egy olyan probléma, miszerint gyorsítótárazás esetén az egyes elemek nem működnek megfelelően. Ennek kiküszöbölésére döntöttem úgy, hogy a nézeteket nem gyorsítótárazom.
+		\item A keretrendszerben jártas olvasó észreveheti, hogy kihagytam a nézetek gyorsítótárazására szolgáló parancsot. A Livewire általam használt verziójában van egy olyan probléma, miszerint gyorsítótárazás esetén az egyes elemek nem működnek megfelelően. Ennek ideiglenes kiküszöbölése a nézetek gyorsítótárazásának kihagyása.
 	\end{itemize}
 	\item A fejlesztői szerver elindítható a \textbf{php artisan serve} paranccsal. Ugyan csak szükséges a sor elindítása is egy másik terminál ablakban: \textbf{php artisan queue:work}.
-	\item Az alkalmazást megnyithatjuk a böngészőben, az alapértelmezett \textbf{SADMIN/superadmin} kombinációval tudunk belépni.
+	\item Az alkalmazást megnyithatjuk a böngészőben, az alapértelmezett \textbf{SADMIN / superadmin} felhasználónév és jelszó párossal tudunk belépni.
 \end{enumerate}
 
 \chapter*{Összegzés}
 \addcontentsline{toc}{chapter}{Összegzés}
 
-Összegezve a szakdolgozatban leírt és elkészített dolgokat, én elégedett vagyok az elkészült munkával. Egyrészről azért, mert hosszasabb fejlesztési folyamatban vehettem ezáltal részt, egészen a tervezéstől, a fejlesztésen és a tesztelésen át az alkalmazás telepítéséig. Ezek mellett lehetőséget nyújtott, hogy jobban elmerüljek a webfejlesztés világában, és új, érdekes csomagokkal, megoldásokkal találkozzak.
+Összegezve a szakdolgozatban leírt és elkészített dolgokat, én elégedett vagyok az elkészült munkával. Egyrészről azért, mert hosszasabb fejlesztési folyamatban vehettem ezáltal részt, egészen a tervezéstől, a fejlesztésen és a tesztelésen át az alkalmazás telepítéséig. Másrészről lehetőséget nyújtott, hogy jobban elmerüljek a webfejlesztés világában, és új, érdekes csomagokkal és megoldásokkal találkozzak, illetve jobban megismerjem a Laravel keretrendszer adta lehetőségeket.
 
 A dolgozat készítése során fejleszteni tudtam a keretrendszerről a tudásom, és modern technológiákkal találkoztam, ismertem meg azok működését. Sikerült megismerkednem a Websocket technológiával, a Tailwind keretrendszerrel, naptárak és diagramok létrehozásával, illetve több platformon elérhető alkalmazás készítésével a PWA segítségével, csak hogy párat kiemeljek, amik kifejezetten érdekesek voltak számomra.
 
 Úgy vélem, egy életképes programot sikerült létrehozni, ami tényleg segítséget nyújthat a tanároknak a jelenléttel kapcsolatos folyamatok felgyorsításában és egy helyre való szervezésében. A későbbiekben én is szeretném éles helyzetben kipróbálni az alkalmazást és visszajelzéseket gyűjteni.
 
-Amennyiben úgy alakulna,hogy a weboldalt továbbfejleszteném a vizsgák után, akkor elsősorban az alkalmazás lehetséges integrációját vizsgálnám meg más, már létező és használt megoldásokkal, illetve szeretném megoldani, hogy a kedvezményes tanrendek is megtekinthetőek legyenek az oldalon.
+Amennyiben úgy alakulna,hogy a weboldalt továbbfejleszteném a vizsgák után, akkor elsősorban az alkalmazás lehetséges integrációját vizsgálnám meg más, már létező és használt megoldásokkal (gondolok itt első sorban a Neptun rendszerre), illetve szeretném megoldani, hogy a kedvezményes tanrendek is megtekinthetőek legyenek az oldalon.
 
 A készítés során létrejött programnak és a szakdolgozatnak a forráskódja elérhető a \url{https://github.com/gyorkistamas/thesis} repozitóriumban is, illetve még egyszer kiemelném, hogy kipróbálható a \url{https://szakdolgozat.ddns.net/} címen.
 

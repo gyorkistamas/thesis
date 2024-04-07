@@ -512,7 +512,7 @@ Ahogy azt \aref{users}. alfejezetben említettem, több szerepkört különbözt
 
 Ahogy azt fentebb említettem, a middleware csak az egyik hely, ahol a szerepköröket használtam. A Policy-k\cite{policies} segítségével egy helyre lehet gyűjteni, hogy a felhasználó egy adott modell esetén milyen jogokkal rendelkezik: megtekintheti, újat hozhat lére, esetleg módosíthatja vagy törölheti. Minden modellhez készíthető ilyen szabály, egyszóval itt lehet definiálni a felhasználó jogait. Ez nálam a legtöbb esetben úgy nézett ki, hogy adminisztrátor (vagy szuper adminisztrátor) esetén mindenhez joga van, a modellek megtekintéséhez be kell jelentkezni, többi esetben a szituációtól függ a jogosultság, például tantárgyakat csak adminisztrátorok tudnak létrehozni és kezelni, de bármely bejelentkezett felhasználó megtekintheti.
 
-\Aref{policyPart}. kódban egy részletet láthatunk a jogosultság vizsgálatra: a \emph{before} függvény minden jogosultságvizsgálat előtt lefut, itt állapítom meg, hogy adminisztrátorról felhasználóról van-e szó. Ha nem, akkor megy tovább a vizsgálat az egyik függvényre, attól függően, hogy mit szeretnénk tenni a modellel. A tantárgyakat mindenki megtudja tekinteni (ezért ad vissza igazat a \emph{viewAny} függvény), létrehozni pedig csak adminisztrátor tud, viszont ezt már a \emph{before} függvény levizsgálja, így itt elegendő egy hamis értéket vissza adni, mivel más nem tud létrehozni tárgyat.
+\Aref{policyPart}. kódban egy részletet láthatunk a egy ilyen Policy fájlból: a \emph{before} függvény minden jogosultságvizsgálat előtt lefut, itt állapítódik meg, hogy adminisztrátor felhasználóról van-e szó. Ha nem, akkor megy tovább a vizsgálat az egyik függvényre, attól függően, hogy mit szeretnénk tenni a modellel. A tantárgyakat mindenki megtudja tekinteni (ezért ad vissza igazat a \emph{viewAny} függvény), létrehozni pedig csak adminisztrátor tud, viszont ezt már a \emph{before} függvény levizsgálja, így itt elegendő egy hamis értéket vissza adni, mivel más nem tud létrehozni tárgyat.
 
 \Aref{check}. részletben pedig egy konkrét vizsgálatot láthatunk egy tárgy létrehozásának esetében: a felhasználó modellje rendelkezik egy \emph{can} és a fordítottja, egy \emph{cannot} függvénnyel, amikkel el lehet dönti, hogy van-e jogosultsága a felhasználónak az adott művelethez, vagy sem. Ehhez az elvégzendő műveletet kell megadni, illetve az érintett modellt, ami lehet egy konkrét entitás, vagy a modellt leíró osztály, mivel létrehozás esetén még nem rendelkezünk entitással. Ezen adatok alapján tudja a keretrendszer, hogy melyik szabály melyik metódusa tudja eldönteni a jogosultságot. Ha a felhasználó nem végezheti el az adott műveletet, akkor megjelenítek egy hibaüzenetet, és visszalépek a függvényből a legtöbb esetben.
 
@@ -563,8 +563,7 @@ Azért, hogy egységesen megjelenő oldalt készítsek, a \emph{DaisyUI}\cite{da
 			\lstinputlisting[caption={DaisyUI: gomb létrehozása}, label=buttonCode, style=html]{../codes/savebutton.html}
 		\end{minipage}
 		&
-		\section{Livewire}
-		\label{livewireSection}
+		
 		\begin{minipage}{.4\textwidth}
 			\centering
 			\caption{A megjelenő gomb.}
@@ -575,8 +574,10 @@ Azért, hogy egységesen megjelenő oldalt készítsek, a \emph{DaisyUI}\cite{da
 	\end{tabular}
 \end{figure}
 
+\section{Livewire}
+\label{livewireSection}
 
-A program megtervezésekor célom volt, hogy egy modernnek érződő alkalmazást készítsek. Ezért esett egy rövidebb keresés után a Livewire-re a választásom, ami egy dinamikus oldalak létrehozására szolgáló keretrendszer, kifejezetten a Laravel-hez készítve.\cite{livewire}
+A program megtervezésekor célom volt, hogy egy modernnek érződő alkalmazást készítsek. Ezért esett egy rövidebb keresés után a Livewire-re a választásom, ami egy dinamikus oldalak létrehozására szolgáló rendszer, kifejezetten a Laravel-hez készítve.\cite{livewire}
 
 Nagy előnye a csomagnak, hogy nem kell kilépnünk a PHP nyelvből, hiszen a Livewire által létrehozott komponensek nagyon hasonlítanak \aref{bladeSection}. fejezetben említett komponensekhez. Az így létrehozott komponensek dinamikusan viselkednek. Ez a felhasználók szemszögéből abban jelenik meg, hogy az oldallal való interakció esetén (gombnyomás, mező kitöltése stb.) nem töltődik újra a teljes oldal, csak azon részei, amik változtak. Ezt a Livewire úgy oldja meg, hogy ha olyan interakciót végzünk az oldalon, ami változtatna a komponens állapotán, akkor a háttérben egy kérést küld a szerver felé, ami tartalmazza a komponens (illetve a komponenshez tartozó PHP osztály) új állapotát, amit a szerver kiértékel, és az visszaküldi az eredményt. Ekkor a beérkezett adatok alapján megváltoztatja a DOM-ot\footnote{Jelentése: Document Object Model, avagy Dokumentum Objektum Modell\cite{dom}} a Livewire, ezáltal kikerülve az oldal teljes újratöltését.
 
@@ -591,7 +592,7 @@ Nagy előnye a csomagnak, hogy nem kell kilépnünk a PHP nyelvből, hiszen a Li
 
 \subsection{Komponensek és data binding}
 
-Ahogy azt fentebb említettem, a csomag használatához komponenseket kell létrehozni, melyek egy PHP osztályból, és az ahhoz tartozó nézetből állnak. Az osztályban létrehozott mezőkhöz és függvényekhez hozzá tudunk férni a nézetünkben, és akár hozzá is tudjuk ezeket az értékeket kötni egyes beviteli mezőkhöz a \emph{wire:model} segítségével. A függvények meghívásait pedig gombnyomásokhoz, vagy űrlapok elküldéséhez is köthetjük a \emph{wire:click} és \emph{wire:submit} használatával. Így amikor a felhasználó begépel valamit egy mezőbe, és/vagy megnyom egy gombot, a mögöttes PHP osztály állapota frissül, ez kerül elküldésre \aref{livewireUpdate}. kódrészletben látható módon, amit kiértékel a szerver, és visszaküldi. Ezek a komponensek egyébként Blade fájlok egyben, így \aref{bladeSection}. fejezetben írt direktívák továbbra is használhatók. Amennyiben azt szeretnénk, hogy minden  gombnyomásra frissüljön az oldal-- ez akkor hasznos például, ha az űrlap kitöltése során egyből szeretnénk frissíteni az oldalt esetleges hibaüzenetekkel --, akkor ezt is megtehetjük, ha a direktívát kiegészítjük a \emph{live} kulcsszóval.
+Ahogy azt fentebb említettem, a csomag használatához komponenseket kell létrehozni, melyek egy PHP osztályból, és az ahhoz tartozó nézetből állnak. Az osztályban létrehozott mezőkhöz és függvényekhez hozzá tudunk férni a nézetünkben, és akár hozzá is tudjuk ezeket az értékeket kötni egyes beviteli mezőkhöz a \emph{wire:model} segítségével. A függvények hívásait pedig gombnyomásokhoz, vagy űrlapok elküldéséhez is köthetjük a \emph{wire:click} és \emph{wire:submit} használatával. Így amikor a felhasználó begépel valamit egy mezőbe, és/vagy megnyom egy gombot, a mögöttes PHP osztály állapota frissül, ez kerül elküldésre \aref{livewireUpdate}. kódrészletben látható módon, amit kiértékel a szerver, és visszaküldi. Ezek a komponensek egyébként Blade fájlok egyben, így \aref{bladeSection}. fejezetben írt direktívák továbbra is használhatók. Amennyiben azt szeretnénk, hogy minden  gombnyomásra frissüljön az oldal-- ez akkor hasznos például, ha az űrlap kitöltése során egyből szeretnénk frissíteni az oldalt esetleges hibaüzenetekkel --, akkor ezt is megtehetjük, ha a direktívát kiegészítjük a \emph{live} kulcsszóval.
 
 \lstinputlisting[caption={A komponens osztályának egy mezője és egy bemeneti mező összekapcsolása, ami a harmadik sorban található.}, label=binding, style=php]{../codes/binding.blade.php}
 
@@ -605,7 +606,7 @@ Ezáltal egy SPA típusú oldal hozható létre, melynek jelentése: Single Page
 
 \subsection{Események}
 \label{livewireevents}
-A csomag lehetőséget ad események küldésére és fogadására is. Ezt én elsősorban kettő funkció megoldására használtam fel. Az egyik a legördülő kiválasztó mezők esetén volt, amikor egy, vagy több felhasznált kell kiválasztani. Ezek a mezők külön komponensek, így amikor annak az értéke frissül, akkor egy eseményt hozok létre, amit fogad az a komponens, amibe a mező be van ágyazva, ezáltal módosítva az értéket. A másik ilyen a felugró ablakok bezárása: ha valamilyen modell létrehozására szolgáló felugró ablakot nyit meg a felhasználó, majd a mezők megfelelő kitöltése után a mentésre kattint a felhasználó, akkor -- amennyiben nem lép közbe validációs probléma -- a mentést megvalósító függvény egy eseményt küld, hogy záródjon be az ablak.
+A csomag lehetőséget ad események küldésére és fogadására is. Ezt én elsősorban kettő funkció megoldására használtam fel. Az egyik a legördülő és kereshető kiválasztó mezők esetén volt, amikor egy, vagy több felhasználót kell kiválasztani. Ezek a mezők külön komponensek, így amikor annak az értéke frissül, akkor egy eseményt hozok létre, amit fogad az a komponens, amibe a mező be van ágyazva, ezáltal módosítva az értéket. A másik ilyen a felugró ablakok bezárása: ha valamilyen modell létrehozására szolgáló felugró ablakot nyit meg a felhasználó, majd a mezők megfelelő kitöltése után a mentésre kattint a felhasználó, akkor -- amennyiben nem lép közbe validációs probléma -- a mentést megvalósító függvény egy eseményt küld, hogy záródjon be az ablak.
 
 Ilyen eseményeket a komponensben belül a \emph{dispatch()} függvény segítségével küldhetünk, ahol adni kell egy nevet az eseménynek, illetve igény szerint egyéb adatokat, amiket szeretnék mellékelni az eseményhez.
 
@@ -636,11 +637,11 @@ Amikor \aref{class}. képen látható óra megtekintésére szolgáló oldalt k�
 
 \subsection{Websocket}
 
-A Websocket technológia kétirányú kommunikációt tesz lehető a szerver és a kliensek között. Ezáltal a folytonos frissítést, amit először terveztem, eseményekkel lehet kiváltani.\cite{websocket} Amikor valaki bejelentkezik az órára, akkor egy esemény jön létre, ami egy csatornán kerül kiküldésre, amire fel van iratkozva a tanár által látott oldal. Így fogadja az eseményt, és innen tudja, hogy frissíteni kell az adott tanulóhoz tartozó sort. Ezek nem azok az események, amiket \aref{livewireevents}. fejezetben taglaltam. Azok az események az adott felhasználói munkamenetre korlátozódnak, míg ezek az események küldése, fogadása eszközök, felhasználók között történnek.
+A Websocket technológia kétirányú kommunikációt tesz lehető a szerver és a kliensek között. Ezáltal a folytonos frissítést, amit először terveztem, eseményekkel lehet kiváltani.\cite{websocket} Amikor valaki bejelentkezik az órára, akkor egy esemény jön létre, ami egy csatornán kerül kiküldésre, amire fel van iratkozva a tanár által látott oldal. Az oldal fogadja az eseményt a csatornán keresztül, és innen tudja, hogy frissíteni kell az adott tanulóhoz tartozó sort. Ezek nem azok az események, amiket \aref{livewireevents}. fejezetben taglaltam. Azok az események az adott felhasználói munkamenetre korlátozódnak, míg ezek az események küldése, fogadása eszközök, felhasználók között történnek.
 
 \subsection{Pusher channels}
 
-A Pusher Channels\cite{pusher} tulajdonképpen egy megvalósítása a Websocketeknek, amit kifejezetten webalkalmazásokhoz terveztek. Ingyenes fiókot lehet hozzá létrehozni, ami bár korlátolt, a szakdolgozat készítéséhez és kipróbálásához bőven elegendő volt. A Laravel keretrendszer is támogatja a Pusher technológiát, így könnyen integrálható volt a programba. Mondhatni a Pusher a szerver és a kliensek között áll: ide érkeznek be az események, és innen kerülnek kiküldésre.
+A Pusher Channels\cite{pusher} tulajdonképpen egy megvalósítása a Websocketeknek, amit kifejezetten webalkalmazásokhoz terveztek. Ingyenes fiókot lehet hozzá létrehozni, ami bár korlátolt, a szakdolgozat készítéséhez és kipróbálásához bőven elegendő volt. A Laravel keretrendszer is támogatja a Pusher technológiát, így könnyen integrálható volt a programba. Mondhatni a Pusher a szerver és a kliensek között áll: ide érkeznek be az események, és innen kerülnek továbbküldésre a kliensnek.
 
 Természetesen más, akár nyílt forrású megoldások is elérhetők, illetve a dolgozat készítésekor is fejlesztés alatt volt egy kifejezetten a Laravel-hez készülő változat, viszont a fejlesztők későn lettek készek vele ahhoz, hogy fel tudjam használni szakdolgozatomban, így a Pusher lecserélése erre a megoldásra egy jövőbeli feladat lesz.
 
@@ -714,7 +715,7 @@ Ez a megoldás még egy pozitívumot vont magával, amibe először nem is gondo
 
 \subsection{Diagramok - Chart.js}
 
-A főoldalon és az óráknál megjelenő diagramokat a Chart.js\cite{chartjs} nevezet könyvtárral készítettem el, ami szintén a nagy személyre szabhatóság  miatt tetszett meg. Sok különböző típusú diagramot támogat, de én leginkább a kördiagramok létrehozására használtam fel. A fent említett probléma itt is megjelent, mely szerint a PHP szolgáltatja az adatokat, viszont itt egyszerűbb volt a megoldás, tekintettel arra, hogy csak pár számot kell a diagramnak megkapnia, nem egész eseményeket. Blade direktívák segítségével beleírtam a komponens nézetbe -- ami tartalmazza a diagram létrehozására szolgáló JavaScript kódot is --, hogy milyen értékeket kell megjeleníteni a kördiagramnak. Illetve ugyan itt figyelek egy \emph{updateChart} eseményre, ami megkapja friss adatokat, és átírja  a diagram-on az értékeket, így a frissítés is meg van oldva.
+A főoldalon és az óráknál megjelenő diagramokat a Chart.js\cite{chartjs} nevezet könyvtárral készítettem el, ami szintén a nagy személyre szabhatóság  miatt tetszett meg. Sok különböző típusú diagramot támogat, de én leginkább a kördiagramok létrehozására használtam fel. A fent említett probléma itt is megjelent, mely szerint a PHP kód szolgáltatja az adatokat, viszont itt egyszerűbb volt a megoldás, tekintettel arra, hogy csak pár számot kell a diagramnak megkapnia, nem egész eseményeket. Blade direktívák segítségével beleírtam a komponens nézetbe -- ami tartalmazza a diagram létrehozására szolgáló JavaScript kódot is --, hogy milyen értékeket kell megjeleníteni a kördiagramnak. Illetve ugyan itt figyelek egy \emph{updateChart} eseményre, ami megkapja a friss adatokat, és átírja  a diagram-on az értékeket, így a frissítés is meg van oldva.
 
 \lstinputlisting[caption={Részlet egy kördiagram létrehozásából.}, label=chart, style=js]{../codes/chart.js}
 
@@ -725,7 +726,7 @@ A fejlesztés során folyamatosan manuális tesztelést végeztem annak érdeké
 
 \section{Automatizált tesztelés}
 
-A tesztelést a Cypress\cite{cypress} segítségével automatizáltam. Ez egy kifejezetten weboldalak automatizált tesztelésére készült szoftver. Segítségével akár külön komponenseket is tudunk tesztelni, vagy az egész oldalt egyszerre. Az utóbbit \emph{End to end} tesztelésnek hívnak, melynek az előnye, hogy a tesztelő szoftver, pontosan úgy interaktál az alkalmazással, mint ahogy azt a felhasználó tenné. Így ha bármit változtatunk az  kódban, akkor csak az elkészült teszteket kell újra lefuttatni, hogy megbizonyosodjunk arról, hogy a funkciók nem mentek tönkre. \cite{e2e}
+A tesztelést a Cypress\cite{cypress} segítségével automatizáltam. Ez egy kifejezetten weboldalak automatizált tesztelésére készült szoftver. Segítségével akár külön komponenseket is tudunk tesztelni, vagy az egész oldalt egyszerre. Az utóbbit \emph{End to end} tesztelésnek hívnak, melynek az előnye, hogy a tesztelő szoftver pontosan úgy interaktál az alkalmazással, mint ahogy azt a felhasználó tenné. Így ha bármit változtatunk a kódban, akkor csak az elkészült teszteket kell újra lefuttatni, hogy megbizonyosodjunk arról, hogy a funkciók nem mentek tönkre. \cite{e2e}
 
 \subsection{Működése}
 
@@ -749,13 +750,20 @@ A tesztjeim nagy része is ezekből épült fel: meglátogattam a teszteni kív�
 
 \Aref{userTest}. részletben látható egy \emph{before} függvény is. Ennek segítségével a teszt előtt futtathatunk le parancsokat, mely elsődleges célja a tesztelési környezet előkészítése. Én ezt arra használtam ki, hogy egy kifejezetten a Cypress és a Laravel összekapcsolására használt csomag\cite{laravelCypress} parancsait használjam itt. Ezen csomag segítségével a Cypress interaktálni tud közvetlen az alkalmazásunkkal. Ez tette lehetővé, hogy a tesztek futása előtt egy másik adatbázisra váltson automatikusan a Cypress, majd pedig a \emph{before} függvényben látható két sor frissíti az adatbázist a tesztek előtt, illetve feltölti pár alap felhasználóval. Emellett a későbbiekben -- amikor nem a bejelentkezés tesztelése volt a fő cél -- használtam gyors bejelentkezésre is, illetve lehetőség ad a csomag a modelljeink lekérdezésére is, ami akkor volt hasznos, ha létrehoztam valamilyen entitást, akkor levizsgáljam, hogy tényleg létre jött-e az adatbázisban.
 
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[height=13cm]{../pictures/screenshots/cypress_tests.png}
+	\caption{Részlet a Cypress tesztek eredményéből.}
+	\label{cypressResult}
+\end{figure}
+
 \section{Terheléses tesztelés}
 
 A fejlesztés vége felé kíváncsi lettem egy kicsit az alkalmazás teljesítményére is, ezért egy minimális terheléses tesztelést is végeztem. Ehhez a Gatling\cite{gatling} nevezetű szoftvert alkalmaztam, mely egy Java nyelven alapuló szoftver.
 
 A tesztelés elején egy felvevő segítségével készíthetjük el a tesztről a forgatókönyvünket. Ekkor felvesszük, hogy hogyan interaktálunk az oldallal a teszt során. Ezt úgy tehetjük meg, hogy egy általunk választott böngésző proxy beállításait átállítjuk a felvevő által megadott értékekre. Így tudja felvenni, hogy milyen kérések kerülnek elküldésre, illetve érkeznek. Ezen adatok alapján épül fel a szimulációs osztály, amit módosítanunk kell.\cite{gatlingRecorder}
 
-A szimulációs osztályokban egy ún. \emph{scenario} jön létre. Ez tartalmazza a kéréseket sorozatát, illetve az ahhoz tartozó adatokat, amik felvételre kerültek. Itt célszerű az egyes kéréseknek nevet adni, hogy be tudjuk őket azonosítani, illetve egyéb módosítások is szükségesek lehetnek. Az én esetemben ez azt jelentette, hogy a felvevő statikus értékekként vette föl a Livewire és oldal által használt tokeneket, amiket felvételkor látott, de át kellet ezt írni úgy, hogy minden egyes kérés esetén olvassa ki a kapott tokent, és azt használja. Ezek mellett érdemes lehet olyan kéréseket kiszedni, amiket nem szeretnénk terheléses tesztelés alá vetni, mert mondjuk nem közvetlen az alkalmazásunkhoz tartozik. Végezetül beállítjuk, hogy egyszerre hány felhasználóval tesztelje az alkalmazást, majd indulhat a tesztelés.\cite{gatlingScenario}
+A szimulációs osztályokban egy ún. \emph{scenario} jön létre. Ez tartalmazza a kéréseket sorozatát, illetve az ahhoz tartozó adatokat, amik felvételre kerültek. Itt célszerű az egyes kéréseknek nevet adni, hogy be tudjuk őket azonosítani, illetve egyéb módosítások is szükségesek lehetnek. Az én esetemben ez azt jelentette, hogy a felvevő statikus értékekként vette föl a Livewire és az oldal által használt tokeneket, amiket felvételkor látott, de át kellet ezt írni úgy, hogy minden egyes kérés esetén olvassa ki a kapott tokent, és azt használja. Ezek mellett érdemes lehet olyan kéréseket kiszedni, amiket nem szeretnénk terheléses tesztelés alá vetni, mert mondjuk nem közvetlen az alkalmazásunkhoz tartozik. Végezetül beállítjuk, hogy egyszerre hány felhasználóval tesztelje az alkalmazást, majd indulhat a tesztelés.\cite{gatlingScenario}
 
 \lstinputlisting[caption={Részlet a bejelentkezés terheléses teszteléséből.}, label=gatlingTest, style=java]{../codes/gatling.java}
 
@@ -772,7 +780,7 @@ Mivel egy kis teljesítményű, ingyenes szerveren fut az alkalmazás, így sajn
 
 \section{Laravel Pint és Github actions}
 
-A Laravel Pint egy kód elemező, ami segít betartani a készítők által megfelelőnek tartott kód formázási szabályokat. Futtatásakor végignézi az összes PHP fájlt a projektben, majd kijavítja az esetleges formázási hibákat, mint például rossz behúzások, kapcsos zárójelek helye és hasonlók.\cite{pint} Futtatható manuálisan is, de akár a fejlesztői környezetbe is be lehet integrálni, így közvetlen a szerkesztőben is megjelennek az értesítések a formázási hibákról. 
+A Laravel Pint egy kód elemező, ami segít betartani a készítők által megfelelőnek tartott kód formázási szabályokat. Futtatásakor végignézi az összes PHP fájlt a projektben, majd kijavítja az esetleges formázási hibákat, mint például rossz behúzások, kapcsos zárójelek helye és az ehhez hasonló hibákat.\cite{pint} Futtatható manuálisan is, de akár a fejlesztői környezetbe is be lehet integrálni, így közvetlen a szerkesztőben is megjelennek az értesítések a formázási hibákról. 
 
 Azért, hogy ne felejtsem el ellenőrizni a kódom, a projekt Github repozitóriumában beállítottam a Github Actions\cite{actions} segítségével, hogy minden feltöltés esetén ellenőrizze le a kódot, hogy az megfelel-e a szabályoknak, így mindig láthattam, ha valahol formázási hiba volt.
 
@@ -781,13 +789,6 @@ Azért, hogy ne felejtsem el ellenőrizni a kódom, a projekt Github repozitóri
 	\includegraphics[width=16cm]{../pictures/screenshots/githubActions.png}
 	\caption{A Laravel Pint eredményes futása Github Action esetén.}
 	\label{githubActions}
-\end{figure}
-
-\begin{figure}[ht!]
-	\centering
-	\includegraphics[height=13cm]{../pictures/screenshots/cypress_tests.png}
-	\caption{Részlet a Cypress tesztek eredményéből.}
-	\label{cypressResult}
 \end{figure}
 
 \chapter{Az alkalmazás telepítése}
@@ -823,17 +824,17 @@ A kész alkalmazás egy ingyenes Amazon AWS\cite{aws} szerveren fut, ide került
 \section{Kézi telepítés lépései}
 \label{manualSetup}
 \begin{enumerate}
-	\item Töltsük le az alkalmazás fájljait, amik a szakdolgozathoz vannak mellékelve, vagy a repozitóriumból.
+	\item Töltsük le az alkalmazás fájljait, amik a szakdolgozathoz vannak mellékelve, vagy az összefoglalóban említett repozitóriumból.
 	\item A futtatáshoz szükségünk van egy adatbázis szerverre. Javasolt MySQL\cite{mysql} vagy PostgreSQL\cite{postgre} használata. Ezeknek a telepítéséről az adott adatbázisszerver weboldalán lehet tájékozódni.
 	\item Telepítsük a PHP-t számítógépünkre, legalább a 8.1-es verziót, melyet a Laravel keretrendszer 10-es verziója követel meg. Alternatívaként telepíthetjük a XAMPP\cite{xampp} nevezetű programot is, mely feltelepít egy adatbázis és PHP disztribúciót is.
-	\item Konfiguráljuk az adatbázist: hozzunk létre egy felhasználót és egy sémát, amihez hozz fog tudni férni az oldalunk.
+	\item Konfiguráljuk az adatbázist: hozzunk létre egy felhasználót és egy sémát, amihez hozz fog tudni férni az alkalmazás.
 	\item Az alábbi php kiegészítő csomagok engedélyezése szükséges: Ctype, cURL, DOM, Fileinfo, Filter, Hash, Mbstring, OpenSSL, PCRE, PDO, Session, Tokenizer, XML.
 	\item Telepítsük a Composer\cite{composer} nevű PHP csomagkezelő rendszert.
 	\item Telepítsük a Node.js\cite{nodejs} nevű JavaScript futtatókörnyezetet.
 	\item A sikeres telepítések után navigáljunk el a \emph{thesisproject} nevű mappába a letöltött fájlok között. Ez tartalmazza a program fájljait, a továbbiakban itt dolgozunk, itt adunk ki parancsokat.
 	\item Készítsünk egy másolatot a \emph{.env.example} nevű fájlról és nevezzük azt át \emph{.env} névre. Nyissuk meg, és töltsük ki az alábbi adatokat:
 	\begin{itemize}
-		\item APP\_URL: amennyiben nem helyi környezetben, kipróbálásra telepítjük, akkor itt adjuk meg az alkalmazás elérési útját, egyébként maradhat az értéke.
+		\item APP\_URL: amennyiben nem helyi környezetben, kipróbálásra telepítjük az alkalmazást, hanem éles környezetben, akkor itt adjuk meg az alkalmazás elérési útját, egyébként maradhat az értéke.
 		\item DB prefixummal kezdődő értékek: itt állítsuk be az adatbázis kapcsolat adatait.
 		\item BROADCAST\_DRIVER: értékét állítsuk át \emph{pusher}-re.
 		\item QUEUE\_CONNECTION: értékét állítsuk át \emph{database}-re, amennyiben az adatbázist szeretnék használni a sor-hoz.

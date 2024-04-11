@@ -250,7 +250,7 @@ Szakdolgozatomat négy részre osztottam: \aref{appDescription}. fejezetben mag�
 	\item Az egyéb, nem említett táblák inkább kapcsolótábla funkciót töltenek be, vagy a keretrendszernek van rá szüksége. Például a \emph{jobs} tábla a háttérben végrehajtandó feladatokat (job) tartalmazza.
 \end{itemize}
 
-Itt érdemes még megemlíteni, hogy a fejlesztés során a MySQL\cite{mysql} nevezetű, relációs adatbázist használtam, viszont a Laravel keretrendszerből adódóan sok más típusú adatbázis szoftverrel használható az alkalmazás, mivel a táblák felépítése a keretrendszer nyújtotta módon van elkészítve.
+Itt érdemes még megemlíteni, hogy a fejlesztés során a MySQL nevezetű, relációs adatbázist használtam, viszont a Laravel keretrendszerből adódóan sok más típusú adatbázis szoftverrel használható az alkalmazás, mivel a táblák felépítése a keretrendszer nyújtotta módon van elkészítve.
 
 \section{Általános információk}
 
@@ -602,27 +602,27 @@ A programban főként ilyen Livewire komponenseket használtam. Ez alól egyedü
 
 A fentebb említettek alapján sikerült kialakítani dinamikusan frissülő nézeteket, viszont egy probléma továbbra is fent állt: az oldalak közötti navigáció esetén továbbra is az egész oldal újra töltődött. Ennek megoldására találták ki a Livewire \emph{Navigate}\cite{navigate} funkcióját. Használata egyszerű: a navigálásra szánt gombokra, hivatkozásokra a \emph{wire:navigate} direktívát kell alkalmazni. Ezután amikor rákattint a felhasználó, az oldal teljes újratöltése helyett a háttérben kéri le a weboldalt a szervertől, majd a kapott adatok alapján módosítja a dokumentum struktúráját a Livewire.
 
-Ezáltal egy SPA típusú oldal hozható létre, melynek jelentése: Single Page Application, avagy Egy oldalból álló alkalmazás. Ahogy a neve is sugallja, ezek olyan alkalmazások, amik egy oldalt töltenek be teljesen, a későbbiek során ennek az oldalnak a felépítését módosítják háttérben történő kérésekkel, mint ami \aref{livewireUpdate}. ábrán is látható.\cite{spa}
+Ezáltal egy SPA típusú oldal hozható létre, melynek jelentése: Single Page Application, avagy egy oldalból álló alkalmazás. Ahogy a neve is sugallja, ezek olyan alkalmazások, amik egy oldalt töltenek be teljesen, a későbbiek során ennek az oldalnak a felépítését módosítják háttérben történő kérésekkel, mint ahogyan \aref{livewireUpdate}. ábrán is látható.\cite{spa}
 
 \subsection{Események}
 \label{livewireevents}
-A csomag lehetőséget ad események küldésére és fogadására is. Ezt én elsősorban kettő funkció megoldására használtam fel. Az egyik a legördülő és kereshető kiválasztó mezők esetén volt, amikor egy, vagy több felhasználót kell kiválasztani. Ezek a mezők külön komponensek, így amikor annak az értéke frissül, akkor egy eseményt hozok létre, amit fogad az a komponens, amibe a mező be van ágyazva, ezáltal módosítva az értéket. A másik ilyen a felugró ablakok bezárása: ha valamilyen modell létrehozására szolgáló felugró ablakot nyit meg a felhasználó, majd a mezők megfelelő kitöltése után a mentésre kattint a felhasználó, akkor -- amennyiben nem lép közbe validációs probléma -- a mentést megvalósító függvény egy eseményt küld, hogy záródjon be az ablak.
+A csomag lehetőséget ad események küldésére és fogadására is. Ezt én elsősorban kettő funkció megoldására használtam fel. Az egyik a legördülő és kereshető kiválasztó mezők esetén volt, amikor egy, vagy több felhasználót kell kiválasztani. Ezek a mezők külön komponensek, így amikor annak az értéke frissül, akkor egy eseményt hozok létre, amit fogad az a komponens, amibe a mező be van ágyazva, ezáltal módosítva az értéket. A másik ilyen a felugró ablakok bezárása, ha valamilyen entitás létrehozására szolgáló felugró ablakot nyit meg a felhasználó. A mezők megfelelő kitöltése után a mentésre kattintva az azt megvalósító függvény egy eseményt küld, hogy záródjon be az ablak, amennyiben nem történt validációs probléma.
 
 Ilyen eseményeket a komponensben belül a \emph{dispatch()} függvény segítségével küldhetünk, ahol adni kell egy nevet az eseménynek, illetve igény szerint egyéb adatokat, amiket szeretnék mellékelni az eseményhez.
 
-Az eseményeket fogadni többféleképpen tudjuk. Például a legördülő mezők esetén közvetlen a komponens osztályában fogadtam az eseményt. Ehhez egy függvényt kellett írni, aminél az \emph{\#On} attribútumot kellett alkalmazni. Amennyiben egyéb adatok is várunk az eseménynél, akkor azt a függvény paraméterein keresztül tudjuk megkapni. Ezt felhasználva, amikor változott a legördülő mező értéke, akkor egy eseményben kiküldtem a szülő komponensnek az új értéket, azt ő fogadta, és eltárolta azt.
+Az eseményeket fogadni többféleképpen tudjuk. Például a legördülő mezők esetén közvetlen a komponens osztályában fogadtam az eseményt. Ehhez egy függvényt kellett írni, aminél az \emph{\#On} attribútumot kellett alkalmazni. Amennyiben egyéb adatok is várunk az eseménynél, akkor azt a függvény paraméterein keresztül tudjuk megkapni. Ezt felhasználva, amikor változott a legördülő mező értéke, akkor egy eseményben kiküldtem a szülő komponensnek az új értéket, azt fogadta, és eltárolta.
 
-Eseményt nem csak a PHP kódban, hanem a nézetekben, JavaScript-ben belül is tudunk fogadni. Ez a felugró ablakok bezárásánál volt előnyös, hiszen a nézetből férek hozzá az egyes HTML elemekhez az oldalon. Ilyenkor a JavaScript kódunkban a \emph{Livewire.on} függvényt kell használni, megadni az esemény nevét, illetve hogy mi történjen az esemény bekövetkezésekor, tehát jelen példában záródjon be az ablak.
+Eseményt nem csak a PHP kódban, hanem a nézetekben, JavaScript-ben belül is tudunk fogadni. Ez a felugró ablakok bezárásánál volt előnyös, hiszen a nézetből férek hozzá az egyes HTML elemekhez az oldalon. Ilyenkor a JavaScript kódunkban a \emph{Livewire.on} függvényt kell használni, megadni az esemény nevét, illetve, hogy mi történjen az esemény bekövetkezésekor, tehát jelen példában záródjon be az ablak.\cite{livewireEvents}
 
 \lstinputlisting[caption={Események küldése és fogadása.}, label=events, style=php]{../codes/events.php}
 
 \subsection{WireToast: Livewire alapú értesítések}
 
-Az utolsó Livewire-el kapcsolat téma, amit szeretnék megemlíteni, az az oldalon megjelenő értesítések egyes interakciók után, mint például létrehozás. Ehhez a \emph{Tall toasts}\cite{talltoasts} nevű csomagot használtam. Ez a Livewire-rel együtt működő csomag, így csak ilyen komponenseken belül lehet használni. Működéséhez a komponensek használnia kell a \emph{WireToasts} nevezetű trait-et, majd pedig a \emph{toast()} függvény meghívásával hozható létre ilyen értesítés. Ezután a típusát kell megadni (információ, siker, esetleg hiba), illetve a megjelenítendő szöveget és címet. Majd a \emph{push()} függvénnyel tudjuk kiküldeni az értesítést.
+Az utolsó Livewire-el kapcsolat téma, amit szeretnék megemlíteni, az az oldalon megjelenő értesítések egyes interakciók után, mint például létrehozás. Ehhez a \emph{Tall toasts}\cite{talltoasts} nevű csomagot használtam. Ez a Livewire-rel együtt működő csomag, így csak ilyen komponenseken belül lehet használni. Működéséhez a komponensek használnia kell a \emph{WireToasts} nevezetű trait-et, majd pedig a \emph{toast()} függvény meghívásával hozható létre ilyen értesítés. Ezután a típusát kell megadni (információ, siker, esetleg hiba), illetve a megjelenítendő szöveget és címet. Ezután a \emph{push()} függvénnyel tudjuk kiküldeni az értesítést.
 
 \lstinputlisting[caption={Oldalon megjelenő sikeres értesítés küldése.}, label=wiretoast, style=php]{../codes/toast.php}
 
-Az értesítések kinézete természetesen személyre szabható, én például a DaisyUi által szolgáltatott értesítés komponensre írtam át az eredeti nézeteket.
+Az értesítések kinézete természetesen személyre szabhatók, én például a DaisyUI által szolgáltatott értesítés komponensre írtam át az eredeti nézeteket.
 
 \begin{figure}[ht!]
 	\centering
@@ -633,29 +633,29 @@ Az értesítések kinézete természetesen személyre szabható, én például a
 
 \section{Websocket és Pusher}
 
-Amikor \aref{class}. képen látható óra megtekintésére szolgáló oldalt készítettem, akkor mindenképpen szerettem volna megoldani, hogy amikor a tanuló a QR kód segítségével jelzi jelenlétét az órán, a státusza automatikusan frissüljön a tanár által látott oldalon is. Első gondolatom az volt, hogy periodikusan, pár másodpercenként frissítem az oldalt, viszont ezt az ötletet azonnal elvetettem, mivel ez rengeteg fölösleges kéréssel járna, ami sok töltést jelentene a felhasználóknak, illetve terhet a szervernek. Így másik megoldás után néztem, ekkor találtam rá a Websocket-ekre és a Pusher szolgáltatásra.
+Amikor \aref{class}. ábrán látható óra megtekintésére szolgáló oldalt készítettem, akkor mindenképpen szerettem volna megoldani, hogy amikor a tanuló a QR kód segítségével jelzi jelenlétét az órán, a státusza automatikusan frissüljön a tanár által látott oldalon is. Első gondolatom az volt, hogy periodikusan, pár másodpercenként frissítem az oldalt, viszont ezt az ötletet azonnal elvetettem, mivel ez rengeteg fölösleges kéréssel járna, ami sok töltést jelentene a felhasználóknak, illetve terhet a szervernek. Így másik megoldás után néztem. Ekkor találtam rá a Websocket-ekre és a Pusher szolgáltatásra.
 
 \subsection{Websocket}
 
-A Websocket technológia kétirányú kommunikációt tesz lehető a szerver és a kliensek között. Ezáltal a folytonos frissítést, amit először terveztem, eseményekkel lehet kiváltani.\cite{websocket} Amikor valaki bejelentkezik az órára, akkor egy esemény jön létre, ami egy csatornán kerül kiküldésre, amire fel van iratkozva a tanár által látott oldal. Az oldal fogadja az eseményt a csatornán keresztül, és innen tudja, hogy frissíteni kell az adott tanulóhoz tartozó sort. Ezek nem azok az események, amiket \aref{livewireevents}. fejezetben taglaltam. Azok az események az adott felhasználói munkamenetre korlátozódnak, míg ezek az események küldése, fogadása eszközök, felhasználók között történnek.
+A Websocket technológia kétirányú kommunikációt tesz lehetővé a szerver és a kliensek között. Ezáltal a folytonos frissítést, amit először terveztem, eseményekkel lehet kiváltani.\cite{websocket} Amikor valaki bejelentkezik az órára, akkor egy esemény jön létre, ami egy csatornán kerül kiküldésre, amire fel van iratkozva a tanár által látott oldal. Az oldal fogadja az eseményt a csatornán keresztül, és innen tudja, hogy frissíteni kell az adott tanulóhoz tartozó sort. Ezek nem azok az események, amiket \aref{livewireevents}. fejezetben taglaltam. Azok az események az adott felhasználói munkamenetre korlátozódnak, míg ezek az események küldése - fogadása az eszközök és felhasználók között történnek elsősorban.
 
 \subsection{Pusher channels}
 
-A Pusher Channels\cite{pusher} tulajdonképpen egy megvalósítása a Websocketeknek, amit kifejezetten webalkalmazásokhoz terveztek. Ingyenes fiókot lehet hozzá létrehozni, ami bár korlátolt, a szakdolgozat készítéséhez és kipróbálásához bőven elegendő volt. A Laravel keretrendszer is támogatja a Pusher technológiát, így könnyen integrálható volt a programba. Mondhatni a Pusher a szerver és a kliensek között áll: ide érkeznek be az események, és innen kerülnek továbbküldésre a kliensnek.
+A Pusher Channels\cite{pusher} tulajdonképpen egy megvalósítása a Websocketeknek, amit kifejezetten webalkalmazásokhoz terveztek. Ingyenes fiókot lehet hozzá létrehozni, ami bár korlátolt, a szakdolgozat készítéséhez és kipróbálásához bőven elegendő volt. A Laravel keretrendszer is támogatja a Pusher technológiát, így könnyen integrálható volt a programba. Mondhatni a Pusher a szerver és a kliensek között áll: ide érkeznek be az események, majd innen kerülnek továbbküldésre a klienseknek.
 
-Természetesen más, akár nyílt forrású megoldások is elérhetők, illetve a dolgozat készítésekor is fejlesztés alatt volt egy kifejezetten a Laravel-hez készülő változat, viszont a fejlesztők későn lettek készek vele ahhoz, hogy fel tudjam használni szakdolgozatomban, így a Pusher lecserélése erre a megoldásra egy jövőbeli feladat lesz.
+Természetesen más, akár nyílt forrású megoldások is elérhetők, illetve a dolgozat készítésekor is fejlesztés alatt volt egy kifejezetten Laravel-hez készülő változat, viszont a fejlesztők későn lettek készen vele ahhoz, hogy fel tudjam használni szakdolgozatomban, így a Pusher lecserélése erre a megoldásra egy jövőbeli feladat lesz.
 
 \subsection{Csatornák, események létrehozása}
 
-A Websocketek konfigurálása és használata két részre tehető: a szerver és a kliens beállítására és az ezekhez szükséges csomagok telepítésére.
+A Websocketek konfigurálása és használata két részre vehető: a szerver és a kliens beállítására, valamint az ezekhez szükséges csomagok telepítésére.
 
-Pusher használata esetén regisztrálnunk kell magunkat, majd a kapott hozzáférési kulcsokat és adatokat megadni a környezeti fájlban, illetve engedélyezni kell az események közvetítését a konfigurációs fájlokban. Végezetül a Pusher-hez szükséges csomag telepítését kell elvégezni, illetve beállítani -- szintén a környezeti fájlban --, hogy a közvetítésre a Pusher-t használjon a keretrendszer. Szükséges még egy sor (Queue) beállítása is, mivel innen kerülnek az események kiküldésre, de mivel az emailek esetén is szükség volt erre, így ezzel a lépéssel már készen voltam.\cite{broadcasting}
+Pusher használata esetén regisztrálnunk kell magunkat, majd a kapott hozzáférési kulcsokat és adatokat megadni a környezeti fájlban, illetve engedélyezni kell az események közvetítését a konfigurációs fájlokban. Végezetül a Pusher-hez szükséges csomag telepítését kell elvégezni, illetve beállítani -- szintén a környezeti fájlban --, hogy a közvetítésre a Pusher-t használja a keretrendszer. Szükséges még egy sor (Queue) beállítása is, mivel innen kerülnek az események kiküldésre, de mivel az emailek esetén is szükség volt erre, így ezzel a lépéssel már készen voltam.\cite{broadcasting}
 
-Ezután készen állunk az események létrehozására. A jelenlét megváltozására létrehoztam a \emph{ClassPresenceChanged} eseményt. Ez az esemény kerül kiküldésre ha a hallgató bejelentkezik az órára a QR kódon keresztül. Az osztálynak implementálnia kell a \emph{ShouldBroadcast} interfészt, ami egy függvényt tartalmaz, a \emph{broadcastOn} függvényt. Itt kell definiálunk azon csatorná(ka)t, ahol szeretnék az eseményt hirdetni. Lehetőség van privát csatornák létrehozására is, de nekem elegendő volt a publikus csatorna is ebben az esetben. Az eseményeket a \emph{updatePresence} csatornákon hirdetem, amihez hozzáfűzöm a jelenlétet leíró entitás azonosítóját, ez látható \aref{broadcastOn}. részletben. Hogy ezt megtehessem, az esemény osztályának konstruktorában bekérem a jelenlét entitást. Így minden tanuló minden órájához külön csatorna tartozik azért, hogy az óránál egyszerre csak egy sor frissüljön, ne az összes mindig.
+Ezek után készen állunk az események létrehozására. A jelenlét megváltozására létrehoztam a \emph{ClassPresenceChanged} eseményt. Ez az esemény kerül kiküldésre ha a hallgató bejelentkezik az órára a QR kódon keresztül. Az osztálynak implementálnia kell a \emph{ShouldBroadcast} interfészt, ami egy függvényt tartalmaz, a \emph{broadcastOn}-t. Itt kell definiálni azon csatorná(ka)t, ahol szeretnék az eseményt hirdetni. Lehetőség van privát csatornák létrehozására is, de nekem elegendő volt a publikus csatorna is ebben az esetben. Az eseményeket az \emph{updatePresence} csatornákon hirdetem, melynek nevéhez hozzáfűzöm a jelenlétet leíró entitás azonosítóját, ez látható \aref{broadcastOn}. kódrészletben. Hogy ezt megtehessem, az esemény osztályának konstruktorában bekérem a jelenlét entitást. Így minden tanuló minden órájához külön csatorna tartozik azért, hogy az óránál egyszerre csak egy sor frissüljön, ne mindig az összes.
 
 \lstinputlisting[caption={Csatorna definiálása az esemény osztályában.}, label=broadcastOn, style=php]{../codes/event.php}
 
-Az események létrehozása után az osztálynevük, majd a \emph{dispatch} függvényhasználatával, illetve az esetleges konstruktor értékek megadásával küldhetjük el az eseményt.
+Az események létrehozása után az osztálynevük, majd a \emph{dispatch} függvény használatával, illetve az esetleges konstruktor értékek megadásával küldhetjük el az eseményt.
 
 \lstinputlisting[caption={Esemény elküldése.}, label=sendEvent, style=php]{../codes/sendEvent.php}
 
@@ -663,7 +663,7 @@ Az események létrehozása után az osztálynevük, majd a \emph{dispatch} füg
 
 Természetesen ezeket az eseményeket fogadni is kell. Ehhez nyújt megoldást a Laravel Echo\cite{broadcasting}. Itt is szükséges maga az Echo és a Pusher-hez tartozó csomagok telepítése. Ezek után egy Echo példányt kell létrehoznunk a JavaScript kódunkban. Ez a példány kapja meg a csatornákhoz való csatlakozás adatait, és ez fogja fogadni az eseményeket. A keretrendszer alapból tartalmaz egy ilyen példányt, amit csak ki kell vennünk a  kommentekből. Az autentikációs adatokat a környezeti fájlból kiolvassa, így ez használatra kész.
 
-Az Echo példány létrehozása után JavaScript kódból tudunk az eseményekre figyelni, viszont én nem ezt az utat választottam. Helyette Livewire komponensből figyeltem az eseményeket. Ehhez továbbra is szükség van a Laravel Echo csomagra az események fogadásához, viszont azt, hogy mi történik, és hogy milyen csatornákat, eseményeket figyelek, azt már a PHP osztályon belül tudom megadni, hasonlóan \aref{livewireevents}. alfejezetben írt módon.
+Az Echo példány létrehozása után JavaScript kódból tudunk az eseményekre figyelni, viszont én nem ezt az utat választottam. Helyette Livewire komponensből figyeltem az eseményeket. Ehhez továbbra is szükség van a Laravel Echo csomagra az események fogadásához, viszont azt, hogy mi történik, és hogy milyen csatornákat, eseményeket figyelek, azt már a PHP osztályon belül tudom megadni, hasonlóan, mint \aref{livewireevents}. alfejezetben írt módon.
 
 Továbbra is az \emph{\#On[]} attribútumot kell alkalmazni, viszont az esemény leírásában az \emph{echo} előtagot, a csatorna nevét, majd az esemény nevét kell leírni.\cite{livewireEcho}. Az esemény nevénél szükség lehet az egész névteret megadni, ahol az esemény osztálya található.
 
@@ -671,43 +671,43 @@ Továbbra is az \emph{\#On[]} attribútumot kell alkalmazni, viszont az esemény
 
 \section{Progressive Web Apps}
 
-Az alkalmazás tervezésének elején azért döntöttem weboldal készítése mellett, mivel ez a legkönnyebb módon elérhető alkalmazás, hiszen telepíteni se kell. Ugyan akkor a fejlesztés során elgondolkoztam, hogy jó lenne, ha akár telepíteni is tudnák a felhasználók az alkalmazást, hogy gyorsabban hozzáférjenek, ezáltal kiszolgálva mindkét lehetőséget. Ezért is lett belőle PWA alkalmazás.
+Az alkalmazás tervezésének elején azért döntöttem weboldal készítése mellett, mivel ez a legkönnyebb módon elérhető alkalmazás, hiszen telepíteni se kell. Ugyanakkor a fejlesztés során elgondolkoztam, hogy jó lenne, ha akár telepíteni is tudnák a felhasználók az alkalmazást, hogy gyorsabban hozzáférjenek, ezáltal kiszolgálva mindkét lehetőséget. Ezért is lett belőle PWA alkalmazás.
 
-A PWA, avagy a Progressive Web Apps olyan webalkalmazások, melyek webes technológiákkal készültek, webböngészőkben futnak, de képesek platform specifikus alkalmazásként is viselkedni, beépülni a rendszerbe.\cite{PWA} Ez a gyakorlatban azt jelenti, hogy az alkalmazás külön ablakban nyílik meg, nem a böngészőben, a telepített alkalmazások között megjelenik, illetve az is előfordulhat, hogy egyes részei internetkapcsolat nélkül is működnek.
+A PWA, avagy a Progressive Web Apps olyan webalkalmazások, melyek webes technológiákkal készültek, webböngészőkben futnak, de képesek platform specifikus alkalmazásként is viselkedni, beépülni a rendszerbe.\cite{PWA} Ez a gyakorlatban azt jelenti, hogy az alkalmazás külön ablakban nyílik meg, nem a böngésző fő ablakában, a telepített alkalmazások között megjelenik, illetve az is előfordulhat, hogy egyes részei internetkapcsolat nélkül is működhetnek.
 
 Ennek megvalósításához a Laravel PWA\cite{laravelpwa} csomagot használtam. Ez a könyvtár segítség nyújt a \emph{manifest} fájl és a \emph{service worker} létrehozásában, melyek szükségesek a PWA működéséhez. A csomag létrehozza ezeket, illetve létrehoz egy oldalt is, ami akkor jelenik meg, ha nincs internetkapcsolat. Ezeket szabtam személyre.
 
-Fontos megjegyezni, hogy a PWA alkalmazások csak HTTPS kapcsolat alatt működnek, ez alól kivételt a fejlesztői környezetben futó alkalmazások jelentenek csak. Sajnos egyedüli hátránya, hogy nem minden böngésző támogatja a PWA alkalmazások telepítését, de attól maga az oldal továbbra is működik.
+Fontos megjegyezni, hogy a PWA alkalmazások csak HTTPS kapcsolat alatt működnek, ez alól a fejlesztői környezetben futó alkalmazások jelentenek csak kivételt. Sajnos egyedüli hátránya, hogy nem minden böngésző támogatja a PWA alkalmazások telepítését, de attól maga az oldal továbbra is működik.
 
 \subsection{A manifest fájl}
 
-A \emph{manifest} fájl tartalmazza az alkalmazás adatait, mint például a nevét is. Ezt a fájlt szükséges behivatkozni a főoldalon. A böngésző érzékeli ezt a fájlt, és innen tudja, hogy a weboldal telepíthető PWA alkalmazásként, illetve a telepített alkalmazás nevét, ikonját is innen szerzi be. \Aref{manytomany}. kódrészleten láthatjuk ezt a fájlt. Itt több beállítást meg lehet adni: az alkalmazás nevét, kezdő címét, háttér színét és az ikonjait, csak hogy párat kiemeljek. Vannak más lehetőségek is, amiket itt nem használtam, például más méretű ikonokat, vagy gyors parancsokat is fel lehet venni.
+A \emph{manifest} fájl tartalmazza az alkalmazás adatait, mint például a nevét is. Ezt a fájlt szükséges behivatkozni a főoldalon. A böngésző érzékeli ezt a fájlt, és innen tudja, hogy a weboldal telepíthető PWA alkalmazásként, illetve a telepített alkalmazás nevét, ikonját is innen szerzi be. \Aref{manytomany}. kódrészleten láthatjuk ezt a fájlt. Itt több beállítást lehet megadni: az alkalmazás nevét, kezdő címét, háttér színét és az ikonjait, csak hogy párat kiemeljek. Vannak más lehetőségek is, amiket itt nem használtam, például más méretű ikonokat, vagy gyors parancsokat is fel lehet venni.
 
 \lstinputlisting[caption={Az oldal által használt manifest fájl.}, label=manifest, style=jsonstyle]{../codes/manifest.json}
 
 \subsection{Service Worker}
 
-A másik fontos összetevő a Service worker. Ennek az egyik fő feladata, hogy gyorsító tárazza az oldal egyes elemeit. Az oldal betöltésekor regisztrálja magát, és elmenti a gyorsítótárba a fájlokat. Ezáltal akkor is működni tud, ha nincs kapcsolat a szerverrel. Ezt a szolgáltatását arra használtam ki, hogy egy személyre szabott oldalt jelenítsek meg kapcsolat hiányának esetén. Ez úgy történik, hogy minden kérést és választ megvizsgál a service worker. Amennyiben úgy látja, hogy a szerver nem elérhető, akkor a gyorsítótárból tölti be a hibát jelző oldalt, ellenkező esetben pedig tovább engedi a kérést. 
+A másik fontos összetevő a Service Worker. Ennek az egyik fő feladata, hogy gyorsító tárazza az oldal egyes elemeit. Az oldal betöltésekor regisztrálja magát, és elmenti a gyorsítótárba a fájlokat. Ezáltal akkor is működni tud, ha nincs kapcsolat a szerverrel. Ezt a szolgáltatását arra használtam ki, hogy egy személyre szabott oldalt jelenítsek meg kapcsolat hiányának esetén. Ez úgy történik, hogy minden kérést és választ megvizsgál a Service Worker. Amennyiben úgy látja, hogy a szerver nem elérhető, akkor a gyorsítótárból tölti be a hibát jelző oldalt, ellenkező esetben pedig tovább engedi a kérést. 
 
 Sajnos az oldal többi részén használt Tailwind-et itt nem tudtam alkalmazni, mivel a stílusokat tartalmazó fájlok minden újraépítés során kapnak egy egyedi azonosító részt, így nem tudtam őket felvenni a gyorsítótárazandó fájlok közé. Ezért ezen az ,,offline'' oldalon a BootStrap-et\cite{bootstrap} alkalmaztam, amely egy másik komponens keretrendszer, mivel az ehhez szükséges fájlt csak be raktam a publikusan elérhető fájlok közé, és ezt már sikerült gyorsítótárazni.
 
-\lstinputlisting[caption={Részlet a Laravel PWA csomagban előre elkészített service worker fájlból.\cite{laravelpwa}}, label=service, style=js]{../codes/service_worker.js}
+\lstinputlisting[caption={Részlet a Laravel PWA csomagban előre elkészített Service Worker fájlból.\cite{laravelpwa}}, label=service, style=js]{../codes/service_worker.js}
 
 \section{Egyéb csomagok}
 
 \subsection{QR kód generálás}
 
-A QR kódok olyan kétdimenziós, négyzetes képek, amiket azok gyors, kamerával való beolvasására fejlesztettek ki.\cite{qrCodeWhatIsIt} Amikor egy gyorsabb módszeren gondolkoztam, amivel bejelentkezhetnek a diákok az órákra, és nem szükséges hozzá különösebb eszköz, akkor végül ezen kódok használata mellett döntöttem, hiszen a tanárnak csak ki kell ezt vetíteni, a hallgatók pedig telefonjukkal be tudják azt szkennelni.
+A QR kódok olyan kétdimenziós, négyzetes képek, amiket azok gyors, kamerával való beolvasására fejlesztettek ki.\cite{qrCodeWhatIsIt} Amikor egy gyorsabb módszeren gondolkoztam, amivel bejelentkezhetnek a diákok az órákra, és nem szükséges hozzá különösebb eszköz, akkor végül ezen kódok használata mellett döntöttem, hiszen a tanárnak csak ki kell ezt vetíteni, a hallgatók pedig telefonjukkal be tudják azt olvasni.
 
-A QR kódok generálására a \emph{Simple QrCode}\cite{qrCode} nevű csomagot használom. Telepítés után a Blade fájlban közvetlen létre tudjuk hozni a kódot, ahol a méretét, és a kódolandó szöveget kell megadni.
+A QR kódok generálására a \emph{Simple QrCode}\cite{qrCode} nevű csomagot használtam. Telepítés után a Blade fájlban közvetlen létre tudjuk hozni a kódot, ahol a méretét, és a kódolandó szöveget kell megadni.
 
-\lstinputlisting[caption={QR kód generálása 250-es mérettel, ami a bejelentkező linket tartalmazza, ezt a komponens egyik mezőjéből kértem le.}, label=qr, style=php]{../codes/qr.blade.php}
+\lstinputlisting[caption={QR kód generálása 250-es mérettel, ami a bejelentkező linket tartalmazza, amit a komponens egyik mezőjéből kértem le.}, label=qr, style=php]{../codes/qr.blade.php}
 
 \subsection{Naptár - FullCalendar.js}
 
-Az órarend megjelenítésére használtam a FullCalendar.js\cite{fullcalendar} nevezetű csomagot. Ez egy nagyon személyre szabható csomag, a színek, méretek, felépítések is testre szabhatók. Beállítható a nyelv, a megjelenő napok száma és az események kinézete is többek között.
+Az órarend megjelenítésére használtam a FullCalendar.js\cite{fullcalendar} nevezetű csomagot. Ez egy nagyon személyre szabható csomag: a színek, méretek, felépítések is testre szabhatók. Többek között beállítható a nyelv, a megjelenő napok száma és az események kinézete is többek között.
 
-Mivel ez egy JavaScript alapú csomag, így az órarend létrehozása is azzal történt, ennek kódja a Blade komponens-be van beágyazva. Ez viszont egy problémát hozott magával: az órarendben megjelenő eseményeket a PHP kód szolgáltatja, így a kettőt össze kellett valamilyen módon kötni. Szerencsére sikerült megoldást találnom. A Livewire lehetővé teszi, hogy a PHP komponensben található függvényeket meghívjuk JavaScript kódunkban, és azoknak visszatérési értékét feldolgozzuk. A FullCalender csomag pedig lehetőséget nyújt arra, hogy amennyiben a naptár megjelenítésre kerül, vagy másik időtartományra vált a felhasználó, akkor egy JavaScript függvény fusson le, ami elvégzi a kiválasztott időtartamban található események lekérdezését. Bár ezt elsődlegesen API végpontok meghívására tervezték, jól működik Livewire esetén is. Ilyenkor meghívásra kerül a PHP függvény, ami megkapja a kiválasztott időtartamot, lekérdezi az adatbázisból a felhasználó óráit, ezeket egy asszociatív tömbbe gyűjti, majd vissza adja ezt. Az így kapott adatot a FullCalendar csomag fel tudja használni és megjeleníteni az órákat. Itt volt lehetőség megadni azt is, hogy milyen színe legyen az eseménynek, így azt is könnyű volt megoldani, hogy attól függően, hogy milyen a státusza a hallgatónak az órán, változik a színe.
+Mivel ez egy JavaScript alapú csomag, így az órarend létrehozása is azzal történt, aminek kódja a Blade komponens-be van beágyazva. Ez viszont egy problémát hozott magával: az órarendben megjelenő eseményeket a PHP kód szolgáltatja, így a kettőt össze kellett valamilyen módon kötni. Szerencsére sikerült megoldást találnom. A Livewire lehetővé teszi, hogy a PHP komponensben található függvényeket meghívjuk JavaScript kódunkban, és azoknak visszatérési értékét feldolgozzuk. A FullCalendar csomag pedig lehetőséget nyújt arra, hogy amennyiben a naptár megjelenítésre kerül, vagy másik időtartományra vált a felhasználó, akkor egy JavaScript függvény fusson le, ami elvégzi a kiválasztott időtartamban található események lekérdezését. Bár ezt elsődlegesen API végpontok meghívására tervezték, jól működik Livewire esetén is. Ilyenkor meghívásra kerül a PHP függvény, ami megkapja a kiválasztott időtartamot, majd lekérdezi az adatbázisból a felhasználó óráit, ezeket egy asszociatív tömbbe gyűjti, majd vissza adja ezt. Az így kapott adatot a FullCalendar csomag fel tudja használni és megjeleníteni az órákat. Itt volt lehetőség megadni azt is, hogy milyen színe legyen az eseménynek, így azt is könnyű volt megoldani, hogy változik a színe attól függően, hogy milyen a státusza a hallgatónak az órán.
 
 Ez a megoldás még egy pozitívumot vont magával, amibe először nem is gondoltam bele, csak utólag. Amikor új eseményekre van szüksége a naptárnak, akkor ezek lekérésekor megadja azt is, hogy mely napok láthatóak jelenleg az oldalon, amit tovább lehet küldeni a PHP függvénynek paraméterként. Így nem kell az órarend megnyitásakor a felhasználó összes óráját lekérdezni, elég csak egy részét, ami nagy teljesítménybeli ugrást jelenthet, ha már több félév adata is benne van az adatbázisban.
 
@@ -715,18 +715,18 @@ Ez a megoldás még egy pozitívumot vont magával, amibe először nem is gondo
 
 \subsection{Diagramok - Chart.js}
 
-A főoldalon és az óráknál megjelenő diagramokat a Chart.js\cite{chartjs} nevezet könyvtárral készítettem el, ami szintén a nagy személyre szabhatóság  miatt tetszett meg. Sok különböző típusú diagramot támogat, de én leginkább a kördiagramok létrehozására használtam fel. A fent említett probléma itt is megjelent, mely szerint a PHP kód szolgáltatja az adatokat, viszont itt egyszerűbb volt a megoldás, tekintettel arra, hogy csak pár számot kell a diagramnak megkapnia, nem egész eseményeket. Blade direktívák segítségével beleírtam a komponens nézetbe -- ami tartalmazza a diagram létrehozására szolgáló JavaScript kódot is --, hogy milyen értékeket kell megjeleníteni a kördiagramnak. Illetve ugyan itt figyelek egy \emph{updateChart} eseményre, ami megkapja a friss adatokat, és átírja  a diagram-on az értékeket, így a frissítés is meg van oldva.
+A főoldalon és az óráknál megjelenő diagramokat a Chart.js\cite{chartjs} nevezetű könyvtárral készítettem el, ami szintén a nagy személyre szabhatóság  miatt tetszett meg. Sok különböző típusú diagramot támogat, de én leginkább a kördiagramok létrehozására használtam fel. A fent említett probléma itt is megjelent, mely szerint a PHP kód szolgáltatja az adatokat, viszont itt egyszerűbb volt a megoldás, tekintettel arra, hogy csak pár számot kell a diagramnak megkapnia, nem egész eseményeket. Blade direktívák segítségével beleírtam a komponens nézetbe -- ami tartalmazza a diagram létrehozására szolgáló JavaScript kódot is --, hogy milyen értékeket kell megjeleníteni a kördiagramnak. Illetve ugyan itt figyelek egy \emph{updateChart} eseményre, ami megkapja a friss adatokat, és átírja  a diagramon az értékeket, így a frissítés is meg van oldva.
 
 \lstinputlisting[caption={Részlet egy kördiagram létrehozásából.}, label=chart, style=js]{../codes/chart.js}
 
 \chapter{Az alkalmazás tesztelése}
 \label{testing}
 
-A fejlesztés során folyamatosan manuális tesztelést végeztem annak érdekében, hogy a lehető legkevesebb hiba merüljön fel a programban. Ugyan akkor más tesztelési módokat is igénybe vettem, illetve a kód minőségének ellenőrzésére is alkalmaztam eszközöket.
+A fejlesztés során folyamatosan manuális tesztelést végeztem annak érdekében, hogy a lehető legkevesebb hiba merüljön fel az alkalmazásban. Ugyan akkor más tesztelési módokat is igénybe vettem, illetve a kód minőségének ellenőrzésére is alkalmaztam eszközöket.
 
 \section{Automatizált tesztelés}
 
-A tesztelést a Cypress\cite{cypress} segítségével automatizáltam. Ez egy kifejezetten weboldalak automatizált tesztelésére készült szoftver. Segítségével akár külön komponenseket is tudunk tesztelni, vagy az egész oldalt egyszerre. Az utóbbit \emph{End to end} tesztelésnek hívnak, melynek az előnye, hogy a tesztelő szoftver pontosan úgy interaktál az alkalmazással, mint ahogy azt a felhasználó tenné. Így ha bármit változtatunk a kódban, akkor csak az elkészült teszteket kell újra lefuttatni, hogy megbizonyosodjunk arról, hogy a funkciók nem mentek tönkre. \cite{e2e}
+A tesztelést Cypress\cite{cypress} segítségével automatizáltam. Ez egy kifejezetten weboldalak automatizált tesztelésére készült szoftver. Segítségével akár külön komponenseket is tudunk tesztelni, vagy az egész oldalt egyszerre. Az utóbbit \emph{End to end} tesztelésnek hívnak, melynek az előnye, hogy a tesztelő szoftver pontosan úgy interaktál az alkalmazással, mint ahogyan azt a felhasználó tenné. Így ha bármit változtatunk a kódban, akkor csak az elkészült teszteket kell újra lefuttatni, hogy megbizonyosodjunk arról, hogy a funkciók nem mentek tönkre. \cite{e2e}
 
 \subsection{Működése}
 
@@ -739,7 +739,7 @@ A tesztjeim nagy része is ezekből épült fel: meglátogattam a teszteni kív�
 	\item 11. sor: kikeresi és beírja a felhasználónév mezőbe, hogy ,,SDAMIN''.
 	\item 12. sor: kikeresi és beírja a jelszó mezőbe, hogy ,,superadmin''.
 	\item 13. sor: kikeresi és rákattint a \emph{Bejelentkezés} gombra
-	\item 14. sor: itt történik a tényleges ellenőrzés. Megnézi, hogy az oldal tartalmazza-e az ,,Oldal adminisztráció'' szöveget. Mivel ezt csak akkor látja a felhasználó, ha sikerült szuper adminisztrátori jogokkal bejelentkeznie, ez egy megfelelő ellenőrzési pont.
+	\item Az utolsó sorban történik a tényleges ellenőrzés. Megnézi, hogy az oldal tartalmazza-e az ,,Oldal adminisztráció'' szöveget. Mivel ezt csak akkor látja a felhasználó, ha sikerült szuper adminisztrátori jogokkal bejelentkeznie, ez egy megfelelő ellenőrzési pont.
 \end{itemize}
 
 \lstinputlisting[caption={Részlet a bejelentkezés teszteléséből.}, label=userTest, style=js]{../codes/user_testing.cy.js}
@@ -748,7 +748,7 @@ A tesztjeim nagy része is ezekből épült fel: meglátogattam a teszteni kív�
 
 \subsection{Laravel Cypress}
 
-\Aref{userTest}. részletben látható egy \emph{before} függvény is. Ennek segítségével a teszt előtt futtathatunk le parancsokat, mely elsődleges célja a tesztelési környezet előkészítése. Én ezt arra használtam ki, hogy egy kifejezetten a Cypress és a Laravel összekapcsolására használt csomag\cite{laravelCypress} parancsait használjam itt. Ezen csomag segítségével a Cypress interaktálni tud közvetlen az alkalmazásunkkal. Ez tette lehetővé, hogy a tesztek futása előtt egy másik adatbázisra váltson automatikusan a Cypress, majd pedig a \emph{before} függvényben látható két sor frissíti az adatbázist a tesztek előtt, illetve feltölti pár alap felhasználóval. Emellett a későbbiekben -- amikor nem a bejelentkezés tesztelése volt a fő cél -- használtam gyors bejelentkezésre is, illetve lehetőség ad a csomag a modelljeink lekérdezésére is, ami akkor volt hasznos, ha létrehoztam valamilyen entitást, akkor levizsgáljam, hogy tényleg létre jött-e az adatbázisban.
+\Aref{userTest}. kódrészletben látható egy \emph{before} függvény is. Ennek segítségével a teszt előtt futtathatunk le parancsokat, melynek elsődleges célja a tesztelési környezet előkészítése. Én ezt arra használtam ki, hogy egy kifejezetten a Cypress és a Laravel összekapcsolására használt csomag\cite{laravelCypress} parancsait használjam itt. Ezen csomag segítségével a Cypress interaktálni tud közvetlen az alkalmazásunkkal. Ez tette lehetővé, hogy a tesztek futása előtt egy másik adatbázisra váltson automatikusan a Cypress, majd pedig a \emph{before} függvényben látható két sor frissíti az adatbázist a tesztek előtt, illetve feltölti pár alap felhasználóval. Emellett a későbbiekben -- amikor nem a bejelentkezés tesztelése volt a fő cél -- használtam gyors bejelentkezésre is. Ezek mellett lehetőség ad a csomag a modelljeink lekérdezésére is, ami akkor volt hasznos, ha létrehoztam valamilyen entitást, akkor levizsgáljam, hogy tényleg létre jött-e az adatbázisban.
 
 \begin{figure}[ht!]
 	\centering
@@ -759,11 +759,11 @@ A tesztjeim nagy része is ezekből épült fel: meglátogattam a teszteni kív�
 
 \section{Terheléses tesztelés}
 
-A fejlesztés vége felé kíváncsi lettem egy kicsit az alkalmazás teljesítményére is, ezért egy minimális terheléses tesztelést is végeztem. Ehhez a Gatling\cite{gatling} nevezetű szoftvert alkalmaztam, mely egy Java nyelven alapuló szoftver.
+A fejlesztés vége felé kíváncsi lettem az alkalmazás teljesítményére is, ezért egy minimális terheléses tesztelést is végeztem. Ehhez a Gatling\cite{gatling} nevezetű szoftvert alkalmaztam, amely egy Java nyelven alapuló szoftver.
 
 A tesztelés elején egy felvevő segítségével készíthetjük el a tesztről a forgatókönyvünket. Ekkor felvesszük, hogy hogyan interaktálunk az oldallal a teszt során. Ezt úgy tehetjük meg, hogy egy általunk választott böngésző proxy beállításait átállítjuk a felvevő által megadott értékekre. Így tudja felvenni, hogy milyen kérések kerülnek elküldésre, illetve érkeznek. Ezen adatok alapján épül fel a szimulációs osztály, amit módosítanunk kell.\cite{gatlingRecorder}
 
-A szimulációs osztályokban egy ún. \emph{scenario} jön létre. Ez tartalmazza a kéréseket sorozatát, illetve az ahhoz tartozó adatokat, amik felvételre kerültek. Itt célszerű az egyes kéréseknek nevet adni, hogy be tudjuk őket azonosítani, illetve egyéb módosítások is szükségesek lehetnek. Az én esetemben ez azt jelentette, hogy a felvevő statikus értékekként vette föl a Livewire és az oldal által használt tokeneket, amiket felvételkor látott, de át kellet ezt írni úgy, hogy minden egyes kérés esetén olvassa ki a kapott tokent, és azt használja. Ezek mellett érdemes lehet olyan kéréseket kiszedni, amiket nem szeretnénk terheléses tesztelés alá vetni, mert mondjuk nem közvetlen az alkalmazásunkhoz tartozik. Végezetül beállítjuk, hogy egyszerre hány felhasználóval tesztelje az alkalmazást, majd indulhat a tesztelés.\cite{gatlingScenario}
+A szimulációs osztályokban egy ún. \emph{scenario} jön létre. Ez tartalmazza a kéréseket sorozatát, illetve az ahhoz tartozó adatokat, amik felvételre kerültek. Itt célszerű az egyes kéréseknek nevet adni, hogy be tudjuk őket azonosítani, illetve egyéb módosítások is szükségesek lehetnek. Az én esetemben ez azt jelentette, hogy a felvevő statikus értékekként vette föl a Livewire és az oldal által használt tokeneket, amiket felvételkor látott, de át kellet ezt írni úgy, hogy minden egyes kérés esetén olvassa ki a kapott tokent, és azt használja. Ezek mellett érdemes lehet kivenni olyan kéréseket, amiket nem szeretnénk terheléses tesztelés alá vetni, mert mondjuk nem közvetlen az alkalmazásunkhoz tartozik. Végezetül beállítjuk, hogy egyszerre hány felhasználóval tesztelje az alkalmazást, majd indulhat a tesztelés.\cite{gatlingScenario}
 
 \lstinputlisting[caption={Részlet a bejelentkezés terheléses teszteléséből.}, label=gatlingTest, style=java]{../codes/gatling.java}
 
@@ -782,7 +782,7 @@ Mivel egy kis teljesítményű, ingyenes szerveren fut az alkalmazás, így sajn
 
 A Laravel Pint egy kód elemező, ami segít betartani a készítők által megfelelőnek tartott kód formázási szabályokat. Futtatásakor végignézi az összes PHP fájlt a projektben, majd kijavítja az esetleges formázási hibákat, mint például rossz behúzások, kapcsos zárójelek helye és az ehhez hasonló hibákat.\cite{pint} Futtatható manuálisan is, de akár a fejlesztői környezetbe is be lehet integrálni, így közvetlen a szerkesztőben is megjelennek az értesítések a formázási hibákról. 
 
-Azért, hogy ne felejtsem el ellenőrizni a kódom, a projekt Github repozitóriumában beállítottam a Github Actions\cite{actions} segítségével, hogy minden feltöltés esetén ellenőrizze le a kódot, hogy az megfelel-e a szabályoknak, így mindig láthattam, ha valahol formázási hiba volt.
+Azért, hogy ne felejtsem el ellenőrizni a kódom, a projekt Github repozitóriumában beállítottam a Github Actions\cite{actions} segítségével, hogy minden feltöltés esetén leellenőrizze le a kódot, hogy az megfelel-e a szabályoknak, így mindig láthattam, ha valahol formázási hiba volt.
 
 \begin{figure}[ht!]
 	\centering
@@ -819,15 +819,15 @@ Az alkalmazás a szakdolgozat védés, illetve a záróvizsga időszak alatt el�
 
 \section{Laravel Forge}
 
-A kész alkalmazás egy ingyenes Amazon AWS\cite{aws} szerveren fut, ide került kihelyezésre. Ebben nagy segítséget nyújtott a Laravel Forge\cite{forge} nevű szolgáltatás, ami összekötötte a kódot tartalmazó repozitóriumot, illetve az AWS fiókomat. Így egy helyen történt maga a szerver létrehozása, konfigurációja, illetve az alkalmazás telepítése is. Ehhez egy telepítési szkriptet kellet írni, ami nagyjából hasonló lépéseket végez el, mint \aref{manualSetup}. fejezetben leírtak. Ezek után a Forge telepítette az alkalmazást, majd egy kis konfiguráció után használható is volt. További előnye, hogy amennyiben töltöttem fel új vagy módosított fájlokat a repozitóriumba, akkor ezt a Forge automatikusan észlelte, és frissítette a telepített alkalmazást.
+A kész alkalmazás egy ingyenes Amazon AWS\cite{aws} szerveren fut, ide került kihelyezésre. Ebben nagy segítséget nyújtott a Laravel Forge\cite{forge} nevű szolgáltatás, ami összekötötte a kódot tartalmazó repozitóriumot, illetve az AWS fiókomat. Így egy helyen történt maga a szerver létrehozása, konfigurációja, illetve az alkalmazás telepítése is. Ehhez egy telepítési szkriptet kellet írni, ami nagyjából hasonló lépéseket végez el, mint \aref{manualSetup}. fejezetben leírtak. Ezek után a Forge telepítette az alkalmazást, majd egy kis konfiguráció után használható is volt. További előnye, hogy amennyiben töltöttem fel új, vagy módosított fájlokat a repozitóriumba, akkor ezt a Forge automatikusan észlelte, és frissítette a telepített alkalmazást.
 
 \section{Kézi telepítés lépései}
 \label{manualSetup}
 \begin{enumerate}
 	\item Töltsük le az alkalmazás fájljait, amik a szakdolgozathoz vannak mellékelve, vagy az összefoglalóban említett repozitóriumból.
-	\item A futtatáshoz szükségünk van egy adatbázis szerverre. Javasolt MySQL\cite{mysql} vagy PostgreSQL\cite{postgre} használata. Ezeknek a telepítéséről az adott adatbázisszerver weboldalán lehet tájékozódni.
-	\item Telepítsük a PHP-t számítógépünkre, legalább a 8.1-es verziót, melyet a Laravel keretrendszer 10-es verziója követel meg. Alternatívaként telepíthetjük a XAMPP\cite{xampp} nevezetű programot is, mely feltelepít egy adatbázis és PHP disztribúciót is.
-	\item Konfiguráljuk az adatbázist: hozzunk létre egy felhasználót és egy sémát, amihez hozz fog tudni férni az alkalmazás.
+	\item A futtatáshoz szükségünk van egy adatbázis szerverre. Javasolt MySQL vagy PostgreSQL használata. Ezeknek a telepítéséről az adott adatbázisszerver weboldalán lehet tájékozódni.
+	\item Telepítsük a PHP-t számítógépünkre, legalább 8.1-es verziót, melyet a Laravel keretrendszer 10-es verziója követel meg. Alternatívaként telepíthetjük a XAMPP nevezetű programot is, amely feltelepít egy adatbázis és PHP disztribúciót is.
+	\item Konfiguráljuk az adatbázist: hozzunk létre egy felhasználót és egy sémát, amihez hozzá fog tudni férni az alkalmazás.
 	\item Az alábbi php kiegészítő csomagok engedélyezése szükséges: Ctype, cURL, DOM, Fileinfo, Filter, Hash, Mbstring, OpenSSL, PCRE, PDO, Session, Tokenizer, XML.
 	\item Telepítsük a Composer\cite{composer} nevű PHP csomagkezelő rendszert.
 	\item Telepítsük a Node.js\cite{nodejs} nevű JavaScript futtatókörnyezetet.
@@ -837,7 +837,7 @@ A kész alkalmazás egy ingyenes Amazon AWS\cite{aws} szerveren fut, ide került
 		\item APP\_URL: amennyiben nem helyi környezetben, kipróbálásra telepítjük az alkalmazást, hanem éles környezetben, akkor itt adjuk meg az alkalmazás elérési útját, egyébként maradhat az értéke.
 		\item DB prefixummal kezdődő értékek: itt állítsuk be az adatbázis kapcsolat adatait.
 		\item BROADCAST\_DRIVER: értékét állítsuk át \emph{pusher}-re.
-		\item QUEUE\_CONNECTION: értékét állítsuk át \emph{database}-re, amennyiben az adatbázist szeretnék használni a sor-hoz.
+		\item QUEUE\_CONNECTION: értékét állítsuk át \emph{database}-re, amennyiben az adatbázist szeretnék használni a queue-hoz.
 		\item MAIL prefixummal kezdődő értékek: itt állíthatjuk be a levelezéshez használt hozzáférési értékeket. Ezekről az email szolgáltatótól kaphatunk információt.
 		\item PUSHER prefixummal kezdődő értékek: itt a Pusher hozzáférési adatok beállítása szükséges. Ezekhez fiókot kell regisztrálnunk, miután elérhetővé válnak a szükséges értékek. 
 	\end{itemize}
@@ -855,23 +855,23 @@ A kész alkalmazás egy ingyenes Amazon AWS\cite{aws} szerveren fut, ide került
 		\item A keretrendszerben jártas olvasó észreveheti, hogy kihagytam a nézetek gyorsítótárazására szolgáló parancsot. A Livewire általam használt verziójában van egy olyan probléma, miszerint gyorsítótárazás esetén az egyes elemek nem működnek megfelelően. Ennek ideiglenes kiküszöbölése a nézetek gyorsítótárazásának kihagyása.
 	\end{itemize}
 	\item A fejlesztői szerver elindítható a \textbf{php artisan serve} paranccsal. Ugyan csak szükséges a sor elindítása is egy másik terminál ablakban: \textbf{php artisan queue:work}.
-	\item Az alkalmazást megnyithatjuk a böngészőben, az alapértelmezett \textbf{SADMIN / superadmin} felhasználónév és jelszó párossal tudunk belépni.
+	\item Az alkalmazást megnyithatjuk a böngészőben, majd az alapértelmezett \\ \textbf{SADMIN / superadmin} felhasználónév és jelszó párossal tudunk belépni.
 \end{enumerate}
 
 \chapter*{Összegzés}
 \addcontentsline{toc}{chapter}{Összegzés}
 
-Összegezve a szakdolgozatban leírt és elkészített dolgokat, én elégedett vagyok az elkészült munkával. Egyrészről azért, mert hosszasabb fejlesztési folyamatban vehettem ezáltal részt, egészen a tervezéstől, a fejlesztésen és a tesztelésen át az alkalmazás telepítéséig. Másrészről lehetőséget nyújtott, hogy jobban elmerüljek a webfejlesztés világában, és új, érdekes csomagokkal és megoldásokkal találkozzak, illetve jobban megismerjem a Laravel keretrendszer adta lehetőségeket.
+Összegezve a szakdolgozatban leírt és elkészített dolgokat, elégedett vagyok az elkészült munkával. Egyrészről azért, mert hosszasabb fejlesztési folyamatban vehettem ezáltal részt, egészen a tervezéstől, a fejlesztésen és a tesztelésen át az alkalmazás telepítéséig. Másrészről lehetőséget nyújtott, hogy jobban elmerüljek a webfejlesztés világában és új, érdekes csomagokkal és megoldásokkal találkozzak, illetve jobban megismerjem a Laravel keretrendszer adta lehetőségeket.
 
 A dolgozat készítése során fejleszteni tudtam a keretrendszerről a tudásom, és modern technológiákkal találkoztam, ismertem meg azok működését. Sikerült megismerkednem a Websocket technológiával, a Tailwind keretrendszerrel, naptárak és diagramok létrehozásával, illetve több platformon elérhető alkalmazás készítésével a PWA segítségével, csak hogy párat kiemeljek, amik kifejezetten érdekesek voltak számomra.
 
-Úgy vélem, egy életképes programot sikerült létrehozni, ami tényleg segítséget nyújthat a tanároknak a jelenléttel kapcsolatos folyamatok felgyorsításában és egy helyre való szervezésében. A későbbiekben én is szeretném éles helyzetben kipróbálni az alkalmazást és visszajelzéseket gyűjteni.
+Úgy vélem egy életképes alkalmazást sikerült létrehozni, ami tényleg segítséget nyújthat a tanároknak a jelenléttel kapcsolatos folyamatok felgyorsításában és egy helyre való szervezésében. A későbbiekben szeretném éles helyzetben kipróbálni az alkalmazást és visszajelzéseket gyűjteni.
 
-Amennyiben úgy alakulna,hogy a weboldalt továbbfejleszteném a vizsgák után, akkor elsősorban az alkalmazás lehetséges integrációját vizsgálnám meg más, már létező és használt megoldásokkal (gondolok itt első sorban a Neptun rendszerre), illetve szeretném megoldani, hogy a kedvezményes tanrendek is megtekinthetőek legyenek az oldalon.
+Amennyiben úgy alakulna, hogy a weboldalt továbbfejleszteném a vizsgák után, akkor elsősorban az alkalmazás lehetséges integrációját vizsgálnám meg más, már létező és használt megoldásokkal (gondolok itt első sorban a Neptun rendszerre), illetve szeretném megoldani, hogy a kedvezményes tanrendek is megtekinthetőek legyenek az oldalon.
 
-A készítés során létrejött programnak és a szakdolgozatnak a forráskódja elérhető a \url{https://github.com/gyorkistamas/thesis} repozitóriumban is, illetve még egyszer kiemelném, hogy kipróbálható a \url{https://szakdolgozat.ddns.net/} címen.
+A készítés során létrejött alkalmazásnak és a szakdolgozatnak a forráskódja elérhető a \url{https://github.com/gyorkistamas/thesis} repozitóriumban is, illetve még egyszer kiemelném, hogy kipróbálható a \url{https://szakdolgozat.ddns.net/} címen.
 
-\begin{thebibliography}{47}
+\begin{thebibliography}{55}
 \addcontentsline{toc}{chapter}{\bibname}
 
 \bibitem{Neptun}
@@ -974,11 +974,6 @@ A készítés során létrejött programnak és a szakdolgozatnak a forráskódj
 \\
 \url{https://laravel.com/docs/10.x/eloquent}, Megtekintés dátuma: 2024.03.25.
 
-\bibitem{blade}
-\textsc{Laravel}: \emph{Blade Templates}
-\\
-\url{https://laravel.com/docs/10.x/blade}, Megtekintés dátuma: 2024.03.25.
-
 \bibitem{fortify}
 \textsc{Laravel}: \emph{Laravel Fortify}
 \\
@@ -1034,7 +1029,7 @@ A készítés során létrejött programnak és a szakdolgozatnak a forráskódj
 \\
 \url{https://developer.mozilla.org/en-US/docs/Glossary/SPA}, Megtekintés dátuma: 2024.03.26.
 
-\bibitem{spa}
+\bibitem{livewireEvents}
 \textsc{Livewire}: \emph{Events}
 \\
 \url{https://livewire.laravel.com/docs/events}, Megtekintés dátuma: 2024.03.26.
@@ -1087,7 +1082,7 @@ A készítés során létrejött programnak és a szakdolgozatnak a forráskódj
 \bibitem{laravelpwa}
 \textsc{Github}: \emph{silviolleite: laravel-pwa}
 \\
-\url{https://www.chartjs.org/}, Megtekintés dátuma: 2024.03.28.
+\url{https://github.com/silviolleite/laravel-pwa}, Megtekintés dátuma: 2024.03.28.
 
 \bibitem{bootstrap}
 \textsc{Bootstrap}: \emph{Főoldal}
@@ -1143,21 +1138,6 @@ A készítés során létrejött programnak és a szakdolgozatnak a forráskódj
 \textsc{Forge}: \emph{Főoldal}
 \\
 \url{https://forge.laravel.com/}, Megtekintés dátuma: 2024.03.29.
-
-\bibitem{xampp}
-\textsc{Xampp}: \emph{Főoldal}
-\\
-\url{https://www.apachefriends.org/hu/index.html}, Megtekintés dátuma: 2024.03.31.
-
-\bibitem{mysql}
-\textsc{MySQL}: \emph{Főoldal}
-\\
-\url{https://www.mysql.com/}, Megtekintés dátuma: 2024.03.31.
-
-\bibitem{postgre}
-\textsc{PostGreSQL}: \emph{Főoldal}
-\\
-\url{https://www.postgresql.org/}, Megtekintés dátuma: 2024.03.31.
 
 \bibitem{composer}
 \textsc{Composer}: \emph{Főoldal}

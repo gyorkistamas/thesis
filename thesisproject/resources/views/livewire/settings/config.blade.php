@@ -4,7 +4,7 @@
     </div>
 
     <div class="divider mt-1 mb-1"></div>
-    
+
     <div class="flex flex-col items-center ">
         <div>
             <label class="input input-bordered input-accent flex items-center gap-2">
